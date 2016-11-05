@@ -35,9 +35,6 @@ use Illuminate\Database\Seeder;
                 'password'  => \Hash::make('123'),
                 'role' => 'estudiante',
             ));
-
-
-            $users = factory(reservas\User::class)->times(10)->create();
 		}
 
 
