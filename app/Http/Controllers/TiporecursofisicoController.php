@@ -21,11 +21,11 @@ class TiporecursofisicoController extends Controller
     public function index()
     {
         //Se obtienen todas los tiporecursofisicos.
-        $tiporecursofisicos = Tiporecursofisicos::all();
+        $tiporecursofisicos = Tiporecursofisico::all();
 
         //dd($tiporecursofisicos);
         //Se carga la vista y se pasan los registros. ->paginate($cantPages)
-        return view('tiporecursofisicos/index')->with('tiporecursofisicos', $tiporecursofisicos);
+        return view('tiporecursofisico/index')->with('tiporecursofisicos', $tiporecursofisicos);
     }
 
     /**
@@ -37,11 +37,13 @@ class TiporecursofisicoController extends Controller
     {
         // Carga el formulario para crear un nuevo registro (views/create.blade.php)
 
+        /*
         $cargos = \DB::table('cargos')
                             ->select('cargos.*')
                             ->get();
+        */
 
-        return view('tiporecursofisicos/create', compact('cargos'));
+        return view('tiporecursofisico/create');
     }
 
     /**
@@ -53,13 +55,12 @@ class TiporecursofisicoController extends Controller
     {
         //Validación de datos
         $this->validate(request(), [
-                'nombres' => ['required', 'max:50']
+                'tirf_descripcion' => ['required', 'max:100']
             ]);
         //Guarda todos los datos recibidos del formulario
-        $contrato = request()->except(['_token']);
+        $tiporecursofisico = request()->except(['_token']);
 
-
-        Tiporecursofisicos::create($contrato);
+        Tiporecursofisico::create($tiporecursofisico);
 
         //dd($contrato);
 

@@ -26,9 +26,9 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach($tiporecursosfisicos as $tiporecursofisico)
+		@foreach($tiporecursofisicos as $tiporecursofisico)
 		<tr>
-			<td>{{ $contrato -> tirf_descripcion }}</td>
+			<td>{{ $tiporecursofisico -> tirf_descripcion }}</td>
 			<td>
 				<!-- Borrar registro (utiliza el método DESTROY /reservas/{reserva_id}/pregs/{id} -->
 				{{ Form::open(array('url' => 'tiporecursofisico/'.$tiporecursofisico->id, 'class' => 'pull-right')) }}
