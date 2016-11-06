@@ -11,24 +11,6 @@ use Session;
 
 class ContratosController extends Controller
 {
-	/*
-    public function __construct(Redirector $redirect)
-    {
-        //Requiere que el usuario inicie sesión.
-        $this->middleware('auth');
-
-        //Si el rol es user, redirige al home
-        $action = Route::currentRouteAction();
-        $arrActionsAdmin = array('create', 'edit', 'store', 'show', 'destroy');
-        
-        if(in_array(explode("@", $action)[1], $arrActionsAdmin)){
-            if(isset(auth()->user()->role) && (auth()->user()->role == 'user')){
-                Session::flash('error', '¡Usuario no tiene permisos!');
-                $redirect->to('/home')->send();
-            }
-        }
-    }*/
-
 
     /**
      * Muestra una lista de los registros.

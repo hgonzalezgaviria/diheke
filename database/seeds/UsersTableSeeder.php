@@ -36,8 +36,6 @@ use Illuminate\Database\Seeder;
                 'role' => 'estudiante',
             ));
 
-
-            $users = factory(reservas\User::class)->times(10)->create();
 		}
 
 

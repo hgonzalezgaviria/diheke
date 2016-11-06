@@ -30,8 +30,14 @@
 						</a>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="{{ url('/tipoestados') }}"><i class="fa fa-btn fa-key"></i> Tipos de Estados</a></li>
+
 							<li><a href="{{ url('/estados') }}"><i class="fa fa-btn fa-sign-out"></i> Estados </a></li>
+
 							<li><a href="{{ url('/recursos') }}"><i class="fa fa-btn fa-key"></i> Recursos de Salas</a></li>
+
+							<li><a href="{{ url('/tiporecursofisico') }}"><i class="fa fa-btn fa-key"></i> Tipos de Recursos Fisicos </a></li>
+
+
 						</ul>
 					</li>
 						</ul>

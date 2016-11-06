@@ -31,7 +31,8 @@ Route::get('/prueba', function(){
 //contratos
 Route::resource('contratos', 'ContratosController');
 
-
+//contratos
+Route::resource('tiporecursofisico', 'TiporecursofisicoController');
 
 //recursos
 Route::resource('recursos', 'RecursosController');
