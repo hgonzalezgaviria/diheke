@@ -3,6 +3,8 @@
 namespace reservas\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Route;
 
 use reservas\Http\Requests;
 use reservas\Estado;
@@ -15,23 +17,30 @@ use DB;
 
 class EstadosController extends Controller
 {
-    /*
-    public function __construct(Redirector $redirect)
+    
+    public function __construct(Redirector $redirect=null)
     {
         //Requiere que el usuario inicie sesión.
         $this->middleware('auth');
+        if(isset($redirect)){
 
-        //Si el rol es user, redirige al home
-        $action = Route::currentRouteAction();
-        $arrActionsAdmin = array('create', 'edit', 'store', 'show', 'destroy');
-        
-        if(in_array(explode("@", $action)[1], $arrActionsAdmin)){
-            if(isset(auth()->user()->role) && (auth()->user()->role == 'user')){
-                Session::flash('error', '¡Usuario no tiene permisos!');
-                $redirect->to('/home')->send();
+            $action = Route::currentRouteAction();
+            $role = isset(auth()->user()->role) ? auth()->user()->role : 'guest';
+
+            //Lista de acciones que solo puede realizar los administradores o los editores
+            $arrActionsAdmin = array('index', 'create', 'edit', 'store', 'show', 'destroy');
+
+            if(in_array(explode("@", $action)[1], $arrActionsAdmin))//Si la acción del controlador se encuentra en la lista de acciones de admin...
+            {
+                if( ! in_array($role , ['admin','editor']))//Si el rol no es admin o editor, se niega el acceso.
+                {
+                    Session::flash('error', '¡Usuario no tiene permisos!');
+                    abort(403, '¡Usuario no tiene permisos!.');
+                }
             }
         }
-    }*/
+    }
+
 
 
     /**

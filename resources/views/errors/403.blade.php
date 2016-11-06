@@ -28,7 +28,7 @@
 
 @section('content')
 	<div class="title">
-		<strong>Error 404: Not Found.</strong><br>
-		La página no existe.
+		<strong>Error 403: Forbidden.</strong><br>
+		El usuario no tiene permisos para acceder al recurso.
 	</div>
 @endsection
