@@ -35,6 +35,8 @@
 
 							<li><a href="{{ url('/recursos') }}"><i class="fa fa-btn fa-key"></i> Recursos de Salas</a></li>
 
+							<li><a href="{{ url('/situacionrecursofisico') }}"><i class="fa fa-btn fa-key"></i> Situacion Recursos Físicos</a></li>
+
 							<li><a href="{{ url('/tiporecursofisico') }}"><i class="fa fa-btn fa-key"></i> Tipos de Recursos Fisicos </a></li>
 
 

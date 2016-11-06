@@ -43,6 +43,9 @@ Route::resource('tipoestados', 'TipoestadosController');
 //estados
 Route::resource('estados', 'EstadosController');
 
+//estados
+Route::resource('situacionrecursofisico', 'SituacionRecursoFisicoController');
+
 
 
 /*
