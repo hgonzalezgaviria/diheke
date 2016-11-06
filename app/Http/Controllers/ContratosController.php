@@ -3,6 +3,8 @@
 namespace reservas\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Route;
 
 use reservas\Http\Requests;
 use reservas\Contrato;
@@ -11,7 +13,29 @@ use Session;
 
 class ContratosController extends Controller
 {
+    public function __construct(Redirector $redirect=null)
+    {
+        //Requiere que el usuario inicie sesión.
+        $this->middleware('auth');
+        if(isset($redirect)){
 
+            $action = Route::currentRouteAction();
+            $role = isset(auth()->user()->role) ? auth()->user()->role : 'guest';
+            
+            //Lista de acciones que solo puede realizar los administradores o los editores
+            $arrActionsAdmin = array('index', 'create', 'edit', 'store', 'show', 'destroy');
+
+            if(in_array(explode("@", $action)[1], $arrActionsAdmin))//Si la acción del controlador se encuentra en la lista de acciones de admin...
+            {
+                if( ! in_array($role , ['admin','editor']))//Si el rol no es admin o editor, se niega el acceso.
+                {
+                    Session::flash('error', '¡Usuario no tiene permisos!');
+                    abort(403, '¡Usuario no tiene permisos!.');
+                }
+            }
+        }
+    }
+    
     /**
      * Muestra una lista de los registros.
      *

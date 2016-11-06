@@ -45,6 +45,7 @@ Route::resource('estados', 'EstadosController');
 
 
 
+/*
 //Pregunta
 Route::resource('encuestas/{id_encuesta}/pregs', 'PreguntaController');
 
@@ -55,10 +56,8 @@ Route::resource('encuestas/{id_encuesta}/resps', 'RespuestaController',
 //Menu
 Route::get('menu', 'MenuController@index');
 
-
-
 //https://laravel.com/docs/5.3/routing#route-group-prefixes
-/*
+
 Route::group(['prefix' => 'admin'], function () {
     Route::get('users', function ()    {
         // Matches The "/admin/users" URL
