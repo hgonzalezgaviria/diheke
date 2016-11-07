@@ -43,6 +43,8 @@
 
 							<li><a href="{{ url('/tiporecursofisico') }}"><i class="fa fa-btn fa-key"></i> Tipos de Recursos Fisicos </a></li>
 
+							<li><a href="{{ url('/tipoespaciofisico') }}"><i class="fa fa-btn fa-key"></i> Tipos de Espacios Fisicos </a></li>
+
 
 						</ul>
 					</li>

@@ -52,6 +52,9 @@ Route::resource('estadoelementorecursofisico', 'EstadoElementoRecursoFisicoContr
 //Elementos recurso físico
 Route::resource('elementorecursofisico', 'ElementoRecursoFisicoController');
 
+//Tipo de espacio físico
+Route::resource('tipoespaciofisico', 'TipoEspacioFisicoController');
+
 
 
 /*
