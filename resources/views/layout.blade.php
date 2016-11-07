@@ -2,9 +2,10 @@
 <html>
 	<head>
 		<title>Reservas @yield('title')</title>
+		{!! Html::style('assets/css/fullcalendar.css') !!}
 		{!! Html::style('assets/css/bootstrap.min.css') !!}
 		{!! Html::style('assets/css/font-awesome.min.css') !!}
-		{!! Html::style('assets/css/bootstrap-theme.min.css') !!}
+		{!! Html::style('assets/css/boontstrap-theme.min.css') !!}
 		{!! Html::style('assets/js/jquery-ui/jquery-ui.min.css') !!}
 		{!! Html::style('assets/css/style.css') !!}
 		<style>
@@ -35,6 +36,10 @@
 
 		<!-- Scripts -->
 		{!! Html::script('assets/js/jquery-1.11.2.min.js') !!}
+		{!! Html::script('assets/js/jquery-ui.min.js') !!}
+		{!! Html::script('assets/js/jquery.min.js') !!}
+		{!! Html::script('assets/js/moment.min.js') !!}
+		{!! Html::script('assets/js/fullcalendar.js') !!}
 		{!! Html::script('assets/js/bootstrap.min.js') !!}
 		@yield('scripts')
 	</body>
