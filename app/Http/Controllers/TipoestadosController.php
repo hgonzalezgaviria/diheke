@@ -13,7 +13,7 @@ use Session;
 use Illuminate\Support\Facades\Input;
 
 
-class TipoestadosController extends Controller
+class TipoEstadosController extends Controller
 {
     public function __construct(Redirector $redirect=null)
     {

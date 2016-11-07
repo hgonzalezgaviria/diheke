@@ -3,11 +3,11 @@
 
 @section('content')
 
-	<h1 class="page-header">Tipos de Espacio Físico</h1>
+	<h1 class="page-header">Tipos de Posesión</h1>
 	<div class="row well well-sm">
 
 		<div id="btn-create" class="pull-right">
-			<a class='btn btn-primary' role='button' href="{{ URL::to('tipoespaciofisico/create') }}">
+			<a class='btn btn-primary' role='button' href="{{ URL::to('tipoposesion/create') }}">
 				<i class="fa fa-plus" aria-hidden="true"></i> Nuevo Tipo
 			</a>
 		</div>
@@ -18,6 +18,7 @@
 		<tr>
 			<th class="col-md-2">ID</th>
 			<th class="col-md-2">Descripción</th>
+			<th class="col-md-2">Centro de Práctica</th>
 			<th class="col-md-2">Acciones</th>
 
 		</tr>
@@ -25,19 +26,20 @@
 	<tbody>
 
 
-		@foreach($tiposEspaciosFisicos as $tipoEspacioFisico)
+		@foreach($tiposPosesiones as $tipoPosesion)
 		<tr>
-			<td>{{ $tipoEspacioFisico -> TIEF_ID }}</td>
-			<td>{{ $tipoEspacioFisico -> TIEF_DESCRIPCION }}</td>
+			<td>{{ $tipoPosesion -> TIPO_ID }}</td>
+			<td>{{ $tipoPosesion -> TIPO_DESCRIPCION }}</td>
+			<td>{{ $tipoPosesion -> TIPO_CENTRODEPRACTICA ? 'SI' : 'NO' }}</td>
 			<td>
 
 				<!-- Botón Ver (show) -->
-				<a class="btn btn-small btn-success btn-xs" href="{{ URL::to('tipoespaciofisico/'.$tipoEspacioFisico->TIEF_ID) }}">
+				<a class="btn btn-small btn-success btn-xs" href="{{ URL::to('tipoposesion/'.$tipoPosesion->TIPO_ID) }}">
 					<span class="glyphicon glyphicon-eye-open"></span> Ver
 				</a><!-- Fin Botón Ver (show) -->
 
 				<!-- Botón Editar (edit) -->
-				<a class="btn btn-small btn-info btn-xs" href="{{ URL::to('tipoespaciofisico/'.$tipoEspacioFisico->TIEF_ID.'/edit') }}">
+				<a class="btn btn-small btn-info btn-xs" href="{{ URL::to('tipoposesion/'.$tipoPosesion->TIPO_ID.'/edit') }}">
 					<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
 				</a><!-- Fin Botón Editar (edit) -->
 
@@ -45,11 +47,11 @@
 				{{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Borrar',[
 						'class'=>'btn btn-xs btn-danger',
 						'data-toggle'=>'modal',
-						'data-target'=>'#pregModal'.$tipoEspacioFisico -> TIEF_ID ])
+						'data-target'=>'#pregModal'.$tipoPosesion -> TIPO_ID ])
 						}}
 
 				<!-- Mensaje Modal. Bloquea la pantalla mientras se procesa la solicitud -->
-				<div class="modal fade" id="pregModal{{ $tipoEspacioFisico -> TIEF_ID }}" role="dialog" tabindex="-1" >
+				<div class="modal fade" id="pregModal{{ $tipoPosesion -> TIPO_ID }}" role="dialog" tabindex="-1" >
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
@@ -57,11 +59,11 @@
 							</div>
 							<div class="modal-body">
 								<p>
-									<i class="fa fa-exclamation-triangle"></i> ¿Desea borrar el registro {{ $tipoEspacioFisico -> TIEF_ID }}?
+									<i class="fa fa-exclamation-triangle"></i> ¿Desea borrar el registro {{ $tipoPosesion -> TIPO_ID }}?
 								</p>
 							</div>
 							<div class="modal-footer">
-									{{ Form::open(array('url' => 'tipoespaciofisico/'.$tipoEspacioFisico->TIEF_ID, 'class' => 'pull-right')) }}
+									{{ Form::open(array('url' => 'tipoposesion/'.$tipoPosesion->TIPO_ID, 'class' => 'pull-right')) }}
 										{{ Form::hidden('_method', 'DELETE') }}
 										{{ Form::button(' NO ', ['class'=>'btn btn-xs btn-success', 'type'=>'button','data-dismiss'=>'modal']) }}
 										{{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> SI',[

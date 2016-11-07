@@ -47,11 +47,11 @@
 
 							<li role="separator" class="divider"></li>
 							
-							<li><a href="{{ url('/tiporecursofisico') }}"><i class="fa fa-btn fa-key"></i> Tipos de Recursos Fisicos </a></li>
+							<li><a href="{{ url('/tipoespaciofisico') }}"><i class="fa fa-btn fa-key"></i> Tipos de Espacios Físicos </a></li>
 
 							<li role="separator" class="divider"></li>
 							
-							<li><a href="{{ url('/tipoespaciofisico') }}"><i class="fa fa-btn fa-key"></i> Tipos de Espacios Fisicos </a></li>
+							<li><a href="{{ url('/tipoposesion') }}"><i class="fa fa-btn fa-key"></i> Tipos de Posesión </a></li>
 
 
 						</ul>

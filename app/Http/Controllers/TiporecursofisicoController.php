@@ -2,19 +2,15 @@
 
 namespace reservas\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\Route;
-
-use reservas\Http\Requests;
-use reservas\Tiporecursofisico;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Routing\Redirector;
 
-use Session;
+use reservas\TipoRecursoFisico;
 
-class TiporecursofisicoController extends Controller
+class TipoRecursoFisicoController extends Controller
 {
-    
     public function __construct(Redirector $redirect=null)
     {
         //Requiere que el usuario inicie sesión.
@@ -22,8 +18,8 @@ class TiporecursofisicoController extends Controller
         if(isset($redirect)){
 
             $action = Route::currentRouteAction();
-            $role = isset(auth()->user()->role) ? auth()->user()->role : 'guest';
-            
+            $role = isset(auth()->user()->role) ? auth()->user()->role : 'user';
+
             //Lista de acciones que solo puede realizar los administradores o los editores
             $arrActionsAdmin = array('index', 'create', 'edit', 'store', 'show', 'destroy');
 
@@ -45,12 +41,10 @@ class TiporecursofisicoController extends Controller
      */
     public function index()
     {
-        //Se obtienen todas los tiporecursofisicos.
-        $tiporecursofisicos = Tiporecursofisico::all();
-
-        //dd($tiporecursofisicos);
-        //Se carga la vista y se pasan los registros. ->paginate($cantPages)
-        return view('tiporecursofisico/index')->with('tiporecursofisicos', $tiporecursofisicos);
+        //Se obtienen todos los registros.
+        $tipoRecursosFisicos = TipoRecursoFisico::all();
+        //Se carga la vista y se pasan los registros
+        return view('tiporecursofisico/index', compact('tipoRecursosFisicos'));
     }
 
     /**
@@ -60,14 +54,6 @@ class TiporecursofisicoController extends Controller
      */
     public function create()
     {
-        // Carga el formulario para crear un nuevo registro (views/create.blade.php)
-
-        /*
-        $cargos = \DB::table('cargos')
-                            ->select('cargos.*')
-                            ->get();
-        */
-
         return view('tiporecursofisico/create');
     }
 
@@ -80,133 +66,108 @@ class TiporecursofisicoController extends Controller
     {
         //Validación de datos
         $this->validate(request(), [
-                'tirf_descripcion' => ['required', 'max:100']
-            ]);
-        //Guarda todos los datos recibidos del formulario
-        $tiporecursofisico = request()->except(['_token']);
-
-        Tiporecursofisico::create($tiporecursofisico);
-
-        //dd($contrato);
+            'EERF_DESCRIPCION' => ['required', 'max:300'],
+        ]);
 
         //Permite seleccionar los datos que se desean guardar.
-        /*
-        $contrato = new Tiporecursofisicos;
-        $contrato->titulo = Input::get('titulo');
-        $contrato->status = Tiporecursofisicos::NUEVA;
-        $contrato->created_by = auth()->user()->username;
-        $contrato->save();
-        */
+        $tipoRecursoFisico = new TipoRecursoFisico;
+        $tipoRecursoFisico->EERF_DESCRIPCION = Input::get('EERF_DESCRIPCION');
+        $tipoRecursoFisico->EERF_CREADOPOR = auth()->user()->username;
+        //Se guarda modelo
+        $tipoRecursoFisico->save();
 
         // redirecciona al index de controlador
-        Session::flash('message', '¡Tiporecursofisicos creado exitosamente!');
-        return redirect()->to('tiporecursofisicos');
+        Session::flash('message', 'Tipo de Recurso Físico '.$tipoRecursoFisico->EERF_ID.' creado exitosamente!');
+        return redirect()->to('tiporecursofisico');
     }
 
 
     /**
      * Muestra información de un registro.
      *
-     * @param  int  $id
+     * @param  int  $EERF_ID
      * @return Response
      */
-    public function show($id)
+    public function show($EERF_ID)
     {
         // Se obtiene el registro
-        //$contrato = Tiporecursofisicos::find($id);
+        $tipoRecursoFisico = TipoRecursoFisico::findOrFail($EERF_ID);
+
         // Muestra la vista y pasa el registro
-
-        $contrato = \DB::table('tiporecursofisicos')
-                            ->join('cargos','tiporecursofisicos.cargo','=','cargos.id')
-                            ->select('tiporecursofisicos.*','cargos.cargo as cargo_desc')
-                            ->where('tiporecursofisicos.id','=',$id)
-                            ->get()[0];
-
-        return view('tiporecursofisicos/show', compact('contrato'));
+        return view('tiporecursofisico/show', compact('tipoRecursoFisico'));
     }
+
 
     /**
      * Muestra el formulario para editar un registro en particular.
      *
-     * @param  int  $id
+     * @param  int  $EERF_ID
      * @return Response
      */
-    public function edit($id)
+    public function edit($EERF_ID)
     {
         // Se obtiene el registro
-        $contrato = Tiporecursofisicos::find($id);
+        $tipoRecursoFisico = TipoRecursoFisico::findOrFail($EERF_ID);
 
         // Muestra el formulario de edición y pasa el registro a editar
-        return view('tiporecursofisicos/edit')->with('contrato', $contrato);
+        return view('tiporecursofisico/edit', compact('tipoRecursoFisico'));
     }
+
 
     /**
      * Actualiza un registro en la base de datos.
      *
-     * @param  int  $id
+     * @param  int  $EERF_ID
      * @return Response
      */
-    public function update($id)
+    public function update($EERF_ID)
     {
         //Validación de datos
-        /*
         $this->validate(request(), [
-            'titulo' => ['required', 'max:50']
+            'EERF_DESCRIPCION' => ['required', 'max:300'],
         ]);
-        */
 
         // Se obtiene el registro
-        $contrato = Tiporecursofisicos::find($id);
+        $tipoRecursoFisico = TipoRecursoFisico::findOrFail($EERF_ID);
 
-        $contrato->cedula = Input::get('cedula');
-        $contrato->nombres = Input::get('nombres');
-        $contrato->apellidos = Input::get('apellidos');
-        $contrato->sexo = Input::get('sexo');
-        $contrato->caso_medico = Input::get('caso_medico');
-        $contrato->nro_contrato = Input::get('nro_contrato');
-        $contrato->tipo_contrato = Input::get('tipo_contrato');
-        $contrato->cargo = Input::get('cargo');
-        $contrato->estado_contrato = Input::get('estado_contrato');
-        $contrato->fecha_ingreso = Input::get('fecha_ingreso');
-
-        if(Input::has('fecha_retiro')){
-            $contrato->fecha_retiro = Input::get('fecha_retiro');
-        }
-        
-        $contrato->salario = Input::get('salario');
-        $contrato->tipo_nomina = Input::get('tipo_nomina');
-        $contrato->cno = Input::get('cno');
-        $contrato->centro_costo = Input::get('centro_costo');
-        $contrato->gerencia = Input::get('gerencia');
-        $contrato->empleador = Input::get('empleador');
-
-
-
-        //$contrato->edited_by = auth()->user()->username;
-        $contrato->save();
+        $tipoRecursoFisico->EERF_DESCRIPCION = Input::get('EERF_DESCRIPCION');
+        $tipoRecursoFisico->EERF_MODIFICADOPOR = auth()->user()->username;
+        //Se guarda modelo
+        $tipoRecursoFisico->save();
 
         // redirecciona al index de controlador
-        Session::flash('message', '¡Tiporecursofisicos actualizada exitosamente!');
-        return redirect()->to('tiporecursofisicos/'.$id);
+        Session::flash('message', 'Tipo de Recurso Físico '.$tipoRecursoFisico->EERF_ID.' modificado exitosamente!');
+        return redirect()->to('tiporecursofisico');
     }
 
     /**
      * Elimina un registro de la base de datos.
      *
-     * @param  int  $id
+     * @param  int  $EERF_ID
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($EERF_ID, $showMsg=True)
     {
-        // delete
-        $contrato = Tiporecursofisicos::find($id);
-        $contrato->delete();
+        $tipoRecursoFisico = TipoRecursoFisico::findOrFail($EERF_ID);
+
+        try {
+            // delete
+            $tipoRecursoFisico->EERF_ELIMINADOPOR = auth()->user()->username;
+            $tipoRecursoFisico->save();
+            $tipoRecursoFisico->delete();
+        }
+        catch (\Illuminate\Database\QueryException $e) {
+            if($e->getCode() == "23000"){ //23000 is sql code for integrity constraint violation
+                abort(400, '¡Error 23000 (sql code): Integrity constraint violation!.');
+            }
+        }
 
         // redirecciona al index de controlador
-        Session::flash('message', '¡Tiporecursofisicos '.$id.' borrado!');
-        return redirect()->to('tiporecursofisicos');
+        if($showMsg){
+            Session::flash('message', 'Tipo de Recurso Físico '.$tipoRecursoFisico->EERF_ID.' eliminado exitosamente!');
+            return redirect()->to('tiporecursofisico');
+        }
     }
-
 
 
 }
