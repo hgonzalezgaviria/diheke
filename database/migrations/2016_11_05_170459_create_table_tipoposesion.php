@@ -20,6 +20,7 @@ class CreateTableTipoposesion extends Migration
             $table->string('TIPO_DESCRIPCION', 300)
                 ->comment = "Descripcion del tipo de Posesion, el cual puede ser: Propia, Arrendada, Convenio";
 
+            $table->boolean('TIPO_CENTRODEPRACTICA', 300)
                 ->comment = "indica si tipo de posesión es uncentro de práctica";
                 
 
