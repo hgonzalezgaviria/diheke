@@ -6,23 +6,40 @@
 
 		    // page is now ready, initialize the calendar...
 
-		    $('#calendar').fullCalendar({
+		   $('#calendar').fullCalendar({
 		        // put your options and callbacks here
-
+		        locale: 'es',
 		        header: {
-			        center: 'month, day' // buttons for switching between views
+			        center: 'month, day, week' // buttons for switching between views
 			    },
 			    views: {
 			        day: {
+			        	minTime: '09:00:00',
+			        	maxTime: '22:00:00',
 			            type: 'agenda',
-			            buttonText: 'day'
-			        }
-			    }
+			            buttonText: 'Día'
+			        },
+			        week: {
+			        	type: 'basicWeek',
+			        	buttonText: 'Semana'
+			        },
+			        
+			    },
 
 
 
 
-		    })
+
+		    });
+
+		    $( "#boton" ).click(function() {
+			   var calendar = $('#calendar').fullCalendar('getCalendar');
+			   var m1 = calendar.moment('2016-11-09');
+			   var m2 = calendar.moment('2016-11-10');
+			   console.log(m1);
+			   console.log(m2);
+			});
+		    
 
 		});
     </script>
@@ -39,8 +56,12 @@
 
 		{{ Form::open(array('url' => 'contratos', 'class' => 'form-horizontal')) }}
 
-	  	<div class="form-group" id='calendar'>
+	  	<div id="calendar" class="form-group">
 			
+		</div>
+
+		<div class="form-group">
+			<input type="button" value="probar" id="boton">
 		</div>
 
 		<div class="text-right">

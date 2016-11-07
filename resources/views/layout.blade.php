@@ -40,6 +40,7 @@
 		{!! Html::script('assets/js/jquery.min.js') !!}
 		{!! Html::script('assets/js/moment.min.js') !!}
 		{!! Html::script('assets/js/fullcalendar.js') !!}
+		{!! Html::script('assets/js/es.js') !!}
 		{!! Html::script('assets/js/bootstrap.min.js') !!}
 		@yield('scripts')
 	</body>
