@@ -1,18 +1,17 @@
 @extends('layout')
+@section('title', '/ Situación Recurso Físico '.$sitRecursoFisico->SIRF_ID)
 
 @section('content')
 
-
-<h1 class="page-header">Estado {{ $estado->id }}: {{ $estado->descripcion }} </h1>
+	<h1 class="page-header">Situación Recurso Físico {{ $sitRecursoFisico->SIRF_ID }}:</h1>
 
 	<div class="jumbotron text-center">
-		<h3><strong>Estado {{ $estado->id }}:</strong> {{ $estado->descripcion }}</h3>
 		<p>
-			<strong>Tipo de Estado:</strong> {{ $estado->tipoestado_desc }} <br>
+			<strong>Situación :</strong> {{ $sitRecursoFisico->SIRF_DESCRIPCION }} <br>
 		</p>
 	</div>
 	<div class="text-right">
-		<a class="btn btn-primary" role="button" href="{{ URL::to('estados/') }}">
+		<a class="btn btn-primary" role="button" href="{{ URL::to('situacionrecursofisico/') }}">
 			<i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar
 		</a>
 	</div>

@@ -1,9 +1,5 @@
 @extends('layout')
 @section('title', '/ Crear Situación Recurso Físico')
-@section('scripts')
-    <script>
-    </script>
-@endsection
 
 @section('content')
 

@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', '/ Editar Tipo de Estado')
+@section('title', '/ Editar Situación Recurso Físico '.$sitRecursoFisico->SIRF_ID)
 @section('scripts')
     <script>
     </script>
@@ -7,28 +7,23 @@
 
 @section('content')
 
-	<h1 class="page-header">Actualizar Tipo de Estado</h1>
+	<h1 class="page-header">Actualizar Situación Recurso Físico</h1>
 
 	@include('partials/errors')
 
 	<!-- if there are creation errors, they will show here -->
 	{{ Html::ul($errors->all() )}}
 
-		{{ Form::model($tipoestado, array('action' => array('TipoestadosController@update', $tipoestado->id, $tipoestado->id), 'method' => 'PUT', 'class' => 'form-horizontal')) }}
+	{{ Form::model($sitRecursoFisico, array('action' => array('SituacionRecursoFisicoController@update', $sitRecursoFisico->SIRF_ID), 'method' => 'PUT', 'class' => 'form-horizontal')) }}
 
 	  	<div class="form-group">
-			{{ Form::label('descripcion', 'Descripción') }} 
-			{{ Form::text('descripcion', old('descripcion'), array('class' => 'form-control', 'required')) }}
-		</div>
-
-	  	<div class="form-group">
-			{{ Form::label('observaciones', 'Observaciones') }} 
-			{{ Form::text('observaciones', old('observaciones'), array('class' => 'form-control')) }}
+			{{ Form::label('SIRF_DESCRIPCION', 'Descripción') }} 
+			{{ Form::text('SIRF_DESCRIPCION', old('SIRF_DESCRIPCION'), array('class' => 'form-control', 'max' => '300', 'required')) }}
 		</div>
 
 	    <div id="btn-form" class="text-right">
 	    	{{ Form::button('<i class="fa fa-exclamation" aria-hidden="true"></i> Reset', array('class'=>'btn btn-warning', 'type'=>'reset')) }}
-	        <a class="btn btn-warning" role="button" href="{{ URL::to('reservas/'.$tipoestado->id ) }}">
+	        <a class="btn btn-warning" role="button" href="{{ URL::to('situacionrecursofisico/') }}">
 	            <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar
 	        </a>
 			{{ Form::button('<i class="fa fa-floppy-o" aria-hidden="true"></i> Actualizar', array('class'=>'btn btn-primary', 'type'=>'submit')) }}
