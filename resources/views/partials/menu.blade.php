@@ -51,8 +51,9 @@
 
 							<li role="separator" class="divider"></li>
 							
-							<li><a href="{{ url('/tipoposesion') }}"><i class="fa fa-btn fa-key"></i> Tipos de Posesión </a></li>
+							<li><a href="{{ url('/localidad') }}"><i class="fa fa-btn fa-key"></i> Localidades </a></li>
 
+							<li><a href="{{ url('/tipoposesion') }}"><i class="fa fa-btn fa-key"></i> Tipos de Posesión </a></li>
 
 						</ul>
 					</li>

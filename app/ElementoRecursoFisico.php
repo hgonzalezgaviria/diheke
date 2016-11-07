@@ -22,7 +22,7 @@ class ElementoRecursoFisico extends Model
 		'ELRF_DESCRIPCION', 'ELRF_CREADOPOR', 'ELRF_MODIFICADOPOR'
 	];
 
-	//Un ElementoRecursoFisico pertenece a un EstadoElementoRecursoFisico
+	//Un ElementoRecursoFisico tiene un EstadoElementoRecursoFisico
 	public function estadoElementoRecursoFisico()
 	{
 		$foreingKey = 'EERF_ID';

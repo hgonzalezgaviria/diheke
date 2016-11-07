@@ -61,6 +61,9 @@ Route::resource('tipoespaciofisico', 'TipoEspacioFisicoController');
 //Tipo de posesión
 Route::resource('tipoposesion', 'TipoPosesionController');
 
+//Localidades
+Route::resource('localidad', 'LocalidadController');
+
 
 
 /*

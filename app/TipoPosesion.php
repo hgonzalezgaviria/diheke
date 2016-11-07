@@ -22,10 +22,10 @@ class TipoPosesion extends Model
 		'TIPO_DESCRIPCION', 'TIPO_CENTRODEPRACTICA', 'TIPO_CREADOPOR', 'TIPO_MODIFICADOPOR'
 	];
 
-	//Un TipoPosesion tiene muchos Posesion
-	public function espaciosFisicos()
+	//Un TipoPosesion tiene muchas Localidades
+	public function localidades()
 	{
 		$foreingKey = 'TIPO_ID';
-		return $this->hasMany(EspacioFisico::class, $foreingKey);
+		return $this->hasMany(Localidad::class, $foreingKey);
 	}
 }

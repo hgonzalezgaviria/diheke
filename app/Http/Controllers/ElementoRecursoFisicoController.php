@@ -151,12 +151,14 @@ class ElementoRecursoFisicoController extends Controller
 		//Validación de datos
 		$this->validate(request(), [
 			'ELRF_DESCRIPCION' => ['required', 'max:300'],
+			'EERF_ID' => ['required'],
 		]);
 
 		// Se obtiene el registro
 		$elemRecursoFisico = ElementoRecursoFisico::findOrFail($ELRF_ID);
 
 		$elemRecursoFisico->ELRF_DESCRIPCION = Input::get('ELRF_DESCRIPCION');
+		$elemRecursoFisico->EERF_ID = Input::get('EERF_ID');
         $elemRecursoFisico->ELRF_MODIFICADOPOR = auth()->user()->username;
         //Se guarda modelo
 		$elemRecursoFisico->save();
