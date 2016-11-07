@@ -22,4 +22,10 @@ class EstadoElementoRecursoFisico extends Model
 		'EERF_DESCRIPCION', 'EERF_CREADOPOR', 'EERF_MODIFICADOPOR'
 	];
 
+	//Un EstadoElementoRecursoFisico tiene muchos ElementoRecursoFisico
+	public function elementosRecursosFisicos()
+	{
+		$foreingKey = 'EERF_ID';
+		return $this->hasMany(ElementoRecursoFisico::class, $foreingKey);
+	}
 }

@@ -37,6 +37,8 @@
 
 							<li><a href="{{ url('/situacionrecursofisico') }}"><i class="fa fa-btn fa-key"></i> Situacion Recursos Físicos</a></li>
 
+							<li><a href="{{ url('/elementorecursofisico') }}"><i class="fa fa-btn fa-key"></i> Elementos Recursos Físicos</a></li>
+
 							<li><a href="{{ url('/estadoelementorecursofisico') }}"><i class="fa fa-btn fa-key"></i> Estado Elemento Recursos Físicos</a></li>
 
 							<li><a href="{{ url('/tiporecursofisico') }}"><i class="fa fa-btn fa-key"></i> Tipos de Recursos Fisicos </a></li>

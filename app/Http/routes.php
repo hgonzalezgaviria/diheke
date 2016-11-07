@@ -49,6 +49,9 @@ Route::resource('situacionrecursofisico', 'SituacionRecursoFisicoController');
 //Estados elemento recurso físico
 Route::resource('estadoelementorecursofisico', 'EstadoElementoRecursoFisicoController');
 
+//Elementos recurso físico
+Route::resource('elementorecursofisico', 'ElementoRecursoFisicoController');
+
 
 
 /*
