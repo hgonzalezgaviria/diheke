@@ -150,10 +150,17 @@ class EstadoElementoRecursoFisicoController extends Controller
 	{
 		$estElemRecursoFisico = EstadoElementoRecursoFisico::findOrFail($EERF_ID);
 
-		// delete
-        $estElemRecursoFisico->EERF_ELIMINADOPOR = auth()->user()->username;
-		$estElemRecursoFisico->save();
-		$estElemRecursoFisico->delete();
+		try {
+			// delete
+	        $estElemRecursoFisico->EERF_ELIMINADOPOR = auth()->user()->username;
+			$estElemRecursoFisico->save();
+			$estElemRecursoFisico->delete();
+		}
+		catch (\Illuminate\Database\QueryException $e) {
+	        if($e->getCode() == "23000"){ //23000 is sql code for integrity constraint violation
+	            abort(400, '¡Error 23000 (sql code): Integrity constraint violation!.');
+	        }
+		}
 
 		// redirecciona al index de controlador
 		if($showMsg){

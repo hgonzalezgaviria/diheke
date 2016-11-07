@@ -54,7 +54,8 @@ class CreateTableElementosrecursofisico extends Migration
             //Relaciones
             $table->foreign('EERF_ID')
                 ->references('EERF_ID')->on('ESTADOELEMENTORECURSOFISICO')
-                ->onDelete('cascade');
+                ->onUpdate('cascade')
+                ->onDelete('restrict');
         });
     }
 

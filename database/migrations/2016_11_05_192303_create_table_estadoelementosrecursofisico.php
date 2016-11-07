@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableEstadoElementosRecursoFisico extends Migration
+class CreateTableEstadoelementosrecursofisico extends Migration
 {
     /**
      * Run the migrations.
