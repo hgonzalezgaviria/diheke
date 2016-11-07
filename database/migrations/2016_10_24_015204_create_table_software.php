@@ -12,7 +12,7 @@ class CreateTableSoftware extends Migration
      */
    public function up()
    {       
-        Schema::create('recursos', function (Blueprint $table) {
+        Schema::create('RECURSOS', function (Blueprint $table) {
 
             $table->increments('id');
             $table->string('descripcion', 300);
@@ -31,6 +31,6 @@ class CreateTableSoftware extends Migration
     public function down()
     {
         //
-        Schema::drop('recursos');
+        Schema::drop('RECURSOS');
     }
 }

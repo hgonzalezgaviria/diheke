@@ -11,9 +11,6 @@
 
 	@include('partials/errors')
 
-	<!-- if there are creation errors, they will show here -->
-	{{ Html::ul($errors->all() )}}
-
 	{{ Form::model($sitRecursoFisico, array('action' => array('SituacionRecursoFisicoController@update', $sitRecursoFisico->SIRF_ID), 'method' => 'PUT', 'class' => 'form-horizontal')) }}
 
 	  	<div class="form-group">
@@ -30,6 +27,6 @@
 	    </div>
 
 	{{ Form::close() }}
-    </div><!-- End ng-controller -->
+    </div>
 
 @endsection

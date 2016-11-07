@@ -42,7 +42,7 @@ class CreateTableTipoposesion extends Migration
     public function down()
     {
         //
-        Schema::drop('TIPORECURSOFISICO');
+        Schema::drop('TIPOPOSESION');
     }
 
 }

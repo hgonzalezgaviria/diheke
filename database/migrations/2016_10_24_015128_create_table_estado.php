@@ -12,14 +12,14 @@ class CreateTableEstado extends Migration
      */
    public function up()
     {       
-        Schema::create('estados', function (Blueprint $table) {
+        Schema::create('ESTADOS', function (Blueprint $table) {
 
             $table->increments('id');
             $table->string('descripcion', 300);
             $table->integer('tipo_estado')->unsigned();
 
             $table->foreign('tipo_estado')
-                  ->references('id')->on('tipoestados')
+                  ->references('id')->on('TIPOESTADOS')
                   ->onDelete('cascade');
 
             $table->timestamps();
@@ -35,6 +35,6 @@ class CreateTableEstado extends Migration
     public function down()
     {
         //
-        Schema::drop('estados');
+        Schema::drop('ESTADOS');
     }
 }

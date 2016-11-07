@@ -3,11 +3,11 @@
 
 @section('content')
 
-	<h1 class="page-header">Situación Recurso Físico</h1>
+	<h1 class="page-header">Estados para Elemento Recurso Físico</h1>
 	<div class="row well well-sm">
 
 		<div id="btn-create" class="pull-right">
-			<a class='btn btn-primary' role='button' href="{{ URL::to('situacionrecursofisico/create') }}">
+			<a class='btn btn-primary' role='button' href="{{ URL::to('estadoelementorecursofisico/create') }}">
 				<i class="fa fa-plus" aria-hidden="true"></i> Nueva Situación
 			</a>
 		</div>
@@ -25,18 +25,19 @@
 	<tbody>
 
 
-		@foreach($sitRecursosFisicos as $sitRecursoFisico)
+		@foreach($estElemRecursosFisicos as $estElemRecursoFisico)
 		<tr>
-			<td>{{ $sitRecursoFisico -> SIRF_ID }}</td>
-			<td>{{ $sitRecursoFisico -> SIRF_DESCRIPCION }}</td>
+			<td>{{ $estElemRecursoFisico -> EERF_ID }}</td>
+			<td>{{ $estElemRecursoFisico -> EERF_DESCRIPCION }}</td>
 			<td>
+
 				<!-- Botón Ver (show) -->
-				<a class="btn btn-small btn-success btn-xs" href="{{ URL::to('situacionrecursofisico/'.$sitRecursoFisico->SIRF_ID) }}">
+				<a class="btn btn-small btn-success btn-xs" href="{{ URL::to('estadoelementorecursofisico/'.$estElemRecursoFisico->EERF_ID) }}">
 					<span class="glyphicon glyphicon-eye-open"></span> Ver
 				</a><!-- Fin Botón Ver (show) -->
 
 				<!-- Botón Editar (edit) -->
-				<a class="btn btn-small btn-info btn-xs" href="{{ URL::to('situacionrecursofisico/'.$sitRecursoFisico->SIRF_ID.'/edit') }}">
+				<a class="btn btn-small btn-info btn-xs" href="{{ URL::to('estadoelementorecursofisico/'.$estElemRecursoFisico->EERF_ID.'/edit') }}">
 					<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
 				</a><!-- Fin Botón Editar (edit) -->
 
@@ -44,11 +45,11 @@
 				{{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Borrar',[
 						'class'=>'btn btn-xs btn-danger',
 						'data-toggle'=>'modal',
-						'data-target'=>'#pregModal'.$sitRecursoFisico -> SIRF_ID ])
+						'data-target'=>'#pregModal'.$estElemRecursoFisico -> EERF_ID ])
 						}}
 
 				<!-- Mensaje Modal. Bloquea la pantalla mientras se procesa la solicitud -->
-				<div class="modal fade" id="pregModal{{ $sitRecursoFisico -> SIRF_ID }}" role="dialog" tabindex="-1" >
+				<div class="modal fade" id="pregModal{{ $estElemRecursoFisico -> EERF_ID }}" role="dialog" tabindex="-1" >
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
@@ -56,11 +57,11 @@
 							</div>
 							<div class="modal-body">
 								<p>
-									<i class="fa fa-exclamation-triangle"></i> ¿Desea borrar el registro {{ $sitRecursoFisico -> SIRF_ID }}?
+									<i class="fa fa-exclamation-triangle"></i> ¿Desea borrar el registro {{ $estElemRecursoFisico -> EERF_ID }}?
 								</p>
 							</div>
 							<div class="modal-footer">
-									{{ Form::open(array('url' => 'situacionrecursofisico/'.$sitRecursoFisico->SIRF_ID, 'class' => 'pull-right')) }}
+									{{ Form::open(array('url' => 'estadoelementorecursofisico/'.$estElemRecursoFisico->EERF_ID, 'class' => 'pull-right')) }}
 										{{ Form::hidden('_method', 'DELETE') }}
 										{{ Form::button(' NO ', ['class'=>'btn btn-xs btn-success', 'type'=>'button','data-dismiss'=>'modal']) }}
 										{{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> SI',[
@@ -76,7 +77,6 @@
 					</div>
 				</div><!-- Fin Botón Borrar (destroy) -->
 
-
 			</td>
 		</tr>
 		@endforeach
@@ -84,25 +84,6 @@
 </table>
 
 
-  <!-- Mensaje Modal. Bloquea la pantalla mientras se procesa la solicitud -->
-  <div class="modal fade" id="msgModal" role="dialog">
-	<div class="modal-dialog">
-	
-	  <!-- Modal content-->
-	  <div class="modal-content">
-		<div class="modal-header">
-		  <h4 class="modal-title">Borrando...</h4>
-		</div>
-		<div class="modal-body">
-			<p>
-				<i class="fa fa-cog fa-spin fa-3x fa-fw"></i> Borrando registro...
-			</p>
-		</div>
-		<div class="modal-footer">
-		</div>
-	  </div>
-	  
-	</div>
-  </div>
+
 
 @endsection

@@ -13,18 +13,18 @@ class CreateTableRecursoSalas extends Migration
     public function up()
     {
         //
-        Schema::create('recursosalas', function (Blueprint $table) {
+        Schema::create('RECURSOSALAS', function (Blueprint $table) {
 
          $table->increments('id');
          $table->integer('id_sala')->unsigned();
          $table->integer('id_recurso')->unsigned();
 
             $table->foreign('id_sala')
-                  ->references('id')->on('salas')
+                  ->references('id')->on('SALAS')
                   ->onDelete('cascade');
 
             $table->foreign('id_recurso')
-                  ->references('id')->on('recursos')
+                  ->references('id')->on('RECURSOS')
                   ->onDelete('cascade');
 
         $table->timestamps();
@@ -40,6 +40,6 @@ class CreateTableRecursoSalas extends Migration
     public function down()
     {
         //
-         Schema::drop('recursosalas');
+         Schema::drop('RECURSOSALAS');
     }
 }

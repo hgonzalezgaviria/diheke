@@ -13,7 +13,7 @@ class CreateTablePolitica extends Migration
     public function up()
     {
         //
-        Schema::create('politicas', function (Blueprint $table) {
+        Schema::create('POLITICAS', function (Blueprint $table) {
          $table->increments('id');
          $table->timestamp('hora_min');
          $table->timestamp('hora_max');
@@ -32,6 +32,6 @@ class CreateTablePolitica extends Migration
     public function down()
     {
         //
-         Schema::drop('politicas');
+         Schema::drop('POLITICAS');
     }
 }

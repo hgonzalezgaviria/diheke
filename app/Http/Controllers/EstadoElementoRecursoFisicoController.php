@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Redirector;
 
-use reservas\SituacionRecursoFisico;
+use reservas\EstadoElementoRecursoFisico;
 
-class SituacionRecursoFisicoController extends Controller
+class EstadoElementoRecursoFisicoController extends Controller
 {
 	public function __construct(Redirector $redirect=null)
 	{
@@ -42,9 +42,9 @@ class SituacionRecursoFisicoController extends Controller
 	public function index()
 	{
 		//Se obtienen todos los registros.
-		$sitRecursosFisicos = SituacionRecursoFisico::all();
+		$estElemRecursosFisicos = EstadoElementoRecursoFisico::all();
 		//Se carga la vista y se pasan los registros
-		return view('situacionrecursofisico/index', compact('sitRecursosFisicos'));
+		return view('estadoelementorecursofisico/index', compact('estElemRecursosFisicos'));
 	}
 
 	/**
@@ -54,7 +54,7 @@ class SituacionRecursoFisicoController extends Controller
 	 */
 	public function create()
 	{
-		return view('situacionrecursofisico/create');
+		return view('estadoelementorecursofisico/create');
 	}
 
 	/**
@@ -66,99 +66,99 @@ class SituacionRecursoFisicoController extends Controller
 	{
 		//Validación de datos
 		$this->validate(request(), [
-			'SIRF_DESCRIPCION' => ['required', 'max:300'],
+			'EERF_DESCRIPCION' => ['required', 'max:300'],
 		]);
 
 		//Permite seleccionar los datos que se desean guardar.
-		$sitRecursoFisico = new SituacionRecursoFisico;
-		$sitRecursoFisico->SIRF_DESCRIPCION = Input::get('SIRF_DESCRIPCION');
-        $sitRecursoFisico->SIRF_CREADOPOR = auth()->user()->username;
+		$estElemRecursoFisico = new EstadoElementoRecursoFisico;
+		$estElemRecursoFisico->EERF_DESCRIPCION = Input::get('EERF_DESCRIPCION');
+        $estElemRecursoFisico->EERF_CREADOPOR = auth()->user()->username;
         //Se guarda modelo
-		$sitRecursoFisico->save();
+		$estElemRecursoFisico->save();
 
 		// redirecciona al index de controlador
-		Session::flash('message', 'Situación Recurso Físico '.$sitRecursoFisico->SIRF_ID.' creado exitosamente!');
-		return redirect()->to('situacionrecursofisico');
+		Session::flash('message', 'Estado para Elemento Recurso Físico '.$estElemRecursoFisico->EERF_ID.' creado exitosamente!');
+		return redirect()->to('estadoelementorecursofisico');
 	}
 
 
 	/**
 	 * Muestra información de un registro.
 	 *
-	 * @param  int  $SIRF_ID
+	 * @param  int  $EERF_ID
 	 * @return Response
 	 */
-	public function show($SIRF_ID)
+	public function show($EERF_ID)
 	{
 		// Se obtiene el registro
-		$sitRecursoFisico = SituacionRecursoFisico::findOrFail($SIRF_ID);
+		$estElemRecursoFisico = EstadoElementoRecursoFisico::findOrFail($EERF_ID);
 
 		// Muestra la vista y pasa el registro
-		return view('situacionrecursofisico/show', compact('sitRecursoFisico'));
+		return view('estadoelementorecursofisico/show', compact('estElemRecursoFisico'));
 	}
 
 
 	/**
 	 * Muestra el formulario para editar un registro en particular.
 	 *
-	 * @param  int  $SIRF_ID
+	 * @param  int  $EERF_ID
 	 * @return Response
 	 */
-	public function edit($SIRF_ID)
+	public function edit($EERF_ID)
 	{
 		// Se obtiene el registro
-		$sitRecursoFisico = SituacionRecursoFisico::findOrFail($SIRF_ID);
+		$estElemRecursoFisico = EstadoElementoRecursoFisico::findOrFail($EERF_ID);
 
 		// Muestra el formulario de edición y pasa el registro a editar
-		return view('situacionrecursofisico/edit', compact('sitRecursoFisico'));
+		return view('estadoelementorecursofisico/edit', compact('estElemRecursoFisico'));
 	}
 
 
 	/**
 	 * Actualiza un registro en la base de datos.
 	 *
-	 * @param  int  $SIRF_ID
+	 * @param  int  $EERF_ID
 	 * @return Response
 	 */
-	public function update($SIRF_ID)
+	public function update($EERF_ID)
 	{
 		//Validación de datos
 		$this->validate(request(), [
-			'SIRF_DESCRIPCION' => ['required', 'max:300'],
+			'EERF_DESCRIPCION' => ['required', 'max:300'],
 		]);
 
 		// Se obtiene el registro
-		$sitRecursoFisico = SituacionRecursoFisico::findOrFail($SIRF_ID);
+		$estElemRecursoFisico = EstadoElementoRecursoFisico::findOrFail($EERF_ID);
 
-		$sitRecursoFisico->SIRF_DESCRIPCION = Input::get('SIRF_DESCRIPCION');
-        $sitRecursoFisico->SIRF_MODIFICADOPOR = auth()->user()->username;
+		$estElemRecursoFisico->EERF_DESCRIPCION = Input::get('EERF_DESCRIPCION');
+        $estElemRecursoFisico->EERF_MODIFICADOPOR = auth()->user()->username;
         //Se guarda modelo
-		$sitRecursoFisico->save();
+		$estElemRecursoFisico->save();
 
 		// redirecciona al index de controlador
-		Session::flash('message', 'Situación Recurso Físico '.$sitRecursoFisico->SIRF_ID.' modificado exitosamente!');
-		return redirect()->to('situacionrecursofisico');
+		Session::flash('message', 'Estado para Elemento Recurso Físico '.$estElemRecursoFisico->EERF_ID.' modificado exitosamente!');
+		return redirect()->to('estadoelementorecursofisico');
 	}
 
 	/**
 	 * Elimina un registro de la base de datos.
 	 *
-	 * @param  int  $SIRF_ID
+	 * @param  int  $EERF_ID
 	 * @return Response
 	 */
-	public function destroy($SIRF_ID, $showMsg=True)
+	public function destroy($EERF_ID, $showMsg=True)
 	{
-		$sitRecursoFisico = SituacionRecursoFisico::findOrFail($SIRF_ID);
+		$estElemRecursoFisico = EstadoElementoRecursoFisico::findOrFail($EERF_ID);
 
 		// delete
-        $sitRecursoFisico->SIRF_ELIMINADOPOR = auth()->user()->username;
-		$sitRecursoFisico->save();
-		$sitRecursoFisico->delete();
+        $estElemRecursoFisico->EERF_ELIMINADOPOR = auth()->user()->username;
+		$estElemRecursoFisico->save();
+		$estElemRecursoFisico->delete();
 
 		// redirecciona al index de controlador
 		if($showMsg){
-			Session::flash('message', 'Situación Recurso Físico '.$sitRecursoFisico->SIRF_ID.' eliminado exitosamente!');
-			return redirect()->to('situacionrecursofisico');
+			Session::flash('message', 'Estado para Elemento Recurso Físico '.$estElemRecursoFisico->EERF_ID.' eliminado exitosamente!');
+			return redirect()->to('estadoelementorecursofisico');
 		}
 	}
 

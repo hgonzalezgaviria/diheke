@@ -43,8 +43,11 @@ Route::resource('tipoestados', 'TipoestadosController');
 //estados
 Route::resource('estados', 'EstadosController');
 
-//estados
+//Situación Recursos Físicos
 Route::resource('situacionrecursofisico', 'SituacionRecursoFisicoController');
+
+//Estados elemento recurso físico
+Route::resource('estadoelementorecursofisico', 'EstadoElementoRecursoFisicoController');
 
 
 

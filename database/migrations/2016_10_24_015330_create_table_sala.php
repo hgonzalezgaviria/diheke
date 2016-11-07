@@ -13,7 +13,7 @@ class CreateTableSala extends Migration
     public function up()
     {
         //
-   Schema::create('salas', function (Blueprint $table) {
+   Schema::create('SALAS', function (Blueprint $table) {
 
             $table->increments('id');
             $table->string('descripcion', 300);
@@ -25,12 +25,12 @@ class CreateTableSala extends Migration
             $table->integer('id_sede')->unsigned(); 
 
             $table->foreign('id_estado')
-                  ->references('id')->on('estados')
+                  ->references('id')->on('ESTADOS')
                   ->onDelete('cascade');
 
 
             $table->foreign('id_sede')
-                  ->references('id')->on('sedes')
+                  ->references('id')->on('SEDES')
                   ->onDelete('cascade');
 
             $table->timestamps();
@@ -46,6 +46,6 @@ class CreateTableSala extends Migration
     public function down()
     {
         //
-        Schema::drop('salas');
+        Schema::drop('SALAS');
     }
 }

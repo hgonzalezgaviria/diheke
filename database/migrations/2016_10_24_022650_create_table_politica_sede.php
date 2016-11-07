@@ -13,17 +13,17 @@ class CreateTablePoliticaSede extends Migration
      public function up()
     {
         //
-        Schema::create('politicasedes', function (Blueprint $table) {
+        Schema::create('POLITICASEDES', function (Blueprint $table) {
          $table->increments('id');
          $table->integer('id_politica')->unsigned();
          $table->integer('id_sede')->unsigned();
 
          $table->foreign('id_politica')
-                  ->references('id')->on('politicas')
+                  ->references('id')->on('POLITICAS')
                   ->onDelete('cascade');
 
             $table->foreign('id_sede')
-                  ->references('id')->on('sedes')
+                  ->references('id')->on('SEDES')
                   ->onDelete('cascade');
 
          $table->timestamps();
@@ -39,6 +39,6 @@ class CreateTablePoliticaSede extends Migration
     public function down()
     {
         //
-         Schema::drop('politicasedes');
+         Schema::drop('POLITICASEDES');
     }
 }
