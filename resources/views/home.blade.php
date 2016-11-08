@@ -10,7 +10,7 @@
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-default">
-				<div class="panel-heading">Eva360</div>
+				<div class="panel-heading">Sistema de Reservas de Salas y Equipos - UNIAJC</div>
 
 				<div class="panel-body">
 					¡Bienvenido!<br>

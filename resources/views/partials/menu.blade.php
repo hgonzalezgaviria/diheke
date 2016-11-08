@@ -57,6 +57,8 @@
 
 							<li role="separator" class="divider"></li>
 
+							<li><a href="{{ url('/reservas/show') }}"><i class="fa fa-btn fa-key"></i> Reservas </a></li>
+
 						</ul>
 					</li>
 						</ul>
