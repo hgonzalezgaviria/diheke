@@ -68,23 +68,7 @@ Route::resource('localidad', 'LocalidadController');
 Route::resource('espaciofisico', 'EspacioFisicoController');
 
 
-
-/*
-//Pregunta
-Route::resource('encuestas/{id_encuesta}/pregs', 'PreguntaController');
-
-//Respuesta
-Route::resource('encuestas/{id_encuesta}/resps', 'RespuestaController',
-    ['parameters' => ['id_encuesta' => 'id_encuesta']]);
-
-//Menu
-Route::get('menu', 'MenuController@index');
-
-//https://laravel.com/docs/5.3/routing#route-group-prefixes
-
-Route::group(['prefix' => 'admin'], function () {
-    Route::get('users', function ()    {
-        // Matches The "/admin/users" URL
-    });
-});
-*/
+Route::get('cargaEventos{id?}','ReservasController@index');
+Route::post('reservas/guardaEventos', array('as' => 'guardaEventos','uses' => 'ReservasController@create'));
+Route::post('actualizaEventos','ReservasController@update');
+Route::post('eliminaEvento','ReservasController@delete');

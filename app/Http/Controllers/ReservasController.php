@@ -5,6 +5,7 @@ namespace reservas\Http\Controllers;
 use Illuminate\Http\Request;
 
 use reservas\Http\Requests;
+use reservas\Reserva;
 
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
@@ -38,6 +39,11 @@ class ReservasController extends Controller
             }
         }
     }
+
+    public function show()
+    {
+        return view('reservas/index');
+    }
    
     
     /**
@@ -47,127 +53,82 @@ class ReservasController extends Controller
      */
     public function index()
     {
-        //Se genera paginación cada $cantPages registros.
-        //$cantPages = 10;
-        //Se obtienen todas los contratos.
-        //$contratos = Contrato::paginate($cantPages);
-
-
-        //Se carga la vista y se pasan los registros. ->paginate($cantPages)
-        return view('reservas/index');
+        $data = array(); //declaramos un array principal que va contener los datos
+        $id = Reserva::all()->lists('id'); //listamos todos los id de los eventos
+        $titulo = Reserva::all()->lists('titulo'); //lo mismo para lugar y fecha
+        $fechaini = Reserva::all()->lists('fechaini');
+        $fechafin = Reserva::all()->lists('fechafin');
+        $allDay = Reserva::all()->lists('todoeldia');
+        $background = Reserva::all()->lists('color');
+        $count = count($id); //contamos los ids obtenidos para saber el numero exacto de eventos
+ 
+        //hacemos un ciclo para anidar los valores obtenidos a nuestro array principal $data
+        for($i=0;$i<$count;$i++){
+            $data[$i] = array(
+                "title"=>$titulo[$i], //obligatoriamente "title", "start" y "url" son campos requeridos
+                "start"=>$fechaini[$i], //por el plugin asi que asignamos a cada uno el valor correspondiente
+                "end"=>$fechafin[$i],
+                "allDay"=>$allDay[$i],
+                "backgroundColor"=>$background[$i],
+                //"borderColor"=>$borde[$i],
+                "id"=>$id[$i]
+                //"url"=>"cargaEventos".$id[$i]
+                //en el campo "url" concatenamos el el URL con el id del evento para luego
+                //en el evento onclick de JS hacer referencia a este y usar el método show
+                //para mostrar los datos completos de un evento
+            );
+        }
+ 
+        json_encode($data); //convertimos el array principal $data a un objeto Json 
+       return $data; //para luego retornarlo y estar listo para consumirlo
     }
 
-    /**
-     * Muestra el formulario para crear un nuevo registro.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        // Carga el formulario para crear un nuevo registro (views/create.blade.php)
-        return view('contratos/create');
-    }
+    public function create(){
+        //Valores recibidos via ajax
+        $title = $_POST['title'];
+        $start = $_POST['start'];
+        $back = $_POST['background'];
 
-    /**
-     * Guarda el registro nuevo en la base de datos.
-     *
-     * @return Response
-     */
-    public function store()
-    {
-        //Validación de datos
-        $this->validate(request(), [
-                'nombres' => ['required', 'max:50']
-            ]);
-        //Guarda todos los datos recibidos del formulario
-        $contrato = request()->except(['_token']);
+        //Insertando evento a base de datos
+        $evento=new Reserva;
+        $evento->fechaini=$start;
+        //$evento->fechafin=$end;
+        $evento->todoeldia=true;
+        $evento->color=$back;
+        $evento->titulo=$title;
 
+        $evento->save();
+   }
 
-        Contrato::create($contrato);
+   public function update(){
+        //Valores recibidos via ajax
+        $id = $_POST['id'];
+        $title = $_POST['title'];
+        $start = $_POST['start'];
+        $end = $_POST['end'];
+        $allDay = $_POST['allday'];
+        $back = $_POST['background'];
 
-        //Permite seleccionar los datos que se desean guardar.
-        /*
-        $contrato = new Contrato;
-        $contrato->titulo = Input::get('titulo');
-        $contrato->status = Contrato::NUEVA;
-        $contrato->created_by = auth()->user()->username;
-        $contrato->save();
-		*/
+        $evento=Reserva::find($id);
+        if($end=='NULL'){
+            $evento->fechafin=NULL;
+        }else{
+            $evento->fechafin=$end;
+        }
+        $evento->fechaini=$start;
+        $evento->todoeldia=$allDay;
+        $evento->color=$back;
+        $evento->titulo=$title;
+        //$evento->fechafin=$end;
 
-        // redirecciona al index de controlador
-        Session::flash('message', '¡Contrato creado exitosamente!');
-        return redirect()->to('contratos');
-    }
+        $evento->save();
+   }
 
+   public function delete(){
+        //Valor id recibidos via ajax
+        $id = $_POST['id'];
 
-    /**
-     * Muestra información de un registro.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        // Se obtiene el registro
-        $contrato = Contrato::find($id);
-        // Muestra la vista y pasa el registro
-        return view('contratos/show')->with('contrato', $contrato);
-    }
-
-    /**
-     * Muestra el formulario para editar un registro en particular.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        // Se obtiene el registro
-        $contrato = Contrato::find($id);
-
-        // Muestra el formulario de edición y pasa el registro a editar
-        return view('encuestas/edit')->with('encuesta', $contrato);
-    }
-
-    /**
-     * Actualiza un registro en la base de datos.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function update($id)
-    {
-        //Validación de datos
-        $this->validate(request(), [
-            'titulo' => ['required', 'max:50']
-        ]);
-
-        // Se obtiene el registro
-        $contrato = Contrato::find($id);
-        $contrato->titulo = Input::get('titulo');
-        $contrato->edited_by = auth()->user()->username;
-        $contrato->save();
-
-        // redirecciona al index de controlador
-        Session::flash('message', '¡Contrato actualizada exitosamente!');
-        return redirect()->to('encuestas/'.$id);
-    }
-
-    /**
-     * Elimina un registro de la base de datos.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        // delete
-        $contrato = Contrato::find($id);
-        $contrato->delete();
-
-        // redirecciona al index de controlador
-        Session::flash('message', '¡Contrato '.$id.' borrado!');
-        return redirect()->to('contratos');
-    }
+        Reserva::destroy($id);
+   }
 
 }

@@ -2,76 +2,230 @@
 @section('title', '/ Crear Reserva')
 @section('scripts')
     <script type="text/javascript">
-    	$(document).ready(function() {
 
-		    // page is now ready, initialize the calendar...
+  $(function () {
+    /* initialize the external events
+     -----------------------------------------------------------------*/
+    function ini_events(ele) {
+      ele.each(function () {
+        // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+        // it doesn't need to have a start or end
+        var eventObject = {
+          title: $.trim($(this).text()) // use the element's text as the event title
+        };
 
-		   $('#calendar').fullCalendar({
-		        // put your options and callbacks here
-		        locale: 'es',
-		        header: {
-			        center: 'month, day, week' // buttons for switching between views
-			    },
-			    views: {
-			        day: {
-			        	minTime: '09:00:00',
-			        	maxTime: '22:00:00',
-			            type: 'agenda',
-			            buttonText: 'Día'
-			        },
-			        week: {
-			        	type: 'basicWeek',
-			        	buttonText: 'Semana'
-			        },
-			        
-			    },
+        // store the Event Object in the DOM element so we can get to it later
+        $(this).data('eventObject', eventObject);
 
+        // make the event draggable using jQuery UI
+        
+        
+        $(this).draggable({
+          zIndex: 1070,
+          revert: true, // will cause the event to go back to its
+          revertDuration: 0  //  original position after the drag
+        });
+        
+       
 
+      });
+    }
 
+    ini_events($('#external-events div.external-event'));
 
+    /* initialize the calendar
+     -----------------------------------------------------------------*/
+    //Date for the calendar events (dummy data)
+    var date = new Date();
+    var d = date.getDate(),
+        m = date.getMonth(),
+        y = date.getFullYear();
+  //while(reload==false){
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      },
+      buttonText: {
+        today: 'hoy',
+        month: 'mes',
+        week: 'semana',
+        day: 'dia'
+      },
 
-		    });
+      events: { url:"../cargaEventos"},
 
-		    $( "#boton" ).click(function() {
-			   var calendar = $('#calendar').fullCalendar('getCalendar');
-			   var m1 = calendar.moment('2016-11-09');
-			   var m2 = calendar.moment('2016-11-10');
-			   console.log(m1);
-			   console.log(m2);
-			});
-		    
+      editable: true,
+      droppable: true, // this allows things to be dropped onto the calendar !!!
 
-		});
+      drop: function (date, allDay) { // this function is called when something is dropped
+        // retrieve the dropped element's stored Event Object
+        var originalEventObject = $(this).data('eventObject');
+        // we need to copy it, so that multiple events don't have a reference to the same object
+        var copiedEventObject = $.extend({}, originalEventObject);
+        allDay=true;
+        // assign it the date that was reported
+        copiedEventObject.start = date;
+        copiedEventObject.allDay = allDay;
+        copiedEventObject.backgroundColor = $(this).css("background-color");
+        copiedEventObject.borderColor = $(this).css("border-color");
+
+        // render the event on the calendar
+        //$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+        // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+        // is the "remove after drop" checkbox checked?
+        if ($('#drop-remove').is(':checked')) {
+          // if so, remove the element from the "Draggable Events" list
+          $(this).remove();
+        }
+        //Guardamos el evento creado en base de datos
+        var title=copiedEventObject.title;
+        var start=copiedEventObject.start.format("YYYY-MM-DD HH:mm");
+        var back=copiedEventObject.backgroundColor;
+
+        crsfToken = document.getElementsByName("_token")[0].value;
+
+        $.ajax({
+             url: 'guardaEventos',
+             data: 'title='+ title+'&start='+ start+'&allday='+allDay+'&background='+back,
+             type: "POST",
+             headers: {
+                    "X-CSRF-TOKEN": crsfToken
+                },
+              success: function(events) {
+                console.log('Evento creado');      
+                $('#calendar').fullCalendar('refetchEvents' );
+              },
+              error: function(json){
+                console.log("Error al crear evento");
+              }        
+        });        
+      }      
+    });
+
+    /* AGREGANDO EVENTOS AL PANEL */
+    var currColor = "#3c8dbc"; //Red by default
+    //Color chooser button
+    var colorChooser = $("#color-chooser-btn");
+    $("#color-chooser > li > a").click(function (e) {
+      e.preventDefault();
+      //Save color
+      currColor = $(this).css("color");
+      //Add color effect to button
+
+      //$('#add-new-event').css({"background-color": currColor, "border-color": currColor});
+    });
+    $("#add-new-event").click(function (e) {
+      e.preventDefault();
+      //Get value and make sure it is not null
+      var val = $("#new-event").val();
+      if (val.length == 0) {
+        return;
+      }
+
+      //Create events
+      var event = $("<div />");
+      event.css({"background-color": currColor, "border-color": currColor, "color": "#fff"}).addClass("external-event");
+      event.html(val);
+      $('#external-events').prepend(event);
+
+      //Add draggable funtionality
+      ini_events(event);
+
+      //Remove event from text input
+      $("#new-event").val("");
+    });
+  });
     </script>
 @endsection
 
 @section('content')
 
-	<h1 class="page-header">Nueva Reserva</h1>
+  <h1 class="page-header">Nueva Reserva</h1>
 
-	@include('partials/errors')
+  @include('partials/errors')
 
-	<!-- if there are creation errors, they will show here -->
-	{{ Html::ul($errors->all() )}}
+  <!-- if there are creation errors, they will show here -->
+  {{ Html::ul($errors->all() )}}
 
-		{{ Form::open(array('url' => 'contratos', 'class' => 'form-horizontal')) }}
+   <div class="panel panel-default">
+    <!-- Content Header (Page header) -->
+    <div class="panel-heading"><h2> Calendario de Reservas   </h2>  </div>
+    <div class="panel-body">
+    <!-- Main content -->
 
-	  	<div id="calendar" class="form-group">
-			
-		</div>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <h4 class="box-title">Reservas</h4>
+            </div>
+            <div class="box-body">
+              <!-- the events -->
+              <div id="external-events">
+                <div class="external-event bg-primary">Reserva 1</div>
+                <div class="external-event bg-warning">Reserva 2</div>
+                <div class="external-event bg-danger">Reserva 3</div>
+                <div class="external-event bg-info">Reserva 4</div>
+                <div class="checkbox">
+                  <label for="drop-remove">
+                    <input type="checkbox" id="drop-remove">
+                    Eliminar al asignar
+                  </label>
+                </div>
+              </div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /. box -->
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <h3 class="box-title">Crear Reserva</h3>
+            </div>
+            <div class="box-body">
+              <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
+                <!--<button type="button" id="color-chooser-btn" class="btn btn-info btn-block dropdown-toggle" data-toggle="dropdown">Color <span class="caret"></span></button>-->
+                <ul class="list-inline" id="color-chooser">
+                  <li><a class="text-success" href="#"><i class="fa fa-circle fa-3x"></i></a></li>
+                  <li><a class="text-primary" href="#"><i class="fa fa-circle fa-3x"></i></a></li>
+                  <li><a class="text-danger" href="#"><i class="fa fa-circle fa-3x"></i></a></li>
+                </ul>
+              </div>
+              <!-- /btn-group -->
+              <div class="input-group">
+                <input id="new-event" type="text" class="form-control" placeholder="Titulo de evento">
 
-		<div class="form-group">
-			<input type="button" value="probar" id="boton">
-		</div>
+                <div class="input-group-btn">
+                  <button id="add-new-event" type="button" class="btn btn-primary btn-flat">Agregar</button>
+                </div>
+                <!-- /btn-group -->
+              </div><br/><br/>
+              <!-- /input-group -->
+              {!! Form::open(['route' => ['guardaEventos'], 'method' => 'POST', 'id' =>'form-calendario']) !!}
+              {!! Form::close() !!}
+            </div>
+          </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-md-9">
+          <div class="box box-primary">
+            <div class="box-body no-padding">
+              <!-- THE CALENDAR -->
+              <div id="calendar"></div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /. box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    <!-- /.content -->
+   </div><!-- /.panel-body -->
+  </div><!-- /.panel -->
+</div>
+</div>
 
-		<div class="text-right">
-			{{ Form::button('<i class="fa fa-exclamation" aria-hidden="true"></i> Reset', array('class'=>'btn btn-warning', 'type'=>'reset')) }}
-			<a class="btn btn-warning" role="button" href="{{ URL::to('contratos') }}">
-				<i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar
-			</a>
-			{{ Form::button('<i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar', array('class'=>'btn btn-primary', 'type'=>'submit')) }}
-		</div>
-
-		
-		{{ Form::close() }}
 @endsection
+
