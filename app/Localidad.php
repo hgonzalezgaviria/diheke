@@ -28,5 +28,12 @@ class Localidad extends Model
 		$foreingKey = 'TIPO_ID';
 		return $this->belongsTo(TipoPosesion::class, $foreingKey);
 	}
+
+	//Una Localidad tiene muchos EspacioFisico
+	public function localidades()
+	{
+		$foreingKey = 'LOCA_ID';
+		return $this->hasMany(EspacioFisico::class, $foreingKey);
+	}
 	
 }

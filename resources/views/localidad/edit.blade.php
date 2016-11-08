@@ -19,7 +19,7 @@
 		</div>
 
 	  	<div class="form-group">
-			{{ Form::label('LOCA_AREA', 'Descripción') }} 
+			{{ Form::label('LOCA_AREA', 'Área (Mts2 o Hectareas)') }} 
 			{{ Form::text('LOCA_AREA', old('LOCA_AREA'), array('class' => 'form-control', 'max' => '300', 'required')) }}
 		</div>
 		

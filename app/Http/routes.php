@@ -64,6 +64,9 @@ Route::resource('tipoposesion', 'TipoPosesionController');
 //Localidades
 Route::resource('localidad', 'LocalidadController');
 
+//Espacio Físico
+Route::resource('espaciofisico', 'EspacioFisicoController');
+
 
 
 /*
