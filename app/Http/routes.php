@@ -71,6 +71,12 @@ Route::resource('tiporecursofisico', 'TipoRecursoFisicoController');
 //Recurso Físico
 Route::resource('recursofisico', 'RecursoFisicoController');
 
+//Tipos Unidades
+Route::resource('tipounidad', 'TipoUnidadController');
+
+//Recurso Físico
+Route::resource('unidad', 'UnidadController');
+
 
 Route::get('cargaEventos{id?}','ReservasController@index');
 Route::post('reservas/guardaEventos', array('as' => 'guardaEventos','uses' => 'ReservasController@create'));

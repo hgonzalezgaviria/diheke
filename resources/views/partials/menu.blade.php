@@ -61,6 +61,12 @@
 
 							<li role="separator" class="divider"></li>
 
+							<li><a href="{{ url('/tipounidad') }}"><i class="fa fa-btn fa-key"></i> Tipos de Unidades</a></li>
+
+							<li><a href="{{ url('/unidad') }}"><i class="fa fa-btn fa-key"></i> Unidades </a></li>
+
+							<li role="separator" class="divider"></li>
+
 							<li><a href="{{ url('/reservas/show') }}"><i class="fa fa-btn fa-key"></i> Reservas </a></li>
 
 						</ul>
