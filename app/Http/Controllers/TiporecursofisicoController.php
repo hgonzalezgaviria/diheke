@@ -42,9 +42,9 @@ class TipoRecursoFisicoController extends Controller
     public function index()
     {
         //Se obtienen todos los registros.
-        $tipoRecursosFisicos = TipoRecursoFisico::all();
+        $tiposRecursosFisicos = TipoRecursoFisico::all();
         //Se carga la vista y se pasan los registros
-        return view('tiporecursofisico/index', compact('tipoRecursosFisicos'));
+        return view('tiporecursofisico/index', compact('tiposRecursosFisicos'));
     }
 
     /**
@@ -66,18 +66,18 @@ class TipoRecursoFisicoController extends Controller
     {
         //Validación de datos
         $this->validate(request(), [
-            'EERF_DESCRIPCION' => ['required', 'max:300'],
+            'TIRF_DESCRIPCION' => ['required', 'max:300'],
         ]);
 
         //Permite seleccionar los datos que se desean guardar.
         $tipoRecursoFisico = new TipoRecursoFisico;
-        $tipoRecursoFisico->EERF_DESCRIPCION = Input::get('EERF_DESCRIPCION');
-        $tipoRecursoFisico->EERF_CREADOPOR = auth()->user()->username;
+        $tipoRecursoFisico->TIRF_DESCRIPCION = Input::get('TIRF_DESCRIPCION');
+        $tipoRecursoFisico->TIRF_CREADOPOR = auth()->user()->username;
         //Se guarda modelo
         $tipoRecursoFisico->save();
 
         // redirecciona al index de controlador
-        Session::flash('message', 'Tipo de Recurso Físico '.$tipoRecursoFisico->EERF_ID.' creado exitosamente!');
+        Session::flash('message', 'Tipo de Recurso Físico '.$tipoRecursoFisico->TIRF_ID.' creado exitosamente!');
         return redirect()->to('tiporecursofisico');
     }
 
@@ -85,13 +85,13 @@ class TipoRecursoFisicoController extends Controller
     /**
      * Muestra información de un registro.
      *
-     * @param  int  $EERF_ID
+     * @param  int  $TIRF_ID
      * @return Response
      */
-    public function show($EERF_ID)
+    public function show($TIRF_ID)
     {
         // Se obtiene el registro
-        $tipoRecursoFisico = TipoRecursoFisico::findOrFail($EERF_ID);
+        $tipoRecursoFisico = TipoRecursoFisico::findOrFail($TIRF_ID);
 
         // Muestra la vista y pasa el registro
         return view('tiporecursofisico/show', compact('tipoRecursoFisico'));
@@ -101,13 +101,13 @@ class TipoRecursoFisicoController extends Controller
     /**
      * Muestra el formulario para editar un registro en particular.
      *
-     * @param  int  $EERF_ID
+     * @param  int  $TIRF_ID
      * @return Response
      */
-    public function edit($EERF_ID)
+    public function edit($TIRF_ID)
     {
         // Se obtiene el registro
-        $tipoRecursoFisico = TipoRecursoFisico::findOrFail($EERF_ID);
+        $tipoRecursoFisico = TipoRecursoFisico::findOrFail($TIRF_ID);
 
         // Muestra el formulario de edición y pasa el registro a editar
         return view('tiporecursofisico/edit', compact('tipoRecursoFisico'));
@@ -117,42 +117,42 @@ class TipoRecursoFisicoController extends Controller
     /**
      * Actualiza un registro en la base de datos.
      *
-     * @param  int  $EERF_ID
+     * @param  int  $TIRF_ID
      * @return Response
      */
-    public function update($EERF_ID)
+    public function update($TIRF_ID)
     {
         //Validación de datos
         $this->validate(request(), [
-            'EERF_DESCRIPCION' => ['required', 'max:300'],
+            'TIRF_DESCRIPCION' => ['required', 'max:300'],
         ]);
 
         // Se obtiene el registro
-        $tipoRecursoFisico = TipoRecursoFisico::findOrFail($EERF_ID);
+        $tipoRecursoFisico = TipoRecursoFisico::findOrFail($TIRF_ID);
 
-        $tipoRecursoFisico->EERF_DESCRIPCION = Input::get('EERF_DESCRIPCION');
-        $tipoRecursoFisico->EERF_MODIFICADOPOR = auth()->user()->username;
+        $tipoRecursoFisico->TIRF_DESCRIPCION = Input::get('TIRF_DESCRIPCION');
+        $tipoRecursoFisico->TIRF_MODIFICADOPOR = auth()->user()->username;
         //Se guarda modelo
         $tipoRecursoFisico->save();
 
         // redirecciona al index de controlador
-        Session::flash('message', 'Tipo de Recurso Físico '.$tipoRecursoFisico->EERF_ID.' modificado exitosamente!');
+        Session::flash('message', 'Tipo de Recurso Físico '.$tipoRecursoFisico->TIRF_ID.' modificado exitosamente!');
         return redirect()->to('tiporecursofisico');
     }
 
     /**
      * Elimina un registro de la base de datos.
      *
-     * @param  int  $EERF_ID
+     * @param  int  $TIRF_ID
      * @return Response
      */
-    public function destroy($EERF_ID, $showMsg=True)
+    public function destroy($TIRF_ID, $showMsg=True)
     {
-        $tipoRecursoFisico = TipoRecursoFisico::findOrFail($EERF_ID);
+        $tipoRecursoFisico = TipoRecursoFisico::findOrFail($TIRF_ID);
 
         try {
             // delete
-            $tipoRecursoFisico->EERF_ELIMINADOPOR = auth()->user()->username;
+            $tipoRecursoFisico->TIRF_ELIMINADOPOR = auth()->user()->username;
             $tipoRecursoFisico->save();
             $tipoRecursoFisico->delete();
         }
@@ -164,7 +164,7 @@ class TipoRecursoFisicoController extends Controller
 
         // redirecciona al index de controlador
         if($showMsg){
-            Session::flash('message', 'Tipo de Recurso Físico '.$tipoRecursoFisico->EERF_ID.' eliminado exitosamente!');
+            Session::flash('message', 'Tipo de Recurso Físico '.$tipoRecursoFisico->TIRF_ID.' eliminado exitosamente!');
             return redirect()->to('tiporecursofisico');
         }
     }

@@ -42,5 +42,12 @@ class EspacioFisico extends Model
 		$foreingKey = 'LOCA_ID';
 		return $this->belongsTo(Localidad::class, $foreingKey);
 	}
+
+	//Un EspacioFisico tiene muchos RecursoFisico
+	public function recursosFisicos()
+	{
+		$foreingKey = 'ESFI_ID';
+		return $this->hasMany(RecursoFisico::class, $foreingKey);
+	}
 	
 }

@@ -20,7 +20,7 @@ class CreateTableReservas extends Migration
             $table->datetime('fechaini')
                 ->comment = "fecha inicio de la reserva";
 
-            $table->datetime('fechafin')
+            $table->datetime('fechafin')->nullable()
                 ->comment = "fecha fin de la reserva";
 
             $table->boolean('todoeldia')->nullable()

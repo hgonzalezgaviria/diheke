@@ -22,4 +22,12 @@ class SituacionRecursoFisico extends Model
 		'SIRF_DESCRIPCION', 'SIRF_FECHACAMBIO', 'SIRF_REGISTRADOPOR'
 	];
 
+	//Una SituacionRecursoFisico tiene muchos RecursoFisico
+	public function recursosFisicos()
+	{
+		$foreingKey = 'SIRF_ID';
+		return $this->hasMany(RecursoFisico::class, $foreingKey);
+	}
+
+
 }

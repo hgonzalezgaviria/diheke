@@ -73,11 +73,7 @@ class TipoPosesionController extends Controller
 		$tipoPosesion = new TipoPosesion;
 		$tipoPosesion->TIPO_DESCRIPCION = Input::get('TIPO_DESCRIPCION');
 
-		if(null !== Input::get('TIPO_CENTRODEPRACTICA')){
-			$tipoPosesion->TIPO_CENTRODEPRACTICA = true;
-		} else {
-			$tipoPosesion->TIPO_CENTRODEPRACTICA = false;
-		}
+		$tipoPosesion->TIPO_CENTRODEPRACTICA =  (Input::get('TIPO_CENTRODEPRACTICA')) ? true : false;
 
         $tipoPosesion->TIPO_CREADOPOR = auth()->user()->username;
         //Se guarda modelo
@@ -139,11 +135,7 @@ class TipoPosesionController extends Controller
 
 		$tipoPosesion->TIPO_DESCRIPCION = Input::get('TIPO_DESCRIPCION');
 
-		if(null !== Input::get('TIPO_CENTRODEPRACTICA')){
-			$tipoPosesion->TIPO_CENTRODEPRACTICA = true;
-		} else {
-			$tipoPosesion->TIPO_CENTRODEPRACTICA = false;
-		}
+		$tipoPosesion->TIPO_CENTRODEPRACTICA =  (Input::get('TIPO_CENTRODEPRACTICA')) ? true : false;
 
         $tipoPosesion->TIPO_MODIFICADOPOR = auth()->user()->username;
         //Se guarda modelo

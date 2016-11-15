@@ -34,8 +34,6 @@ Route::resource('contratos', 'ContratosController');
 //contratos
 Route::resource('reservas', 'ReservasController');
 
-//contratos
-Route::resource('tiporecursofisico', 'TiporecursofisicoController');
 
 //recursos
 Route::resource('recursos', 'RecursosController');
@@ -66,6 +64,12 @@ Route::resource('localidad', 'LocalidadController');
 
 //Espacio Físico
 Route::resource('espaciofisico', 'EspacioFisicoController');
+
+//Tipos Recurso Físico
+Route::resource('tiporecursofisico', 'TipoRecursoFisicoController');
+
+//Recurso Físico
+Route::resource('recursofisico', 'RecursoFisicoController');
 
 
 Route::get('cargaEventos{id?}','ReservasController@index');

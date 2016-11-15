@@ -9,16 +9,16 @@
 	
 		{{ Form::open(array('url' => 'tipoposesion', 'class' => 'form-horizontal')) }}
 
-	  	<div class="form-group">
+		<div class="form-group">
 			{{ Form::label('TIPO_DESCRIPCION', 'Descripción') }} 
 			{{ Form::text('TIPO_DESCRIPCION', old('TIPO_DESCRIPCION'), array('class' => 'form-control', 'max' => '300', 'required')) }}
 		</div>
 
 		<div class="input-group col-lg-4">
 			<span class="input-group-addon">Centro de práctica: </span>
-	        <span class="input-group-addon">
-	        	{{ Form::checkbox('TIPO_CENTRODEPRACTICA', true,old('TIPO_CENTRODEPRACTICA'), array('class' => 'form-control')) }}
-	        </span>
+			<span class="input-group-addon">
+				{{ Form::checkbox('TIPO_CENTRODEPRACTICA', true,old('TIPO_CENTRODEPRACTICA'), array('class' => 'form-control')) }}
+			</span>
 		</div>
 
 		<!-- botones -->

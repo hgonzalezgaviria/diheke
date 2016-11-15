@@ -28,4 +28,12 @@ class TipoPosesion extends Model
 		$foreingKey = 'TIPO_ID';
 		return $this->hasMany(Localidad::class, $foreingKey);
 	}
+
+	//Un TipoPosesion tiene muchos RecursoFisico
+	public function recursosFisicos()
+	{
+		$foreingKey = 'TIPO_ID';
+		return $this->hasMany(RecursoFisico::class, $foreingKey);
+	}
+
 }

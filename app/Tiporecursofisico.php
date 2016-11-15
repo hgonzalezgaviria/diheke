@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class TipoRecursoFisico extends Model
 {
 	//Nombre de la tabla en la base de datos
-	protected $table = 'ESTADOELEMENTORECURSOFISICO';
+	protected $table = 'TIPORECURSOFISICO';
     protected $primaryKey = 'TIRF_ID';
 
 	//Traza: Nombre de campos en la tabla para auditoría de cambios
@@ -28,4 +28,12 @@ class TipoRecursoFisico extends Model
 		$foreingKey = 'TIRF_ID';
 		return $this->hasMany(ElementoRecursoFisico::class, $foreingKey);
 	}
+
+	//Una TipoRecursoFisico tiene muchos RecursoFisico
+	public function recursosFisicos()
+	{
+		$foreingKey = 'TIRF_ID';
+		return $this->hasMany(RecursoFisico::class, $foreingKey);
+	}
+
 }
