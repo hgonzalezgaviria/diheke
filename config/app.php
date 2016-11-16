@@ -155,6 +155,7 @@ return [
         reservas\Providers\AuthServiceProvider::class,
         reservas\Providers\EventServiceProvider::class,
         reservas\Providers\RouteServiceProvider::class,
+        MaddHatter\LaravelFullcalendar\ServiceProvider::class,
 
         //Add by DiegoCortes
         Styde\Html\HtmlServiceProvider::class,
@@ -205,6 +206,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
+
+        'Calendar' => MaddHatter\LaravelFullcalendar\Facades\Calendar::class,
 
     ],
 

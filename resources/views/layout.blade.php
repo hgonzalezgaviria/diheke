@@ -10,6 +10,8 @@
 		{!! Html::style('assets/css/font-awesome.min.css') !!}
 		{!! Html::style('assets/css/bootstrap-theme.min.css') !!}
 		{!! Html::style('assets/css/style.css') !!}
+
+		{!! Html::style('assets/css/bootstrap-datetimepicker.min.css') !!}
 		<style>
 			.page-header{
 				margin-top:10px;
@@ -42,6 +44,8 @@
 		{!! Html::script('assets/js/fullcalendar.js') !!}
 		{!! Html::script('assets/js/es.js') !!}
 		{!! Html::script('assets/js/bootstrap.min.js') !!}
+
+		{!! Html::script('assets/js/bootstrap-datetimepicker.js') !!}
 		@yield('scripts')
 	</body>
 </html>

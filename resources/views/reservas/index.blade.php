@@ -4,6 +4,62 @@
     <script type="text/javascript">
 
   $(function () {
+
+    $('#fechainicio').datetimepicker({
+          locale: 'es',
+          format: 'YYYY-MM-DD HH:mm:ss'          
+    });
+
+    $('#fechafin').datetimepicker({
+          locale: 'es',
+          format: 'YYYY-MM-DD HH:mm:ss'          
+    });
+
+    $('#probando').click(function() {
+
+
+        var title = 'PRUEBA';
+        var allDay = false;
+        var back = 'rgb(51, 122, 183)';
+        var fechaini = $('#fechainicio').data("DateTimePicker").date();
+        var fechafin = $('#fechafin').data("DateTimePicker").date();
+
+        //alert('prueba '+fechaini + "prueba2 "+fechafin);
+
+        //var fechainicio = moment(fechaini, 'YYYY-DD-MM HH:mm:ss').format('YYYY-DD-MM HH:mm:ss');
+        var fechainicio = moment(fechaini, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+
+
+        var fechafinal = moment(fechafin,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+
+        //var t = 'data' + 'title='+ title+'&start='+ fechainicio+'&allday='+allDay+'&background='+back+'&end='+fechafinal;
+        //var fechafinal = moment(fechafin.format('YYYY-MM-DD HH:mm:ss'));
+
+        //alert(t);
+
+        crsfToken = document.getElementsByName("_token")[0].value;
+
+
+        $.ajax({
+             url: 'guardaEventos',
+             data: 'title='+ title+'&start='+ fechainicio+'&allday='+allDay+'&background='+back+
+             '&end='+fechafinal,
+             type: "POST",
+             headers: {
+                    "X-CSRF-TOKEN": crsfToken
+                },
+              success: function(events) {
+                console.log('Evento creado');      
+                $('#calendar').fullCalendar('refetchEvents' );
+              },
+              error: function(json){
+                console.log("Error al crear evento");
+              }        
+        });
+ 
+        
+    });
+
     /* initialize the external events
      -----------------------------------------------------------------*/
     function ini_events(ele) {
@@ -36,10 +92,7 @@
     /* initialize the calendar
      -----------------------------------------------------------------*/
     //Date for the calendar events (dummy data)
-    var date = new Date();
-    var d = date.getDate(),
-        m = date.getMonth(),
-        y = date.getFullYear();
+
   //while(reload==false){
     $('#calendar').fullCalendar({
       header: {
@@ -64,9 +117,10 @@
         var originalEventObject = $(this).data('eventObject');
         // we need to copy it, so that multiple events don't have a reference to the same object
         var copiedEventObject = $.extend({}, originalEventObject);
-        allDay=true;
+        allDay=false;
         // assign it the date that was reported
         copiedEventObject.start = date;
+        copiedEventObject.end = date;
         copiedEventObject.allDay = allDay;
         copiedEventObject.backgroundColor = $(this).css("background-color");
         copiedEventObject.borderColor = $(this).css("border-color");
@@ -82,13 +136,30 @@
         //Guardamos el evento creado en base de datos
         var title=copiedEventObject.title;
         var start=copiedEventObject.start.format("YYYY-MM-DD HH:mm");
+        var end=copiedEventObject.end.format("YYYY-MM-DD HH:mm");
         var back=copiedEventObject.backgroundColor;
+
+        var fecha = new Date();
+
+        //var prueba = moment($('#fechainicio').val()).format("YYYY-MM-DD HH:mm:ss");
+
+        var fechita = $('#fechainicio').data("DateTimePicker").date();
+        var fechita2 = $('#fechafin').data("DateTimePicker").date();
+
+        var prueba = moment(fechita).format("YYYY-MM-DD HH:mm:ss");
+        var prueba2 = moment(fechita2).format("YYYY-MM-DD HH:mm:ss");
+        
+        //var prueba = "";
+
+
+        //alert('Start: '+start+' - End: '+end+ ' Prueba: '+prueba);
 
         crsfToken = document.getElementsByName("_token")[0].value;
 
         $.ajax({
              url: 'guardaEventos',
-             data: 'title='+ title+'&start='+ start+'&allday='+allDay+'&background='+back,
+             data: 'title='+ title+'&start='+ prueba+'&allday='+allDay+'&background='+back+
+             '&end='+prueba2,
              type: "POST",
              headers: {
                     "X-CSRF-TOKEN": crsfToken
@@ -100,7 +171,8 @@
               error: function(json){
                 console.log("Error al crear evento");
               }        
-        });        
+        });
+
       }      
     });
 
@@ -157,51 +229,47 @@
 
       <div class="row">
         <div class="col-md-3">
-          <div class="box box-solid">
-            <div class="box-header with-border">
-              <h4 class="box-title">Reservas</h4>
-            </div>
-            <div class="box-body">
-              <!-- the events -->
-              <div id="external-events">
-                <div class="external-event bg-primary">Reserva 1</div>
-                <div class="external-event bg-warning">Reserva 2</div>
-                <div class="external-event bg-danger">Reserva 3</div>
-                <div class="external-event bg-info">Reserva 4</div>
-                <div class="checkbox">
-                  <label for="drop-remove">
-                    <input type="checkbox" id="drop-remove">
-                    Eliminar al asignar
-                  </label>
-                </div>
-              </div>
-            </div>
-            <!-- /.box-body -->
-          </div>
+         
           <!-- /. box -->
           <div class="box box-solid">
             <div class="box-header with-border">
               <h3 class="box-title">Crear Reserva</h3>
             </div>
             <div class="box-body">
-              <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
-                <!--<button type="button" id="color-chooser-btn" class="btn btn-info btn-block dropdown-toggle" data-toggle="dropdown">Color <span class="caret"></span></button>-->
-                <ul class="list-inline" id="color-chooser">
-                  <li><a class="text-success" href="#"><i class="fa fa-circle fa-3x"></i></a></li>
-                  <li><a class="text-primary" href="#"><i class="fa fa-circle fa-3x"></i></a></li>
-                  <li><a class="text-danger" href="#"><i class="fa fa-circle fa-3x"></i></a></li>
-                </ul>
-              </div>
+              
               <!-- /btn-group -->
               <div class="input-group">
-                <input id="new-event" type="text" class="form-control" placeholder="Titulo de evento">
+                
 
                 <div class="input-group-btn">
-                  <button id="add-new-event" type="button" class="btn btn-primary btn-flat">Agregar</button>
+                  
                 </div>
+
                 <!-- /btn-group -->
               </div><br/><br/>
               <!-- /input-group -->
+
+
+                <div class='input-group date' id='fechainicio'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+
+                <br>
+
+                <div class='input-group date' id='fechafin'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+
+                <br>
+
+                <button id="probando" type="button" class="btn btn-primary btn-flat">Crear Reserva</button>
+
               {!! Form::open(['route' => ['guardaEventos'], 'method' => 'POST', 'id' =>'form-calendario']) !!}
               {!! Form::close() !!}
             </div>

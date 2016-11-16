@@ -8,7 +8,8 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "styde/html": "~1.0",
-        "phpoffice/phpexcel": "^1.8"
+        "phpoffice/phpexcel": "^1.8",
+        "maddhatter/laravel-fullcalendar": "~1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

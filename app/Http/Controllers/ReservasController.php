@@ -88,16 +88,17 @@ class ReservasController extends Controller
         $title = $_POST['title'];
         $start = $_POST['start'];
         $back = $_POST['background'];
+        $end = $_POST['end'];
 
         //Insertando evento a base de datos
-        $evento=new Reserva;
-        $evento->fechaini=$start;
-        //$evento->fechafin=$end;
-        $evento->todoeldia=true;
-        $evento->color=$back;
-        $evento->titulo=$title;
+        $reserva=new Reserva;
+        $reserva->fechaini=$start;
+        $reserva->fechafin=$end;
+        $reserva->todoeldia=false;
+        $reserva->color=$back;
+        $reserva->titulo=$title;
 
-        $evento->save();
+        $reserva->save();
    }
 
    public function update(){
