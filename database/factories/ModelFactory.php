@@ -13,13 +13,15 @@
 */
 
 $factory->define(reservas\User::class, function (Faker\Generator $faker) {
-    $roles = array('user', 'audit', 'admin');
+    $roles = array('estudiante', 'docente');
     return [
         'name' => $faker->name,
         'username' => $faker->userName,
         'email' => $faker->safeEmail,
         'password' => bcrypt(str_random(10)),
         'remember_token' => str_random(10),
-        'role' => $roles[rand(0,2)],
+        'role' => 'editor',
+        'USER_creadopor' => 'SYSTEM',
+        'USER_fechacreado' => \Carbon\Carbon::now()->toDateTimeString(),
     ];
 });
