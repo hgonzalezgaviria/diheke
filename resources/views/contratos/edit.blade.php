@@ -8,17 +8,17 @@
 
 @section('scripts')
 <script>
-    var appreservas = angular.module('appreservas', ['ngAnimate'], function($interpolateProvider) {
+    var appEva360 = angular.module('appEva360', ['ngAnimate'], function($interpolateProvider) {
         $interpolateProvider.startSymbol('<%');
         $interpolateProvider.endSymbol('%>');
     });
 
-    appreservas.controller('PreguntasCtrl', ['$scope', function($scope){
+    appEva360.controller('PreguntasCtrl', ['$scope', function($scope){
 		$scope.tipos_preg = {!! json_encode(Config::get('enums.preg_tipos2')) !!}
 		$scope.selectedPregTipo = $scope.tipos_preg[{{ $pregunta->preg_tipo_id }} - 1].id;
     }]);
     
-    appreservas.controller('PregEleccionUnicaCtrl', ['$scope', function($scope){
+    appEva360.controller('PregEleccionUnicaCtrl', ['$scope', function($scope){
         $scope.pregOpciones = {!! $pregunta->pregItems !!};
         $scope.cantOpciones = ($scope.pregOpciones.length > 0) ? $scope.pregOpciones.length : 1;
         $scope.index = 0;
@@ -37,7 +37,7 @@
 	<!-- if there are creation errors, they will show here -->
 	{{ Html::ul($errors->all()) }}
 
-    <div ng-app="appreservas" ng-controller="PreguntasCtrl">
+    <div ng-app="appEva360" ng-controller="PreguntasCtrl">
     
 	{{ Form::model($pregunta, array('action' => array('PreguntaController@update', $pregunta->reserva->id, $pregunta->id), 'method' => 'PUT', 'class' => 'form-horizontal')) }}
 

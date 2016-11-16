@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableTipounidad extends Migration
+class CreateTableTipoUnidad extends Migration
 {
 	/**
 	 * Run the migrations.

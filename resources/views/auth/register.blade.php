@@ -6,16 +6,13 @@
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
 			<div class="panel panel-default">
-				<div class="panel-heading">Crear nuevo usuario</div>
+				<div class="panel-heading">Register</div>
 				<div class="panel-body">
-				
-					@include('partials/errors')
-
 					<form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
 						{{ csrf_field() }}
 
 						<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-							<label for="name" class="col-md-4 control-label">Nombre</label>
+							<label for="name" class="col-md-4 control-label">Name</label>
 
 							<div class="col-md-6">
 								<input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}">
@@ -57,7 +54,7 @@
 						</div>
 
 						<div class="form-group{{ $errors->has('role') ? ' has-error' : '' }}">
-							<label for="role" class="col-md-4 control-label">Rol</label>
+							<label for="role" class="col-md-4 control-label">Usuario</label>
 
 							<div class="col-md-6">
 								<input id="role" type="text" class="form-control" name="role" value="{{ old('role') }}">
@@ -98,22 +95,14 @@
 							</div>
 						</div>
 
-
-						<!-- Botones -->
 						<div class="form-group">
-							<div class="col-md-6 col-md-offset-4 text-right">
-
-						    	{{ Form::button('<i class="fa fa-exclamation" aria-hidden="true"></i> Reset', array('class'=>'btn btn-warning', 'type'=>'reset')) }}
-
-						        <a class="btn btn-warning" role="button" href="{{ URL::to('usuarios/') }}">
-						            <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar
-						        </a>
-
-								{{ Form::button('<i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar', array('class'=>'btn btn-primary', 'type'=>'submit')) }}
-
+							<div class="col-md-6 col-md-offset-4">
+								<button type="submit" class="btn btn-primary">
+									<i class="fa fa-btn fa-user"></i> Register
+								</button>
 							</div>
 						</div>
-					{{ Form::close() }}
+					</form>
 				</div>
 			</div>
 		</div>

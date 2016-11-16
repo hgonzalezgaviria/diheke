@@ -13,7 +13,6 @@
 
 //Autenticación
 Route::auth();
-Route::resource('usuarios', 'Auth\AuthController');
 
 //Inicio
 Route::get('/home', 'HomeController@index');
