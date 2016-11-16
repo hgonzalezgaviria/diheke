@@ -2,6 +2,8 @@
 <html>
 	<head>
 		<title>Reservas @yield('title')</title>
+		{!! Html::favicon('favicon.ico') !!}
+
 		{!! Html::style('assets/js/jquery-ui/jquery-ui.min.css') !!}
 		{!! Html::style('assets/css/fullcalendar.css') !!}
 		{!! Html::style('assets/css/bootstrap.min.css') !!}
@@ -13,7 +15,6 @@
 				margin-top:10px;
 			}
 		</style>
-		<!-- !! Html::favicon('favicon.ico') !!} -->
 		<!-- Fonts 
 		<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'> -->
 		@yield('head')
