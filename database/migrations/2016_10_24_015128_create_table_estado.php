@@ -14,15 +14,38 @@ class CreateTableEstado extends Migration
     {       
         Schema::create('ESTADOS', function (Blueprint $table) {
 
-            $table->increments('id');
-            $table->string('descripcion', 300);
-            $table->integer('tipo_estado')->unsigned();
+            $table->increments('ES_ID') 
+                ->comment = "Valor autonumerico, llave primaria de la tabla ESTADOS.";
 
-            $table->foreign('tipo_estado')
-                  ->references('id')->on('TIPOESTADOS')
+                 $table->string('ES_DESCRIPCION', 300)
+                ->comment = "Descripcion del estado que puede tener, una sala, equipo u recursos";
+
+                $table->integer('TIES_ID')->unsigned()
+                ->comment = "Campo foráneo de la tabla TIPOESTADOS.";
+
+
+                       //Traza
+            $table->string('ES_CREADOPOR')
+                ->comment('Usuario que creó el registro en la tabla');
+            $table->timestamp('ES_FECHACREADO')
+                ->comment('Fecha en que se creó el registro en la tabla.');
+            $table->string('ES_MODIFICADOPOR')->nullable()
+                ->comment('Usuario que realizó la última modificación del registro en la tabla.');
+            $table->timestamp('ES_FECHAMODIFICADO')->nullable()
+                ->comment('Fecha de la última modificación del registro en la tabla.');
+            $table->string('ES_ELIMINADOPOR')->nullable()
+                ->comment('Usuario que eliminó el registro en la tabla.');
+            $table->timestamp('ES_FECHAELIMINADO')->nullable()
+                ->comment('Fecha en que se eliminó el registro en la tabla.');
+
+
+          //Relasiones
+
+            $table->foreign('TIES_ID')
+                  ->references('TIES_ID')->on('TIPOESTADOS')
                   ->onDelete('cascade');
 
-            $table->timestamps();
+           // $table->timestamps();
             
         });
     }

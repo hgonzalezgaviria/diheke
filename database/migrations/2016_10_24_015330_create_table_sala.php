@@ -21,11 +21,11 @@ class CreateTableSala extends Migration
             $table->string('fotosala', 500);
             $table->string('fotocroquis', 500);
             $table->string('observaciones', 300);
-            $table->integer('id_estado')->unsigned();
+            $table->integer('ES_ID')->unsigned();
             $table->integer('id_sede')->unsigned(); 
 
-            $table->foreign('id_estado')
-                  ->references('id')->on('ESTADOS')
+            $table->foreign('ES_ID')
+                  ->references('ES_ID')->on('ESTADOS')
                   ->onDelete('cascade');
 
 
