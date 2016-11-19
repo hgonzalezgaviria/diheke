@@ -21,7 +21,7 @@ class CreateTableSede extends Migration
             $table->integer('id_responsable')->unsigned();
 
             $table->foreign('id_responsable')
-                  ->references('id')->on('users')
+                  ->references('USER_id')->on('USERS')
                   ->onDelete('cascade');
 
 

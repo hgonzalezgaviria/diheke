@@ -9,8 +9,8 @@ class User extends Authenticatable
 {
 
 	//Nombre de la tabla en la base de datos
-	protected $table = 'users';
-    protected $primaryKey = 'id';
+	protected $table = 'USERS';
+    protected $primaryKey = 'USER_id';
 
 	//Traza: Nombre de campos en la tabla para auditoría de cambios
 	const CREATED_AT = 'USER_fechacreado';
@@ -26,7 +26,7 @@ class User extends Authenticatable
 	 * @var array
 	 */
 	protected $fillable = [
-		'name', 'username', 'email', 'password', 'role', 'USER_creadopor'
+		'name', 'username', 'email', 'password', 'ROLE_id', 'USER_creadopor'
 	];
 
 	/**
@@ -37,4 +37,10 @@ class User extends Authenticatable
 	protected $hidden = [
 		'password', 'remember_token',
 	];
+
+	public function rol()
+	{
+		$foreingKey = 'ROLE_id';
+		return $this->belongsTo(Rol::class, $foreingKey);
+	}
 }

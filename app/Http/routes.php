@@ -14,6 +14,7 @@
 //Autenticación
 Route::auth();
 Route::resource('usuarios', 'Auth\AuthController');
+Route::resource('roles', 'Auth\RolController');
 
 //Inicio
 Route::get('/home', 'HomeController@index');

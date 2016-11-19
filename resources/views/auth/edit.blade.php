@@ -11,7 +11,7 @@
 
 					@include('partials/errors')
 					
-					{{ Form::model($usuario, [ 'action' => [ 'Auth\AuthController@update', $usuario->id ], 'method' => 'PUT', 'class' => 'form-horizontal' ]) }}
+					{{ Form::model($usuario, [ 'action' => [ 'Auth\AuthController@update', $usuario->USER_id ], 'method' => 'PUT', 'class' => 'form-vertical' ]) }}
 
 					  	<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
 							{{ Form::label('name', 'Nombre', [ 'class' => 'col-md-4 control-label' ]) }}
@@ -29,8 +29,9 @@
 					  	<div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
 							{{ Form::label('username', 'Usuario', [ 'class' => 'col-md-4 control-label' ]) }}
 							<div class="col-md-6">
+ 								<a href="#" title="No editable" data-toggle="popover" data-trigger="hover" data-placement="auto" data-content="Usuario no puede ser editado.">
 								{{ Form::text('username', old('username'), [ 'class' => 'form-control', 'disabled' ]) }}
-
+								</a>
 								@if ($errors->has('username'))
 									<span class="help-block">
 										<strong>{{ $errors->first('username') }}</strong>
@@ -54,14 +55,22 @@
 						</div>
 
 
-					  	<div class="form-group{{ $errors->has('role') ? ' has-error' : '' }}">
-							{{ Form::label('role', 'Rol', [ 'class' => 'col-md-4 control-label' ]) }}
+					  	<div class="form-group{{ $errors->has('ROLE_id') ? ' has-error' : '' }}">
+							{{ Form::label('ROLE_id', 'Rol', [ 'class' => 'col-md-4 control-label' ]) }}
 							<div class="col-md-6">
-								{{ Form::text('role', old('role'), [ 'class' => 'form-control', 'max' => '255', 'required' ]) }}
 
-								@if ($errors->has('role'))
+								<select class="form-control" id="ROLE_id" name="ROLE_id" class="form-control" required>
+									<option value="" disabled>Seleccione un rol...</option>
+									@foreach($roles as $rol)
+									<option value="{{ $rol->ROLE_id }}" {{ $usuario->rol->ROLE_id == $rol->ROLE_id ? ' selected' : '' }}>
+										{{ $rol->ROLE_descripcion }}
+									</option>
+									@endforeach
+								</select>
+
+								@if ($errors->has('ROLE_id'))
 									<span class="help-block">
-										<strong>{{ $errors->first('role') }}</strong>
+										<strong>{{ $errors->first('ROLE_id') }}</strong>
 									</span>
 								@endif
 							</div>
@@ -89,4 +98,12 @@
 		</div>
 	</div>
 </div>
+@endsection
+
+@section('scripts')
+	<script>
+		$(document).ready(function(){
+		    $('[data-toggle="popover"]').popover();
+		});
+	</script>
 @endsection

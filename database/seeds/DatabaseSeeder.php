@@ -11,12 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(ParametrizacionTableSeeder::class);
         $this->call(UsersTableSeeder::class);
-        //$this->call(EncuestasTableSeeder::class);
-        
-        //foreach(Config::get('enums.preg_tipos') as $tipo){
-         //   \DB::table('preg_tipos')->insert( array('descripcion' => $tipo) );
-        //}
-
     }
 }

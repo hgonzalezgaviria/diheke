@@ -24,7 +24,7 @@ class ReservasController extends Controller
         if(isset($redirect)){
 
             $action = Route::currentRouteAction();
-            $role = isset(auth()->user()->role) ? auth()->user()->role : 'guest';
+            $role = isset(auth()->user()->rol->ROLE_rol) ? auth()->user()->rol->ROLE_rol : 'guest';
             
             //Lista de acciones que solo puede realizar los administradores o los editores
             $arrActionsAdmin = array('index', 'create', 'edit', 'store', 'show', 'destroy');

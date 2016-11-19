@@ -56,15 +56,22 @@
 							</div>
 						</div>
 
-						<div class="form-group{{ $errors->has('role') ? ' has-error' : '' }}">
-							<label for="role" class="col-md-4 control-label">Rol</label>
+						<div class="form-group{{ $errors->has('ROLE_id') ? ' has-error' : '' }}">
+							<label for="ROLE_id" class="col-md-4 control-label">Rol</label>
 
 							<div class="col-md-6">
-								<input id="role" type="text" class="form-control" name="role" value="{{ old('role') }}">
+								<select class="form-control" id="ROLE_id" name="ROLE_id" class="form-control" required>
+									<option value="">Seleccione un rol...</option>
+									@foreach($roles as $rol)
+									<option value="{{ $rol->ROLE_id }}">
+										{{ $rol->ROLE_descripcion }}
+									</option>
+									@endforeach
+								</select>
 
-								@if ($errors->has('role'))
+								@if ($errors->has('ROLE_id'))
 									<span class="help-block">
-										<strong>{{ $errors->first('role') }}</strong>
+										<strong>{{ $errors->first('ROLE_id') }}</strong>
 									</span>
 								@endif
 							</div>
