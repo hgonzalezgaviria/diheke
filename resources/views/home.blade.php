@@ -1,7 +1,6 @@
 @extends('layout')
 
 @section('head')
-	{{-- Html::style('assets/css/bootstrap-nav-tabs.css') --}}
 	{!! Html::style('assets/css/bootstrap.vertical-tabs.css') !!}
 	{!! Html::style('assets/css/hover-zoom.css') !!}
 @endsection

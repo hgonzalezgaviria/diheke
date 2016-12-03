@@ -1,3 +1,8 @@
+/*!
+ * dropdown-menu in hover
+ * 
+ * 
+ */
 
 .dropdown-menu > li.kopie > a {
     padding-left:5px;
@@ -32,7 +37,7 @@
 .dropdown-menu > li > a:hover, .dropdown-menu > .active > a:hover {
   text-decoration: underline;
 }  
-  
+
 @media (max-width: 767px) {
 
   .navbar-nav  {
@@ -76,7 +81,7 @@
    }
 
 }
- 
+
 @media (min-width: 768px) {
   ul.nav li:hover > ul.dropdown-menu {
     display: block;

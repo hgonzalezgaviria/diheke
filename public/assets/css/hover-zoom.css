@@ -12,9 +12,9 @@
     -moz-transition: all 200ms ease-in;
     -moz-transform: scale(1);
     transition: all 200ms ease-in;
-    transform: scale(1);   
-
+    transform: scale(1);
 }
+
 .zoom-in-hover:hover
 {
     z-index: 2;
@@ -27,4 +27,3 @@
     transition: all 200ms ease-in;
     transform: scale(1.5);
 }
-
