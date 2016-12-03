@@ -24,6 +24,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $sedes = \reservas\EspacioFisico::getEspaciosFisicos();
+        $salas = \reservas\RecursoFisico::getRecursosFisicos();
+        return view('home', compact('sedes', 'salas'));
     }
 }

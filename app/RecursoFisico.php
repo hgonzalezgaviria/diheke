@@ -63,4 +63,29 @@ class RecursoFisico extends Model
 		return $this->belongsTo(TipoRecursoFisico::class, $foreingKey);
 	}
 
+
+    /**
+     * Retorna un array de las recursos existentes. Se utiliza en Form::select
+     *
+     * @param  null
+     * @return Array
+     */
+    public static function getRecursosFisicos()
+    {
+        $recursos = self::orderBy('REFI_ID')
+        				//->where('REFI_ESTADO', 'ACTIVO')
+                        ->select([
+                        	'REFI_ID',
+                        	'REFI_NOMENCLATURA',
+                        	'REFI_DESCRIPCION',
+							'REFI_ESTADO',
+							'REFI_CAPACIDADREAL',
+							'REFI_PRESTABLE',
+							'ESFI_ID',
+                        ])
+                        ->get();
+
+        return $recursos;
+    }
+
 }

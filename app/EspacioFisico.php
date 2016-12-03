@@ -19,7 +19,13 @@ class EspacioFisico extends Model
 	protected $dates = ['ESFI_FECHAELIMINADO'];
 	
 	protected $fillable = [
-		'ESFI_DESCRIPCION', 'ESFI_CREADOPOR', 'ESFI_MODIFICADOPOR'
+		'ESFI_DESCRIPCION',
+		'ESFI_NOMBRE',
+		'ESFI_NRONIVELES',
+		'ESFI_NOMENCLATURA',
+		'ESFI_AREA',
+		'ESFI_CREADOPOR',
+		'ESFI_MODIFICADOPOR'
 	];
 
 	//Un EspacioFisico tiene un TipoEspacioFisico
@@ -50,4 +56,24 @@ class EspacioFisico extends Model
 		return $this->hasMany(RecursoFisico::class, $foreingKey);
 	}
 	
+
+    /**
+     * Retorna un array de las recursos existentes. Se utiliza en Form::select
+     *
+     * @param  null
+     * @return Array
+     */
+    public static function getEspaciosFisicos()
+    {
+        $espacios = self::orderBy('ESFI_ID')
+        				//->where('REFI_ESTADO', 'ACTIVO')
+                        ->select([
+                        	'ESFI_ID',
+                        	'ESFI_DESCRIPCION',
+                        	])
+                        ->get();
+
+        return $espacios;
+    }
+
 }

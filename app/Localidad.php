@@ -30,7 +30,7 @@ class Localidad extends Model
 	}
 
 	//Una Localidad tiene muchos EspacioFisico
-	public function localidades()
+	public function espaciosFisicos()
 	{
 		$foreingKey = 'LOCA_ID';
 		return $this->hasMany(EspacioFisico::class, $foreingKey);
