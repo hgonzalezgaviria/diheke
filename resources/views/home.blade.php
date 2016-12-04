@@ -6,8 +6,6 @@
 @endsection
 
 @section('scripts')
-	<script>
-	</script>
 @endsection
 
 @section('content')
@@ -25,7 +23,7 @@
 	<div class="tab-content">
 <h3>Salas</h3>
 		@foreach($sedes as $sede)
-		<div class="tab-pane" id="Sede{{$sede->ESFI_ID}}">
+		<div class="tab-pane fade" id="Sede{{$sede->ESFI_ID}}">
 			@foreach($salas as $sala)
 			@if($sala->ESFI_ID == $sede->ESFI_ID)
 			<a href="{{ url('reservas/show?sede='.$sala->ESFI_ID.'&sala='.$sala->REFI_ID) }}">

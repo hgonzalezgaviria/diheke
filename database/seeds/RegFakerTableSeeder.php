@@ -51,7 +51,7 @@ class RegFakerTableSeeder extends Seeder
 
 		$this->command->info('----Creando EspacioFisico');
 		$arrEspacioFisico = [];
-		for ($i=1; $i < rand(3,6); $i++) { 
+		for ($i=1; $i < rand(4,6); $i++) { 
 			$model = new reservas\EspacioFisico;
 			$model->ESFI_DESCRIPCION = 'EspacioFisico '.$i;
 			$model->ESFI_NOMBRE = 'EspacioFisico '.$i;
@@ -112,13 +112,6 @@ class RegFakerTableSeeder extends Seeder
 			$model->save();
 		}
 
-		$this->command->info('----Creando EstadoElementoRecursoFisico');
-		for ($i=1; $i < rand(3,6); $i++) { 
-			$model = new reservas\EstadoElementoRecursoFisico;
-			$model->EERF_DESCRIPCION = 'EstadoElementoRecursoFisico '.$i;
-			$model->EERF_CREADOPOR = $username;
-			$model->save();
-		}
 
 		$this->command->info('----Creando SituacionRecursoFisico');
 		$arrSituacionRecursoFisico = [];
@@ -131,12 +124,13 @@ class RegFakerTableSeeder extends Seeder
 		}
 
 		$this->command->info('----Creando RecursoFisico');
-		for ($i=1; $i < rand(3,8); $i++) { 
+		$REFI_TIPOASIGNACION = ['G','C','E'];
+		for ($i=1; $i < rand(50,60); $i++) { 
 			$model = new reservas\RecursoFisico;
 
 			$model->REFI_NOMENCLATURA = 'RF'.$i;
 			$model->REFI_DESCRIPCION = 'RecursoFisico '.$i;
-			$model->REFI_TIPOASIGNACION = $i;
+			$model->REFI_TIPOASIGNACION = $REFI_TIPOASIGNACION[rand(0, 2)];
 			$model->REFI_ESTADO = 'OK';
 
 			$model->REFI_NIVEL = $i;
