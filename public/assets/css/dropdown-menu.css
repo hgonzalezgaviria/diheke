@@ -47,7 +47,7 @@
     display: inline;
   }
   .navbar-default .navbar-toggle .icon-bar {
-    background-color: #fff;
+    /*background-color: #fff;*/
   }
   .navbar-default .navbar-nav .dropdown-menu > li > a {
     color: red;
