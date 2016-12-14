@@ -1,5 +1,5 @@
 <!-- Menú -->
-<nav role="navigation" class="navbar navbar-default">
+<nav role="navigation" class="navbar navbar-default navbar-fixed-top">
 	<div class="container-fluid">
 
 		<!-- Brand y toggle se agrupan para una mejor visualización en dispositivos móviles -->
@@ -11,8 +11,7 @@
 				<span class="icon-bar"></span>
 			</button>
 			<a href="{{ URL::to('home') }}" class="pull-left">
-				<img src="{{ asset('assets/img/LOGO UNIAJC.png') }}" height="50" style="padding-top: 5px;padding-bottom: 5px;">
-				{{-- <img src="{{ asset('assets/img/logo_redondo.jpg') }}" height="44"> --}}
+				<img src="{{ asset('assets/img/LOGO UNIAJC.png') }}" height="50" style="padding-top:5px; padding-left:5px; padding-bottom:5px;">
 			</a>
 		</div>
 
@@ -20,8 +19,8 @@
 		<div id="navbarCollapse" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
 
-				@unless (Auth::guest())
-					<li ><a href="{{ URL::to('home') }}"><i class="fa fa-home" aria-hidden="true"></i>Inicio</a></li>
+			@unless (Auth::guest())
+				<li ><a href="{{ URL::to('home') }}"><i class="fa fa-home" aria-hidden="true"></i>Inicio</a></li>
 
             	@if (in_array(Auth::user()->rol->ROLE_rol , ['audit','admin']))
 					<li class="dropdown">
@@ -89,8 +88,8 @@
 						</a>
 					</li>
 				@endif
-				</ul>
 			@endunless
+			</ul>
 
 			<!-- Lado derecho del Navbar. -->
 			<ul class="nav navbar-nav navbar-right">
@@ -110,6 +109,12 @@
 							<span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu" role="menu">
+							<li>
+								<a href="{{ url('password/reset?USER_id='.Auth::user()->USER_id) }}">
+									<i class="fa fa-btn fa-key"></i> Cambiar contraseña
+								</a>
+							</li>
+
 							<li>
 								<a href="{{ url('/logout') }}">
 									<i class="fa fa-btn fa-sign-out"></i> Logout

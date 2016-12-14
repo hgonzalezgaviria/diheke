@@ -11,7 +11,7 @@
 
 					@include('partials/errors')
 					
-					{{ Form::model($usuario, [ 'action' => [ 'Auth\AuthController@update', $usuario->USER_id ], 'method' => 'PUT', 'class' => 'form-vertical' ]) }}
+					{{ Form::model($usuario, [ 'action' => [ 'Auth\AuthController@update', $usuario->USER_id ], 'method' => 'PUT', 'class' => 'form-horizontal' ]) }}
 
 					  	<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
 							{{ Form::label('name', 'Nombre', [ 'class' => 'col-md-4 control-label' ]) }}
@@ -29,9 +29,8 @@
 					  	<div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
 							{{ Form::label('username', 'Usuario', [ 'class' => 'col-md-4 control-label' ]) }}
 							<div class="col-md-6">
- 								<a href="#" title="No editable" data-toggle="popover" data-trigger="hover" data-placement="auto" data-content="Usuario no puede ser editado.">
 								{{ Form::text('username', old('username'), [ 'class' => 'form-control', 'disabled' ]) }}
-								</a>
+
 								@if ($errors->has('username'))
 									<span class="help-block">
 										<strong>{{ $errors->first('username') }}</strong>
@@ -98,12 +97,4 @@
 		</div>
 	</div>
 </div>
-@endsection
-
-@section('scripts')
-	<script>
-		$(document).ready(function(){
-		    $('[data-toggle="popover"]').popover();
-		});
-	</script>
 @endsection

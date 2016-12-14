@@ -17,7 +17,6 @@
 	<thead>
 		<tr>
 			<th class="col-md-2">ID</th>
-			<th class="col-md-2">Rol</th>
 			<th class="col-md-2">Descripción</th>
 			<th class="col-md-2">Creado por</th>
 			<th class="col-md-2">Acciones</th>
@@ -30,7 +29,6 @@
 		@foreach($roles as $rol)
 		<tr>
 			<td>{{ $rol -> ROLE_id }}</td>
-			<td>{{ $rol -> ROLE_rol }}</td>
 			<td>{{ $rol -> ROLE_descripcion }}</td>
 			<td>{{ $rol -> ROLE_creadopor }}</td>
 			<td>

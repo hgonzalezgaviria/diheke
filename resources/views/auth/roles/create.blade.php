@@ -7,12 +7,7 @@
 
 	@include('partials/errors')
 	
-	{{ Form::open(['url' => 'roles', 'class' => 'form-vertical']) }}
-
-	  	<div class="form-group">
-			{{ Form::label('ROLE_rol', 'Rol') }} 
-			{{ Form::text('ROLE_rol', old('ROLE_rol'), [ 'class' => 'form-control', 'max' => '15', 'required' ]) }}
-		</div>
+	{{ Form::open(['url' => 'roles', 'class' => 'form-horizontal']) }}
 
 	  	<div class="form-group">
 			{{ Form::label('ROLE_descripcion', 'Descripción') }} 

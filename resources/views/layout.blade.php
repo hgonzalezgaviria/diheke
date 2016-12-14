@@ -29,7 +29,7 @@
 		<!--
 		<div class="container" style="padding-top:60px;padding-left:50px;padding-right:50px;">
 		-->
-		<div class="container" style="padding-top:40px;">
+		<div class="container" style="padding-top:60px;">
 
 			<!-- Utilizado para mostrar cualquier mensaje -->
 			@include('partials/messages')

@@ -7,19 +7,7 @@
 
 	@include('partials/errors')
 
-	{{ Form::model($rol, ['action' => ['Auth\RolController@update', $rol->ROLE_id ], 'method' => 'PUT', 'class' => 'form-vertical' ]) }}
-
-	  	<div class="form-group">
-			{{ Form::label('ROLE_rol', 'Rol') }}
- 			<a href="#" title="No editable" data-toggle="popover" data-trigger="hover" data-placement="auto" data-content="Rol creado por SYSTEM">
-			{{ Form::text('ROLE_rol', old('ROLE_rol'), [
-				'class' => 'form-control',
-				'max' => '15',
-				'required',
-				$rol->ROLE_creadopor === 'SYSTEM' ? 'disabled' : '',
-			]) }}
-			</a>
-		</div>
+	{{ Form::model($rol, ['action' => ['Auth\RolController@update', $rol->ROLE_id ], 'method' => 'PUT', 'class' => 'form-horizontal' ]) }}
 
 	  	<div class="form-group">
 			{{ Form::label('ROLE_descripcion', 'Descripción') }} 
@@ -36,12 +24,4 @@
 	    </div>
 
 	{{ Form::close() }}
-@endsection
-
-@section('scripts')
-	<script>
-		$(document).ready(function(){
-		    $('[data-toggle="popover"]').popover();
-		});
-	</script>
 @endsection
