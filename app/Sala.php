@@ -5,25 +5,25 @@ namespace reservas;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Recurso extends Model
+class Sala extends Model
 {
 	//Nombre de la tabla en la base de datos
 	protected $table = 'RECURSOS';
-    protected $primaryKey = 'RECU_id';
+    protected $primaryKey = 'SALA_id';
 
 	//Traza: Nombre de campos en la tabla para auditoría de cambios
-	const CREATED_AT = 'RECU_FECHACREADO';
-	const UPDATED_AT = 'RECU_FECHAMODIFICADO';
+	const CREATED_AT = 'SALA_FECHACREADO';
+	const UPDATED_AT = 'SALA_FECHAMODIFICADO';
 	use SoftDeletes;
-	const DELETED_AT = 'RECU_FECHAELIMINADO';
-	protected $dates = ['RECU_FECHAELIMINADO'];
+	const DELETED_AT = 'SALA_FECHAELIMINADO';
+	protected $dates = ['SALA_FECHAELIMINADO'];
 	
 	protected $fillable = [
-		'RECU_descripcion', 'RECU_version', 'RECU_observaciones'
+		'SALA_descripcion', 'SALA_version', 'SALA_observaciones'
 	];
 
     protected $hidden = [
-      	"RECU_id"
+      	"SALA_id"
     ];
 
 
@@ -32,9 +32,9 @@ class Recurso extends Model
 	 */
 	public function salas()
 	{
-		$foreingKey = 'RECU_id';
+		$foreingKey = 'RECU_ID';
 		$otherKey   = 'SALA_id';
-		return $this->belongsToMany(Sala::class, 'RECURSOSALAS', $foreingKey,  $otherKey);
+		return $this->belongsToMany(Recurso::class, 'RECURSOSALAS', $foreingKey,  $otherKey);
 	}
 
 
@@ -46,12 +46,12 @@ class Recurso extends Model
      */
     public static function getRecursos()
     {
-        $recursos = self::orderBy('RECU_id')
-        				//->where('RECU_ESTADO', 'ACTIVO')
+        $recursos = self::orderBy('SALA_ID')
+        				//->where('SALA_ESTADO', 'ACTIVO')
                         ->select([
-                        	'RECU_descripcion',
-                        	'RECU_version',
-                        	'RECU_observaciones',
+                        	'SALA_descripcion',
+                        	'SALA_version',
+                        	'SALA_observaciones',
                         ])->get();
 
         return $recursos;

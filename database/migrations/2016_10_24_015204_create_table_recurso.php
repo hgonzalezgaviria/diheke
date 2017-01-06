@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableTiporecursofisico extends Migration
+class CreateTableRecurso extends Migration
 {
     /**
      * Run the migrations.
@@ -11,30 +11,29 @@ class CreateTableTiporecursofisico extends Migration
      * @return void
      */
    public function up()
-    {       
-        Schema::create('TIPORECURSOFISICO', function (Blueprint $table) {
+   {       
+        Schema::create('RECURSOS', function (Blueprint $table) {
 
-            $table->increments('TIRF_ID') 
-                ->comment = "Valor autonumerico, llave primaria de la tabla TIPORECURSOFISICO.";
+            $table->increments('RECU_id');
+            $table->string('RECU_descripcion', 300);
+            $table->string('RECU_version', 50);
+            $table->string('RECU_observaciones', 300);
 
-            $table->string('TIRF_DESCRIPCION', 300)
-                ->comment = "Descripcion, el cual puede ser: Aula, Laboratorio, Campo Deportivo";
-
-              
+            
             //Traza
-            $table->string('TIRF_CREADOPOR')
+            $table->string('RECU_CREADOPOR')
                 ->comment('Usuario que creó el registro en la tabla');
-            $table->timestamp('TIRF_FECHACREADO')
+            $table->timestamp('RECU_FECHACREADO')
                 ->comment('Fecha en que se creó el registro en la tabla.');
-            $table->string('TIRF_MODIFICADOPOR')->nullable()
+            $table->string('RECU_MODIFICADOPOR')->nullable()
                 ->comment('Usuario que realizó la última modificación del registro en la tabla.');
-            $table->timestamp('TIRF_FECHAMODIFICADO')->nullable()
+            $table->timestamp('RECU_FECHAMODIFICADO')->nullable()
                 ->comment('Fecha de la última modificación del registro en la tabla.');
-            $table->string('TIRF_ELIMINADOPOR')->nullable()
+            $table->string('RECU_ELIMINADOPOR')->nullable()
                 ->comment('Usuario que eliminó el registro en la tabla.');
-            $table->timestamp('TIRF_FECHAELIMINADO')->nullable()
+            $table->timestamp('RECU_FECHAELIMINADO')->nullable()
                 ->comment('Fecha en que se eliminó el registro en la tabla.');
-
+            
         });
     }
 
@@ -46,7 +45,6 @@ class CreateTableTiporecursofisico extends Migration
     public function down()
     {
         //
-        Schema::drop('TIPORECURSOFISICO');
+        Schema::drop('RECURSOS');
     }
-
 }

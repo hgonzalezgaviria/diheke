@@ -30,11 +30,17 @@ class CreateTableReservas extends Migration
                 ->comment = "color de la reserva.";
 
             $table->mediumText('titulo')->nullable()
-                ->comment = "titulo de la reserva.";          
+                ->comment = "titulo de la reserva.";
 
-            $table->timestamps(); 
+            $table->integer('id_sala')->unsigned()
+                ->comment = 'Campo foráneo de la tabla SALAS.';
 
-            
+            $table->timestamps();
+
+            $table->foreign('id_sala')
+                    ->references('id')->on('SALAS')
+                    ->onDelete('cascade');
+
         });
     }
 

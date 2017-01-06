@@ -16,27 +16,23 @@ class RegFakerTableSeeder extends Seeder
 		$faker = Faker\Factory::create('es_ES');
 		$username = 'PRUEBA';
 
-		$this->command->info('----Creando TipoPosesion');
-		$arrTipoPosesion = [];
+
+		$this->command->info('----Creando RECURSOS');
+		$arrRecursos = [];
 		for ($i=1; $i < rand(3,6); $i++) { 
-			$model = new reservas\TipoPosesion;
-			$model->TIPO_DESCRIPCION = 'TipoPosesion '.$i;
-			$model->TIPO_CENTRODEPRACTICA = true;
-			$model->TIPO_CREADOPOR = $username;
+			$model = new reservas\Recurso;
+			$model->RECU_descripcion = 'Recurso '.$i;
+			$model->RECU_version = $i;
+			$model->RECU_observaciones = 'Obs del Recurso '.$i;
+			$model->RECU_CREADOPOR = $username;
 			$model->save();
-			array_push($arrTipoPosesion, $model);
+			array_push($arrRecursos, $model);
 		}
 
-		$this->command->info('----Creando TipoEspacioFisico');
-		$arrTipoEspacioFisico = [];
-		for ($i=1; $i < rand(3,6); $i++) { 
-			$model = new reservas\TipoEspacioFisico;
-			$model->TIEF_DESCRIPCION = 'TipoEspacioFisico '.$i;
-			$model->TIEF_CREADOPOR = $username;
-			$model->save();
-			array_push($arrTipoEspacioFisico, $model);
-		}
 
+
+
+/*
 		$this->command->info('----Creando Localidad');
 		$arrLocalidad = [];
 		for ($i=1; $i < rand(3,6); $i++) { 
