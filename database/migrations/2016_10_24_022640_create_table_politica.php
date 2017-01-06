@@ -14,11 +14,11 @@ class CreateTablePolitica extends Migration
     {
         //
         Schema::create('POLITICAS', function (Blueprint $table) {
-         $table->increments('id');
-         $table->timestamp('hora_min');
-         $table->timestamp('hora_max');
-         $table->integer('horas_min_reserva');
-         $table->integer('dias_min_cancelar');
+         $table->increments('POLI_ID');
+         $table->timestamp('POLI_HORA_MIN');
+         $table->timestamp('POLI_HORA_MAX');
+         $table->integer('POLI_HORAS_MIN_RESERVA');
+         $table->integer('POLI_DIAS_MIN_CANCELAR');
          $table->timestamps();
 
         });

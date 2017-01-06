@@ -14,16 +14,16 @@ class CreateTablePoliticaSede extends Migration
     {
         //
         Schema::create('POLITICASEDES', function (Blueprint $table) {
-         $table->increments('id');
-         $table->integer('id_politica')->unsigned();
-         $table->integer('id_sede')->unsigned();
+         $table->increments('POSE_id');
+         $table->integer('POLI_ID')->unsigned();
+         $table->integer('SEDE_ID')->unsigned();
 
-         $table->foreign('id_politica')
-                  ->references('id')->on('POLITICAS')
+         $table->foreign('POLI_ID')
+                  ->references('POLI_ID')->on('POLITICAS')
                   ->onDelete('cascade');
 
-            $table->foreign('id_sede')
-                  ->references('id')->on('SEDES')
+            $table->foreign('SEDE_ID')
+                  ->references('SEDE_ID')->on('SEDES')
                   ->onDelete('cascade');
 
          $table->timestamps();

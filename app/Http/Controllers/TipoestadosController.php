@@ -22,7 +22,7 @@ class TipoEstadosController extends Controller
         if(isset($redirect)){
 
             $action = Route::currentRouteAction();
-            $role = isset(auth()->user()->rol->ROLE_rol) ? auth()->user()->rol->ROLE_rol : 'guest';
+            $role = isset(auth()->user()->rol->ROLE_ROL) ? auth()->user()->rol->ROLE_ROL : 'guest';
             
             //Lista de acciones que solo puede realizar los administradores o los editores
             $arrActionsAdmin = array('index', 'create', 'edit', 'store', 'show', 'destroy');

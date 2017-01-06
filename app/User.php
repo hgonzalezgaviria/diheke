@@ -10,14 +10,14 @@ class User extends Authenticatable
 
 	//Nombre de la tabla en la base de datos
 	protected $table = 'USERS';
-    protected $primaryKey = 'USER_id';
+    protected $primaryKey = 'USER_ID';
 
 	//Traza: Nombre de campos en la tabla para auditoría de cambios
-	const CREATED_AT = 'USER_fechacreado';
-	const UPDATED_AT = 'USER_fechamodificado';
+	const CREATED_AT = 'USER_FECHACREADO';
+	const UPDATED_AT = 'USER_FECHAMODIFICADO';
 	use SoftDeletes;
-	const DELETED_AT = 'USER_fechaeliminado';
-	protected $dates = ['USER_fechaeliminado'];
+	const DELETED_AT = 'USER_FECHAELIMINADO';
+	protected $dates = ['USER_FECHAELIMINADO'];
 
 
 	/**
@@ -26,7 +26,7 @@ class User extends Authenticatable
 	 * @var array
 	 */
 	protected $fillable = [
-		'name', 'username', 'email', 'password', 'ROLE_id', 'USER_creadopor'
+		'name', 'username', 'email', 'password', 'ROLE_ID', 'USER_CREADOPOR'
 	];
 
 	/**
@@ -40,7 +40,7 @@ class User extends Authenticatable
 
 	public function rol()
 	{
-		$foreingKey = 'ROLE_id';
+		$foreingKey = 'ROLE_ID';
 		return $this->belongsTo(Rol::class, $foreingKey);
 	}
 }

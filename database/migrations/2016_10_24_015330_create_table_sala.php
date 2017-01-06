@@ -13,27 +13,42 @@ class CreateTableSala extends Migration
     public function up()
     {
         //
-   Schema::create('SALAS', function (Blueprint $table) {
+        Schema::create('SALAS', function (Blueprint $table) {
 
-            $table->increments('SALA_id');
-            $table->string('descripcion', 300);
-            $table->integer('capacidad');
-            $table->string('fotosala', 500);
-            $table->string('fotocroquis', 500);
-            $table->string('observaciones', 300);
-            $table->integer('ES_ID')->unsigned();
-            $table->integer('id_sede')->unsigned(); 
+            $table->increments('SALA_ID');
+            $table->string('SALA_DESCRIPCION', 300);
+            $table->integer('SALA_CAPACIDAD');
+            $table->string('SALA_FOTOSALA', 500);
+            $table->string('SALA_FOTOCROQUIS', 500);
+            $table->string('SALA_OBSERVACIONES', 300);
+            $table->integer('ESTA_ID')->unsigned();
+            $table->integer('SEDE_ID')->unsigned(); 
 
-            $table->foreign('ES_ID')
-                  ->references('ES_ID')->on('ESTADOS')
+
+             //Traza
+            $table->string('SALA_CREADOPOR')
+                ->comment('Usuario que creó el registro en la tabla');
+            $table->timestamp('SALA_FECHACREADO')
+                ->comment('Fecha en que se creó el registro en la tabla.');
+            $table->string('SALA_MODIFICADOPOR')->nullable()
+                ->comment('Usuario que realizó la última modificación del registro en la tabla.');
+            $table->timestamp('SALA_FECHAMODIFICADO')->nullable()
+                ->comment('Fecha de la última modificación del registro en la tabla.');
+            $table->string('SALA_ELIMINADOPOR')->nullable()
+                ->comment('Usuario que eliminó el registro en la tabla.');
+            $table->timestamp('SALA_FECHAELIMINADO')->nullable()
+                ->comment('Fecha en que se eliminó el registro en la tabla.');
+
+
+          //Relaciones
+            $table->foreign('ESTA_ID')
+                  ->references('ESTA_ID')->on('ESTADOS')
                   ->onDelete('cascade');
 
 
-            $table->foreign('id_sede')
-                  ->references('id')->on('SEDES')
+            $table->foreign('SEDE_ID')
+                  ->references('SEDE_ID')->on('SEDES')
                   ->onDelete('cascade');
-
-            $table->timestamps();
             
         });
     }

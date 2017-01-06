@@ -13,9 +13,9 @@ use Illuminate\Database\Seeder;
                 'username' => 'admin',
                 'email' => 'admin@correo.com',
                 'password'  => \Hash::make('123'),
-                'ROLE_id' => reservas\Rol::where('ROLE_rol','admin')->get()->first()->ROLE_id,
-                'USER_creadopor' => 'SYSTEM',
-                'USER_fechacreado' => \Carbon\Carbon::now()->toDateTimeString(),
+                'ROLE_ID' => reservas\Rol::where('ROLE_rol','admin')->get()->first()->ROLE_ID,
+                'USER_CREADOPOR' => 'SYSTEM',
+                'USER_FECHACREADO' => \Carbon\Carbon::now()->toDateTimeString(),
             ));
 
             //Editores
@@ -24,18 +24,18 @@ use Illuminate\Database\Seeder;
                 'username' => 'editor1',
                 'email' => 'editor1@correo.com',
                 'password'  => \Hash::make('123'),
-                'ROLE_id' => reservas\Rol::where('ROLE_rol','editor')->get()->first()->ROLE_id,
-                'USER_creadopor' => 'admin',
-                'USER_fechacreado' => \Carbon\Carbon::now()->toDateTimeString(),
+                'ROLE_ID' => reservas\Rol::where('ROLE_rol','editor')->get()->first()->ROLE_ID,
+                'USER_CREADOPOR' => 'admin',
+                'USER_FECHACREADO' => \Carbon\Carbon::now()->toDateTimeString(),
             ));
             \DB::table('USERS')->insert( array(
                 'name' => 'Editor 2 de prueba',
                 'username' => 'editor2',
                 'email' => 'editor2@correo.com',
                 'password'  => \Hash::make('123'),
-                'ROLE_id' => reservas\Rol::where('ROLE_rol','editor')->get()->first()->ROLE_id,
-                'USER_creadopor' => 'admin',
-                'USER_fechacreado' => \Carbon\Carbon::now()->toDateTimeString(),
+                'ROLE_ID' => reservas\Rol::where('ROLE_rol','editor')->get()->first()->ROLE_ID,
+                'USER_CREADOPOR' => 'admin',
+                'USER_FECHACREADO' => \Carbon\Carbon::now()->toDateTimeString(),
             ));
 
             //Estudiantes
@@ -44,18 +44,18 @@ use Illuminate\Database\Seeder;
                 'username' => 'estudiante1',
                 'email' => 'estudiante1@correo.com',
                 'password'  => \Hash::make('123'),
-                'ROLE_id' => reservas\Rol::where('ROLE_rol','estudiante')->get()->first()->ROLE_id,
-                'USER_creadopor' => 'admin',
-                'USER_fechacreado' => \Carbon\Carbon::now()->toDateTimeString(),
+                'ROLE_ID' => reservas\Rol::where('ROLE_rol','estudiante')->get()->first()->ROLE_ID,
+                'USER_CREADOPOR' => 'admin',
+                'USER_FECHACREADO' => \Carbon\Carbon::now()->toDateTimeString(),
             ));
             \DB::table('USERS')->insert( array(
                 'name' => 'Estudiante 2 de prueba',
                 'username' => 'estudiante2',
                 'email' => 'estudiante2@correo.com',
                 'password'  => \Hash::make('123'),
-                'ROLE_id' => reservas\Rol::where('ROLE_rol','estudiante')->get()->first()->ROLE_id,
-                'USER_creadopor' => 'admin',
-                'USER_fechacreado' => \Carbon\Carbon::now()->toDateTimeString(),
+                'ROLE_ID' => reservas\Rol::where('ROLE_rol','estudiante')->get()->first()->ROLE_ID,
+                'USER_CREADOPOR' => 'admin',
+                'USER_FECHACREADO' => \Carbon\Carbon::now()->toDateTimeString(),
             ));
 
             //Docentes
@@ -64,18 +64,18 @@ use Illuminate\Database\Seeder;
                 'username' => 'docente1',
                 'email' => 'docente1@correo.com',
                 'password'  => \Hash::make('123'),
-                'ROLE_id' => reservas\Rol::where('ROLE_rol','docente')->get()->first()->ROLE_id,
-                'USER_creadopor' => 'admin',
-                'USER_fechacreado' => \Carbon\Carbon::now()->toDateTimeString(),
+                'ROLE_ID' => reservas\Rol::where('ROLE_rol','docente')->get()->first()->ROLE_ID,
+                'USER_CREADOPOR' => 'admin',
+                'USER_FECHACREADO' => \Carbon\Carbon::now()->toDateTimeString(),
             ));
             \DB::table('USERS')->insert( array(
                 'name' => 'Docente 2 de prueba',
                 'username' => 'docente2',
                 'email' => 'docente2@correo.com',
                 'password'  => \Hash::make('123'),
-                'ROLE_id' => reservas\Rol::where('ROLE_rol','docente')->get()->first()->ROLE_id,
-                'USER_creadopor' => 'admin',
-                'USER_fechacreado' => \Carbon\Carbon::now()->toDateTimeString(),
+                'ROLE_ID' => reservas\Rol::where('ROLE_rol','docente')->get()->first()->ROLE_ID,
+                'USER_CREADOPOR' => 'admin',
+                'USER_FECHACREADO' => \Carbon\Carbon::now()->toDateTimeString(),
             ));
 
             //5 usuarios faker

@@ -64,7 +64,7 @@ class PasswordController extends Controller
         $email = Input::get('email');
         if ( auth()->check() && is_null($token) ){
 
-            if( auth()->user()->rol->ROLE_rol == 'admin' )
+            if( auth()->user()->rol->ROLE_ROL == 'admin' )
                 $user = \reservas\User::findOrFail(Input::get('USER_id'));
             else 
                 $user = auth()->user();
@@ -106,7 +106,7 @@ class PasswordController extends Controller
      */
     protected function getResetSuccessResponse($response)
     {
-        if( auth()->check() && auth()->user()->rol->ROLE_rol == 'admin' )
+        if( auth()->check() && auth()->user()->rol->ROLE_ROL == 'admin' )
             return redirect('usuarios')->with('status', trans($response));
         else
             return redirect($this->redirectPath())->with('status', trans($response));

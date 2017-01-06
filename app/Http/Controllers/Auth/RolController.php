@@ -20,7 +20,7 @@ class RolController extends Controller
 		
 		if(!auth()->guest() && isset($redirect)){
 			$action = Route::currentRouteAction();
-			$role = isset(auth()->user()->rol->ROLE_rol) ? auth()->user()->rol->ROLE_rol : 'user';
+			$role = isset(auth()->user()->rol->ROLE_ROL) ? auth()->user()->rol->ROLE_ROL : 'user';
 
 			//Lista de acciones que solo puede realizar los administradores o los editores
 			$arrActionsAdmin = array('index', 'create', 'edit', 'store', 'show', 'destroy');
@@ -68,13 +68,13 @@ class RolController extends Controller
 	{
 		//Validación de datos
 		$this->validate(request(), [
-			'ROLE_rol' => 'required|max:15|unique:ROLES',
+			'ROLE_ROL' => 'required|max:15|unique:ROLES',
 			'ROLE_descripcion' => ['required', 'max:255'],
 		]);
 
 		//Permite seleccionar los datos que se desean guardar.
 		$rol = new Rol;
-		$rol->ROLE_rol = Input::get('ROLE_rol');
+		$rol->ROLE_ROL = Input::get('ROLE_ROL');
 		$rol->ROLE_descripcion = Input::get('ROLE_descripcion');
         $rol->ROLE_creadopor = auth()->user()->username;
         //Se guarda modelo
@@ -112,14 +112,14 @@ class RolController extends Controller
 	{
 		//Validación de datos
 		$this->validate(request(), [
-			'ROLE_rol' => 'required|max:15|unique:ROLES',
+			'ROLE_ROL' => 'required|max:15|unique:ROLES',
 			'ROLE_descripcion' => ['required', 'max:300'],
 		]);
 
 		// Se obtiene el registro
 		$rol = Rol::findOrFail($ROLE_id);
 
-		$rol->ROLE_rol = Input::get('ROLE_rol');
+		$rol->ROLE_ROL = Input::get('ROLE_ROL');
 		$rol->ROLE_descripcion = Input::get('ROLE_descripcion');
         $rol->ROLE_modificadopor = auth()->user()->username;
         //Se guarda modelo

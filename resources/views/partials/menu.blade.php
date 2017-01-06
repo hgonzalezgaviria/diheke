@@ -22,7 +22,7 @@
 			@unless (Auth::guest())
 				<li ><a href="{{ URL::to('home') }}"><i class="fa fa-home" aria-hidden="true"></i>Inicio</a></li>
 
-            	@if (in_array(Auth::user()->rol->ROLE_rol , ['audit','admin']))
+            	@if (in_array(Auth::user()->rol->ROLE_ROL , ['audit','admin']))
 					<li class="dropdown">
 						
 						<ul class="nav navbar-nav">
@@ -81,7 +81,7 @@
 							<i class="fa fa-calendar" aria-hidden="true"></i> Reservas
 						</a>
 					</li>
-				@elseif (in_array(Auth::user()->rol->ROLE_rol , ['user','estudiante','docente']))
+				@elseif (in_array(Auth::user()->rol->ROLE_ROL , ['user','estudiante','docente']))
 					<li>
 						<a href="{{ url('/prueba') }}">
 							<i class="fa fa-list" aria-hidden="true"></i> Presentar Reserva
@@ -105,7 +105,7 @@
 				@else
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-							<i class="fa fa-user" aria-hidden="true"></i> {{ Auth::user()->username }} ({{ Auth::user()->rol->ROLE_rol }})
+							<i class="fa fa-user" aria-hidden="true"></i> {{ Auth::user()->username }} ({{ Auth::user()->rol->ROLE_ROL }})
 							<span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu" role="menu">

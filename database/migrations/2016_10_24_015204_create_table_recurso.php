@@ -14,10 +14,10 @@ class CreateTableRecurso extends Migration
    {       
         Schema::create('RECURSOS', function (Blueprint $table) {
 
-            $table->increments('RECU_id');
-            $table->string('RECU_descripcion', 300);
-            $table->string('RECU_version', 50);
-            $table->string('RECU_observaciones', 300);
+            $table->increments('RECU_ID');
+            $table->string('RECU_DESCRIPCION', 300);
+            $table->string('RECU_VERSION', 50);
+            $table->string('RECU_OBSERVACIONES', 300);
 
             
             //Traza

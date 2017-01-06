@@ -21,9 +21,9 @@ class RegFakerTableSeeder extends Seeder
 		$arrRecursos = [];
 		for ($i=1; $i < rand(3,6); $i++) { 
 			$model = new reservas\Recurso;
-			$model->RECU_descripcion = 'Recurso '.$i;
-			$model->RECU_version = $i;
-			$model->RECU_observaciones = 'Obs del Recurso '.$i;
+			$model->RECU_DESCRIPCION = 'Recurso '.$i;
+			$model->RECU_VERSION = $i;
+			$model->RECU_OBSERVACIONES = 'Obs del Recurso '.$i;
 			$model->RECU_CREADOPOR = $username;
 			$model->save();
 			array_push($arrRecursos, $model);

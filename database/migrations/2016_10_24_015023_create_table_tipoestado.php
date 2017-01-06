@@ -14,13 +14,13 @@ class CreateTableTipoestado extends Migration
     {       
         Schema::create('TIPOESTADOS', function (Blueprint $table) {
 
-                     $table->increments('TIES_ID') 
+            $table->increments('TIES_ID') 
                 ->comment = "Valor autonumerico, llave primaria de la tabla TIPOESTADOS.";
 
-                 $table->string('TIES_DESCRIPCION', 300)
+            $table->string('TIES_DESCRIPCION', 300)
                 ->comment = "Descripcion del tipo estado que puede tener, una sala, equipo u recursos";
 
-                $table->string('TIES_OBSERVACIONES', 300)
+            $table->string('TIES_OBSERVACIONES', 300)
                 ->comment = "Observaciones varias del tipo de estado";
 
 

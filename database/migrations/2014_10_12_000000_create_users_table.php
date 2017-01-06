@@ -13,7 +13,7 @@ class CreateUsersTable extends Migration
 	public function up()
 	{
 		Schema::create('USERS', function (Blueprint $table) {
-			$table->increments('USER_id')
+			$table->increments('USER_ID')
 				->comment('Valor autonumérico, llave primaria de la tabla USERS.');
 			$table->string('name')
 				->comment('Nombre completo del usuario.');
@@ -23,27 +23,27 @@ class CreateUsersTable extends Migration
 				->comment('Correo electrónico del usuario.');
 			$table->string('password')
 				->comment('Contraseña del usuario cifrada.');
-			$table->unSignedInteger('ROLE_id')
+			$table->unSignedInteger('ROLE_ID')
 				->comment('Campo foráneo de la tabla ROLES.');
 			$table->rememberToken();
 
 			//Traza
-			$table->string('USER_creadopor')
+			$table->string('USER_CREADOPOR')
 				->comment('Usuario que creó el registro en la tabla');
-			$table->timestamp('USER_fechacreado')
+			$table->timestamp('USER_FECHACREADO')
 				->comment('Fecha en que se creó el registro en la tabla.');
-			$table->string('USER_modificadopor')->nullable()
+			$table->string('USER_MODIFICADOPOR')->nullable()
 				->comment('Usuario que realizó la última modificación del registro en la tabla.');
-			$table->timestamp('USER_fechamodificado')->nullable()
+			$table->timestamp('USER_FECHAMODIFICADO')->nullable()
 				->comment('Fecha de la última modificación del registro en la tabla.');
-			$table->string('USER_eliminadopor')->nullable()
+			$table->string('USER_ELIMINADOPOR')->nullable()
 				->comment('Usuario que eliminó el registro en la tabla.');
-			$table->timestamp('USER_fechaeliminado')->nullable()
+			$table->timestamp('USER_FECHAELIMINADO')->nullable()
 				->comment('Fecha en que se eliminó el registro en la tabla.');
 
 			//Relaciones
-			$table->foreign('ROLE_id')
-			->references('ROLE_id')
+			$table->foreign('ROLE_ID')
+			->references('ROLE_ID')
 			->on('ROLES');
 		});
 

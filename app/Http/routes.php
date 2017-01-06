@@ -32,11 +32,14 @@ Route::get('/prueba', function(){
 });
 
 
-//contratos
-Route::resource('contratos', 'ContratosController');
+//Sedes (EspacioFisico)
+Route::resource('sedes', 'SedeController');
 
-//contratos
-Route::resource('reservas', 'ReservasController');
+// Salas (recursofisico)
+Route::resource('salas', 'SalaController');
+
+/*
+
 
 
 //recursos
@@ -48,8 +51,7 @@ Route::resource('tipoestados', 'TipoestadosController');
 //estados
 Route::resource('estados', 'EstadosController');
 
-//Situación Recursos Físicos
-Route::resource('situacionrecursofisico', 'SituacionRecursoFisicoController');
+
 
 //Estados elemento recurso físico
 Route::resource('estadoelementorecursofisico', 'EstadoElementoRecursoFisicoController');
@@ -66,22 +68,14 @@ Route::resource('tipoposesion', 'TipoPosesionController');
 //Localidades
 Route::resource('localidad', 'LocalidadController');
 
-//Espacio Físico
-Route::resource('espaciofisico', 'EspacioFisicoController');
 
 //Tipos Recurso Físico
 Route::resource('tiporecursofisico', 'TipoRecursoFisicoController');
 
-//Recurso Físico
-Route::resource('recursofisico', 'RecursoFisicoController');
+*/
 
-//Tipos Unidades
-Route::resource('tipounidad', 'TipoUnidadController');
-
-//Recurso Físico
-Route::resource('unidad', 'UnidadController');
-
-
+//reservas
+Route::resource('reservas', 'ReservasController');
 Route::get('cargaEventos{id?}','ReservasController@index');
 Route::post('reservas/guardaEventos', array('as' => 'guardaEventos','uses' => 'ReservasController@create'));
 Route::post('actualizaEventos','ReservasController@update');

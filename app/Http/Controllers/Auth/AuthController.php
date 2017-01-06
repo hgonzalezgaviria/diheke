@@ -73,7 +73,7 @@ class AuthController extends Controller
 
 		if(Route::currentRouteAction() !== null){//Compatibilidad con el comando "php artisan route:list", ya que ingresa como guest y la ruta es nula.		
 			$action = Route::currentRouteAction();
-			$role = isset(auth()->user()->rol->ROLE_rol) ? auth()->user()->rol->ROLE_rol : 'user';
+			$role = isset(auth()->user()->rol->ROLE_ROL) ? auth()->user()->rol->ROLE_ROL : 'user';
 
 			
 			if(in_array(explode("@", $action)[1], $arrActionsAdmin))//Si la acción del controlador se encuentra en la lista de acciones de admin...

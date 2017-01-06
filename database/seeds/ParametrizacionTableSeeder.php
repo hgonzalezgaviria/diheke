@@ -15,9 +15,9 @@ class ParametrizacionTableSeeder extends Seeder
 		
 		foreach(Config::get('enums.roles') as $rol){
 			$newRol = new reservas\Rol;
-			$newRol->ROLE_rol         = $rol['rol'];
-			$newRol->ROLE_descripcion = $rol['descripcion'];
-			$newRol->ROLE_creadopor   = 'SYSTEM';
+			$newRol->ROLE_ROL         = $rol['rol'];
+			$newRol->ROLE_DESCRIPCION = $rol['descripcion'];
+			$newRol->ROLE_CREADOPOR   = 'SYSTEM';
 			$newRol->save();
 		}
 

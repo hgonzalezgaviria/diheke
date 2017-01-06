@@ -5,27 +5,27 @@ namespace reservas;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class EspacioFisico extends Model
+class Sede extends Model
 {
 	//Nombre de la tabla en la base de datos
-	protected $table = 'ESPACIOFISICO';
-    protected $primaryKey = 'ESFI_ID';
+	protected $table = 'SEDES';
+    protected $primaryKey = 'SEDE_ID';
 
 	//Traza: Nombre de campos en la tabla para auditoría de cambios
-	const CREATED_AT = 'ESFI_FECHACREADO';
-	const UPDATED_AT = 'ESFI_FECHAMODIFICADO';
+	const CREATED_AT = 'SEDE_FECHACREADO';
+	const UPDATED_AT = 'SEDE_FECHAMODIFICADO';
 	use SoftDeletes;
-	const DELETED_AT = 'ESFI_FECHAELIMINADO';
-	protected $dates = ['ESFI_FECHAELIMINADO'];
+	const DELETED_AT = 'SEDE_FECHAELIMINADO';
+	protected $dates = ['SEDE_FECHAELIMINADO'];
 	
 	protected $fillable = [
-		'ESFI_DESCRIPCION',
-		'ESFI_NOMBRE',
-		'ESFI_NRONIVELES',
-		'ESFI_NOMENCLATURA',
-		'ESFI_AREA',
-		'ESFI_CREADOPOR',
-		'ESFI_MODIFICADOPOR'
+		'SEDE_DESCRIPCION',
+		'SEDE_NOMBRE',
+		'SEDE_NRONIVELES',
+		'SEDE_NOMENCLATURA',
+		'SEDE_AREA',
+		'SEDE_CREADOPOR',
+		'SEDE_MODIFICADOPOR'
 	];
 
 	//Un EspacioFisico tiene un TipoEspacioFisico
@@ -52,7 +52,7 @@ class EspacioFisico extends Model
 	//Un EspacioFisico tiene muchos RecursoFisico
 	public function recursosFisicos()
 	{
-		$foreingKey = 'ESFI_ID';
+		$foreingKey = 'SEDE_ID';
 		return $this->hasMany(RecursoFisico::class, $foreingKey);
 	}
 	
@@ -63,13 +63,13 @@ class EspacioFisico extends Model
      * @param  null
      * @return Array
      */
-    public static function getEspaciosFisicos()
+    public static function getSedes()
     {
-        $espacios = self::orderBy('ESFI_ID')
+        $espacios = self::orderBy('SEDE_ID')
         				//->where('REFI_ESTADO', 'ACTIVO')
                         ->select([
-                        	'ESFI_ID',
-                        	'ESFI_DESCRIPCION',
+                        	'SEDE_ID',
+                        	'SEDE_DESCRIPCION',
                         	])
                         ->get();
 
