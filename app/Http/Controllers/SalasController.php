@@ -7,13 +7,13 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Redirector;
 
-use reservas\RecursoFisico;
-use reservas\SituacionRecursoFisico;
-use reservas\TipoRecursoFisico;
+use reservas\Sala;
+use reservas\SituacionSala;
+use reservas\TipoSala;
 use reservas\TipoPosesion;
 use reservas\EspacioFisico;
 
-class RecursoFisicoController extends Controller
+class SalaController extends Controller
 {
 	public function __construct(Redirector $redirect=null)
 	{
@@ -46,10 +46,10 @@ class RecursoFisicoController extends Controller
 	public function index()
 	{
 		//Se obtienen todos los registros.
-		$recursosFisicos = RecursoFisico::all();
+		$sala = Sala::all();
 
 		//Se carga la vista y se pasan los registros
-		return view('recursofisico/index', compact('recursosFisicos'));
+		return view('sala/index', compact('sala'));
 	}
 
 	/**
@@ -60,7 +60,7 @@ class RecursoFisicoController extends Controller
 	public function create()
 	{
 
-		$situacionesRecursosFisicos = SituacionRecursoFisico::all();
+		$situacionesRecursosFisicos = SituacionSala::all();
 		$arrSituacionesRecursosFisicos = [];
 		foreach ($situacionesRecursosFisicos as $situacion) {
 			$arrSituacionesRecursosFisicos = array_add(
@@ -70,7 +70,7 @@ class RecursoFisicoController extends Controller
 			);
 		}
 		
-		$tiposRecursosFisicos = TipoRecursoFisico::all();
+		$tiposRecursosFisicos = TipoSala::all();
 		$arrTiposRecursosFisicos = [];
 		foreach ($tiposRecursosFisicos as $tipo) {
 			$arrTiposRecursosFisicos = array_add(
@@ -99,7 +99,7 @@ class RecursoFisicoController extends Controller
 				$espacio->ESFI_DESCRIPCION
 			);
 		}
-		return view('recursofisico/create', compact(
+		return view('sala/create', compact(
 			'arrSituacionesRecursosFisicos',
 			'arrTiposRecursosFisicos',
 			'arrTiposPosesiones',
@@ -135,7 +135,7 @@ class RecursoFisicoController extends Controller
 		]);
 
 		//Permite seleccionar los datos que se desean guardar.
-		$recursoFisico = new RecursoFisico;
+		$recursoFisico = new Sala;
 		$recursoFisico->REFI_NOMENCLATURA = Input::get('REFI_NOMENCLATURA');
 		$recursoFisico->REFI_CAPACIDADMAXIMA = Input::get('REFI_CAPACIDADMAXIMA');
 		$recursoFisico->REFI_TIPOASIGNACION = Input::get('REFI_TIPOASIGNACION');
@@ -160,7 +160,7 @@ class RecursoFisicoController extends Controller
 
 		// redirecciona al index de controlador
 		Session::flash('message', 'Espacio Fisico '.$recursoFisico->REFI_ID.' creado exitosamente!');
-		return redirect()->to('recursofisico');
+		return redirect()->to('sala');
 	}
 
 
@@ -173,10 +173,10 @@ class RecursoFisicoController extends Controller
 	public function show($REFI_ID)
 	{
 		// Se obtiene el registro
-		$recursoFisico = RecursoFisico::findOrFail($REFI_ID);
+		$recursoFisico = Sala::findOrFail($REFI_ID);
 
 		// Muestra la vista y pasa el registro
-		return view('recursofisico/show', compact('recursoFisico'));
+		return view('sala/show', compact('recursoFisico'));
 	}
 
 
@@ -189,10 +189,10 @@ class RecursoFisicoController extends Controller
 	public function edit($REFI_ID)
 	{
 		// Se obtiene el registro a modificar
-		$recursoFisico = RecursoFisico::findOrFail($REFI_ID);
+		$recursoFisico = Sala::findOrFail($REFI_ID);
 
 
-		$situacionesRecursosFisicos = SituacionRecursoFisico::all();
+		$situacionesRecursosFisicos = SituacionSala::all();
 		$arrSituacionesRecursosFisicos = [];
 		foreach ($situacionesRecursosFisicos as $situacion) {
 			$arrSituacionesRecursosFisicos = array_add(
@@ -202,7 +202,7 @@ class RecursoFisicoController extends Controller
 			);
 		}
 		
-		$tiposRecursosFisicos = TipoRecursoFisico::all();
+		$tiposRecursosFisicos = TipoSala::all();
 		$arrTiposRecursosFisicos = [];
 		foreach ($tiposRecursosFisicos as $tipo) {
 			$arrTiposRecursosFisicos = array_add(
@@ -234,7 +234,7 @@ class RecursoFisicoController extends Controller
 
 		// Muestra el formulario de edición y pasa el registro a editar
 		// y arreglos para llenar los Selects
-		return view('recursofisico/edit', compact(
+		return view('sala/edit', compact(
 			'recursoFisico',
 			'arrSituacionesRecursosFisicos',
 			'arrTiposRecursosFisicos',
@@ -273,7 +273,7 @@ class RecursoFisicoController extends Controller
 		]);
 
 		// Se obtiene el registro
-		$recursoFisico = RecursoFisico::findOrFail($REFI_ID);
+		$recursoFisico = Sala::findOrFail($REFI_ID);
 
 		$recursoFisico->REFI_NOMENCLATURA = Input::get('REFI_NOMENCLATURA');
 		$recursoFisico->REFI_CAPACIDADMAXIMA = Input::get('REFI_CAPACIDADMAXIMA');
@@ -296,7 +296,7 @@ class RecursoFisicoController extends Controller
 
 		// redirecciona al index de controlador
 		Session::flash('message', 'Espacio Fisico '.$recursoFisico->REFI_ID.' modificado exitosamente!');
-		return redirect()->to('recursofisico');
+		return redirect()->to('sala');
 	}
 
 	/**
@@ -307,7 +307,7 @@ class RecursoFisicoController extends Controller
 	 */
 	public function destroy($REFI_ID, $showMsg=True)
 	{
-		$recursoFisico = RecursoFisico::findOrFail($REFI_ID);
+		$recursoFisico = Sala::findOrFail($REFI_ID);
 
 		// delete
         $recursoFisico->REFI_ELIMINADOPOR = auth()->user()->username;
@@ -317,7 +317,7 @@ class RecursoFisicoController extends Controller
 		// redirecciona al index de controlador
 		if($showMsg){
 			Session::flash('message', 'Espacio Fisico '.$recursoFisico->REFI_ID.' eliminado exitosamente!');
-			return redirect()->to('recursofisico');
+			return redirect()->to('sala');
 		}
 	}
 
