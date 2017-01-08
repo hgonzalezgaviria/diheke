@@ -15,7 +15,7 @@ class TableReservasSeeder extends Seeder
            $reserva->RESE_FECHAINI = '2017-01-15 10:00:00';
            $reserva->RESE_FECHAFIN = '2017-01-15 12:00:00';
            $reserva->RESE_TODOELDIA = 0;
-           $reserva->RESE_COLOR = '(192,192,192)';
+           $reserva->RESE_COLOR = 'rgb(192,192,192)';
            $reserva->RESE_TITULO = 'TALLER DE BASES DE DATOS';
            $reserva->SALA_ID = 1;
            $reserva->RESE_CREADOPOR =  'USER_PRUEBA';

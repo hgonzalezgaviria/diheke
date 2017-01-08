@@ -54,12 +54,12 @@ class ReservasController extends Controller
     public function index()
     {
         $data = array(); //declaramos un array principal que va contener los datos
-        $id = Reserva::all()->lists('id'); //listamos todos los id de los eventos
-        $titulo = Reserva::all()->lists('titulo'); //lo mismo para lugar y fecha
-        $fechaini = Reserva::all()->lists('fechaini');
-        $fechafin = Reserva::all()->lists('fechafin');
-        $allDay = Reserva::all()->lists('todoeldia');
-        $background = Reserva::all()->lists('color');
+        $id = Reserva::all()->lists('RESE_ID'); //listamos todos los id de los eventos
+        $titulo = Reserva::all()->lists('RESE_TITULO'); //lo mismo para lugar y fecha
+        $fechaini = Reserva::all()->lists('RESE_FECHAINI');
+        $fechafin = Reserva::all()->lists('RESE_FECHAFIN');
+        $allDay = Reserva::all()->lists('RESE_TODOELDIA');
+        $background = Reserva::all()->lists('RESE_COLOR');
         $count = count($id); //contamos los ids obtenidos para saber el numero exacto de eventos
  
         //hacemos un ciclo para anidar los valores obtenidos a nuestro array principal $data
@@ -79,8 +79,8 @@ class ReservasController extends Controller
             );
         }
  
-        json_encode($data); //convertimos el array principal $data a un objeto Json 
-       return $data; //para luego retornarlo y estar listo para consumirlo
+         //convertimos el array principal $data a un objeto Json 
+       return json_encode($data); //para luego retornarlo y estar listo para consumirlo
     }
 
     public function create(){
@@ -89,14 +89,16 @@ class ReservasController extends Controller
         $start = $_POST['start'];
         $back = $_POST['background'];
         $end = $_POST['end'];
+        $sala = $_POST['sala'];
 
         //Insertando evento a base de datos
         $reserva=new Reserva;
-        $reserva->fechaini=$start;
-        $reserva->fechafin=$end;
-        $reserva->todoeldia=false;
-        $reserva->color=$back;
-        $reserva->titulo=$title;
+        $reserva->RESE_FECHAINI = $start;
+        $reserva->RESE_FECHAINI = $end;
+        $reserva->RESE_TODOELDIA =false;
+        $reserva->RESE_COLOR = $back;
+        $reserva->RESE_TITULO = $title;
+        $reserva->SALA_ID = $sala;
 
         $reserva->save();
    }

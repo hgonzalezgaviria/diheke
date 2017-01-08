@@ -15,6 +15,23 @@
           format: 'YYYY-MM-DD HH:mm:ss'          
     });
 
+
+    //variable que se le asigna el valor de una funcion para obtener el valor de un parametro enviado por GET
+    var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+      for (i = 0; i < sURLVariables.length; i++) {
+          sParameterName = sURLVariables[i].split('=');
+
+          if (sParameterName[0] === sParam) {
+              return sParameterName[1] === undefined ? true : sParameterName[1];
+          }
+      }
+    };
+
     $('#probando').click(function() {
 
 
@@ -32,6 +49,8 @@
 
         var fechafinal = moment(fechafin,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
 
+        var sala = getUrlParameter('sala');
+
         //var t = 'data' + 'title='+ title+'&start='+ fechainicio+'&allday='+allDay+'&background='+back+'&end='+fechafinal;
         //var fechafinal = moment(fechafin.format('YYYY-MM-DD HH:mm:ss'));
 
@@ -43,7 +62,7 @@
         $.ajax({
              url: 'guardaEventos',
              data: 'title='+ title+'&start='+ fechainicio+'&allday='+allDay+'&background='+back+
-             '&end='+fechafinal,
+             '&end='+fechafinal+'&sala='+sala,
              type: "POST",
              headers: {
                     "X-CSRF-TOKEN": crsfToken
