@@ -17,6 +17,12 @@ class TableEstadosSeeder extends Seeder
            $estado->ESTA_CREADOPOR =  'USER_PRUEBA';
            $estado->save();
 
+           $estado = new \reservas\Estado;
+           $estado->ESTA_DESCRIPCION = 'EQUIPO DISPONIBLE';
+           $estado->TIES_ID = 2;
+           $estado->ESTA_CREADOPOR =  'USER_PRUEBA';
+           $estado->save();
+
 	 }
 
 }

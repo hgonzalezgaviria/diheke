@@ -17,6 +17,13 @@ class TableTiposestadosSeeder extends Seeder
            $tipoestado->TIES_CREADOPOR =  'USER_PRUEBA';
            $tipoestado->save();
 
+
+           $tipoestado = new \reservas\Tipoestado;
+           $tipoestado->TIES_DESCRIPCION = 'ESTADOS DE EQUIPOS';
+           $tipoestado->TIES_OBSERVACIONES =  'ESTADOS PARA LOS EQUIPOS DE COMPUTO';
+           $tipoestado->TIES_CREADOPOR =  'USER_PRUEBA';
+           $tipoestado->save();
+
 	  }
   
 }

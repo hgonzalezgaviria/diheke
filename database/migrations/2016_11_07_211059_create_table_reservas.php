@@ -35,6 +35,9 @@ class CreateTableReservas extends Migration
             $table->integer('SALA_ID')->unsigned()
                 ->comment = 'Campo foráneo de la tabla SALAS.';
 
+            $table->integer('EQUI_ID')->unsigned()->nullable()
+                ->comment = 'Campo foráneo de la tabla EQUIPOS.';
+
              //Traza
             $table->string('RESE_CREADOPOR')
                 ->comment('Usuario que creó el registro en la tabla');
@@ -50,9 +53,13 @@ class CreateTableReservas extends Migration
                 ->comment('Fecha en que se eliminó el registro en la tabla.');
 
 
-          //Relaciones
+            //Relaciones
             $table->foreign('SALA_ID')
                     ->references('SALA_ID')->on('SALAS')
+                    ->onDelete('cascade');
+
+            $table->foreign('EQUI_ID')
+                    ->references('EQUI_ID')->on('EQUIPOS')
                     ->onDelete('cascade');
 
         });

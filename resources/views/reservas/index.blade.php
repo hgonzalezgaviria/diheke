@@ -50,6 +50,7 @@
         var fechafinal = moment(fechafin,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
 
         var sala = getUrlParameter('sala');
+        var equipo = getUrlParameter('equipo');
 
         //var t = 'data' + 'title='+ title+'&start='+ fechainicio+'&allday='+allDay+'&background='+back+'&end='+fechafinal;
         //var fechafinal = moment(fechafin.format('YYYY-MM-DD HH:mm:ss'));
@@ -62,7 +63,7 @@
         $.ajax({
              url: 'guardaEventos',
              data: 'title='+ title+'&start='+ fechainicio+'&allday='+allDay+'&background='+back+
-             '&end='+fechafinal+'&sala='+sala,
+             '&end='+fechafinal+'&sala='+sala+'&equipo='+equipo,
              type: "POST",
              headers: {
                     "X-CSRF-TOKEN": crsfToken

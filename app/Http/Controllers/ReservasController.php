@@ -90,6 +90,7 @@ class ReservasController extends Controller
         $back = $_POST['background'];
         $end = $_POST['end'];
         $sala = $_POST['sala'];
+        $equipo = $_POST['equipo'];
 
         //Insertando evento a base de datos
         $reserva=new Reserva;
@@ -99,6 +100,11 @@ class ReservasController extends Controller
         $reserva->RESE_COLOR = $back;
         $reserva->RESE_TITULO = $title;
         $reserva->SALA_ID = $sala;
+
+        if($equipo != null && $equipo != 0){
+            $reserva->EQUI_ID = $equipo;
+        }
+        
 
         $reserva->save();
    }

@@ -18,6 +18,7 @@ class TableReservasSeeder extends Seeder
            $reserva->RESE_COLOR = 'rgb(192,192,192)';
            $reserva->RESE_TITULO = 'TALLER DE BASES DE DATOS';
            $reserva->SALA_ID = 1;
+           $reserva->EQUI_ID = NULL;
            $reserva->RESE_CREADOPOR =  'USER_PRUEBA';
            $reserva->save();
 
