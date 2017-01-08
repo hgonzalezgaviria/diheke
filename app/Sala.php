@@ -16,20 +16,20 @@ class Sala extends Model
 	protected $dates = ['SALA_FECHAELIMINADO'];
 	
 	protected $fillable = [
-		'SALA_NOMENCLATURA',
-		'SALA_CAPACIDADMAXIMA',
-		'SALA_TIPOASIGNACION',
 		'SALA_DESCRIPCION',
-		'SALA_NIVEL',
-		'SALA_ESTADO',
-		'SALA_CAPACIDADREAL',
-		'SALA_PRESTABLE',
-		'SALA_AREAREAL',
-		'SALA_AREAUSADA',
+		'SALA_CAPACIDAD',
+		'SALA_FOTOSALA',
+		'SALA_FOTOCROQUIS',
+		'SALA_OBSERVACIONES',
+		'ESTA_ID',
+		'SEDE_ID',
+		'SALA_CREADOPOR'
 	];
     protected $hidden = [
       	"SALA_ID"
     ];
+
+    /*
 	//Un RecursoFisico tiene un EspacioFisico
 	public function espacioFisico()
 	{
@@ -55,12 +55,18 @@ class Sala extends Model
 		$foreingKey = 'TIRF_ID';
 		return $this->belongsTo(TipoRecursoFisico::class, $foreingKey);
 	}
+
+	*/
+
+
     /**
      * Retorna un array de las recursos existentes. Se utiliza en Form::select
      *
      * @param  null
      * @return Array
      */
+
+    /*
     public static function getSalas()
     {
         $recursos = self::orderBy('SALA_ID')
@@ -77,6 +83,8 @@ class Sala extends Model
                         ->get();
         return $recursos;
     }
+
+    */
 
 
 

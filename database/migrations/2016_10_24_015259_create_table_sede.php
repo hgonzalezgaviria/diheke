@@ -18,12 +18,6 @@ class CreateTableSede extends Migration
             $table->string('SEDE_DESCRIPCION', 300);
             $table->string('SEDE_DIRECCION', 300);
             $table->string('SEDE_OBSERVACIONES', 300);
-            $table->integer('USER_ID')->unsigned();
-
-            $table->foreign('USER_ID')
-                  ->references('USER_ID')->on('USERS')
-                  ->onDelete('cascade');
-
 
             //Traza
             $table->string('SEDE_CREADOPOR')

@@ -14,5 +14,11 @@ class DatabaseSeeder extends Seeder
         $this->call(ParametrizacionTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(RegFakerTableSeeder::class);
+        $this->call(TableSedesSeeder::class);
+        $this->call(TableTiposestadosSeeder::class);
+        $this->call(TableEstadosSeeder::class);
+        $this->call(TableSalasSeeder::class);
+        $this->call(TableReservasSeeder::class);
+        
     }
 }

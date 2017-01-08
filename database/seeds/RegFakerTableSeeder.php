@@ -20,6 +20,7 @@ class RegFakerTableSeeder extends Seeder
 		$this->command->info('----Creando RECURSOS');
 		$arrRecursos = [];
 		for ($i=1; $i < rand(3,6); $i++) { 
+			$this->command->info('------- Inicio Recurso '.$i);
 			$model = new reservas\Recurso;
 			$model->RECU_DESCRIPCION = 'Recurso '.$i;
 			$model->RECU_VERSION = $i;
@@ -27,9 +28,9 @@ class RegFakerTableSeeder extends Seeder
 			$model->RECU_CREADOPOR = $username;
 			$model->save();
 			array_push($arrRecursos, $model);
+			$this->command->info('------- Fin Recurso '.$i);
 		}
-
-
+		$this->command->info('----Fin Crear RECURSOS');
 
 
 /*

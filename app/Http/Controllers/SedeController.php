@@ -116,21 +116,21 @@ class SedeController extends Controller
 		]);
 
 		//Permite seleccionar los datos que se desean guardar.
-		$espacioFisico = new Sede;
-		$espacioFisico->ESFI_DESCRIPCION = Input::get('ESFI_DESCRIPCION');
-		$espacioFisico->ESFI_AREA = Input::get('ESFI_AREA');
-		$espacioFisico->ESFI_NRONIVELES = Input::get('ESFI_NRONIVELES');
-		$espacioFisico->ESFI_NOMBRE = Input::get('ESFI_NOMBRE');
-		$espacioFisico->ESFI_NOMENCLATURA = Input::get('ESFI_NOMENCLATURA');
-		$espacioFisico->TIPO_ID = Input::get('TIPO_ID'); //Relación con TipoPosesion
-		$espacioFisico->TIEF_ID = Input::get('TIEF_ID'); //Relación con TipoSede
-		$espacioFisico->LOCA_ID = Input::get('LOCA_ID'); //Relación con Localidad
-        $espacioFisico->ESFI_CREADOPOR = auth()->user()->username;
+		$sede = new Sede;
+		$sede->ESFI_DESCRIPCION = Input::get('ESFI_DESCRIPCION');
+		$sede->ESFI_AREA = Input::get('ESFI_AREA');
+		$sede->ESFI_NRONIVELES = Input::get('ESFI_NRONIVELES');
+		$sede->ESFI_NOMBRE = Input::get('ESFI_NOMBRE');
+		$sede->ESFI_NOMENCLATURA = Input::get('ESFI_NOMENCLATURA');
+		$sede->TIPO_ID = Input::get('TIPO_ID'); //Relación con TipoPosesion
+		$sede->TIEF_ID = Input::get('TIEF_ID'); //Relación con TipoSede
+		$sede->LOCA_ID = Input::get('LOCA_ID'); //Relación con Localidad
+        $sede->ESFI_CREADOPOR = auth()->user()->username;
         //Se guarda modelo
-		$espacioFisico->save();
+		$sede->save();
 
 		// redirecciona al index de controlador
-		Session::flash('message', 'Espacio Fisico '.$espacioFisico->ESFI_ID.' creado exitosamente!');
+		Session::flash('message', 'Espacio Fisico '.$sede->ESFI_ID.' creado exitosamente!');
 		return redirect()->to('sede');
 	}
 
@@ -144,10 +144,10 @@ class SedeController extends Controller
 	public function show($ESFI_ID)
 	{
 		// Se obtiene el registro
-		$espacioFisico = Sede::findOrFail($ESFI_ID);
+		$sede = Sede::findOrFail($ESFI_ID);
 
 		// Muestra la vista y pasa el registro
-		return view('sede/show', compact('espacioFisico'));
+		return view('sede/show', compact('sede'));
 	}
 
 
@@ -160,7 +160,7 @@ class SedeController extends Controller
 	public function edit($ESFI_ID)
 	{
 		// Se obtiene el registro a modificar
-		$espacioFisico = Sede::findOrFail($ESFI_ID);
+		$sede = Sede::findOrFail($ESFI_ID);
 
 		$tiposPosesiones = TipoPosesion::all();
 		$arrTiposPosesiones = [];
@@ -195,7 +195,7 @@ class SedeController extends Controller
 		// Muestra el formulario de edición y pasa el registro a editar
 		// y arreglos para llenar los Selects
 		return view('sede/edit', compact(
-			'espacioFisico',
+			'sede',
 			'arrTiposPosesiones',
 			'arrTiposEspaciosFisicos',
 			'arrLocalidades'
@@ -224,22 +224,22 @@ class SedeController extends Controller
 		]);
 
 		// Se obtiene el registro
-		$espacioFisico = Sede::findOrFail($ESFI_ID);
+		$sede = Sede::findOrFail($ESFI_ID);
 
-		$espacioFisico->ESFI_DESCRIPCION = Input::get('ESFI_DESCRIPCION');
-		$espacioFisico->ESFI_AREA = Input::get('ESFI_AREA');
-		$espacioFisico->ESFI_NRONIVELES = Input::get('ESFI_NRONIVELES');
-		$espacioFisico->ESFI_NOMBRE = Input::get('ESFI_NOMBRE');
-		$espacioFisico->ESFI_NOMENCLATURA = Input::get('ESFI_NOMENCLATURA');
-		$espacioFisico->TIPO_ID = Input::get('TIPO_ID'); //Relación con TipoPosesion
-		$espacioFisico->TIEF_ID = Input::get('TIEF_ID'); //Relación con TipoSede
-		$espacioFisico->LOCA_ID = Input::get('LOCA_ID'); //Relación con Localidad
-        $espacioFisico->ESFI_MODIFICADOPOR = auth()->user()->username;
+		$sede->ESFI_DESCRIPCION = Input::get('ESFI_DESCRIPCION');
+		$sede->ESFI_AREA = Input::get('ESFI_AREA');
+		$sede->ESFI_NRONIVELES = Input::get('ESFI_NRONIVELES');
+		$sede->ESFI_NOMBRE = Input::get('ESFI_NOMBRE');
+		$sede->ESFI_NOMENCLATURA = Input::get('ESFI_NOMENCLATURA');
+		$sede->TIPO_ID = Input::get('TIPO_ID'); //Relación con TipoPosesion
+		$sede->TIEF_ID = Input::get('TIEF_ID'); //Relación con TipoSede
+		$sede->LOCA_ID = Input::get('LOCA_ID'); //Relación con Localidad
+        $sede->ESFI_MODIFICADOPOR = auth()->user()->username;
         //Se guarda modelo
-		$espacioFisico->save();
+		$sede->save();
 
 		// redirecciona al index de controlador
-		Session::flash('message', 'Espacio Fisico '.$espacioFisico->ESFI_ID.' modificado exitosamente!');
+		Session::flash('message', 'Espacio Fisico '.$sede->ESFI_ID.' modificado exitosamente!');
 		return redirect()->to('sede');
 	}
 
@@ -251,16 +251,16 @@ class SedeController extends Controller
 	 */
 	public function destroy($ESFI_ID, $showMsg=True)
 	{
-		$espacioFisico = Sede::findOrFail($ESFI_ID);
+		$sede = Sede::findOrFail($ESFI_ID);
 
 		// delete
-        $espacioFisico->ESFI_ELIMINADOPOR = auth()->user()->username;
-		$espacioFisico->save();
-		$espacioFisico->delete();
+        $sede->ESFI_ELIMINADOPOR = auth()->user()->username;
+		$sede->save();
+		$sede->delete();
 
 		// redirecciona al index de controlador
 		if($showMsg){
-			Session::flash('message', 'Espacio Fisico '.$espacioFisico->ESFI_ID.' eliminado exitosamente!');
+			Session::flash('message', 'Espacio Fisico '.$sede->ESFI_ID.' eliminado exitosamente!');
 			return redirect()->to('sede');
 		}
 	}
