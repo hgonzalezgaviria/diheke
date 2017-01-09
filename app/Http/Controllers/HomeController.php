@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $sedes = \reservas\Sede::getEspaciosFisicos();
+        $sedes = \reservas\Sede::getSedes();
         $salas = \reservas\Sala::getSalas();
         return view('home', compact('sedes', 'salas'));
     }

@@ -38,39 +38,27 @@
 
 							<li role="separator" class="divider"></li>
 							
-							<li><a href="{{ url('/recursos') }}"><i class="fa fa-btn fa-key"></i> Recursos de Salas</a></li>
+							<li>
+								<a href="{{ url('/sedes') }}">
+									<i class="fa fa-btn fa-key"></i> Sedes
+								</a>
+							</li>
+							<li>
+								<a href="{{ url('/salas') }}">
+									<i class="fa fa-btn fa-key"></i> Salas
+								</a>
+							</li>
 
 							<li role="separator" class="divider"></li>
 							
-							<li><a href="{{ url('/elementorecursofisico') }}"><i class="fa fa-btn fa-key"></i> Elementos Recursos Físicos</a></li>
-
-							<li><a href="{{ url('/estadoelementorecursofisico') }}"><i class="fa fa-btn fa-key"></i> Estado Elemento Recursos Físicos</a></li>
-
-							<li role="separator" class="divider"></li>
-							
-							<li><a href="{{ url('/espaciofisico') }}"><i class="fa fa-btn fa-key"></i> Espacios Físicos </a></li>
-
-							<li><a href="{{ url('/tipoespaciofisico') }}"><i class="fa fa-btn fa-key"></i> Tipos de Espacios Físicos </a></li>
-
-							<li><a href="{{ url('/tipoposesion') }}"><i class="fa fa-btn fa-key"></i> Tipos de Posesión </a></li>
-
-							<li><a href="{{ url('/localidad') }}"><i class="fa fa-btn fa-key"></i> Localidades </a></li>
-
-							<li><a href="{{ url('/tiporecursofisico') }}"><i class="fa fa-btn fa-key"></i> Tipos de Recurso Físico </a></li>
-
-							<li><a href="{{ url('/situacionrecursofisico') }}"><i class="fa fa-btn fa-key"></i> Situaciones Recursos Físicos</a></li>
-
-							<li><a href="{{ url('/recursofisico') }}"><i class="fa fa-btn fa-key"></i> Recursos Físicos </a></li>
 
 							<li role="separator" class="divider"></li>
 
-							<li><a href="{{ url('/tipounidad') }}"><i class="fa fa-btn fa-key"></i> Tipos de Unidades</a></li>
-
-							<li><a href="{{ url('/unidad') }}"><i class="fa fa-btn fa-key"></i> Unidades </a></li>
-
-							<li role="separator" class="divider"></li>
-
-							<li><a href="{{ url('/usuarios') }}"><i class="fa fa-btn fa-users"></i> Usuarios Locales</a></li>
+							<li>
+								<a href="{{ url('/usuarios') }}">
+									<i class="fa fa-btn fa-users"></i> Usuarios Locales
+								</a>
+							</li>
 
 						</ul>
 					</li>

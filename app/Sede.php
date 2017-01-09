@@ -18,47 +18,23 @@ class Sede extends Model
 	const DELETED_AT = 'SEDE_FECHAELIMINADO';
 	protected $dates = ['SEDE_FECHAELIMINADO'];
 	
+
 	protected $fillable = [
 		'SEDE_DESCRIPCION',
-		'SEDE_NOMBRE',
-		'SEDE_NRONIVELES',
-		'SEDE_NOMENCLATURA',
-		'SEDE_AREA',
-		'SEDE_CREADOPOR',
-		'SEDE_MODIFICADOPOR'
+		'SEDE_DIRECCION',
+		'SEDE_OBSERVACIONES',
 	];
 
-	//Un EspacioFisico tiene un TipoEspacioFisico
-	public function tipoEspacioFisico()
-	{
-		$foreingKey = 'TIEF_ID';
-		return $this->belongsTo(TipoEspacioFisico::class, $foreingKey);
-	}
-
-	//Un EspacioFisico tiene un TipoPosesion
-	public function tipoPosesion()
-	{
-		$foreingKey = 'TIPO_ID';
-		return $this->belongsTo(TipoPosesion::class, $foreingKey);
-	}
-	
-	//Un EspacioFisico tiene una Localidad
-	public function localidad()
-	{
-		$foreingKey = 'LOCA_ID';
-		return $this->belongsTo(Localidad::class, $foreingKey);
-	}
-
-	//Un EspacioFisico tiene muchos RecursoFisico
-	public function recursosFisicos()
+	//Una Sede tiene muchas Salas
+	public function salas()
 	{
 		$foreingKey = 'SEDE_ID';
-		return $this->hasMany(RecursoFisico::class, $foreingKey);
+		return $this->hasMany(Sala::class, $foreingKey);
 	}
 	
 
     /**
-     * Retorna un array de las recursos existentes. Se utiliza en Form::select
+     * Retorna un array de las sedes existentes. Se utiliza en Form::select
      *
      * @param  null
      * @return Array

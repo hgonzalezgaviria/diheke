@@ -14,7 +14,7 @@
 <div class="col-xs-2"><h3>Sedes</h3>
 	<ul class="nav nav-tabs tabs-left">
 		@foreach($sedes as $sede)
-		<li><a href="#Sede{{$sede->ESFI_ID}}" data-toggle="tab">{{$sede->ESFI_DESCRIPCION}}</a></li>
+		<li><a href="#Sede{{$sede->SEDE_ID}}" data-toggle="tab">{{$sede->SEDE_DESCRIPCION}}</a></li>
 		@endforeach
 	</ul>
 </div>
@@ -23,17 +23,17 @@
 	<div class="tab-content">
 <h3>Salas</h3>
 		@foreach($sedes as $sede)
-		<div class="tab-pane fade" id="Sede{{$sede->ESFI_ID}}">
+		<div class="tab-pane fade" id="Sede{{$sede->SEDE_ID}}">
 			@foreach($salas as $sala)
-			@if($sala->ESFI_ID == $sede->ESFI_ID)
-			<a href="{{ url('reservas/show?sede='.$sala->ESFI_ID.'&sala='.$sala->REFI_ID) }}">
+			@if($sala->SEDE_ID == $sede->SEDE_ID)
+			<a href="{{ url('reservas/show?sede='.$sala->SEDE_ID.'&sala='.$sala->SALA_ID) }}">
 			<div class="col-md-4 zoom-in-hover">
 				<div class="panel panel-default">
-					<div class="panel-heading">Sala {{$sala->REFI_ID}} en Sede {{$sala->ESFI_ID}}</div>
+					<div class="panel-heading">Sala {{$sala->SALA_ID}} en Sede {{$sala->SEDE_ID}}</div>
 					<div class="panel-body">
-						{{$sala->REFI_DESCRIPCION}}<br>
-						Cantidad de equipos: {{$sala->REFI_CAPACIDADREAL}}<br>
-						Disponible: {{$sala->REFI_PRESTABLE ? 'SI' : 'NO'}}<br>
+						{{$sala->SALA_DESCRIPCION}}<br>
+						Cantidad de equipos: {{$sala->SALA_CAPACIDADREAL}}<br>
+						Disponible: {{$sala->SALA_PRESTABLE ? 'SI' : 'NO'}}<br>
 					</div>
 				</div>
 			</div>

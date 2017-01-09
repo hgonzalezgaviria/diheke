@@ -2,7 +2,7 @@
 	
 use Illuminate\Database\Seeder;
 
-	class UsersTableSeeder extends Seeder {
+	class TableUsersSeeder extends Seeder {
 
 		public function run() {
 
@@ -13,7 +13,7 @@ use Illuminate\Database\Seeder;
                 'username' => 'admin',
                 'email' => 'admin@correo.com',
                 'password'  => \Hash::make('123'),
-                'ROLE_ID' => reservas\Rol::where('ROLE_rol','admin')->get()->first()->ROLE_ID,
+                'ROLE_ID' => reservas\Rol::where('ROLE_ROL','admin')->get()->first()->ROLE_ID,
                 'USER_CREADOPOR' => 'SYSTEM',
                 'USER_FECHACREADO' => \Carbon\Carbon::now()->toDateTimeString(),
             ));
@@ -24,7 +24,7 @@ use Illuminate\Database\Seeder;
                 'username' => 'editor1',
                 'email' => 'editor1@correo.com',
                 'password'  => \Hash::make('123'),
-                'ROLE_ID' => reservas\Rol::where('ROLE_rol','editor')->get()->first()->ROLE_ID,
+                'ROLE_ID' => reservas\Rol::where('ROLE_ROL','editor')->get()->first()->ROLE_ID,
                 'USER_CREADOPOR' => 'admin',
                 'USER_FECHACREADO' => \Carbon\Carbon::now()->toDateTimeString(),
             ));
@@ -33,7 +33,7 @@ use Illuminate\Database\Seeder;
                 'username' => 'editor2',
                 'email' => 'editor2@correo.com',
                 'password'  => \Hash::make('123'),
-                'ROLE_ID' => reservas\Rol::where('ROLE_rol','editor')->get()->first()->ROLE_ID,
+                'ROLE_ID' => reservas\Rol::where('ROLE_ROL','editor')->get()->first()->ROLE_ID,
                 'USER_CREADOPOR' => 'admin',
                 'USER_FECHACREADO' => \Carbon\Carbon::now()->toDateTimeString(),
             ));
@@ -44,7 +44,7 @@ use Illuminate\Database\Seeder;
                 'username' => 'estudiante1',
                 'email' => 'estudiante1@correo.com',
                 'password'  => \Hash::make('123'),
-                'ROLE_ID' => reservas\Rol::where('ROLE_rol','estudiante')->get()->first()->ROLE_ID,
+                'ROLE_ID' => reservas\Rol::where('ROLE_ROL','estudiante')->get()->first()->ROLE_ID,
                 'USER_CREADOPOR' => 'admin',
                 'USER_FECHACREADO' => \Carbon\Carbon::now()->toDateTimeString(),
             ));
@@ -53,7 +53,7 @@ use Illuminate\Database\Seeder;
                 'username' => 'estudiante2',
                 'email' => 'estudiante2@correo.com',
                 'password'  => \Hash::make('123'),
-                'ROLE_ID' => reservas\Rol::where('ROLE_rol','estudiante')->get()->first()->ROLE_ID,
+                'ROLE_ID' => reservas\Rol::where('ROLE_ROL','estudiante')->get()->first()->ROLE_ID,
                 'USER_CREADOPOR' => 'admin',
                 'USER_FECHACREADO' => \Carbon\Carbon::now()->toDateTimeString(),
             ));
@@ -64,7 +64,7 @@ use Illuminate\Database\Seeder;
                 'username' => 'docente1',
                 'email' => 'docente1@correo.com',
                 'password'  => \Hash::make('123'),
-                'ROLE_ID' => reservas\Rol::where('ROLE_rol','docente')->get()->first()->ROLE_ID,
+                'ROLE_ID' => reservas\Rol::where('ROLE_ROL','docente')->get()->first()->ROLE_ID,
                 'USER_CREADOPOR' => 'admin',
                 'USER_FECHACREADO' => \Carbon\Carbon::now()->toDateTimeString(),
             ));
@@ -73,7 +73,7 @@ use Illuminate\Database\Seeder;
                 'username' => 'docente2',
                 'email' => 'docente2@correo.com',
                 'password'  => \Hash::make('123'),
-                'ROLE_ID' => reservas\Rol::where('ROLE_rol','docente')->get()->first()->ROLE_ID,
+                'ROLE_ID' => reservas\Rol::where('ROLE_ROL','docente')->get()->first()->ROLE_ID,
                 'USER_CREADOPOR' => 'admin',
                 'USER_FECHACREADO' => \Carbon\Carbon::now()->toDateTimeString(),
             ));
