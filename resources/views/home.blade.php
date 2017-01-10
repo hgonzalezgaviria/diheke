@@ -25,20 +25,20 @@
 		@foreach($sedes as $sede)
 		<div class="tab-pane fade" id="Sede{{$sede->SEDE_ID}}">
 			@foreach($salas as $sala)
-			@if($sala->SEDE_ID == $sede->SEDE_ID)
-			<a href="{{ url('reservas/show?sede='.$sala->SEDE_ID.'&sala='.$sala->SALA_ID) }}">
-			<div class="col-md-4 zoom-in-hover">
-				<div class="panel panel-default">
-					<div class="panel-heading">Sala {{$sala->SALA_ID}} en Sede {{$sala->SEDE_ID}}</div>
-					<div class="panel-body">
-						{{$sala->SALA_DESCRIPCION}}<br>
-						Cantidad de equipos: {{$sala->SALA_CAPACIDADREAL}}<br>
-						Disponible: {{$sala->SALA_PRESTABLE ? 'SI' : 'NO'}}<br>
+				@if($sala->SEDE_ID == $sede->SEDE_ID)
+				<a href="{{ url('reservas/show?sede='.$sala->SEDE_ID.'&sala='.$sala->SALA_ID) }}">
+				<div class="col-md-4 zoom-in-hover">
+					<div class="panel panel-default">
+						<div class="panel-heading">Sala {{$sala->SALA_ID}} en Sede {{$sala->SEDE_ID}}</div>
+						<div class="panel-body">
+							{{$sala->SALA_DESCRIPCION}}<br>
+							Cantidad de equipos: {{$sala->SALA_CAPACIDAD}}<br>
+							Equipos disponibles: {{$sala->equiposDisp}}<br>
+						</div>
 					</div>
 				</div>
-			</div>
-			</a>
-			@endif
+				</a>
+				@endif
 			@endforeach
 		</div>
 		@endforeach

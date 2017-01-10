@@ -18,7 +18,6 @@ class TableSedesSeeder extends Seeder
        $sede->SEDE_CREADOPOR =  'USER_PRUEBA';
        $sede->save();
 
-
        $sede = new \reservas\Sede;
        $sede->SEDE_DESCRIPCION = 'SEDE JENNY';
        $sede->SEDE_DIRECCION =  'AVENIDA 5BN';

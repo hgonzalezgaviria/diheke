@@ -21,10 +21,15 @@ class Estado extends Model
 
 	protected $fillable = [
 		'ESTA_DESCRIPCION', 
-		'TIES_ID', 
+		'TIES_ID',
 		'ESTA_CREADOPOR',
-		'ESTA_FECHACREADO',
-		'ESTA_MODIFICADOPOR'
 	];
 
+	//Un estado tiene muchas Salas
+	public function salas()
+	{
+		$foreingKey = 'ESTA_ID';
+		return $this->hasMany(Sala::class, $foreingKey);
+	}
+	
 }

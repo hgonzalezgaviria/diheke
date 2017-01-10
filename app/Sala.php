@@ -38,7 +38,12 @@ class Sala extends Model
 		return $this->belongsTo(Sede::class, $foreingKey);
 	}
 
-
+	//Una Sala se encuentra en una Sede
+	public function estado()
+	{
+		$foreingKey = 'ESTA_ID';
+		return $this->belongsTo(Estado::class, $foreingKey);
+	}
 
     /**
      * Retorna un array de las salas existentes. Se utiliza en Form::select
@@ -49,7 +54,8 @@ class Sala extends Model
     public static function getSalas()
     {
         $salas = self::orderBy('SALA_ID')
-        				//->where('SALA_ESTADO', 'ACTIVO')
+        				->join('TIPOESTADOS', 'TIPOESTADOS.TIES_ID', '=', 'SALAS.SALA_ID')
+        				//->where('TIES_DESCRIPCION', 'ACTIVO')
                         ->select([
                         	'SALA_ID',
                         	'SALA_DESCRIPCION',
@@ -62,4 +68,14 @@ class Sala extends Model
     }
 
 
+    /**
+     * Retorna la cantidad de equipos disponibles en la sala.
+     *
+     * @param  null
+     * @return integer
+     */
+    public function equiposDisp()
+    {
+    	//return $this->
+	}
 }
