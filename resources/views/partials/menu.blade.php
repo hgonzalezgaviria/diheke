@@ -48,6 +48,11 @@
 									<i class="fa fa-btn fa-key"></i> Salas
 								</a>
 							</li>
+							<li>
+								<a href="{{ url('/recursos') }}">
+									<i class="fa fa-btn fa-key"></i> Recursos
+								</a>
+							</li>
 
 							<li role="separator" class="divider"></li>
 							

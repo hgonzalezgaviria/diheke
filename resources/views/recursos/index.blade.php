@@ -16,6 +16,7 @@
 			</a>
 		</div>
 	</div>
+
 	
 <table class="table table-striped">
 	<thead>
@@ -30,12 +31,13 @@
 	<tbody>
 		@foreach($recursos as $recurso)
 		<tr>
-			<td>{{ $recurso -> descripcion }}</td>
-			<td>{{ $recurso -> version }}</td>
-			<td>{{ $recurso -> observaciones }}</td>
+			<td>{{ $recurso -> RECU_ID }}</td>
+			<td>{{ $recurso -> RECU_DESCRIPCION }}</td>
+			<td>{{ $recurso -> RECU_VERSION }}</td>
+			<td>{{ $recurso -> RECU_OBSERVACIONES }}</td>
 			<td>
 				<!-- Borrar registro (utiliza el método DESTROY /reservas/{reserva_id}/pregs/{id} -->
-				{{ Form::open(array('url' => 'recursos/'.$recurso->id, 'class' => 'pull-right')) }}
+				{{ Form::open(array('url' => 'recursos/'.$recurso->RECU_ID, 'class' => 'pull-right')) }}
 					{{ Form::hidden('_method', 'DELETE') }}
 					
 					{{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Borrar', array('class'=>'btn btn-xs btn-warning', 'type'=>'submit')) }}
@@ -43,12 +45,12 @@
 				{{ Form::close() }}
 
 				<!-- Muestra este registro (Utiliza método show encontrado en GET /reservas/{reserva_id}/pregs/{id} -->
-				<a class="btn btn-small btn-success btn-xs" href="{{ URL::to('recursos/'.$recurso->id) }}">
+				<a class="btn btn-small btn-success btn-xs" href="{{ URL::to('recursos/'.$recurso->RECU_ID) }}">
 					<span class="glyphicon glyphicon-eye-open"></span> Ver
 				</a>
 
 				<!-- Edita este registro (Utiliza método edit encontrado en GET /reservas/{reserva_id}/pregs/{id}/edit -->
-				<a class="btn btn-small btn-info btn-xs" href="{{ URL::to('recursos/'.$recurso->id.'/edit') }}">
+				<a class="btn btn-small btn-info btn-xs" href="{{ URL::to('recursos/'.$recurso->RECU_ID.'/edit') }}">
 					<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
 				</a>
 			</td>

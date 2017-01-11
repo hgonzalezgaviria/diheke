@@ -9,7 +9,7 @@ class Recurso extends Model
 {
 	//Nombre de la tabla en la base de datos
 	protected $table = 'RECURSOS';
-    protected $primaryKey = 'RECU_id';
+    protected $primaryKey = 'RECU_ID';
 
 	//Traza: Nombre de campos en la tabla para auditoría de cambios
 	const CREATED_AT = 'RECU_FECHACREADO';
@@ -19,11 +19,11 @@ class Recurso extends Model
 	protected $dates = ['RECU_FECHAELIMINADO'];
 	
 	protected $fillable = [
-		'RECU_descripcion', 'RECU_version', 'RECU_observaciones'
+		'RECU_DESCRIPCION', 'RECU_VERSION', 'RECU_OBSERVACIONES'
 	];
 
     protected $hidden = [
-      	"RECU_id"
+      	"RECU_ID"
     ];
 
 
@@ -32,26 +32,26 @@ class Recurso extends Model
 	 */
 	public function salas()
 	{
-		$foreingKey = 'RECU_id';
-		$otherKey   = 'SALA_id';
+		$foreingKey = 'RECU_ID';
+		$otherKey   = 'SALA_ID';
 		return $this->belongsToMany(Sala::class, 'RECURSOSALAS', $foreingKey,  $otherKey);
 	}
 
 
     /**
-     * Retorna un array de las recursos existentes. Se utiliza en Form::select
+     * Retorna un array de las recursos exiStentes. Se utiliza en Form::select
      *
      * @param  null
      * @return Array
      */
     public static function getRecursos()
     {
-        $recursos = self::orderBy('RECU_id')
+        $recursos = self::orderBy('RECU_ID')
         				//->where('RECU_ESTADO', 'ACTIVO')
                         ->select([
-                        	'RECU_descripcion',
-                        	'RECU_version',
-                        	'RECU_observaciones',
+                        	'RECU_DESCRIPCION',
+                        	'RECU_VERSION',
+                        	'RECU_OBSERVACIONES',
                         ])->get();
 
         return $recursos;

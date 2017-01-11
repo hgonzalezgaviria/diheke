@@ -46,14 +46,12 @@ class RecursosController extends Controller
      */
     public function index()
     {
-        //Se genera paginación cada $cantPages registros.
-        $cantPages = 10;
         //Se obtienen todas los contratos.
-        $recursos = Recurso::paginate($cantPages);
+        $recursos = Recurso::all();
 
 
         //Se carga la vista y se pasan los registros. ->paginate($cantPages)
-        return view('recursos/index')->with('recursos', $recursos);
+        return view('recursos/index', compact('recursos'));
     }
 
     /**
@@ -76,7 +74,9 @@ class RecursosController extends Controller
     {
         //Validación de datos
         $this->validate(request(), [
-                'descripcion' => ['required', 'max:50']
+                'RECU_DESCRIPCION' => ['required', 'max:50'],
+                'RECU_VERSION' => ['required', 'max:50'],
+                'RECU_OBSERVACIONES' => ['required', 'max:100']
             ]);
         //Guarda todos los datos recibidos del formulario
         $recurso = request()->except(['_token']);
@@ -134,24 +134,26 @@ class RecursosController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update($id)
+    public function update($RECU_ID)
     {
         //Validación de datos
         $this->validate(request(), [
-            'descripcion' => ['required', 'max:50']
+            'RECU_DESCRIPCION' => ['required', 'max:50'],
+            'RECU_VERSION' => ['required', 'max:50'],
+            'RECU_OBSERVACIONES' => ['required', 'max:100']
         ]);
 
         // Se obtiene el registro
-        $recurso = Recurso::find($id);
-        $recurso->descripcion = Input::get('descripcion');
-        $recurso->version = Input::get('version');
-        $recurso->observaciones = Input::get('observaciones');
+        $recurso = Recurso::find($RECU_ID);
+        $recurso->RECU_DESCRIPCION = Input::get('RECU_DESCRIPCION');
+        $recurso->RECU_VERSION = Input::get('RECU_VERSION');
+        $recurso->RECU_OBSERVACIONES = Input::get('RECU_OBSERVACIONES');
         //$recurso->edited_by = auth()->user()->username;
         $recurso->save();
 
         // redirecciona al index de controlador
         Session::flash('message', 'Recurso actualizado exitosamente!');
-        return redirect()->to('recursos/'.$id);
+        return redirect()->to('recursos/');
     }
 
     /**

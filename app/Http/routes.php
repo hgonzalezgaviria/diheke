@@ -45,8 +45,7 @@ Route::resource('equipos', 'EquiposController');
 
 
 
-//recursos
-Route::resource('recursos', 'RecursosController');
+
 
 //tipos de estados
 Route::resource('tipoestados', 'TipoestadosController');
@@ -83,3 +82,6 @@ Route::get('cargaEventos{id?}','ReservasController@index');
 Route::post('reservas/guardaEventos', array('as' => 'guardaEventos','uses' => 'ReservasController@create'));
 Route::post('actualizaEventos','ReservasController@update');
 Route::post('eliminaEvento','ReservasController@delete');
+
+//recursos
+Route::resource('recursos', 'RecursosController');

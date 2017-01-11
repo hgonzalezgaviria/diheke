@@ -17,18 +17,18 @@
 		{{ Form::open(array('url' => 'recursos', 'class' => 'form-horizontal')) }}
 
 	  	<div class="form-group">
-			{{ Form::label('descripcion', 'Descripción') }} 
-			{{ Form::text('descripcion', old('descripcion'), array('class' => 'form-control', 'required')) }}
+			{{ Form::label('RECU_DESCRIPCION', 'Descripción') }} 
+			{{ Form::text('RECU_DESCRIPCION', old('RECU_DESCRIPCION'), array('class' => 'form-control', 'required')) }}
 		</div>
 
 	  	<div class="form-group">
-			{{ Form::label('version', 'Versión') }} 
-			{{ Form::text('version', old('version'), array('class' => 'form-control')) }}
+			{{ Form::label('RECU_VERSION', 'Versión') }} 
+			{{ Form::text('RECU_VERSION', old('RECU_VERSION'), array('class' => 'form-control')) }}
 		</div>
 
 	  	<div class="form-group">
-			{{ Form::label('observaciones', 'Observaciones') }} 
-			{{ Form::text('observaciones', old('observaciones'), array('class' => 'form-control')) }}
+			{{ Form::label('RECU_OBSERVACIONES', 'Observaciones') }} 
+			{{ Form::text('RECU_OBSERVACIONES', old('RECU_OBSERVACIONES'), array('class' => 'form-control')) }}
 		</div>
 
 		<div class="text-right">
