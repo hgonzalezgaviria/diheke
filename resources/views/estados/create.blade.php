@@ -17,19 +17,17 @@
 		{{ Form::open(array('url' => 'estados', 'class' => 'form-horizontal')) }}
 
 	  	<div class="form-group">
-			{{ Form::label('descripcion', 'Descripción') }} 
-			{{ Form::text('descripcion', old('descripcion'), array('class' => 'form-control', 'required')) }}
+			{{ Form::label('ESTA_DESCRIPCION', 'Descripción') }} 
+			{{ Form::text('ESTA_DESCRIPCION', old('ESTA_DESCRIPCION'), array('class' => 'form-control', 'required')) }}
 		</div>
 
-	  	<div class="form-group">
-			{{ Form::label('tipo_estado', 'Tipo de Estado') }} 
-			{{ Form::select('tipo_nomina', array(
-				'' => 'Seleccione..', 
-				'Q' => 'Quincenal',
-				'M' => 'Mensual'),
-			old('tipo_nomina'), 
-			['class' => 'form-control', 'required']) }}
+
+		<div class="form-group">
+			{{ Form::label('TIES_ID', 'Tipo Estados') }} 
+			{{ Form::select('TIES_ID', [null => 'Seleccione un Tipo Estados...'] + $arrTipoEstados , old('TIES_ID'), ['class' => 'form-control', 'required']) }}
 		</div>
+
+	
 
 		<div class="text-right">
 			{{ Form::button('<i class="fa fa-exclamation" aria-hidden="true"></i> Reset', array('class'=>'btn btn-warning', 'type'=>'reset')) }}
