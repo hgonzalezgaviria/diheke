@@ -38,7 +38,14 @@ class Sala extends Model
 		return $this->belongsTo(Sede::class, $foreingKey);
 	}
 
-	//Una Sala tiene un estado
+	//Una Sala tiene muchos equipos
+	public function equipos()
+	{
+		$foreingKey = 'SALA_ID';
+		return $this->hasMany(Equipo::class, $foreingKey);
+	}
+
+	//Una Sala se encuentra en una Sede
 	public function estado()
 	{
 		$foreingKey = 'ESTA_ID';
@@ -54,7 +61,7 @@ class Sala extends Model
     public static function getSalas()
     {
         $salas = self::orderBy('SALA_ID')
-        				//->join('TIPOESTADOS', 'TIPOESTADOS.TIES_ID', '=', 'SALAS.SALA_ID')
+        				->join('TIPOESTADOS', 'TIPOESTADOS.TIES_ID', '=', 'SALAS.SALA_ID')
         				//->where('TIES_DESCRIPCION', 'ACTIVO')
                         ->select([
                         	'SALA_ID',

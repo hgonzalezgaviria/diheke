@@ -3,18 +3,17 @@
 namespace reservas\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\Route;
 
-use reservas\Http\Requests;
-use reservas\Recurso;
-
-use Session;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Routing\Redirector;
 
+use reservas\Equipo;
 
-class RecursosController extends Controller
+class EquiposController extends Controller
 {
+    //
     public function __construct(Redirector $redirect=null)
     {
         //Requiere que el usuario inicie sesión.
@@ -38,7 +37,6 @@ class RecursosController extends Controller
         }
     }
 
-
     /**
      * Muestra una lista de los registros.
      *
@@ -46,12 +44,13 @@ class RecursosController extends Controller
      */
     public function index()
     {
+        //Se genera paginación cada $cantPages registros.
+        $equipos = Equipo::all();
         //Se obtienen todas los contratos.
-        $recursos = Recurso::all();
 
 
         //Se carga la vista y se pasan los registros. ->paginate($cantPages)
-        return view('recursos/index', compact('recursos'));
+        return view('equipos/index', compact('equipos'));
     }
 
     /**
@@ -62,7 +61,7 @@ class RecursosController extends Controller
     public function create()
     {
         // Carga el formulario para crear un nuevo registro (views/create.blade.php)
-        return view('recursos/create');
+        return view('equipos/create');
     }
 
     /**
@@ -74,15 +73,13 @@ class RecursosController extends Controller
     {
         //Validación de datos
         $this->validate(request(), [
-                'RECU_DESCRIPCION' => ['required', 'max:50'],
-                'RECU_VERSION' => ['required', 'max:50'],
-                'RECU_OBSERVACIONES' => ['required', 'max:100']
+                'descripcion' => ['required', 'max:50']
             ]);
         //Guarda todos los datos recibidos del formulario
-        $recurso = request()->except(['_token']);
+        $tipoestado = request()->except(['_token']);
 
 
-        Recurso::create($recurso);
+        Equipo::create($tipoestado);
 
         //Permite seleccionar los datos que se desean guardar.
         /*
@@ -91,11 +88,11 @@ class RecursosController extends Controller
         $contrato->status = Contrato::NUEVA;
         $contrato->created_by = auth()->user()->username;
         $contrato->save();
-		*/
+        */
 
         // redirecciona al index de controlador
-        Session::flash('message', 'Recurso creado exitosamente!');
-        return redirect()->to('recursos');
+        Session::flash('message', 'Tipo de estado creado exitosamente!');
+        return redirect()->to('equipos');
     }
 
 
@@ -108,9 +105,9 @@ class RecursosController extends Controller
     public function show($id)
     {
         // Se obtiene el registro
-        $recurso = Recurso::find($id);
+        $tipoestado = Equipo::find($id);
         // Muestra la vista y pasa el registro
-        return view('recursos/show')->with('recurso', $recurso);
+        return view('equipos/show')->with('tipoestado', $tipoestado);
     }
 
     /**
@@ -122,10 +119,10 @@ class RecursosController extends Controller
     public function edit($id)
     {
         // Se obtiene el registro
-        $recurso = Recurso::find($id);
+        $tipoestado = Equipo::find($id);
 
         // Muestra el formulario de edición y pasa el registro a editar
-        return view('recursos/edit')->with('recurso', $recurso);
+        return view('equipos/edit')->with('tipoestado', $tipoestado);
     }
 
     /**
@@ -134,26 +131,24 @@ class RecursosController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update($RECU_ID)
+    public function update($id)
     {
         //Validación de datos
         $this->validate(request(), [
-            'RECU_DESCRIPCION' => ['required', 'max:50'],
-            'RECU_VERSION' => ['required', 'max:50'],
-            'RECU_OBSERVACIONES' => ['required', 'max:100']
+            'descripcion' => ['required', 'max:100'],
+            'observaciones' => ['max:500']
         ]);
 
         // Se obtiene el registro
-        $recurso = Recurso::find($RECU_ID);
-        $recurso->RECU_DESCRIPCION = Input::get('RECU_DESCRIPCION');
-        $recurso->RECU_VERSION = Input::get('RECU_VERSION');
-        $recurso->RECU_OBSERVACIONES = Input::get('RECU_OBSERVACIONES');
-        //$recurso->edited_by = auth()->user()->username;
-        $recurso->save();
+        $tipoestado = Equipo::find($id);
+        $tipoestado->descripcion = Input::get('descripcion');
+        $tipoestado->observaciones = Input::get('observaciones');
+        //$tipoestado->edited_by = auth()->user()->username;
+        $tipoestado->save();
 
         // redirecciona al index de controlador
-        Session::flash('message', 'Recurso actualizado exitosamente!');
-        return redirect()->to('recursos/');
+        Session::flash('message', 'Tipo de estado actualizado exitosamente!');
+        return redirect()->to('equipos/'.$id);
     }
 
     /**
@@ -165,13 +160,12 @@ class RecursosController extends Controller
     public function destroy($id)
     {
         // delete
-        $recurso = Recurso::find($id);
-        $recurso->delete();
+        $tipoestado = Equipo::find($id);
+        $tipoestado->delete();
 
         // redirecciona al index de controlador
-        Session::flash('message', 'Recurso '.$id.' borrado!');
-        return redirect()->to('recursos');
+        Session::flash('message', 'Tipo estado '.$id.' borrado!');
+        return redirect()->to('equipos');
     }
-
+    
 }
-

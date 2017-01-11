@@ -31,5 +31,12 @@ class Estado extends Model
 		$foreingKey = 'ESTA_ID';
 		return $this->hasMany(Sala::class, $foreingKey);
 	}
+
+	//Un estado tiene muchas Salas
+	public function equipo()
+	{
+		$foreingKey = 'ESTA_ID';
+		return $this->hasMany(Estado::class, $foreingKey);
+	}
 	
 }

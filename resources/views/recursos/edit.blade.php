@@ -14,28 +14,31 @@
 	<!-- if there are creation errors, they will show here -->
 	{{ Html::ul($errors->all() )}}
 
-		{{ Form::model($recurso, array('action' => array('RecursosController@update', $recurso->id, $recurso->id), 'method' => 'PUT', 'class' => 'form-horizontal')) }}
+		{{ Form::model($recurso, [ 'action' => [ 'RecursosController@update', $recurso->RECU_ID ], 'method' => 'PUT', 'class' => 'form-horizontal' ]) }}
 
 	  	<div class="form-group">
-			{{ Form::label('descripcion', 'Descripción') }} 
-			{{ Form::text('descripcion', old('descripcion'), array('class' => 'form-control', 'required')) }}
+			{{ Form::label('RECU_DESCRIPCION', 'Descripción') }} 
+			{{ Form::text('RECU_DESCRIPCION', old('RECU_DESCRIPCION'), array('class' => 'form-control', 'required')) }}
 		</div>
 
 	  	<div class="form-group">
-			{{ Form::label('version', 'Versión') }} 
-			{{ Form::text('version', old('version'), array('class' => 'form-control')) }}
+			{{ Form::label('RECU_VERSION', 'Versión') }} 
+			{{ Form::text('RECU_VERSION', old('RECU_VERSION'), array('class' => 'form-control')) }}
 		</div>
 
 	  	<div class="form-group">
-			{{ Form::label('observaciones', 'Observaciones') }} 
-			{{ Form::text('observaciones', old('observaciones'), array('class' => 'form-control')) }}
+			{{ Form::label('RECU_OBSERVACIONES', 'Observaciones') }} 
+			{{ Form::text('RECU_OBSERVACIONES', old('RECU_OBSERVACIONES'), array('class' => 'form-control')) }}
 		</div>
 
 	    <div id="btn-form" class="text-right">
+
 	    	{{ Form::button('<i class="fa fa-exclamation" aria-hidden="true"></i> Reset', array('class'=>'btn btn-warning', 'type'=>'reset')) }}
-	        <a class="btn btn-warning" role="button" href="{{ URL::to('reservas/'.$recurso->id ) }}">
+
+	        <a class="btn btn-warning" role="button" href="{{ URL::to('recursos') }}">
 	            <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar
 	        </a>
+
 			{{ Form::button('<i class="fa fa-floppy-o" aria-hidden="true"></i> Actualizar', array('class'=>'btn btn-primary', 'type'=>'submit')) }}
 	    </div>
 
