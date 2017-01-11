@@ -38,6 +38,9 @@ Route::resource('sedes', 'SedeController');
 // Salas (recursofisico)
 Route::resource('salas', 'SalaController');
 
+// Equipos (equipos)
+Route::resource('equipos', 'EquiposController');
+
 /*
 
 

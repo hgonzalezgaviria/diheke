@@ -25,8 +25,23 @@ class Equipo extends Model
 		'ESTA_ID',
 		'EQUI_CREADOPOR'
 	];
+
     protected $hidden = [
       	"EQUI_ID"
     ];
+
+    //Una Sala se encuentra en una Sede
+	public function sala()
+	{
+		$foreingKey = 'SALA_ID';
+		return $this->belongsTo(Sala::class, $foreingKey);
+	}
+
+	//Un Equipo tiene un estado
+	public function estado()
+	{
+		$foreingKey = 'ESTA_ID';
+		return $this->belongsTo(Estado::class, $foreingKey);
+	}
 
 }

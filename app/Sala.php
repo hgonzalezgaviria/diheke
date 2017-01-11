@@ -38,6 +38,13 @@ class Sala extends Model
 		return $this->belongsTo(Sede::class, $foreingKey);
 	}
 
+	//Una Sala tiene muchos equipos
+	public function equipos()
+	{
+		$foreingKey = 'SALA_ID';
+		return $this->hasMany(Equipo::class, $foreingKey);
+	}
+
 	//Una Sala se encuentra en una Sede
 	public function estado()
 	{
