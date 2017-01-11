@@ -50,23 +50,10 @@ class EstadosController extends Controller
      */
     public function index()
     {
-        //Se genera paginación cada $cantPages registros.
-        //$cantPages = 10;
-        //Se obtienen todas los contratos.
-        //$estados = Estado::paginate($cantPages);
-
-        $estados = DB::table('estados')
-            ->join('tipoestados', 'estados.tipo_estado', '=', 'tipoestados.id')
-            ->select('estados.*', 
-                     'tipoestados.id as tipoestado_id',
-                     'tipoestados.descripcion as tipoestado_desc')
-            ->get();
+       $estados=Estado::all();
 
 
-        //print_r($estados);
-
-
-        //Se carga la vista y se pasan los registros. ->paginate($cantPages)
+        //Se carga la vista y se pasan los registros. 
         return view('estados/index')->with('estados', $estados);
     }
 
@@ -169,7 +156,7 @@ class EstadosController extends Controller
     {
         //Validación de datos
         $this->validate(request(), [
-            'descripcion' => ['required', 'max:100'],
+            'ESTA_DESCRIPCION' => ['required', 'max:100'],
             'observaciones' => ['max:500']
         ]);
 

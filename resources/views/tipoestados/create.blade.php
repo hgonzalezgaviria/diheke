@@ -17,18 +17,18 @@
 		{{ Form::open(array('url' => 'tipoestados', 'class' => 'form-horizontal')) }}
 
 	  	<div class="form-group">
-			{{ Form::label('descripcion', 'Descripción') }} 
-			{{ Form::text('descripcion', old('descripcion'), array('class' => 'form-control', 'required')) }}
+			{{ Form::label('TIES_DESCRIPCION', 'Descripción') }} 
+			{{ Form::text('TIES_DESCRIPCION', old('TIES_DESCRIPCION'), array('class' => 'form-control', 'required')) }}
 		</div>
 
 	  	<div class="form-group">
-			{{ Form::label('observaciones', 'Observaciones') }} 
-			{{ Form::text('observaciones', old('observaciones'), array('class' => 'form-control')) }}
+			{{ Form::label('TIES_OBSERVACIONES', 'Observaciones') }} 
+			{{ Form::text('TIES_OBSERVACIONES', old('TIES_OBSERVACIONES'), array('class' => 'form-control', 'required')) }}
 		</div>
 
 		<div class="text-right">
 			{{ Form::button('<i class="fa fa-exclamation" aria-hidden="true"></i> Reset', array('class'=>'btn btn-warning', 'type'=>'reset')) }}
-			<a class="btn btn-warning" role="button" href="{{ URL::to('contratos') }}">
+			<a class="btn btn-warning" role="button" href="{{ URL::to('tipoestados') }}">
 				<i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar
 			</a>
 			{{ Form::button('<i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar', array('class'=>'btn btn-primary', 'type'=>'submit')) }}

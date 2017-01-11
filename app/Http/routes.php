@@ -41,17 +41,17 @@ Route::resource('salas', 'SalasController');
 // Equipos (equipos)
 Route::resource('equipos', 'EquiposController');
 
-/*
-
-
-
-
-
 //tipos de estados
 Route::resource('tipoestados', 'TipoestadosController');
 
 //estados
 Route::resource('estados', 'EstadosController');
+
+
+/*
+
+
+
 
 
 

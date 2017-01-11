@@ -162,14 +162,14 @@ class RecursosController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($RECU_ID)
     {
         // delete
-        $recurso = Recurso::find($id);
+        $recurso = Recurso::find($RECU_ID);
         $recurso->delete();
 
         // redirecciona al index de controlador
-        Session::flash('message', 'Recurso '.$id.' borrado!');
+        Session::flash('message', 'Recurso '.$RECU_ID.' borrado!');
         return redirect()->to('recursos');
     }
 

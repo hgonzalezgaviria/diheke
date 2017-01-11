@@ -26,4 +26,11 @@ class TipoEstado extends Model
 		'TIES_MODIFICADOPOR'
 	];
 
+	//Un estado tiene muchas Salas
+	public function estados()
+	{
+		$foreingKey = 'TIES_ID';
+		return $this->hasMany(Estados::class, $foreingKey);
+	}
+
 }

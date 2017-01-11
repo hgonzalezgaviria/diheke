@@ -31,11 +31,11 @@
 
 		@foreach($estados as $estado)
 		<tr>
-			<td>{{ $estado -> descripcion }}</td>
-			<td>{{ $estado -> tipoestado_desc }}</td>
+			<td>{{ $estado -> ESTA_DESCRIPCION }}</td>
+			<td>{{ $estado -> tipoEstado -> TIES_DESCRIPCION  }}</td>
 			<td>
 				<!-- Borrar registro (utiliza el método DESTROY /reservas/{reserva_id}/pregs/{id} -->
-				{{ Form::open(array('url' => 'estados/'.$estado->id, 'class' => 'pull-right')) }}
+				{{ Form::open(array('url' => 'estados/'.$estado->ESTA_ID, 'class' => 'pull-right')) }}
 					{{ Form::hidden('_method', 'DELETE') }}
 					
 					{{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Borrar', array('class'=>'btn btn-xs btn-warning', 'type'=>'submit')) }}
@@ -43,12 +43,12 @@
 				{{ Form::close() }}
 
 				<!-- Muestra este registro (Utiliza método show encontrado en GET /reservas/{reserva_id}/pregs/{id} -->
-				<a class="btn btn-small btn-success btn-xs" href="{{ URL::to('estados/'.$estado->id) }}">
+				<a class="btn btn-small btn-success btn-xs" href="{{ URL::to('estados/'.$estado->ESTA_ID) }}">
 					<span class="glyphicon glyphicon-eye-open"></span> Ver
 				</a>
 
 				<!-- Edita este registro (Utiliza método edit encontrado en GET /reservas/{reserva_id}/pregs/{id}/edit -->
-				<a class="btn btn-small btn-info btn-xs" href="{{ URL::to('estados/'.$estado->id.'/edit') }}">
+				<a class="btn btn-small btn-info btn-xs" href="{{ URL::to('estados/'.$estado->ESTA_ID.'/edit') }}">
 					<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
 				</a>
 			</td>

@@ -32,11 +32,19 @@ class Estado extends Model
 		return $this->hasMany(Sala::class, $foreingKey);
 	}
 
-	//Un estado tiene muchas Salas
+	//Un estado tiene muchas equipos
 	public function equipo()
 	{
 		$foreingKey = 'ESTA_ID';
-		return $this->hasMany(Estado::class, $foreingKey);
+		return $this->hasMany(Equipo::class, $foreingKey);
 	}
+
+	//Un estado tiene tipo estado
+	public function tipoEstado()
+	{
+		$foreingKey = 'TIES_ID';
+		return $this->belongsTo(TipoEstado::class, $foreingKey);
+	}
+	
 	
 }

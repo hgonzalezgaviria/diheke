@@ -14,21 +14,21 @@
 	<!-- if there are creation errors, they will show here -->
 	{{ Html::ul($errors->all() )}}
 
-		{{ Form::model($tipoestado, array('action' => array('TipoestadosController@update', $tipoestado->id, $tipoestado->id), 'method' => 'PUT', 'class' => 'form-horizontal')) }}
+		{{ Form::model($tipoestado, array('action' => array('TipoestadosController@update', $tipoestado->TIES_ID), 'method' => 'PUT', 'class' => 'form-horizontal')) }}
 
 	  	<div class="form-group">
-			{{ Form::label('descripcion', 'Descripción') }} 
-			{{ Form::text('descripcion', old('descripcion'), array('class' => 'form-control', 'required')) }}
+			{{ Form::label('TIES_DESCRIPCION', 'Descripción') }} 
+			{{ Form::text('TIES_DESCRIPCION', old('TIES_DESCRIPCION'), array('class' => 'form-control', 'required')) }}
 		</div>
 
 	  	<div class="form-group">
-			{{ Form::label('observaciones', 'Observaciones') }} 
-			{{ Form::text('observaciones', old('observaciones'), array('class' => 'form-control')) }}
+			{{ Form::label('TIES_OBSERVACIONES', 'Observaciones') }} 
+			{{ Form::text('TIES_OBSERVACIONES', old('TIES_OBSERVACIONES'), array('class' => 'form-control')) }}
 		</div>
 
 	    <div id="btn-form" class="text-right">
 	    	{{ Form::button('<i class="fa fa-exclamation" aria-hidden="true"></i> Reset', array('class'=>'btn btn-warning', 'type'=>'reset')) }}
-	        <a class="btn btn-warning" role="button" href="{{ URL::to('reservas/'.$tipoestado->id ) }}">
+	        <a class="btn btn-warning" role="button" href="{{ URL::to('tipoestados') }}">
 	            <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar
 	        </a>
 			{{ Form::button('<i class="fa fa-floppy-o" aria-hidden="true"></i> Actualizar', array('class'=>'btn btn-primary', 'type'=>'submit')) }}

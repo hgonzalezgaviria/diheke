@@ -75,7 +75,9 @@ class TipoEstadosController extends Controller
     {
         //Validación de datos
         $this->validate(request(), [
-                'descripcion' => ['required', 'max:50']
+                'TIES_DESCRIPCION' => ['required', 'max:50'],
+                'TIES_OBSERVACIONES' => ['required', 'max:100']
+                
             ]);
         //Guarda todos los datos recibidos del formulario
         $tipoestado = request()->except(['_token']);
@@ -133,24 +135,24 @@ class TipoEstadosController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update($id)
+    public function update($TIES_ID)
     {
         //Validación de datos
         $this->validate(request(), [
-            'descripcion' => ['required', 'max:100'],
-            'observaciones' => ['max:500']
+                 'TIES_DESCRIPCION' => ['required', 'max:50'],
+                'TIES_OBSERVACIONES' => ['required', 'max:100']
         ]);
 
         // Se obtiene el registro
-        $tipoestado = Tipoestado::find($id);
-        $tipoestado->descripcion = Input::get('descripcion');
-        $tipoestado->observaciones = Input::get('observaciones');
+        $tipoestado = Tipoestado::find($TIES_ID);
+        $tipoestado->TIES_DESCRIPCION = Input::get('TIES_DESCRIPCION');
+        $tipoestado->TIES_OBSERVACIONES = Input::get('TIES_OBSERVACIONES');
         //$tipoestado->edited_by = auth()->user()->username;
         $tipoestado->save();
 
         // redirecciona al index de controlador
         Session::flash('message', 'Tipo de estado actualizado exitosamente!');
-        return redirect()->to('tipoestados/'.$id);
+        return redirect()->to('tipoestados/');
     }
 
     /**
@@ -159,14 +161,14 @@ class TipoEstadosController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($TIES_ID)
     {
         // delete
-        $tipoestado = Tipoestado::find($id);
+        $tipoestado = Tipoestado::find($TIES_ID);
         $tipoestado->delete();
 
         // redirecciona al index de controlador
-        Session::flash('message', 'Tipo estado '.$id.' borrado!');
+        Session::flash('message', 'Tipo estado '.$TIES_ID.' borrado!');
         return redirect()->to('tipoestados');
     }
 
