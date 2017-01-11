@@ -10,77 +10,51 @@
 	{{ Form::open([ 'url' => 'salas', 'class' => 'form-horizontal' ]) }}
 
 	  	<div class="form-group">
-			{{ Form::label('REFI_NOMENCLATURA', 'Nomenclatura') }} 
-			{{ Form::text('REFI_NOMENCLATURA', old('REFI_NOMENCLATURA'), [ 'class' => 'form-control', 'max' => '20', 'required' ]) }}
+			{{ Form::label('SALA_DESCRIPCION', 'Descripción') }} 
+			{{ Form::text('SALA_DESCRIPCION', old('SALA_DESCRIPCION'), [ 'class' => 'form-control', 'max' => '300', 'required' ]) }}
 		</div>
 
 	  	<div class="form-group">
-			{{ Form::label('REFI_CAPACIDADMAXIMA', 'Capacidad Máxima') }} 
-			{{ Form::number('REFI_CAPACIDADMAXIMA', old('REFI_CAPACIDADMAXIMA'), [ 'class' => 'form-control', 'min' => '0', 'required' ]) }}
+			{{ Form::label('SALA_CAPACIDAD', 'Capacidad') }} 
+			{{ Form::number('SALA_CAPACIDAD', old('SALA_CAPACIDAD'), [ 'class' => 'form-control', 'min' => '0', 'required' ]) }}
+		</div>
+
+
+		<div class="form-group">
+			{{ Form::label('SALA_FOTOSALA', 'Foto Sala') }}
+			{{ Form::file('SALA_FOTOSALA', [ 
+				'class' => 'form-control',
+				'accept' => 'image/*',
+				'max' => '500',
+				'required',
+			]) }}
+		</div>
+
+		<div class="form-group">
+			{{ Form::label('SALA_FOTOCROQUIS', 'Foto Croquis') }}
+			{{ Form::file('SALA_FOTOCROQUIS', [ 
+				'class' => 'form-control',
+				'accept' => 'image/*',
+				'max' => '500',
+				'required',
+			]) }}
 		</div>
 
 
 	  	<div class="form-group">
-			{{ Form::label('REFI_TIPOASIGNACION', 'Tipo Asignación') }} 
-			{{ Form::text('REFI_TIPOASIGNACION', old('REFI_TIPOASIGNACION'), [ 'class' => 'form-control', 'max' => '1', 'required' ]) }}
+			{{ Form::label('SALA_OBSERVACIONES', 'Descripción') }} 
+			{{ Form::text('SALA_OBSERVACIONES', old('SALA_OBSERVACIONES'), [ 'class' => 'form-control', 'max' => '300', 'required' ]) }}
 		</div>
 
-	  	<div class="form-group">
-			{{ Form::label('REFI_DESCRIPCION', 'Descripción') }} 
-			{{ Form::text('REFI_DESCRIPCION', old('REFI_DESCRIPCION'), [ 'class' => 'form-control', 'max' => '100', 'required' ]) }}
-		</div>
 
 		<div class="form-group">
-			{{ Form::label('REFI_NIVEL', 'Número de niveles') }} 
-			{{ Form::number('REFI_NIVEL', old('REFI_NIVEL'), [ 'class' => 'form-control', 'min' => '0', 'max' => '25', 'required' ]) }}
+			{{ Form::label('ESTA_ID', 'Estado') }} 
+			{{ Form::select('ESTA_ID', [null => 'Seleccione un estado...'] + $arrEstadosSala , old('ESTA_ID'), ['class' => 'form-control', 'required']) }}
 		</div>
-
+		
 		<div class="form-group">
-			{{ Form::label('REFI_ESTADO', 'Estado') }} 
-			{{ Form::text('REFI_ESTADO', old('REFI_ESTADO'), [ 'class' => 'form-control', 'max' => '20', 'required' ]) }}
-		</div>
-
-		<div class="form-group">
-			{{ Form::label('REFI_CAPACIDADREAL', 'Capacidad Real') }} 
-			{{ Form::number('REFI_CAPACIDADREAL', old('REFI_CAPACIDADREAL'), [ 'class' => 'form-control', 'min' => '0', 'required' ]) }}
-		</div>
-
-
-		<div class="input-group col-lg-4">
-			<span class="input-group-addon">Prestable: </span>
-	        <span class="input-group-addon">
-	        	{{ Form::checkbox('REFI_PRESTABLE', true,old('REFI_PRESTABLE'), array('class' => 'form-control')) }}
-	        </span>
-		</div><br>
-
-		<div class="form-group">
-			{{ Form::label('REFI_AREAREAL', 'Área Real (Mts2)') }} 
-			{{ Form::number('REFI_AREAREAL', old('REFI_AREAREAL'), [ 'class' => 'form-control', 'min' => '0', 'required' ]) }}
-		</div>
-
-		<div class="form-group">
-			{{ Form::label('REFI_AREAUSADA', 'Área Usada (Mts2)') }} 
-			{{ Form::number('REFI_AREAUSADA', old('REFI_AREAUSADA'), [ 'class' => 'form-control', 'min' => '0', 'required' ]) }}
-		</div>
-
-		<div class="form-group">
-			{{ Form::label('SIRF_ID', 'Situación Sala') }} 
-			{{ Form::select('SIRF_ID', [null => 'Seleccione una situación...'] + $arrSituacionesRecursosFisicos , old('SIRF_ID'), ['class' => 'form-control', 'required']) }}
-		</div>
-
-		<div class="form-group">
-			{{ Form::label('TIRF_ID', 'Tipo Espacio Físico') }} 
-			{{ Form::select('TIRF_ID', [null => 'Seleccione un tipo...'] + $arrTiposRecursosFisicos , old('TIRF_ID'), ['class' => 'form-control', 'required']) }}
-		</div>
-
-		<div class="form-group">
-			{{ Form::label('TIPO_ID', 'Tipo Posesión') }} 
-			{{ Form::select('TIPO_ID', [null => 'Seleccione un tipo...'] + $arrTiposPosesiones , old('TIPO_ID'), ['class' => 'form-control', 'required']) }}
-		</div>
-
-		<div class="form-group">
-			{{ Form::label('ESFI_ID', 'Espacio Físico') }} 
-			{{ Form::select('ESFI_ID', [null => 'Seleccione un espacio...'] + $arrEspaciosFisicos , old('ESFI_ID'), ['class' => 'form-control', 'required']) }}
+			{{ Form::label('SEDE_ID', 'Sede') }} 
+			{{ Form::select('SEDE_ID', [null => 'Seleccione una sede...'] + $arrSedes , old('SEDE_ID'), ['class' => 'form-control', 'required']) }}
 		</div>
 
 		<!-- Botones -->

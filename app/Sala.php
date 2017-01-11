@@ -85,4 +85,7 @@ class Sala extends Model
     {
     	return false;
 	}
+
+
+	
 }

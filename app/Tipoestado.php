@@ -30,7 +30,7 @@ class TipoEstado extends Model
 	public function estados()
 	{
 		$foreingKey = 'TIES_ID';
-		return $this->hasMany(Estados::class, $foreingKey);
+		return $this->hasMany(Estado::class, $foreingKey);
 	}
 
 }

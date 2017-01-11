@@ -1,38 +1,38 @@
 @extends('layout')
-@section('title', '/ Crear Espacio Físico')
+@section('title', '/ Crear Sede')
 
 @section('content')
 
-	<h1 class="page-header">Nuevo Espacio Físico</h1>
+	<h1 class="page-header">Nueva Sede</h1>
 
 	@include('partials/errors')
 	
-		{{ Form::open(array('url' => 'espaciofisico', 'class' => 'form-horizontal')) }}
+		{{ Form::open(array('url' => 'sede', 'class' => 'form-horizontal')) }}
 
 	  	<div class="form-group">
-			{{ Form::label('ESFI_DESCRIPCION', 'Descripción') }} 
-			{{ Form::text('ESFI_DESCRIPCION', old('ESFI_DESCRIPCION'), array('class' => 'form-control', 'max' => '300', 'required')) }}
+			{{ Form::label('SEDE_DESCRIPCION', 'Descripción') }} 
+			{{ Form::text('SEDE_DESCRIPCION', old('SEDE_DESCRIPCION'), array('class' => 'form-control', 'max' => '300', 'required')) }}
 		</div>
 
 		<div class="form-group">
-			{{ Form::label('ESFI_AREA', 'Área (Mts2 o Hectareas)') }} 
-			{{ Form::text('ESFI_AREA', old('ESFI_AREA'), array('class' => 'form-control', 'max' => '300', 'required')) }}
+			{{ Form::label('SEDE_AREA', 'Área (Mts2 o Hectareas)') }} 
+			{{ Form::text('SEDE_AREA', old('SEDE_AREA'), array('class' => 'form-control', 'max' => '300', 'required')) }}
 		</div>
 
 
 		<div class="form-group">
-			{{ Form::label('ESFI_NRONIVELES', 'Número de niveles') }} 
-			{{ Form::number('ESFI_NRONIVELES', old('ESFI_NRONIVELES'), array('class' => 'form-control', 'min' => '0', 'max' => '999', 'required')) }}
+			{{ Form::label('SEDE_NRONIVELES', 'Número de niveles') }} 
+			{{ Form::number('SEDE_NRONIVELES', old('SEDE_NRONIVELES'), array('class' => 'form-control', 'min' => '0', 'max' => '999', 'required')) }}
 		</div>
 
 		<div class="form-group">
-			{{ Form::label('ESFI_NOMBRE', 'Nombre') }} 
-			{{ Form::text('ESFI_NOMBRE', old('ESFI_NOMBRE'), array('class' => 'form-control', 'max' => '300', 'required')) }}
+			{{ Form::label('SEDE_NOMBRE', 'Nombre') }} 
+			{{ Form::text('SEDE_NOMBRE', old('SEDE_NOMBRE'), array('class' => 'form-control', 'max' => '300', 'required')) }}
 		</div>
 
 		<div class="form-group">
-			{{ Form::label('ESFI_NOMENCLATURA', 'Nomenclatura') }} 
-			{{ Form::text('ESFI_NOMENCLATURA', old('ESFI_NOMENCLATURA'), array('class' => 'form-control', 'max' => '300', 'required')) }}
+			{{ Form::label('SEDE_NOMENCLATURA', 'Nomenclatura') }} 
+			{{ Form::text('SEDE_NOMENCLATURA', old('SEDE_NOMENCLATURA'), array('class' => 'form-control', 'max' => '300', 'required')) }}
 		</div>
 
 		<div class="form-group">
@@ -41,7 +41,7 @@
 		</div>
 
 		<div class="form-group">
-			{{ Form::label('TIEF_ID', 'Tipo Espacio Físico') }} 
+			{{ Form::label('TIEF_ID', 'Tipo Sede') }} 
 			{{ Form::select('TIEF_ID', [null => 'Seleccione un tipo...'] + $arrTiposEspaciosFisicos , old('TIEF_ID'), ['class' => 'form-control', 'required']) }}
 		</div>
 
@@ -54,7 +54,7 @@
 		<!-- Botones -->
 		<div class="text-right">
 			{{ Form::button('<i class="fa fa-exclamation" aria-hidden="true"></i> Reset', array('class'=>'btn btn-warning', 'type'=>'reset')) }}
-			<a class="btn btn-warning" role="button" href="{{ URL::to('espaciofisico') }}">
+			<a class="btn btn-warning" role="button" href="{{ URL::to('sede') }}">
 				<i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar
 			</a>
 			{{ Form::button('<i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar', array('class'=>'btn btn-primary', 'type'=>'submit')) }}

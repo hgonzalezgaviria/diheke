@@ -55,21 +55,40 @@ class SalasController extends Controller
 	 */
 	public function create()
 	{
+		//Se crea un array con las sedes disponibles
+		$sedes = \reservas\Sede::orderBy('SEDE_ID')
+						->select('SEDE_ID', 'SEDE_DESCRIPCION')
+						->get();
 
-		/*$situacionesRecursosFisicos = SituacionSala::all();*/
-		$arrSituacionesRecursosFisicos = [];
-		/*foreach ($situacionesRecursosFisicos as $situacion) {
-			$arrSituacionesRecursosFisicos = array_add(
-				$arrSituacionesRecursosFisicos,
-				$situacion->SIRF_ID,
-				$situacion->SIRF_DESCRIPCION
+		$arrSedes = [];
+		foreach ($sedes as $sede) {
+			$arrSedes = array_add(
+				$arrSedes,
+				$sede->SEDE_ID,
+				$sede->SEDE_DESCRIPCION
 			);
 		}
-		
-		*/
-		return view('salas/create', compact(
-			'arrSituacionesRecursosFisicos'
-			));
+
+
+		//Se crea un array con los posibles estados de una sala.
+		$tipoEstadoSala = 1;
+		$estadosSala = \reservas\Estado::where('TIES_ID', $tipoEstadoSala)
+						->orderBy('ESTA_ID')
+						->select('ESTA_ID', 'ESTA_DESCRIPCION')
+						->get();
+
+		$arrEstadosSala = [];
+		foreach ($estadosSala as $estado) {
+			$arrEstadosSala = array_add(
+				$arrEstadosSala,
+				$estado->ESTA_ID,
+				$estado->ESTA_DESCRIPCION
+			);
+		}
+
+
+		// Carga el formulario para crear un nuevo registro y pasa las variables para llenar los dropdown
+		return view('salas/create', compact('arrSedes', 'arrEstadosSala'));
 	}
 
 	/**
@@ -82,49 +101,42 @@ class SalasController extends Controller
 		//Validación de datos
 		$this->validate(request(), [
 
-			'REFI_NOMENCLATURA' => ['required', 'max:20'],
-			'REFI_CAPACIDADMAXIMA' => ['required', 'numeric'],
-			'REFI_TIPOASIGNACION' => ['required', 'max:1'],
-			'REFI_DESCRIPCION' => ['required', 'max:100'],
-			'REFI_NIVEL' => ['required', 'max:25'],
-			'REFI_ESTADO' => ['required', 'max:20'],
-			'REFI_CAPACIDADREAL' => ['required', 'numeric'],
-			'REFI_PRESTABLE' => ['boolean'],
-			'REFI_AREAREAL' => ['required', 'numeric'],
-			'REFI_AREAUSADA' => ['required', 'numeric'],
+			'SALA_DESCRIPCION' => ['required', 'max:300'],
+			'SALA_CAPACIDAD' => ['required', 'numeric'],
+			'SALA_FOTOSALA' => ['required', 'max:500'],
+			'SALA_FOTOCROQUIS' => ['required', 'max:500'],
+			'SALA_OBSERVACIONES' => ['required', 'max:300'],
+			'ESTA_ID' => ['required', 'numeric'],
+			'SEDE_ID' => ['required', 'numeric'],
 
-			'SIRF_ID' => ['required'],
-			'TIRF_ID' => ['required'],
-			'TIPO_ID' => ['required'],
-			'ESFI_ID' => ['required'],
 		]);
 
 		//Permite seleccionar los datos que se desean guardar.
-		$recursoFisico = new Sala;
-		$recursoFisico->REFI_NOMENCLATURA = Input::get('REFI_NOMENCLATURA');
-		$recursoFisico->REFI_CAPACIDADMAXIMA = Input::get('REFI_CAPACIDADMAXIMA');
-		$recursoFisico->REFI_TIPOASIGNACION = Input::get('REFI_TIPOASIGNACION');
-		$recursoFisico->REFI_DESCRIPCION = Input::get('REFI_DESCRIPCION');
-		$recursoFisico->REFI_NIVEL = Input::get('REFI_NIVEL');
-		$recursoFisico->REFI_ESTADO = Input::get('REFI_ESTADO');
-		$recursoFisico->REFI_CAPACIDADREAL = Input::get('REFI_CAPACIDADREAL');
+		$sala = new Sala;
+		$sala->REFI_NOMENCLATURA = Input::get('REFI_NOMENCLATURA');
+		$sala->REFI_CAPACIDADMAXIMA = Input::get('REFI_CAPACIDADMAXIMA');
+		$sala->REFI_TIPOASIGNACION = Input::get('REFI_TIPOASIGNACION');
+		$sala->REFI_DESCRIPCION = Input::get('REFI_DESCRIPCION');
+		$sala->REFI_NIVEL = Input::get('REFI_NIVEL');
+		$sala->REFI_ESTADO = Input::get('REFI_ESTADO');
+		$sala->REFI_CAPACIDADREAL = Input::get('REFI_CAPACIDADREAL');
 
-		$recursoFisico->REFI_PRESTABLE =  (Input::get('REFI_PRESTABLE')) ? true : false;
+		$sala->REFI_PRESTABLE =  (Input::get('REFI_PRESTABLE')) ? true : false;
 
-		$recursoFisico->REFI_AREAREAL = Input::get('REFI_AREAREAL');
-		$recursoFisico->REFI_AREAUSADA = Input::get('REFI_AREAUSADA');
+		$sala->REFI_AREAREAL = Input::get('REFI_AREAREAL');
+		$sala->REFI_AREAUSADA = Input::get('REFI_AREAUSADA');
 
-		$recursoFisico->SIRF_ID = Input::get('SIRF_ID'); //Relación con SITUACIONRECURSOFISICO
-		$recursoFisico->TIRF_ID = Input::get('TIRF_ID'); //Relación con TIPORECURSOFISICO
-		$recursoFisico->TIPO_ID = Input::get('TIPO_ID'); //Relación con TipoPosesion
-		$recursoFisico->ESFI_ID = Input::get('ESFI_ID'); //Relación con ESPACIOFISICO
+		$sala->SIRF_ID = Input::get('SIRF_ID'); //Relación con SITUACIONRECURSOFISICO
+		$sala->TIRF_ID = Input::get('TIRF_ID'); //Relación con TIPORECURSOFISICO
+		$sala->TIPO_ID = Input::get('TIPO_ID'); //Relación con TipoPosesion
+		$sala->ESFI_ID = Input::get('ESFI_ID'); //Relación con ESPACIOFISICO
 
-        $recursoFisico->REFI_CREADOPOR = auth()->user()->username;
-        //Se guarda modelo
-		$recursoFisico->save();
+		$sala->REFI_CREADOPOR = auth()->user()->username;
+		//Se guarda modelo
+		$sala->save();
 
 		// redirecciona al index de controlador
-		Session::flash('message', 'Espacio Fisico '.$recursoFisico->REFI_ID.' creado exitosamente!');
+		Session::flash('message', 'Espacio Fisico '.$sala->SALA_ID.' creado exitosamente!');
 		return redirect()->to('sala');
 	}
 
@@ -132,90 +144,67 @@ class SalasController extends Controller
 	/**
 	 * Muestra información de un registro.
 	 *
-	 * @param  int  $REFI_ID
+	 * @param  int  $SALA_ID
 	 * @return Response
 	 */
-	public function show($REFI_ID)
+	public function show($SALA_ID)
 	{
 		// Se obtiene el registro
-		$recursoFisico = Sala::findOrFail($REFI_ID);
+		$sala = Sala::findOrFail($SALA_ID);
 
 		// Muestra la vista y pasa el registro
-		return view('salas/show', compact('recursoFisico'));
+		return view('salas/show', compact('sala'));
 	}
 
 
 	/**
 	 * Muestra el formulario para editar un registro en particular.
 	 *
-	 * @param  int  $REFI_ID
+	 * @param  int  $SALA_ID
 	 * @return Response
 	 */
-	public function edit($REFI_ID)
+	public function edit($SALA_ID)
 	{
 		// Se obtiene el registro a modificar
-		$recursoFisico = Sala::findOrFail($REFI_ID);
+		$sala = Sala::findOrFail($SALA_ID);
+
+		//Se crea un array con las sedes disponibles
+    	$sedes = \reservas\Sede::orderBy('SEDE_ID')
+						->select('SEDE_ID', 'SEDE_DESCRIPCION')
+						->get();
+
+		$arrSedes = [];
+		foreach ($sedes as $sede) {
+			array_push($arrSedes, [ $sede->SEDE_ID , $sede->SEDE_DESCRIPCION ]);
+		}
 
 
-		$situacionesRecursosFisicos = SituacionSala::all();
-		$arrSituacionesRecursosFisicos = [];
-		foreach ($situacionesRecursosFisicos as $situacion) {
-			$arrSituacionesRecursosFisicos = array_add(
-				$arrSituacionesRecursosFisicos,
-				$situacion->SIRF_ID,
-				$situacion->SIRF_DESCRIPCION
-			);
-		}
-		
-		$tiposRecursosFisicos = TipoSala::all();
-		$arrTiposRecursosFisicos = [];
-		foreach ($tiposRecursosFisicos as $tipo) {
-			$arrTiposRecursosFisicos = array_add(
-				$arrTiposRecursosFisicos,
-				$tipo->TIRF_ID,
-				$tipo->TIRF_DESCRIPCION
-			);
-		}
-		
-		$tiposPosesiones = TipoPosesion::all();
-		$arrTiposPosesiones = [];
-		foreach ($tiposPosesiones as $tipo) {
-			$arrTiposPosesiones = array_add(
-				$arrTiposPosesiones,
-				$tipo->TIPO_ID,
-				$tipo->TIPO_DESCRIPCION
-			);
+		//Se crea un array con los posibles estados de una sala.
+		$tipoEstadoSala = 1;
+		$estadosSala = \reservas\Estado::where('TIES_ID', $tipoEstadoSala)
+    					->orderBy('ESTA_ID')
+						->select('ESTA_ID', 'ESTA_DESCRIPCION')
+						->get();
+
+		$arrEstadosSala = [];
+		foreach ($estadosSala as $estado) {
+			array_push($arrEstadosSala, [ $estado->ESTA_ID => $estado->ESTA_DESCRIPCION ]);
 		}
 
-		$espaciosFisicos = EspacioFisico::all();
-		$arrEspaciosFisicos = [];
-		foreach ($espaciosFisicos as $espacio) {
-			$arrEspaciosFisicos = array_add(
-				$arrEspaciosFisicos,
-				$espacio->ESFI_ID,
-				$espacio->ESFI_DESCRIPCION
-			);
-		}
 
 		// Muestra el formulario de edición y pasa el registro a editar
 		// y arreglos para llenar los Selects
-		return view('salas/edit', compact(
-			'recursoFisico',
-			'arrSituacionesRecursosFisicos',
-			'arrTiposRecursosFisicos',
-			'arrTiposPosesiones',
-			'arrEspaciosFisicos'
-			));
+		return view('salas/edit', compact('sala', 'arrSedes', 'arrEstadosSala'));
 	}
 
 
 	/**
 	 * Actualiza un registro en la base de datos.
 	 *
-	 * @param  int  $REFI_ID
+	 * @param  int  $SALA_ID
 	 * @return Response
 	 */
-	public function update($REFI_ID)
+	public function update($SALA_ID)
 	{
 		//Validación de datos
 		$this->validate(request(), [
@@ -238,50 +227,50 @@ class SalasController extends Controller
 		]);
 
 		// Se obtiene el registro
-		$recursoFisico = Sala::findOrFail($REFI_ID);
+		$sala = Sala::findOrFail($SALA_ID);
 
-		$recursoFisico->REFI_NOMENCLATURA = Input::get('REFI_NOMENCLATURA');
-		$recursoFisico->REFI_CAPACIDADMAXIMA = Input::get('REFI_CAPACIDADMAXIMA');
-		$recursoFisico->REFI_TIPOASIGNACION = Input::get('REFI_TIPOASIGNACION');
-		$recursoFisico->REFI_DESCRIPCION = Input::get('REFI_DESCRIPCION');
-		$recursoFisico->REFI_NIVEL = Input::get('REFI_NIVEL');
-		$recursoFisico->REFI_ESTADO = Input::get('REFI_ESTADO');
-		$recursoFisico->REFI_CAPACIDADREAL = Input::get('REFI_CAPACIDADREAL');
-		$recursoFisico->REFI_PRESTABLE =  (Input::get('REFI_PRESTABLE')) ? true : false;
-		$recursoFisico->REFI_AREAREAL = Input::get('REFI_AREAREAL');
-		$recursoFisico->REFI_AREAUSADA = Input::get('REFI_AREAUSADA');
+		$sala->REFI_NOMENCLATURA = Input::get('REFI_NOMENCLATURA');
+		$sala->REFI_CAPACIDADMAXIMA = Input::get('REFI_CAPACIDADMAXIMA');
+		$sala->REFI_TIPOASIGNACION = Input::get('REFI_TIPOASIGNACION');
+		$sala->REFI_DESCRIPCION = Input::get('REFI_DESCRIPCION');
+		$sala->REFI_NIVEL = Input::get('REFI_NIVEL');
+		$sala->REFI_ESTADO = Input::get('REFI_ESTADO');
+		$sala->REFI_CAPACIDADREAL = Input::get('REFI_CAPACIDADREAL');
+		$sala->REFI_PRESTABLE =  (Input::get('REFI_PRESTABLE')) ? true : false;
+		$sala->REFI_AREAREAL = Input::get('REFI_AREAREAL');
+		$sala->REFI_AREAUSADA = Input::get('REFI_AREAUSADA');
 
-		$recursoFisico->SIRF_ID = Input::get('SIRF_ID'); //Relación con SITUACIONRECURSOFISICO
-		$recursoFisico->TIRF_ID = Input::get('TIRF_ID'); //Relación con TIPORECURSOFISICO
-		$recursoFisico->TIPO_ID = Input::get('TIPO_ID'); //Relación con TipoPosesion
-		$recursoFisico->ESFI_ID = Input::get('ESFI_ID'); //Relación con ESPACIOFISICO
-        $recursoFisico->REFI_MODIFICADOPOR = auth()->user()->username;
-        //Se guarda modelo
-		$recursoFisico->save();
+		$sala->SIRF_ID = Input::get('SIRF_ID'); //Relación con SITUACIONRECURSOFISICO
+		$sala->TIRF_ID = Input::get('TIRF_ID'); //Relación con TIPORECURSOFISICO
+		$sala->TIPO_ID = Input::get('TIPO_ID'); //Relación con TipoPosesion
+		$sala->ESFI_ID = Input::get('ESFI_ID'); //Relación con ESPACIOFISICO
+		$sala->REFI_MODIFICADOPOR = auth()->user()->username;
+		//Se guarda modelo
+		$sala->save();
 
 		// redirecciona al index de controlador
-		Session::flash('message', 'Espacio Fisico '.$recursoFisico->REFI_ID.' modificado exitosamente!');
+		Session::flash('message', 'Espacio Fisico '.$sala->SALA_ID.' modificado exitosamente!');
 		return redirect()->to('sala');
 	}
 
 	/**
 	 * Elimina un registro de la base de datos.
 	 *
-	 * @param  int  $REFI_ID
+	 * @param  int  $SALA_ID
 	 * @return Response
 	 */
-	public function destroy($REFI_ID, $showMsg=True)
+	public function destroy($SALA_ID, $showMsg=True)
 	{
-		$recursoFisico = Sala::findOrFail($REFI_ID);
+		$sala = Sala::findOrFail($SALA_ID);
 
 		// delete
-        $recursoFisico->REFI_ELIMINADOPOR = auth()->user()->username;
-		$recursoFisico->save();
-		$recursoFisico->delete();
+		$sala->REFI_ELIMINADOPOR = auth()->user()->username;
+		$sala->save();
+		$sala->delete();
 
 		// redirecciona al index de controlador
 		if($showMsg){
-			Session::flash('message', 'Espacio Fisico '.$recursoFisico->REFI_ID.' eliminado exitosamente!');
+			Session::flash('message', 'Espacio Fisico '.$sala->SALA_ID.' eliminado exitosamente!');
 			return redirect()->to('sala');
 		}
 	}

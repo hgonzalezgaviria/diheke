@@ -10,17 +10,25 @@ class TableEstadosSeeder extends Seeder
      * @return void
      */
    Public function run() {
-
+          //SALAS
            $estado = new \reservas\Estado;
-           $estado->ESTA_DESCRIPCION = 'SALA DISPONIBLE';
+           $estado->ESTA_DESCRIPCION = 'DISPONIBLE';
            $estado->TIES_ID = 1;
-           $estado->ESTA_CREADOPOR =  'USER_PRUEBA';
+           $estado->ESTA_CREADOPOR =  'SYSTEM';
            $estado->save();
 
            $estado = new \reservas\Estado;
-           $estado->ESTA_DESCRIPCION = 'EQUIPO DISPONIBLE';
+           $estado->ESTA_DESCRIPCION = 'OCUPADA';
+           $estado->TIES_ID = 1;
+           $estado->ESTA_CREADOPOR =  'SYSTEM';
+           $estado->save();
+
+
+           //EQUIPOS
+           $estado = new \reservas\Estado;
+           $estado->ESTA_DESCRIPCION = ' DISPONIBLE';
            $estado->TIES_ID = 2;
-           $estado->ESTA_CREADOPOR =  'USER_PRUEBA';
+           $estado->ESTA_CREADOPOR =  'SYSTEM';
            $estado->save();
 
 	 }
