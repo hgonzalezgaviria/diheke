@@ -83,7 +83,11 @@ class TipoEstadosController extends Controller
         $tipoestado = request()->except(['_token']);
 
 
-        Tipoestado::create($tipoestado);
+         $tipoestado = Tipoestado::create($tipoestado);
+         $tipoestado->TIES_CREADOPOR = auth()->user()->username;
+        //Se guarda modelo
+        $tipoestado->save();
+
 
         //Permite seleccionar los datos que se desean guardar.
         /*
@@ -145,10 +149,11 @@ class TipoEstadosController extends Controller
         ]);
 
         // Se obtiene el registro
-        $tipoestado = Tipoestado::find($TIES_ID);
+        $tipoestado = Tipoestado::findOrFail($TIES_ID);
         $tipoestado->TIES_DESCRIPCION = Input::get('TIES_DESCRIPCION');
         $tipoestado->TIES_OBSERVACIONES = Input::get('TIES_OBSERVACIONES');
         //$tipoestado->edited_by = auth()->user()->username;
+        $tipoestado->TIES_MODIFICADOPOR = auth()->user()->username;
         $tipoestado->save();
 
         // redirecciona al index de controlador
@@ -165,7 +170,9 @@ class TipoEstadosController extends Controller
     public function destroy($TIES_ID)
     {
         // delete
-        $tipoestado = Tipoestado::find($TIES_ID);
+        $tipoestado = Tipoestado::findOrFail($TIES_ID);
+        $tipoestado->TIES_ELIMINADOPOR = auth()->user()->username;
+        $tipoestado->save();        
         $tipoestado->delete();
 
         // redirecciona al index de controlador

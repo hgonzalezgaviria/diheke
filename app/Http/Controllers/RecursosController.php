@@ -148,6 +148,7 @@ class RecursosController extends Controller
         $recurso->RECU_VERSION = Input::get('RECU_VERSION');
         $recurso->RECU_OBSERVACIONES = Input::get('RECU_OBSERVACIONES');
         //$recurso->edited_by = auth()->user()->username;
+        $recurso->RECU_MODIFICADOPOR = auth()->user()->username;
         $recurso->save();
 
         // redirecciona al index de controlador

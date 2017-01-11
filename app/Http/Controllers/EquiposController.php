@@ -91,7 +91,11 @@ class EquiposController extends Controller
         $equipo = request()->except(['_token']);
 
 
-        Equipo::create($equipo);
+        $equipo = Equipo::create($equipo);
+        $equipo->EQUI_CREADOPOR = auth()->user()->username;
+        //Se guarda modelo
+        $equipo->save();
+
 
         //Permite seleccionar los datos que se desean guardar.
         /*
@@ -163,12 +167,13 @@ class EquiposController extends Controller
         ]);
 
         // Se obtiene el registro
-        $equipo = Equipo::find($id);
+        $equipo = Equipo::findOrFail($id);
         $equipo->EQUI_DESCRIPCION = Input::get('EQUI_DESCRIPCION');
         $equipo->EQUI_OBSERVACIONES = Input::get('EQUI_OBSERVACIONES');
         $equipo->SALA_ID = Input::get('SALA_ID');
         $equipo->ESTA_ID = Input::get('ESTA_ID');
         //$equipo->edited_by = auth()->user()->username;
+        $equipo->EQUI_MODIFICADOPOR = auth()->user()->username;
         $equipo->save();
 
         // redirecciona al index de controlador
@@ -185,7 +190,9 @@ class EquiposController extends Controller
     public function destroy($id)
     {
         // delete
-        $equipo = Equipo::find($id);
+        $equipo = Equipo::findOrFail($id);
+        $equipo->EQUI_ELIMINADOPOR = auth()->user()->username;
+        $equipo->save();
         $equipo->delete();
 
         // redirecciona al index de controlador

@@ -32,7 +32,7 @@
 	
 <table class="table table-striped" id="tabla">
 	<thead>
-		<tr>
+		<tr class="info">
 			<th class="col-md-2">ID</th>
 			<th class="col-md-2">Descripción</th>
 			<th class="col-md-2">Dirección</th>

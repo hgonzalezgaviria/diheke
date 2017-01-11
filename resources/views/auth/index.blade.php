@@ -35,7 +35,7 @@
 	
 <table class="table table-striped" id="tabla">
 	<thead>
-		<tr>
+		<tr class="info">
 			<th class="">ID</th>
 			<th class="">Nombre</th>
 			<th class="">Login</th>

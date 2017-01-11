@@ -76,7 +76,9 @@ class SedesController extends Controller
  		$sede = request()->except(['_token']);
 
 
-        Sede::create($sede);
+        $sede = Sede::create($sede);
+        $sede->SEDE_CREADOPOR = auth()->user()->username;
+         $sede->save();
 
 		// redirecciona al index de controlador
 		Session::flash('message', 'Sede creada exitosamente!');
