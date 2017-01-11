@@ -1,26 +1,42 @@
 @extends('layout')
-@section('title', '/ Espacios Físicos')
+@section('title', '/ Sedes')
+@section('scripts')
+    <script>
+     $(function () {
 
+      	/*
+      	para realizar la paginacion de una tabla lo unico que hay que hacer es asignarle un id a la tabla,
+      	en este caso el id es "tabla" e invocar la función Datatable, lo demas que ven sobre esta función
+      	son configuraciones de presentación
+      	*/
+	 	$('#tabla').DataTable({  
+	        "sScrollY": "350px",
+	        "pagingType": "full_numbers",
+	        "bScrollCollapse": true,
+	 	});
+
+	  });
+    </script>
+@endsection
 @section('content')
 
-	<h1 class="page-header">Espacios Físicos</h1>
+	<h1 class="page-header">Sedes</h1>
 	<div class="row well well-sm">
 
 		<div id="btn-create" class="pull-right">
-			<a class='btn btn-primary' role='button' href="{{ URL::to('sede/create') }}">
+			<a class='btn btn-primary' role='button' href="{{ URL::to('sedes/create') }}">
 				<i class="fa fa-plus" aria-hidden="true"></i> Nuevo Elemento
 			</a>
 		</div>
 	</div>
 	
-<table class="table table-striped">
+<table class="table table-striped" id="tabla">
 	<thead>
 		<tr>
 			<th class="col-md-2">ID</th>
 			<th class="col-md-2">Descripción</th>
-			<th class="col-md-2">Tipo Sede</th>
-			<th class="col-md-2">Tipo Posesión</th>
-			<th class="col-md-2">Localidad</th>
+			<th class="col-md-2">Dirección</th>
+			<th class="col-md-2">Observaciones</th>
 			<th class="col-md-2">Acciones</th>
 
 		</tr>
@@ -28,22 +44,21 @@
 	<tbody>
 
 
-		@foreach($espaciosFisicos as $sede)
+		@foreach($sedes as $sede)
 		<tr>
 			<td>{{ $sede -> SEDE_ID }}</td>
 			<td>{{ $sede -> SEDE_DESCRIPCION }}</td>
-			<td>{{ $sede -> tipoEspacioFisico -> TIEF_DESCRIPCION }}</td>
-			<td>{{ $sede -> tipoPosesion -> TIPO_DESCRIPCION }}</td>
-			<td>{{ $sede -> localidad -> LOCA_DESCRIPCION }}</td>
+			<td>{{ $sede -> SEDE_DIRECCION }}</td>
+			<td>{{ $sede -> SEDE_OBSERVACIONES }}</td>
 			<td>
 
 				<!-- Botón Ver (show) -->
-				<a class="btn btn-small btn-success btn-xs" href="{{ URL::to('sede/'.$sede->SEDE_ID) }}">
+				<a class="btn btn-small btn-success btn-xs" href="{{ URL::to('sedes/'.$sede->SEDE_ID) }}">
 					<span class="glyphicon glyphicon-eye-open"></span> Ver
 				</a><!-- Fin Botón Ver (show) -->
 
 				<!-- Botón Editar (edit) -->
-				<a class="btn btn-small btn-info btn-xs" href="{{ URL::to('sede/'.$sede->SEDE_ID.'/edit') }}">
+				<a class="btn btn-small btn-info btn-xs" href="{{ URL::to('sedes/'.$sede->SEDE_ID.'/edit') }}">
 					<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
 				</a><!-- Fin Botón Editar (edit) -->
 
@@ -67,7 +82,7 @@
 								</p>
 							</div>
 							<div class="modal-footer">
-									{{ Form::open(array('url' => 'sede/'.$sede->SEDE_ID, 'class' => 'pull-right')) }}
+									{{ Form::open(array('url' => 'sedes/'.$sede->SEDE_ID, 'class' => 'pull-right')) }}
 										{{ Form::hidden('_method', 'DELETE') }}
 										{{ Form::button(' NO ', ['class'=>'btn btn-xs btn-success', 'type'=>'button','data-dismiss'=>'modal']) }}
 										{{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> SI',[

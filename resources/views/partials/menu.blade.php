@@ -48,6 +48,14 @@
 									<i class="fa fa-btn fa-key"></i> Salas
 								</a>
 							</li>
+
+							<li>
+								<a href="{{ url('/equipos') }}">
+									<i class="fa fa-btn fa-key"></i> Equipos
+								</a>
+							</li>
+
+							
 							<li>
 								<a href="{{ url('/recursos') }}">
 									<i class="fa fa-btn fa-key"></i> Recursos

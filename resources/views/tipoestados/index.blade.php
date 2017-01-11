@@ -2,6 +2,20 @@
 @section('title', '/ Tipos de Estados')
 @section('scripts')
     <script>
+    $(function () {
+
+      	/*
+      	para realizar la paginacion de una tabla lo unico que hay que hacer es asignarle un id a la tabla,
+      	en este caso el id es "tabla" e invocar la función Datatable, lo demas que ven sobre esta función
+      	son configuraciones de presentación
+      	*/
+	 	$('#tabla').DataTable({  
+	        "sScrollY": "350px",
+	        "pagingType": "full_numbers",
+	        "bScrollCollapse": true,
+	 	});
+
+	  });
     </script>
 @endsection
 
@@ -17,7 +31,7 @@
 		</div>
 	</div>
 	
-<table class="table table-striped">
+<table class="table table-striped" id="tabla">
 	<thead>
 		<tr>
 			<th class="col-md-2">ID</th>
