@@ -34,7 +34,8 @@
 	
 <table class="table table-striped" id="tabla">
 	<thead>
-		<tr>
+		<tr class="info">
+			<th class="col-md-1">ID</th>
 			<th class="col-md-1">Descripción</th>
 			<th class="col-md-2">Versión</th>
 			<th class="col-md-2">Observaciones</th>
@@ -50,6 +51,17 @@
 			<td>{{ $recurso -> RECU_VERSION }}</td>
 			<td>{{ $recurso -> RECU_OBSERVACIONES }}</td>
 			<td>
+
+
+				<!-- Muestra este registro (Utiliza método show encontrado en GET /reservas/{reserva_id}/pregs/{id} -->
+				<a class="btn btn-small btn-success btn-xs" href="{{ URL::to('recursos/'.$recurso->RECU_ID) }}">
+					<span class="glyphicon glyphicon-eye-open"></span> Ver
+				</a>
+
+				<!-- Edita este registro (Utiliza método edit encontrado en GET /reservas/{reserva_id}/pregs/{id}/edit -->
+				<a class="btn btn-small btn-info btn-xs" href="{{ URL::to('recursos/'.$recurso->RECU_ID.'/edit') }}">
+					<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
+				</a>
 
 				<!-- Botón Borrar (destroy) -->
 				{{ Form::button('<i class="fa fa-user-times" aria-hidden="true"></i> Borrar',[
@@ -87,15 +99,7 @@
 
 				
 
-				<!-- Muestra este registro (Utiliza método show encontrado en GET /reservas/{reserva_id}/pregs/{id} -->
-				<a class="btn btn-small btn-success btn-xs" href="{{ URL::to('recursos/'.$recurso->RECU_ID) }}">
-					<span class="glyphicon glyphicon-eye-open"></span> Ver
-				</a>
-
-				<!-- Edita este registro (Utiliza método edit encontrado en GET /reservas/{reserva_id}/pregs/{id}/edit -->
-				<a class="btn btn-small btn-info btn-xs" href="{{ URL::to('recursos/'.$recurso->RECU_ID.'/edit') }}">
-					<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
-				</a>
+			
 			</td>
 		</tr>
 		@endforeach

@@ -106,12 +106,12 @@ class TipoEstadosController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show($TIES_ID)
     {
         // Se obtiene el registro
-        $tipoestado = Tipoestado::find($id);
+        $tipoestado = Tipoestado::findOrFail($TIES_ID);
         // Muestra la vista y pasa el registro
-        return view('tipoestados/show')->with('tipoestado', $tipoestado);
+        return view('tipoestados/show', compact('tipoestado'));        
     }
 
     /**
@@ -120,13 +120,14 @@ class TipoEstadosController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function edit($id)
+    public function edit($TIES_ID)
     {
         // Se obtiene el registro
-        $tipoestado = Tipoestado::find($id);
+        $tipoestado = Tipoestado::findOrFail($TIES_ID);
 
         // Muestra el formulario de edición y pasa el registro a editar
-        return view('tipoestados/edit')->with('tipoestado', $tipoestado);
+        return view('tipoestados/edit', compact('tipoestado'));   
+        //return view('tipoestados/edit')->with('tipoestado', $tipoestado);
     }
 
     /**

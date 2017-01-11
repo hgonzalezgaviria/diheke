@@ -33,7 +33,7 @@
 	
 <table class="table table-striped" id="tabla">
 	<thead>
-		<tr>
+		<tr class="info">
 			<th class="col-md-2">ID</th>
 			<th class="col-md-2">Tipo de Estado</th>
 			<th class="col-md-2">Observaciones</th>
@@ -48,6 +48,16 @@
 			<td>{{ $tipoestado -> TIES_DESCRIPCION }}</td>
 			<td>{{ $tipoestado -> TIES_OBSERVACIONES }}</td>
 			<td>
+
+			<!-- Muestra este registro (Utiliza método show encontrado en GET /reservas/{reserva_id}/pregs/{id} -->
+				<a class="btn btn-small btn-success btn-xs" href="{{ URL::to('tipoestados/'.$tipoestado->TIES_ID) }}">
+					<span class="glyphicon glyphicon-eye-open"></span> Ver
+				</a>
+
+				<!-- Edita este registro (Utiliza método edit encontrado en GET /reservas/{reserva_id}/pregs/{id}/edit -->
+				<a class="btn btn-small btn-info btn-xs" href="{{ URL::to('tipoestados/'.$tipoestado->TIES_ID.'/edit') }}">
+					<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
+				</a>
 
 				<!-- Botón Borrar (destroy) -->
 				{{ Form::button('<i class="fa fa-user-times" aria-hidden="true"></i> Borrar',[
@@ -84,15 +94,7 @@
 				</div><!-- Fin Botón Borrar (destroy) -->
 
 			
-				<!-- Muestra este registro (Utiliza método show encontrado en GET /reservas/{reserva_id}/pregs/{id} -->
-				<a class="btn btn-small btn-success btn-xs" href="{{ URL::to('tipoestados/'.$tipoestado->TIES_ID) }}">
-					<span class="glyphicon glyphicon-eye-open"></span> Ver
-				</a>
-
-				<!-- Edita este registro (Utiliza método edit encontrado en GET /reservas/{reserva_id}/pregs/{id}/edit -->
-				<a class="btn btn-small btn-info btn-xs" href="{{ URL::to('tipoestados/'.$tipoestado->TIES_ID.'/edit') }}">
-					<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
-				</a>
+				
 			</td>
 		</tr>
 		@endforeach

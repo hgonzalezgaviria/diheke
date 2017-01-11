@@ -127,11 +127,20 @@ class EstadosController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show($ESTA_ID)
     {
+
+
+            // Se obtiene el registro
+        $estado = Estado::findOrFail($ESTA_ID);
+
+        // Muestra la vista y pasa el registro
+        
+
         // Se obtiene el registro
         //$estado = Estado::find($id);
         // Muestra la vista y pasa el registro
+       /*
         $estado = DB::table('estados')
             ->join('tipoestados', 'estados.tipo_estado', '=', 'tipoestados.id')
             ->select('estados.*', 
@@ -139,7 +148,7 @@ class EstadosController extends Controller
                      'tipoestados.descripcion as tipoestado_desc')
             ->where('estados.tipo_estado','=',$id)
             ->get();
-
+*/
         //dd($estado);
 
         //return $estado;
@@ -158,10 +167,10 @@ class EstadosController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function edit($id)
+    public function edit($ESTA_ID)
     {
         // Se obtiene el registro
-        $estado = Estado::find($id);
+        $estado = Estado::find($ESTA_ID);
 
         //Se crea un array con los tipos de estados disponibles
         $tipoestados = \reservas\TipoEstado::orderBy('TIES_ID')
@@ -187,25 +196,31 @@ class EstadosController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update($id)
+    public function update($ESTA_ID)
     {
         //Validación de datos
         $this->validate(request(), [
-            'ESTA_DESCRIPCION' => ['required', 'max:100'],
-            'observaciones' => ['max:500']
+            'ESTA_DESCRIPCION' => ['required', 'max:100']
+            
         ]);
 
         // Se obtiene el registro
-        $estado = Estado::find($id);
-        $sala = Sala::findOrFail($SALA_ID);
-        $estado->descripcion = Input::get('descripcion');
-        $estado->observaciones = Input::get('observaciones');
+        $estado = Estado::findOrFail($ESTA_ID);
+        // $estado->fill(request()->except(['_token']));
+
+        //$sala = Sala::findOrFail($SALA_ID);
+        $estado->ESTA_DESCRIPCION = Input::get('ESTA_DESCRIPCION');
+        $estado->TIES_ID = Input::get('TIES_ID');
         //$estado->edited_by = auth()->user()->username;
+
+        $estado->ESTA_MODIFICADOPOR = auth()->user()->username;
+        //Se guarda modelo
         $estado->save();
+
 
         // redirecciona al index de controlador
         Session::flash('message', 'Estado actualizado exitosamente!');
-        return redirect()->to('estados/'.$id);
+        return redirect()->to('estados/');
     }
 
     /**

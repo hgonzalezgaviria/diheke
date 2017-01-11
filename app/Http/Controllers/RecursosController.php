@@ -82,16 +82,15 @@ class RecursosController extends Controller
         $recurso = request()->except(['_token']);
 
 
-        Recurso::create($recurso);
+        $recurso= Recurso::create($recurso);
 
-        //Permite seleccionar los datos que se desean guardar.
-        /*
-        $contrato = new Contrato;
-        $contrato->titulo = Input::get('titulo');
-        $contrato->status = Contrato::NUEVA;
-        $contrato->created_by = auth()->user()->username;
-        $contrato->save();
-		*/
+        $recurso->RECU_CREADOPOR = auth()->user()->username;
+        //Se guarda modelo
+        $recurso->save();
+
+        
+
+    
 
         // redirecciona al index de controlador
         Session::flash('message', 'Recurso creado exitosamente!');
@@ -105,12 +104,12 @@ class RecursosController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show($RECU_ID)
     {
         // Se obtiene el registro
-        $recurso = Recurso::find($id);
-        // Muestra la vista y pasa el registro
-        return view('recursos/show')->with('recurso', $recurso);
+        $recurso = Recurso::findOrFail($RECU_ID);
+        // Muestra la vista y pasa el registro        
+        return view('recursos/show', compact('recurso'));
     }
 
     /**
@@ -119,10 +118,10 @@ class RecursosController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function edit($id)
+    public function edit($RECU_ID)
     {
         // Se obtiene el registro
-        $recurso = Recurso::find($id);
+        $recurso = Recurso::find($RECU_ID);
 
         // Muestra el formulario de edición y pasa el registro a editar
         return view('recursos/edit')->with('recurso', $recurso);
@@ -144,7 +143,7 @@ class RecursosController extends Controller
         ]);
 
         // Se obtiene el registro
-        $recurso = Recurso::find($RECU_ID);
+        $recurso = Recurso::findOrFail($RECU_ID);
         $recurso->RECU_DESCRIPCION = Input::get('RECU_DESCRIPCION');
         $recurso->RECU_VERSION = Input::get('RECU_VERSION');
         $recurso->RECU_OBSERVACIONES = Input::get('RECU_OBSERVACIONES');
@@ -165,9 +164,13 @@ class RecursosController extends Controller
     public function destroy($RECU_ID)
     {
         // delete
-        $recurso = Recurso::find($RECU_ID);
-        $recurso->delete();
 
+        $recurso = Recurso::findOrFail($RECU_ID);
+
+        $recurso->RECU_ELIMINADOPOR = auth()->user()->username;
+        $recurso->save();
+        $recurso->delete();
+        
         // redirecciona al index de controlador
         Session::flash('message', 'Recurso '.$RECU_ID.' borrado!');
         return redirect()->to('recursos');
