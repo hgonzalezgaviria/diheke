@@ -64,8 +64,22 @@ class EstadosController extends Controller
      */
     public function create()
     {
+        //Se crea un array con los tipos de estados disponibles
+        $tipoestados = \reservas\TipoEstado::orderBy('TIES_ID')
+                        ->select('TIES_ID', 'TIES_DESCRIPCION')
+                        ->get();
+
+        $arrTipoEstados = [];
+        foreach ($tipoestados as $tipoestado) {
+            $arrTipoEstados = array_add(
+                $arrTipoEstados,
+                $tipoestado->TIES_ID,
+                $tipoestado->TIES_DESCRIPCION
+            );
+        }
+
         // Carga el formulario para crear un nuevo registro (views/create.blade.php)
-        return view('estados/create');
+        return view('estados/create',compact('arrTipoEstados'));
     }
 
     /**
@@ -77,15 +91,22 @@ class EstadosController extends Controller
     {
         //Validación de datos
         $this->validate(request(), [
-                'descripcion' => ['required', 'max:50']
+                'ESTA_DESCRIPCION' => ['required', 'max:50']
             ]);
         //Guarda todos los datos recibidos del formulario
         $estado = request()->except(['_token']);
 
+        $estado= Estado::create($estado);
 
-        Estado::create($estado);
+        
+
+        $estado->ESTA_CREADOPOR = auth()->user()->username;
+        //Se guarda modelo
+        $estado->save();
+
 
         //Permite seleccionar los datos que se desean guardar.
+
         /*
         $contrato = new Contrato;
         $contrato->titulo = Input::get('titulo');
@@ -95,7 +116,7 @@ class EstadosController extends Controller
         */
 
         // redirecciona al index de controlador
-        Session::flash('message', 'Tipo de estado creado exitosamente!');
+        Session::flash('message', 'Estado creado exitosamente!');
         return redirect()->to('estados');
     }
 
@@ -142,8 +163,22 @@ class EstadosController extends Controller
         // Se obtiene el registro
         $estado = Estado::find($id);
 
+        //Se crea un array con los tipos de estados disponibles
+        $tipoestados = \reservas\TipoEstado::orderBy('TIES_ID')
+                        ->select('TIES_ID', 'TIES_DESCRIPCION')
+                        ->get();
+
+        $arrTipoEstados = [];
+        foreach ($tipoestados as $tipoestado) {
+            $arrTipoEstados = array_add(
+                $arrTipoEstados,
+                $tipoestado->TIES_ID,
+                $tipoestado->TIES_DESCRIPCION
+            );
+        }
+
         // Muestra el formulario de edición y pasa el registro a editar
-        return view('estados/edit')->with('tipoestado', $estado);
+        return view('estados/edit',compact('estado','arrTipoEstados'));
     }
 
     /**
@@ -162,13 +197,14 @@ class EstadosController extends Controller
 
         // Se obtiene el registro
         $estado = Estado::find($id);
+        $sala = Sala::findOrFail($SALA_ID);
         $estado->descripcion = Input::get('descripcion');
         $estado->observaciones = Input::get('observaciones');
         //$estado->edited_by = auth()->user()->username;
         $estado->save();
 
         // redirecciona al index de controlador
-        Session::flash('message', 'Tipo de estado actualizado exitosamente!');
+        Session::flash('message', 'Estado actualizado exitosamente!');
         return redirect()->to('estados/'.$id);
     }
 
@@ -178,14 +214,22 @@ class EstadosController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($ESTA_ID)
     {
+
+    $estado = Estado::findOrFail($ESTA_ID);
+
         // delete
-        $estado = Estado::find($id);
+        $estado->ESTA_ELIMINADOPOR = auth()->user()->username;
+        $estado->save();
         $estado->delete();
 
+        // delete
+        //$estado = Estado::find($ESTA_ID);
+        //$estado->delete();
+
         // redirecciona al index de controlador
-        Session::flash('message', 'Tipo estado '.$id.' borrado!');
+        Session::flash('message', 'estado '.$ESTA_ID.' borrado!');
         return redirect()->to('estados');
     }
 
