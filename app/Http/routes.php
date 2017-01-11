@@ -33,10 +33,10 @@ Route::get('/prueba', function(){
 
 
 //Sedes (EspacioFisico)
-Route::resource('sedes', 'SedeController');
+Route::resource('sedes', 'SedesController');
 
 // Salas (recursofisico)
-Route::resource('salas', 'SalaController');
+Route::resource('salas', 'SalasController');
 
 /*
 

@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', '/ Editar Recurso Físico '.$recursoFisico->REFI_ID)
+@section('title', '/ Editar Sala '.$recursoFisico->REFI_ID)
 @section('scripts')
     <script>
     </script>
@@ -7,7 +7,7 @@
 
 @section('content')
 
-	<h1 class="page-header">Actualizar Recurso Físico</h1>
+	<h1 class="page-header">Actualizar Sala</h1>
 
 	@include('partials/errors')
 
@@ -68,7 +68,7 @@
 		</div>
 
 		<div class="form-group">
-			{{ Form::label('SIRF_ID', 'Situación Recurso Físico') }} 
+			{{ Form::label('SIRF_ID', 'Situación Sala') }} 
 			{{ Form::select('SIRF_ID', [null => 'Seleccione una situación...'] + $arrSituacionesRecursosFisicos , old('SIRF_ID'), ['class' => 'form-control', 'required']) }}
 		</div>
 
@@ -90,7 +90,7 @@
 		<!-- Botones -->
 	    <div id="btn-form" class="text-right">
 	    	{{ Form::button('<i class="fa fa-exclamation" aria-hidden="true"></i> Reset', array('class'=>'btn btn-warning', 'type'=>'reset')) }}
-	        <a class="btn btn-warning" role="button" href="{{ URL::to('recursofisico/') }}">
+	        <a class="btn btn-warning" role="button" href="{{ URL::to('salas/') }}">
 	            <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar
 	        </a>
 			{{ Form::button('<i class="fa fa-floppy-o" aria-hidden="true"></i> Actualizar', array('class'=>'btn btn-primary', 'type'=>'submit')) }}

@@ -8,12 +8,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Redirector;
 
 use reservas\Sala;
-use reservas\SituacionSala;
-use reservas\TipoSala;
-use reservas\TipoPosesion;
-use reservas\EspacioFisico;
 
-class SalaController extends Controller
+class SalasController extends Controller
 {
 	public function __construct(Redirector $redirect=null)
 	{
@@ -29,7 +25,7 @@ class SalaController extends Controller
 
 			if(in_array(explode("@", $action)[1], $arrActionsAdmin))//Si la acción del controlador se encuentra en la lista de acciones de admin...
 			{
-				if( ! in_array($role , ['admin','editor']))//Si el rol no es admin o editor, se niega el acceso.
+				if( ! in_array($role , ['admin']))//Si el rol no es admin, se niega el acceso.
 				{
 					Session::flash('error', '¡Usuario no tiene permisos!');
 					abort(403, '¡Usuario no tiene permisos!.');
@@ -46,10 +42,10 @@ class SalaController extends Controller
 	public function index()
 	{
 		//Se obtienen todos los registros.
-		$sala = Sala::all();
+		$salas = Sala::all();
 
 		//Se carga la vista y se pasan los registros
-		return view('sala/index', compact('sala'));
+		return view('salas/index', compact('salas'));
 	}
 
 	/**
@@ -60,9 +56,9 @@ class SalaController extends Controller
 	public function create()
 	{
 
-		$situacionesRecursosFisicos = SituacionSala::all();
+		/*$situacionesRecursosFisicos = SituacionSala::all();*/
 		$arrSituacionesRecursosFisicos = [];
-		foreach ($situacionesRecursosFisicos as $situacion) {
+		/*foreach ($situacionesRecursosFisicos as $situacion) {
 			$arrSituacionesRecursosFisicos = array_add(
 				$arrSituacionesRecursosFisicos,
 				$situacion->SIRF_ID,
@@ -70,40 +66,9 @@ class SalaController extends Controller
 			);
 		}
 		
-		$tiposRecursosFisicos = TipoSala::all();
-		$arrTiposRecursosFisicos = [];
-		foreach ($tiposRecursosFisicos as $tipo) {
-			$arrTiposRecursosFisicos = array_add(
-				$arrTiposRecursosFisicos,
-				$tipo->TIRF_ID,
-				$tipo->TIRF_DESCRIPCION
-			);
-		}
-		
-		$tiposPosesiones = TipoPosesion::all();
-		$arrTiposPosesiones = [];
-		foreach ($tiposPosesiones as $tipo) {
-			$arrTiposPosesiones = array_add(
-				$arrTiposPosesiones,
-				$tipo->TIPO_ID,
-				$tipo->TIPO_DESCRIPCION
-			);
-		}
-
-		$espaciosFisicos = EspacioFisico::all();
-		$arrEspaciosFisicos = [];
-		foreach ($espaciosFisicos as $espacio) {
-			$arrEspaciosFisicos = array_add(
-				$arrEspaciosFisicos,
-				$espacio->ESFI_ID,
-				$espacio->ESFI_DESCRIPCION
-			);
-		}
-		return view('sala/create', compact(
-			'arrSituacionesRecursosFisicos',
-			'arrTiposRecursosFisicos',
-			'arrTiposPosesiones',
-			'arrEspaciosFisicos'
+		*/
+		return view('salas/create', compact(
+			'arrSituacionesRecursosFisicos'
 			));
 	}
 
@@ -176,7 +141,7 @@ class SalaController extends Controller
 		$recursoFisico = Sala::findOrFail($REFI_ID);
 
 		// Muestra la vista y pasa el registro
-		return view('sala/show', compact('recursoFisico'));
+		return view('salas/show', compact('recursoFisico'));
 	}
 
 
@@ -234,7 +199,7 @@ class SalaController extends Controller
 
 		// Muestra el formulario de edición y pasa el registro a editar
 		// y arreglos para llenar los Selects
-		return view('sala/edit', compact(
+		return view('salas/edit', compact(
 			'recursoFisico',
 			'arrSituacionesRecursosFisicos',
 			'arrTiposRecursosFisicos',

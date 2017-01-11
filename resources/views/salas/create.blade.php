@@ -1,13 +1,13 @@
 @extends('layout')
-@section('title', '/ Crear Recurso Físico')
+@section('title', '/ Crear Sala')
 
 @section('content')
 
-	<h1 class="page-header">Nuevo Recurso Físico</h1>
+	<h1 class="page-header">Nuevo Sala</h1>
 
 	@include('partials/errors')
 	
-	{{ Form::open([ 'url' => 'recursofisico', 'class' => 'form-horizontal' ]) }}
+	{{ Form::open([ 'url' => 'salas', 'class' => 'form-horizontal' ]) }}
 
 	  	<div class="form-group">
 			{{ Form::label('REFI_NOMENCLATURA', 'Nomenclatura') }} 
@@ -64,7 +64,7 @@
 		</div>
 
 		<div class="form-group">
-			{{ Form::label('SIRF_ID', 'Situación Recurso Físico') }} 
+			{{ Form::label('SIRF_ID', 'Situación Sala') }} 
 			{{ Form::select('SIRF_ID', [null => 'Seleccione una situación...'] + $arrSituacionesRecursosFisicos , old('SIRF_ID'), ['class' => 'form-control', 'required']) }}
 		</div>
 
@@ -86,7 +86,7 @@
 		<!-- Botones -->
 		<div class="text-right">
 			{{ Form::button('<i class="fa fa-exclamation" aria-hidden="true"></i> Reset', [ 'class'=>'btn btn-warning', 'type'=>'reset' ]) }}
-			<a class="btn btn-warning" role="button" href="{{ URL::to('recursofisico') }}">
+			<a class="btn btn-warning" role="button" href="{{ URL::to('salas') }}">
 				<i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar
 			</a>
 			{{ Form::button('<i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar', [ 'class'=>'btn btn-primary', 'type'=>'submit' ]) }}

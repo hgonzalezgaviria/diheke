@@ -8,11 +8,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Redirector;
 
 use reservas\Sede;
-use reservas\TipoSede;
-use reservas\TipoPosesion;
-use reservas\Localidad;
 
-class SedeController extends Controller
+class SedesController extends Controller
 {
 	public function __construct(Redirector $redirect=null)
 	{

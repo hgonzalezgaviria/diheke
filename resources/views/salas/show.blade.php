@@ -1,9 +1,9 @@
 @extends('layout')
-@section('title', '/ Recurso Físico '.$recursoFisico->REFI_ID)
+@section('title', '/ Sala '.$recursoFisico->REFI_ID)
 
 @section('content')
 
-	<h1 class="page-header">Recurso Físico {{ $recursoFisico->REFI_ID }}:</h1>
+	<h1 class="page-header">Sala {{ $recursoFisico->REFI_ID }}:</h1>
 
 	<div class="jumbotron text-center">
 		<p>
@@ -44,7 +44,7 @@
 
 			  <li class="list-group-item">
 					<div class="row">
-						<div class="col-lg-4"><strong>Tipo Recurso Físico:</strong></div>
+						<div class="col-lg-4"><strong>Tipo Sala:</strong></div>
 						<div class="col-lg-8">{{ $recursoFisico -> tipoRecursoFisico -> TIEF_DESCRIPCION }}</div>
 					</div>
 			  </li>
@@ -66,7 +66,7 @@
 			</ul>
 		</p>
 		<div class="text-right">
-			<a class="btn btn-primary" role="button" href="{{ URL::to('recursofisico/') }}">
+			<a class="btn btn-primary" role="button" href="{{ URL::to('salas/') }}">
 				<i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar
 			</a>
 		</div>

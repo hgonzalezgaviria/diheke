@@ -11,7 +11,9 @@ class TableSalasSeeder extends Seeder
      */
     Public function run() {
 
-      for ($i=1; $i <= 12; $i++) { 
+      for ($i=1; $i <= 12; $i++) {
+
+        $this->command->info('------Sala '.($i+300));
         $sala = new \reservas\Sala;
         $sala->SALA_DESCRIPCION = 'SALA '.($i+300);
         $sala->SALA_CAPACIDAD = 20;
@@ -24,7 +26,8 @@ class TableSalasSeeder extends Seeder
         $sala->save();
       }
       
-      for ($i=1; $i <= 4; $i++) { 
+      for ($i=1; $i <= 4; $i++) {
+        $this->command->info('------Sala '.($i+100));
         $sala = new \reservas\Sala;
         $sala->SALA_DESCRIPCION = 'SALA '.($i+100);
         $sala->SALA_CAPACIDAD = 20;
