@@ -1,17 +1,16 @@
 @extends('layout')
-@section('title', '/ Editar Sala '.$recursoFisico->REFI_ID)
+@section('title', '/ Editar Sala '.$sala->SALA_ID)
 @section('scripts')
     <script>
     </script>
 @endsection
 
 @section('content')
-
 	<h1 class="page-header">Actualizar Sala</h1>
 
 	@include('partials/errors')
 
-	{{ Form::model($recursoFisico, array('action' => array('RecursoFisicoController@update', $recursoFisico->REFI_ID), 'method' => 'PUT', 'class' => 'form-horizontal')) }}
+	{{ Form::model($sala, [ 'action' => [ 'SalasController@update', $sala->SALA_ID ], 'method' => 'PUT', 'class' => 'form-horizontal' ]) }}
 
 	  	<div class="form-group">
 			{{ Form::label('SALA_DESCRIPCION', 'Descripción') }} 
@@ -20,7 +19,8 @@
 
 	  	<div class="form-group">
 			{{ Form::label('SALA_CAPACIDAD', 'Capacidad') }} 
-			{{ Form::number('SALA_CAPACIDAD', old('SALA_CAPACIDAD'), [ 'class' => 'form-control', 'min' => '0', 'required' ]) }}
+			{{ Form::number('SALA_CAPACIDAD', old('SALA_CAPACIDAD'), [ 'class' => 'form-control', 'min' => '0', 
+				'max' => '999','required' ]) }}
 		</div>
 
 
@@ -30,7 +30,7 @@
 				'class' => 'form-control',
 				'accept' => 'image/*',
 				'max' => '500',
-				'required',
+				//'required',
 			]) }}
 		</div>
 
@@ -40,7 +40,7 @@
 				'class' => 'form-control',
 				'accept' => 'image/*',
 				'max' => '500',
-				'required',
+				//'required',
 			]) }}
 		</div>
 

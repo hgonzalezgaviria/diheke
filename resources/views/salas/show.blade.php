@@ -1,68 +1,48 @@
 @extends('layout')
-@section('title', '/ Sala '.$recursoFisico->REFI_ID)
+@section('title', '/ Sala '.$sala->SALA_ID)
 
 @section('content')
 
-	<h1 class="page-header">Sala {{ $recursoFisico->REFI_ID }}:</h1>
+	<h1 class="page-header">Sala {{ $sala->SALA_ID }}:</h1>
 
 	<div class="jumbotron text-center">
 		<p>
 			<ul class="list-group">
-			  <li class="list-group-item">
+				<li class="list-group-item">
 					<div class="row">
 						<div class="col-lg-4"><strong>Descripción:</strong></div>
-						<div class="col-lg-8">{{ $recursoFisico -> REFI_DESCRIPCION }}</div>
+						<div class="col-lg-8">{{ $sala -> SALA_DESCRIPCION }}</div>
 					</div>
-			  </li>
-			  <li class="list-group-item">
+				</li>
+				<li class="list-group-item">
 					<div class="row">
-						<div class="col-lg-4"><strong>Área (Mts2 o Hectareas):</strong></div>
-						<div class="col-lg-8">{{ $recursoFisico -> REFI_AREA }}</div>
+						<div class="col-lg-4"><strong>Capacidad:</strong></div>
+						<div class="col-lg-8">{{ $sala -> SALA_CAPACIDAD }}</div>
 					</div>
-			  </li>
-
-			  <li class="list-group-item">
+				</li>
+				<li class="list-group-item">
 					<div class="row">
-						<div class="col-lg-4"><strong>Número de niveles:</strong></div>
-						<div class="col-lg-8">{{ $recursoFisico -> REFI_NRONIVELES }}</div>
+						<div class="col-lg-4"><strong>Estado:</strong></div>
+						<div class="col-lg-8">{{ $sala -> estado -> ESTA_DESCRIPCION }}</div>
 					</div>
-			  </li>
-
-			  <li class="list-group-item">
+				</li>
+				<li class="list-group-item">
 					<div class="row">
-						<div class="col-lg-4"><strong>Nombre:</strong></div>
-						<div class="col-lg-8">{{ $recursoFisico -> REFI_NOMBRE }}</div>
+						<div class="col-lg-4"><strong>Sede:</strong></div>
+						<div class="col-lg-8">{{ $sala -> sede -> SEDE_DESCRIPCION }}</div>
 					</div>
-			  </li>
-
-			  <li class="list-group-item">
+				</li>
+				<li class="list-group-item">
 					<div class="row">
-						<div class="col-lg-4"><strong>Nomenclatura:</strong></div>
-						<div class="col-lg-8">{{ $recursoFisico -> REFI_NOMENCLATURA }}</div>
+						<div class="col-lg-4"><strong>Foto Croquis:</strong></div>
+						<div class="col-lg-8">
+							{{ $sala -> SALA_FOTOCROQUIS }}
+							{{ Html::image($sala -> SALA_FOTOCROQUIS, 'SALA_FOTOCROQUIS', [
+								'class'=>'img-responsive',
+							]) }}
+						</div>
 					</div>
-			  </li>
-
-			  <li class="list-group-item">
-					<div class="row">
-						<div class="col-lg-4"><strong>Tipo Sala:</strong></div>
-						<div class="col-lg-8">{{ $recursoFisico -> tipoRecursoFisico -> TIEF_DESCRIPCION }}</div>
-					</div>
-			  </li>
-
-			  <li class="list-group-item">
-					<div class="row">
-						<div class="col-lg-4"><strong>Tipo Posesión:</strong></div>
-						<div class="col-lg-8">{{ $recursoFisico -> tipoPosesion -> TIPO_DESCRIPCION }}</div>
-					</div>
-			  </li>
-
-			  <li class="list-group-item">
-					<div class="row">
-						<div class="col-lg-4"><strong>Localidad:</strong></div>
-						<div class="col-lg-8">{{ $recursoFisico -> localidad -> LOCA_DESCRIPCION }}</div>
-					</div>
-			  </li>
-
+				</li>
 			</ul>
 		</p>
 		<div class="text-right">

@@ -100,44 +100,32 @@ class SalasController extends Controller
 	{
 		//Validación de datos
 		$this->validate(request(), [
-
 			'SALA_DESCRIPCION' => ['required', 'max:300'],
 			'SALA_CAPACIDAD' => ['required', 'numeric'],
 			'SALA_FOTOSALA' => ['required', 'max:500'],
 			'SALA_FOTOCROQUIS' => ['required', 'max:500'],
 			'SALA_OBSERVACIONES' => ['required', 'max:300'],
-			'ESTA_ID' => ['required', 'numeric'],
-			'SEDE_ID' => ['required', 'numeric'],
-
+			'ESTA_ID' => ['required', 'numeric'], //Relación con ESTADOS
+			'SEDE_ID' => ['required', 'numeric'], //Relación con SEDES
 		]);
 
-		//Permite seleccionar los datos que se desean guardar.
+
+        //Guarda todos los datos recibidos del formulario en un obj Sala
+        $sala = new Sala(request()->except(['_token']));
+
+		/*//Permite seleccionar los datos que se desean guardar.
 		$sala = new Sala;
-		$sala->REFI_NOMENCLATURA = Input::get('REFI_NOMENCLATURA');
-		$sala->REFI_CAPACIDADMAXIMA = Input::get('REFI_CAPACIDADMAXIMA');
-		$sala->REFI_TIPOASIGNACION = Input::get('REFI_TIPOASIGNACION');
-		$sala->REFI_DESCRIPCION = Input::get('REFI_DESCRIPCION');
-		$sala->REFI_NIVEL = Input::get('REFI_NIVEL');
-		$sala->REFI_ESTADO = Input::get('REFI_ESTADO');
-		$sala->REFI_CAPACIDADREAL = Input::get('REFI_CAPACIDADREAL');
-
-		$sala->REFI_PRESTABLE =  (Input::get('REFI_PRESTABLE')) ? true : false;
-
-		$sala->REFI_AREAREAL = Input::get('REFI_AREAREAL');
-		$sala->REFI_AREAUSADA = Input::get('REFI_AREAUSADA');
-
-		$sala->SIRF_ID = Input::get('SIRF_ID'); //Relación con SITUACIONRECURSOFISICO
+		$sala->SALA_DESCRIPCION = Input::get('SALA_NOMENCLATURA');
 		$sala->TIRF_ID = Input::get('TIRF_ID'); //Relación con TIPORECURSOFISICO
-		$sala->TIPO_ID = Input::get('TIPO_ID'); //Relación con TipoPosesion
-		$sala->ESFI_ID = Input::get('ESFI_ID'); //Relación con ESPACIOFISICO
+		*/
 
-		$sala->REFI_CREADOPOR = auth()->user()->username;
+		$sala->SALA_CREADOPOR = auth()->user()->username;
 		//Se guarda modelo
 		$sala->save();
 
 		// redirecciona al index de controlador
-		Session::flash('message', 'Espacio Fisico '.$sala->SALA_ID.' creado exitosamente!');
-		return redirect()->to('sala');
+		Session::flash('message', 'Sala '.$sala->SALA_ID.' creada exitosamente!');
+		return redirect()->to('salas');
 	}
 
 
@@ -169,26 +157,34 @@ class SalasController extends Controller
 		$sala = Sala::findOrFail($SALA_ID);
 
 		//Se crea un array con las sedes disponibles
-    	$sedes = \reservas\Sede::orderBy('SEDE_ID')
+		$sedes = \reservas\Sede::orderBy('SEDE_ID')
 						->select('SEDE_ID', 'SEDE_DESCRIPCION')
 						->get();
 
 		$arrSedes = [];
 		foreach ($sedes as $sede) {
-			array_push($arrSedes, [ $sede->SEDE_ID , $sede->SEDE_DESCRIPCION ]);
+			$arrSedes = array_add(
+				$arrSedes,
+				$sede->SEDE_ID,
+				$sede->SEDE_DESCRIPCION
+			);
 		}
 
 
 		//Se crea un array con los posibles estados de una sala.
 		$tipoEstadoSala = 1;
 		$estadosSala = \reservas\Estado::where('TIES_ID', $tipoEstadoSala)
-    					->orderBy('ESTA_ID')
+						->orderBy('ESTA_ID')
 						->select('ESTA_ID', 'ESTA_DESCRIPCION')
 						->get();
 
 		$arrEstadosSala = [];
 		foreach ($estadosSala as $estado) {
-			array_push($arrEstadosSala, [ $estado->ESTA_ID => $estado->ESTA_DESCRIPCION ]);
+			$arrEstadosSala = array_add(
+				$arrEstadosSala,
+				$estado->ESTA_ID,
+				$estado->ESTA_DESCRIPCION
+			);
 		}
 
 
@@ -206,51 +202,29 @@ class SalasController extends Controller
 	 */
 	public function update($SALA_ID)
 	{
-		//Validación de datos
 		$this->validate(request(), [
-
-			'REFI_NOMENCLATURA' => ['required', 'max:20'],
-			'REFI_CAPACIDADMAXIMA' => ['required', 'numeric'],
-			'REFI_TIPOASIGNACION' => ['required', 'max:1'],
-			'REFI_DESCRIPCION' => ['required', 'max:100'],
-			'REFI_NIVEL' => ['required', 'max:25'],
-			'REFI_ESTADO' => ['required', 'max:20'],
-			'REFI_CAPACIDADREAL' => ['required', 'numeric'],
-			'REFI_PRESTABLE' => ['boolean'],
-			'REFI_AREAREAL' => ['required', 'numeric'],
-			'REFI_AREAUSADA' => ['required', 'numeric'],
-
-			'SIRF_ID' => ['required'],
-			'TIRF_ID' => ['required'],
-			'TIPO_ID' => ['required'],
-			'ESFI_ID' => ['required'],
+			'SALA_DESCRIPCION' => ['required', 'max:300'],
+			'SALA_CAPACIDAD' => ['required', 'numeric'],
+			//'SALA_FOTOSALA' => ['required', 'max:500'],
+			//'SALA_FOTOCROQUIS' => ['required', 'max:500'],
+			'SALA_OBSERVACIONES' => ['required', 'max:300'],
+			'ESTA_ID' => ['required', 'numeric'], //Relación con ESTADOS
+			'SEDE_ID' => ['required', 'numeric'], //Relación con SEDES
 		]);
 
-		// Se obtiene el registro
+
+        //Guarda todos los datos recibidos del formulario en un obj Sala
 		$sala = Sala::findOrFail($SALA_ID);
 
-		$sala->REFI_NOMENCLATURA = Input::get('REFI_NOMENCLATURA');
-		$sala->REFI_CAPACIDADMAXIMA = Input::get('REFI_CAPACIDADMAXIMA');
-		$sala->REFI_TIPOASIGNACION = Input::get('REFI_TIPOASIGNACION');
-		$sala->REFI_DESCRIPCION = Input::get('REFI_DESCRIPCION');
-		$sala->REFI_NIVEL = Input::get('REFI_NIVEL');
-		$sala->REFI_ESTADO = Input::get('REFI_ESTADO');
-		$sala->REFI_CAPACIDADREAL = Input::get('REFI_CAPACIDADREAL');
-		$sala->REFI_PRESTABLE =  (Input::get('REFI_PRESTABLE')) ? true : false;
-		$sala->REFI_AREAREAL = Input::get('REFI_AREAREAL');
-		$sala->REFI_AREAUSADA = Input::get('REFI_AREAUSADA');
+        $sala->fill(request()->except(['_token']));
 
-		$sala->SIRF_ID = Input::get('SIRF_ID'); //Relación con SITUACIONRECURSOFISICO
-		$sala->TIRF_ID = Input::get('TIRF_ID'); //Relación con TIPORECURSOFISICO
-		$sala->TIPO_ID = Input::get('TIPO_ID'); //Relación con TipoPosesion
-		$sala->ESFI_ID = Input::get('ESFI_ID'); //Relación con ESPACIOFISICO
-		$sala->REFI_MODIFICADOPOR = auth()->user()->username;
+		$sala->SALA_MODIFICADOPOR = auth()->user()->username;
 		//Se guarda modelo
 		$sala->save();
 
 		// redirecciona al index de controlador
-		Session::flash('message', 'Espacio Fisico '.$sala->SALA_ID.' modificado exitosamente!');
-		return redirect()->to('sala');
+		Session::flash('message', 'Sala '.$sala->SALA_ID.' modificada exitosamente!');
+		return redirect()->to('salas');
 	}
 
 	/**
@@ -264,14 +238,14 @@ class SalasController extends Controller
 		$sala = Sala::findOrFail($SALA_ID);
 
 		// delete
-		$sala->REFI_ELIMINADOPOR = auth()->user()->username;
+		$sala->SALA_ELIMINADOPOR = auth()->user()->username;
 		$sala->save();
 		$sala->delete();
 
 		// redirecciona al index de controlador
 		if($showMsg){
-			Session::flash('message', 'Espacio Fisico '.$sala->SALA_ID.' eliminado exitosamente!');
-			return redirect()->to('sala');
+			Session::flash('message', 'Sala '.$sala->SALA_ID.' eliminada exitosamente!');
+			return redirect()->to('salas');
 		}
 	}
 
