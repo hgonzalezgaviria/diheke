@@ -1,59 +1,65 @@
 @extends('layout')
-@section('title', '/ Editar Espacio Físico '.$espacioFisico->ESFI_ID)
+@section('title', '/ Editar Equipo '.$equipo->EQUI_ID)
 @section('scripts')
-    <script>
+    
+     <script>
+
+      $(function () {
+
+
+      	/*para posicionar un combobox lo unico que hay que hacer es que el selector (select) tenga
+      	un id y referirce a el de la forma en que esta abajo de este comentario. Entonces le decimos
+      	que el select con id ESTA_ID se seleccione la opción que trae el campo ESTA_ID en el registro
+      	de equipo
+      	*/
+	 	$("#ESTA_ID option[value=" + '{{ $equipo->ESTA_ID }}' + "]").attr("selected","selected");
+	 	
+
+	 	$("#SALA_ID option[value=" + '{{ $equipo->SALA_ID }}' + "]").attr("selected","selected");
+
+	  });
+
     </script>
+
 @endsection
 
 @section('content')
 
-	<h1 class="page-header">Actualizar Espacio Físico</h1>
+	<h1 class="page-header">Actualizar Equipo</h1>
 
 	@include('partials/errors')
 
-	{{ Form::model($espacioFisico, array('action' => array('EspacioFisicoController@update', $espacioFisico->ESFI_ID), 'method' => 'PUT', 'class' => 'form-horizontal')) }}
+	{{ Form::model($equipo, array('action' => array('EquiposController@update', $equipo->EQUI_ID), 'method' => 'PUT', 'class' => 'form-horizontal')) }}
 
 	  	<div class="form-group">
-			{{ Form::label('ESFI_DESCRIPCION', 'Descripción') }} 
-			{{ Form::text('ESFI_DESCRIPCION', old('ESFI_DESCRIPCION'), array('class' => 'form-control', 'max' => '300', 'required')) }}
+			{{ Form::label('EQUI_DESCRIPCION', 'Descripción') }} 
+			{{ Form::text('EQUI_DESCRIPCION', old('EQUI_DESCRIPCION'), array('class' => 'form-control', 'max' => '300', 'required')) }}
 		</div>
 
 		<div class="form-group">
-			{{ Form::label('ESFI_AREA', 'Área (Mts2 o Hectareas)') }} 
-			{{ Form::text('ESFI_AREA', old('ESFI_AREA'), array('class' => 'form-control', 'max' => '300', 'required')) }}
-		</div>
-
-
-		<div class="form-group">
-			{{ Form::label('ESFI_NRONIVELES', 'Número de niveles') }} 
-			{{ Form::number('ESFI_NRONIVELES', old('ESFI_NRONIVELES'), array('class' => 'form-control', 'min' => '0', 'max' => '999', 'required')) }}
+			{{ Form::label('EQUI_OBSERVACIONES', 'Observaciones') }} 
+			{{ Form::textarea('EQUI_OBSERVACIONES', old('EQUI_OBSERVACIONES'), array('class' => 'form-control', 'max' => '300', 'required')) }}
 		</div>
 
 		<div class="form-group">
-			{{ Form::label('ESFI_NOMBRE', 'Nombre') }} 
-			{{ Form::text('ESFI_NOMBRE', old('ESFI_NOMBRE'), array('class' => 'form-control', 'max' => '300', 'required')) }}
+			{{ Form::label('sala', 'Sala') }} 
+			<select name="SALA_ID" id="SALA_ID" class="form-control" required>
+				<option value="">Seleccione..</option>
+	            @foreach($salas as $sala)
+	            <option value="{{ $sala->SALA_ID }}">{{ $sala->SALA_DESCRIPCION }}</option>
+	            @endforeach
+	        </select>
 		</div>
 
 		<div class="form-group">
-			{{ Form::label('ESFI_NOMENCLATURA', 'Nomenclatura') }} 
-			{{ Form::text('ESFI_NOMENCLATURA', old('ESFI_NOMENCLATURA'), array('class' => 'form-control', 'max' => '300', 'required')) }}
+			{{ Form::label('estado', 'Estado') }} 
+			<select name="ESTA_ID" id="ESTA_ID" class="form-control" required>
+				<option value="">Seleccione..</option>
+	            @foreach($estados as $estado)
+	            <option value="{{ $estado->ESTA_ID }}">{{ $estado->ESTA_DESCRIPCION }}</option>
+	            @endforeach
+	        </select>
 		</div>
-
-		<div class="form-group">
-			{{ Form::label('TIPO_ID', 'Tipo Posesión') }} 
-			{{ Form::select('TIPO_ID', [null => 'Seleccione un tipo...'] + $arrTiposPosesiones , old('TIPO_ID'), ['class' => 'form-control', 'required']) }}
-		</div>
-
-		<div class="form-group">
-			{{ Form::label('TIEF_ID', 'Tipo Espacio Físico') }} 
-			{{ Form::select('TIEF_ID', [null => 'Seleccione un tipo...'] + $arrTiposEspaciosFisicos , old('TIEF_ID'), ['class' => 'form-control', 'required']) }}
-		</div>
-
-		<div class="form-group">
-			{{ Form::label('LOCA_ID', 'Localidad') }} 
-			{{ Form::select('LOCA_ID', [null => 'Seleccione una localidad...'] + $arrLocalidades , old('LOCA_ID'), ['class' => 'form-control', 'required']) }}
-		</div>
-
 
 		<!-- Botones -->
 	    <div id="btn-form" class="text-right">

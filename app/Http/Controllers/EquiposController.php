@@ -60,8 +60,17 @@ class EquiposController extends Controller
      */
     public function create()
     {
+        $salas = \DB::table('salas')
+                            ->select('salas.*')
+                            ->get();
+
+        $estados = \DB::table('estados')
+                            ->select('estados.*')
+                            ->where('estados.ESTA_id','=',2)
+                            ->get();
+
         // Carga el formulario para crear un nuevo registro (views/create.blade.php)
-        return view('equipos/create');
+        return view('equipos/create', compact('salas','estados'));
     }
 
     /**
@@ -73,13 +82,16 @@ class EquiposController extends Controller
     {
         //Validación de datos
         $this->validate(request(), [
-                'descripcion' => ['required', 'max:50']
+                'EQUI_DESCRIPCION' => ['required', 'max:300'],
+                'EQUI_OBSERVACIONES' => ['max:300'],
+                'SALA_ID' => ['required', 'numeric'],
+                'ESTA_ID' => ['required', 'numeric']
             ]);
         //Guarda todos los datos recibidos del formulario
-        $tipoestado = request()->except(['_token']);
+        $equipo = request()->except(['_token']);
 
 
-        Equipo::create($tipoestado);
+        Equipo::create($equipo);
 
         //Permite seleccionar los datos que se desean guardar.
         /*
@@ -91,7 +103,7 @@ class EquiposController extends Controller
         */
 
         // redirecciona al index de controlador
-        Session::flash('message', 'Tipo de estado creado exitosamente!');
+        Session::flash('message', 'Equipo creado exitosamente!');
         return redirect()->to('equipos');
     }
 
@@ -105,9 +117,9 @@ class EquiposController extends Controller
     public function show($id)
     {
         // Se obtiene el registro
-        $tipoestado = Equipo::find($id);
+        $equipo = Equipo::find($id);
         // Muestra la vista y pasa el registro
-        return view('equipos/show')->with('tipoestado', $tipoestado);
+        return view('equipos/show')->with('equipo', $equipo);
     }
 
     /**
@@ -119,10 +131,19 @@ class EquiposController extends Controller
     public function edit($id)
     {
         // Se obtiene el registro
-        $tipoestado = Equipo::find($id);
+        $equipo = Equipo::find($id);
+
+        $salas = \DB::table('salas')
+                            ->select('salas.*')
+                            ->get();
+
+        $estados = \DB::table('estados')
+                            ->select('estados.*')
+                            ->where('estados.ESTA_id','=',2)
+                            ->get();
 
         // Muestra el formulario de edición y pasa el registro a editar
-        return view('equipos/edit')->with('tipoestado', $tipoestado);
+        return view('equipos/edit', compact('equipo','salas','estados'));
     }
 
     /**
@@ -135,19 +156,23 @@ class EquiposController extends Controller
     {
         //Validación de datos
         $this->validate(request(), [
-            'descripcion' => ['required', 'max:100'],
-            'observaciones' => ['max:500']
+                'EQUI_DESCRIPCION' => ['required', 'max:300'],
+                'EQUI_OBSERVACIONES' => ['max:300'],
+                'SALA_ID' => ['required', 'numeric'],
+                'ESTA_ID' => ['required', 'numeric']
         ]);
 
         // Se obtiene el registro
-        $tipoestado = Equipo::find($id);
-        $tipoestado->descripcion = Input::get('descripcion');
-        $tipoestado->observaciones = Input::get('observaciones');
-        //$tipoestado->edited_by = auth()->user()->username;
-        $tipoestado->save();
+        $equipo = Equipo::find($id);
+        $equipo->EQUI_DESCRIPCION = Input::get('EQUI_DESCRIPCION');
+        $equipo->EQUI_OBSERVACIONES = Input::get('EQUI_OBSERVACIONES');
+        $equipo->SALA_ID = Input::get('SALA_ID');
+        $equipo->ESTA_ID = Input::get('ESTA_ID');
+        //$equipo->edited_by = auth()->user()->username;
+        $equipo->save();
 
         // redirecciona al index de controlador
-        Session::flash('message', 'Tipo de estado actualizado exitosamente!');
+        Session::flash('message', 'Equipo actualizado exitosamente!');
         return redirect()->to('equipos/'.$id);
     }
 
@@ -160,11 +185,11 @@ class EquiposController extends Controller
     public function destroy($id)
     {
         // delete
-        $tipoestado = Equipo::find($id);
-        $tipoestado->delete();
+        $equipo = Equipo::find($id);
+        $equipo->delete();
 
         // redirecciona al index de controlador
-        Session::flash('message', 'Tipo estado '.$id.' borrado!');
+        Session::flash('message', 'Equipo '.$id.' borrado!');
         return redirect()->to('equipos');
     }
     

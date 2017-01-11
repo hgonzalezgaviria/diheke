@@ -5,7 +5,9 @@
 		{!! Html::favicon('favicon.ico') !!}
 		
 		{!! Html::style('assets/js/jquery-ui/jquery-ui.min.css') !!}
+		{!! Html::style('assets/css/jquery.dataTables.min.css') !!}
 		{!! Html::style('assets/css/fullcalendar.css') !!}
+		{!! Html::style('assets/css/msgBoxLight.css') !!}
 		{!! Html::style('assets/css/bootstrap.min.css') !!}
 		{!! Html::style('assets/css/font-awesome.min.css') !!}
 		{!! Html::style('assets/css/bootstrap-theme.min.css') !!}
@@ -45,6 +47,9 @@
 		{!! Html::script('assets/js/fullcalendar.js') !!}
 		{!! Html::script('assets/js/es.js') !!}
 		{!! Html::script('assets/js/bootstrap.min.js') !!}
+
+		{!! Html::script('assets/js/jquery.dataTables.min.js') !!}
+		{!! Html::script('assets/js/jquery.msgBox.js') !!}
 
 		{!! Html::script('assets/js/bootstrap-datetimepicker.js') !!}
 		@yield('scripts')
