@@ -33,7 +33,7 @@
 						<div class="panel-body">
 							{{$sala->SALA_DESCRIPCION}}<br>
 							Cantidad de equipos: {{$sala->SALA_CAPACIDAD}}<br>
-							Equipos disponibles: {{$sala->equiposDisp}}<br>
+							Equipos disponibles: {{$sala->equiposDisp()}}<br>
 						</div>
 					</div>
 				</div>

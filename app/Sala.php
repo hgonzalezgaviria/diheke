@@ -76,6 +76,6 @@ class Sala extends Model
      */
     public function equiposDisp()
     {
-    	//return $this->
+    	return false;
 	}
 }

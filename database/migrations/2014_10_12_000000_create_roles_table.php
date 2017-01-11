@@ -12,7 +12,11 @@ class CreateRolesTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('ROLES', function (Blueprint $table) {
+
+		$nomTabla = 'ROLES';
+		$commentTabla = 'Tabla de roles que puede tener un usuario.';
+		
+		Schema::create($nomTabla, function (Blueprint $table) {
 			$table->increments('ROLE_ID')
 				->comment('Valor autonumérico, llave primaria de la tabla ROLES.');
 			$table->string('ROLE_ROL', 15)->unique()
@@ -35,8 +39,11 @@ class CreateRolesTable extends Migration
 				->comment('Fecha en que se eliminó el registro en la tabla.');
 		});
 
+
 		if(env('DB_CONNECTION') == 'pgsql')
-			DB::statement("COMMENT ON TABLE eva360.\"ROLES\" IS 'Tabla de roles que peude tener un usuario.'");
+			DB::statement("COMMENT ON TABLE ".env('DB_SCHEMA').".\"".$nomTabla."\" IS '".$commentTabla."'");
+		elseif(env('DB_CONNECTION') == 'mysql')
+			DB::statement("ALTER TABLE ".$nomTabla." COMMENT = '".$commentTabla."'");
 
 	}
 

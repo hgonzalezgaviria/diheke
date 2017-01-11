@@ -47,9 +47,6 @@ class CreateUsersTable extends Migration
 			->on('ROLES');
 		});
 
-		if(env('DB_CONNECTION') == 'pgsql')
-			DB::statement("COMMENT ON TABLE eva360.\"USERS\" IS 'Tabla de usuarios para ingresar al aplicativo.'");
-		//elseif(env('DB_CONNECTION') == 'mysql')
 
 	}
 
