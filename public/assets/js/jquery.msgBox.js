@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 // users may change this variable to fit their needs
-var msgBoxImagePath = "../../assets/img/";
+var msgBoxImagePath = "assets/images/";
 
 jQuery.msgBox = msg;
 function msg (options) {

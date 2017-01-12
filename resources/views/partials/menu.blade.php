@@ -62,6 +62,12 @@
 								</a>
 							</li>
 
+							<li>
+								<a href="{{ url('/politicas') }}">
+									<i class="fa fa-btn fa-key"></i> Politicas
+								</a>
+							</li>
+
 							<li role="separator" class="divider"></li>
 							
 

@@ -36,21 +36,29 @@
 					<div class="row">
 						<div class="col-lg-4"><strong>Foto Sala:</strong></div>
 						<div class="col-lg-8">
-							{{ $sala -> SALA_FOTOSALA }}
+							<a href="#modalSala" data-toggle="modal" data-target="#modalSala">
 							{{ Html::image(asset('img/'.$sala -> SALA_FOTOSALA), 'SALA_FOTOSALA', [
 								'class'=>'img-responsive',
+								'style'=>'max-width: 250px;',
 							]) }}
+							</a>
 						</div>
 					</div>
 				</li>
+
+
+
+
 				<li class="list-group-item">
 					<div class="row">
 						<div class="col-lg-4"><strong>Foto Croquis:</strong></div>
 						<div class="col-lg-8">
-							{{ $sala -> SALA_FOTOCROQUIS }}
+						<a href="#modalCroquis" data-toggle="modal" data-target="#modalCroquis">						
 							{{ Html::image(asset('img/'.$sala -> SALA_FOTOCROQUIS), 'SALA_FOTOCROQUIS', [
 								'class'=>'img-responsive',
+								'style'=>'max-width: 250px;',
 							]) }}
+							</a>
 						</div>
 					</div>
 				</li>
@@ -60,6 +68,43 @@
 			<a class="btn btn-primary" role="button" href="{{ URL::to('salas/') }}">
 				<i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar
 			</a>
+		</div>
+	</div>
+
+	<div id="modalSala" class="modal fade" role="dialog">  
+		<div class="modal-dialog">
+		    <div class="modal-content">      
+		        <div class="modal-header">        
+		            <button type="button" class="close" data-dismiss="modal">×</button>        
+		            <h4 class="modal-title">Imagen Sala</h4>      </div>      
+		        <div class="modal-body">
+		       {{ Html::image(asset('img/'.$sala -> SALA_FOTOSALA), 'SALA_FOTOSALA', [
+								'class'=>'img-responsive',
+								
+							]) }}
+		        </div>      
+		        <div class="modal-footer">        
+		            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>     
+		        </div>  
+		    </div>  
+		</div>
+	</div>
+	<div id="modalCroquis" class="modal fade" role="dialog">  
+		<div class="modal-dialog">
+		    <div class="modal-content">      
+		        <div class="modal-header">        
+		            <button type="button" class="close" data-dismiss="modal">×</button>        
+		            <h4 class="modal-title">Imagen Croquis</h4>      </div>      
+		        <div class="modal-body">
+		        {{ Html::image(asset('img/'.$sala -> SALA_FOTOCROQUIS), 'SALA_FOTOCROQUIS', [
+								'class'=>'img-responsive',
+								
+							]) }}
+		        </div>      
+		        <div class="modal-footer">        
+		            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>     
+		        </div>  
+		    </div>  
 		</div>
 	</div>
 
