@@ -10,7 +10,7 @@
 
 	@include('partials/errors')
 
-	{{ Form::model($sala, [ 'action' => [ 'SalasController@update', $sala->SALA_ID ], 'method' => 'PUT', 'class' => 'form-horizontal' ]) }}
+	{{ Form::model($sala, [ 'action' => [ 'SalasController@update', $sala->SALA_ID ], 'method' => 'PUT', 'files' => true, 'class' => 'form-horizontal' ]) }}
 
 	  	<div class="form-group">
 			{{ Form::label('SALA_DESCRIPCION', 'Descripción') }} 

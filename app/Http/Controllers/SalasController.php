@@ -109,20 +109,34 @@ class SalasController extends Controller
 			'SEDE_ID' => ['required', 'numeric'], //Relación con SEDES
 		]);
 
-
-        //Guarda todos los datos recibidos del formulario en un obj Sala
-        $sala = new Sala(request()->except(['_token']));
-
-		/*//Permite seleccionar los datos que se desean guardar.
-		$sala = new Sala;
-		$sala->SALA_DESCRIPCION = Input::get('SALA_NOMENCLATURA');
-		$sala->TIRF_ID = Input::get('TIRF_ID'); //Relación con TIPORECURSOFISICO
-		*/
-
+	
+		//Guarda todos los datos recibidos del formulario en un obj Sala
+		$sala = new Sala(request()->except(['_token']));
 		$sala->SALA_CREADOPOR = auth()->user()->username;
 		//Se guarda modelo
 		$sala->save();
 
+
+		$FOTOSALA = request()->file('SALA_FOTOSALA');
+		if ($FOTOSALA) {
+			$sala->SALA_FOTOSALA = $sala->SALA_ID . '_FOTOSALA.'.$FOTOSALA->getClientOriginalExtension();
+
+			$FOTOSALA->move(public_path('img'), $sala->SALA_FOTOSALA);
+		}else{
+			$sala->SALA_FOTOSALA = 'default.jpg';
+		}
+
+		$FOTOCROQUIS = request()->file('SALA_FOTOCROQUIS');
+		if ($FOTOCROQUIS) {
+			$sala->SALA_FOTOCROQUIS = $sala->SALA_ID . '_FOTOCROQUIS.'.$FOTOCROQUIS->getClientOriginalExtension();
+
+			$FOTOCROQUIS->move(public_path('img'), $sala->SALA_FOTOCROQUIS);
+		}else{
+			$sala->SALA_FOTOCROQUIS = 'default.jpg';
+		}
+
+		$sala->save();
+	 
 		// redirecciona al index de controlador
 		Session::flash('message', 'Sala '.$sala->SALA_ID.' creada exitosamente!');
 		return redirect()->to('salas');
@@ -213,13 +227,41 @@ class SalasController extends Controller
 		]);
 
 
-        //Guarda todos los datos recibidos del formulario en un obj Sala
+		//Guarda todos los datos recibidos del formulario en un obj Sala
 		$sala = Sala::findOrFail($SALA_ID);
 
-        $sala->fill(request()->except(['_token']));
+		$sala->fill(request()->except(['_token', 'SALA_FOTOSALA', 'SALA_FOTOCROQUIS']));
 
 		$sala->SALA_MODIFICADOPOR = auth()->user()->username;
 		//Se guarda modelo
+		$sala->save();
+
+
+
+		$FOTOSALA = request()->file('SALA_FOTOSALA');
+		if ($FOTOSALA) {
+			//Si ya existe una foto...
+			if ($sala->SALA_FOTOSALA != 'default.jpg') {
+				// borrar archivo foto actual
+				unlink(public_path('img/'.$sala->SALA_FOTOSALA));
+			}
+			$sala->SALA_FOTOSALA = $sala->SALA_ID . '_FOTOSALA.'.$FOTOSALA->getClientOriginalExtension();
+			$FOTOSALA->move(public_path('img'), $sala->SALA_FOTOSALA);
+		}
+
+		$FOTOCROQUIS = request()->file('SALA_FOTOCROQUIS');
+		if ($FOTOCROQUIS) {
+			//Si ya existe una foto...
+			if ($sala->SALA_FOTOCROQUIS != 'default.jpg') {
+				// borrar archivo foto actual
+				unlink(public_path('img/'.$sala->SALA_FOTOCROQUIS));
+			}
+			$sala->SALA_FOTOCROQUIS = $sala->SALA_ID . '_FOTOCROQUIS.'.$FOTOCROQUIS->getClientOriginalExtension();
+			$FOTOCROQUIS->move(public_path('img'), $sala->SALA_FOTOCROQUIS);
+		}
+
+
+
 		$sala->save();
 
 		// redirecciona al index de controlador

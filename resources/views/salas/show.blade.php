@@ -34,10 +34,21 @@
 				</li>
 				<li class="list-group-item">
 					<div class="row">
+						<div class="col-lg-4"><strong>Foto Sala:</strong></div>
+						<div class="col-lg-8">
+							{{ $sala -> SALA_FOTOSALA }}
+							{{ Html::image(asset('img/'.$sala -> SALA_FOTOSALA), 'SALA_FOTOSALA', [
+								'class'=>'img-responsive',
+							]) }}
+						</div>
+					</div>
+				</li>
+				<li class="list-group-item">
+					<div class="row">
 						<div class="col-lg-4"><strong>Foto Croquis:</strong></div>
 						<div class="col-lg-8">
 							{{ $sala -> SALA_FOTOCROQUIS }}
-							{{ Html::image($sala -> SALA_FOTOCROQUIS, 'SALA_FOTOCROQUIS', [
+							{{ Html::image(asset('img/'.$sala -> SALA_FOTOCROQUIS), 'SALA_FOTOCROQUIS', [
 								'class'=>'img-responsive',
 							]) }}
 						</div>
