@@ -53,6 +53,7 @@ class ReservasController extends Controller
      */
     public function index()
     {
+
         $data = array(); //declaramos un array principal que va contener los datos
         $id = Reserva::all()->lists('RESE_ID'); //listamos todos los id de los eventos
         $titulo = Reserva::all()->lists('RESE_TITULO'); //lo mismo para lugar y fecha
@@ -93,7 +94,7 @@ class ReservasController extends Controller
         $equipo = $_POST['equipo'];
 
         //Insertando evento a base de datos
-        $reserva=new Reserva;
+        $reserva = new Reserva;
         $reserva->RESE_FECHAINI = $start;
         $reserva->RESE_FECHAINI = $end;
         $reserva->RESE_TODOELDIA =false;
@@ -101,13 +102,21 @@ class ReservasController extends Controller
         $reserva->RESE_TITULO = $title;
         $reserva->SALA_ID = $sala;
 
-        if($equipo != null && $equipo != 0){
-            $reserva->EQUI_ID = $equipo;
+        if($equipo != 0){
+            $reserva->EQUI_ID = $this->getEquipoDisp($sala)->EQUI_ID;
         }
-        
 
         $reserva->save();
    }
+
+    protected function getEquipoDisp($SALA_ID){
+        $equipo = \reservas\Equipo::where('ESTA_ID', 2)
+                                    ->where('SALA_ID', $SALA_ID)
+                                    ->first();
+
+        return $equipo;
+    }
+
 
    public function update(){
         //Valores recibidos via ajax

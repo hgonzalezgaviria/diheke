@@ -26,7 +26,7 @@
 		<div class="tab-pane fade" id="Sede{{$sede->SEDE_ID}}">
 			@foreach($salas as $sala)
 				@if($sala->SEDE_ID == $sede->SEDE_ID)
-				<a href="{{ url('reservas/show?sede='.$sala->SEDE_ID.'&sala='.$sala->SALA_ID) }}">
+				{{-- <a href="{{ url('reservas/show?sede='.$sala->SEDE_ID.'&sala='.$sala->SALA_ID) }}"> --}}
 				<div class="col-md-4 zoom-in-hover">
 					<div class="panel panel-default">
 						<div class="panel-heading">Sala {{$sala->SALA_ID}} en Sede {{$sala->SEDE_ID}}</div>
@@ -34,10 +34,43 @@
 							{{$sala->SALA_DESCRIPCION}}<br>
 							Cantidad de equipos: {{$sala->SALA_CAPACIDAD}}<br>
 							Equipos disponibles: {{$sala->equiposDisp()}}<br>
+							{{ Form::open( ['url' => 'reservas/show', 'method' => 'get', 'class'=>'form-vertical' ]  ) }}
+
+								{{ Form::hidden('sala', $sala->SALA_ID) }}
+								<div class="row">
+									<div class="col-xs-6">
+										<div class="input-group">
+											{{ Form::label('equipo', 'Equipo', [ 'class'=>'form-control' ]) }}
+											<span class="input-group-addon">
+												<input type="radio"
+													title="Requerido!" 
+													value="1"
+													name="equipo"
+													class="">
+											</span>
+										</div>
+									</div>
+
+									<div class="col-xs-6">
+										<div class="input-group">
+											{{ Form::label('equipo', 'Sala', [ 'class'=>'form-control' ]) }}
+											<span class="input-group-addon">
+												<input type="radio"
+													value="0"
+													name="equipo"
+													class="">
+											</span>
+										</div>
+									</div>
+								</div>
+
+								{{ Form::button('<i class="fa fa-ticket" aria-hidden="true"></i> Reservar', [ 'class'=>'btn btn-primary', 'type'=>'submit' ]) }}
+
+							{{ Form::close() }}
 						</div>
 					</div>
 				</div>
-				</a>
+				{{-- </a> --}}
 				@endif
 			@endforeach
 		</div>
@@ -47,18 +80,4 @@
 	  
 </div>
 
-{{-- <div class="container">
-	<div class="row">
-		<div class="col-md-10 col-md-offset-1">
-			<div class="panel panel-default">
-				<div class="panel-heading">Sistema de Reservas de Salas y Equipos - UNIAJC</div>
-
-				<div class="panel-body">
-					¡Bienvenido!<br>
-					<canvas id="cbar" width="350" height="220"></canvas>
-				</div>
-			</div>
-		</div>
-	</div>
-</div> --}}
 @endsection

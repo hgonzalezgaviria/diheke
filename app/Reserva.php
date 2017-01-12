@@ -27,6 +27,7 @@ class Reserva extends Model
         "RESE_COLOR",
         "RESE_TITULO",
         'SALA_ID',
+        'EQUI_ID',
     ];
 
     protected $hidden = [

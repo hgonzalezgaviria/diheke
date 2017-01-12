@@ -35,7 +35,7 @@
     $('#probando').click(function() {
 
 
-        var title = 'PRUEBA';
+        var title = 'RES';
         var allDay = false;
         var back = 'rgb(51, 122, 183)';
         var fechaini = $('#fechainicio').data("DateTimePicker").date();
@@ -69,7 +69,7 @@
                     "X-CSRF-TOKEN": crsfToken
                 },
               success: function(events) {
-                console.log('Evento creado');      
+                console.log('Evento creado');   
                 $('#calendar').fullCalendar('refetchEvents' );
               },
               error: function(json){
