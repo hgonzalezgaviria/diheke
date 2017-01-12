@@ -54,6 +54,13 @@ class ReservasController extends Controller
     public function index()
     {
 
+        $reserva = Reserva::find(2);
+        dump($reserva);
+
+        $equipo = $this->getEquipoDisp($reserva->RESE_ID, $reserva->RESE_FECHAINI, $reserva->RESE_FECHAFIN);
+        dd($equipo);
+
+
         $data = array(); //declaramos un array principal que va contener los datos
         $id = Reserva::all()->lists('RESE_ID'); //listamos todos los id de los eventos
         $titulo = Reserva::all()->lists('RESE_TITULO'); //lo mismo para lugar y fecha
@@ -96,23 +103,29 @@ class ReservasController extends Controller
         //Insertando evento a base de datos
         $reserva = new Reserva;
         $reserva->RESE_FECHAINI = $start;
-        $reserva->RESE_FECHAINI = $end;
+        $reserva->RESE_FECHAFIN = $end;
         $reserva->RESE_TODOELDIA =false;
         $reserva->RESE_COLOR = $back;
         $reserva->RESE_TITULO = $title;
         $reserva->SALA_ID = $sala;
 
         if($equipo != 0){
-            $reserva->EQUI_ID = $this->getEquipoDisp($sala)->EQUI_ID;
+            $equipo = $this->getEquipoDisp($sala, $reserva->RESE_FECHAINI, $reserva->RESE_FECHAFIN);
+            $reserva->EQUI_ID = $equipo->EQUI_ID;
         }
 
         $reserva->save();
    }
 
-    protected function getEquipoDisp($SALA_ID){
+    protected function getEquipoDisp($SALA_ID, $start, $end){
         $equipo = \reservas\Equipo::where('ESTA_ID', 2)
-                                    ->where('SALA_ID', $SALA_ID)
-                                    ->first();
+                            ->join('RESERVAS', 'RESERVAS.EQUI_ID', '=', 'EQUIPOS.EQUI_ID')
+                            ->where('RESE_FECHAINI', '<', $start)  //es plantilla y tambien pública.
+                            ->where('RESE_FECHAFIN', '>', $end)
+                            ->where('SALA_ID', $SALA_ID)
+                            ->first();
+
+        $reservas = Reserva::where('EQUI_ID');
 
         return $equipo;
     }
