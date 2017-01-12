@@ -17,8 +17,8 @@ class TableSalasSeeder extends Seeder
         $sala = new \reservas\Sala;
         $sala->SALA_DESCRIPCION = 'SALA '.($i+300);
         $sala->SALA_CAPACIDAD = 20;
-        $sala->SALA_FOTOSALA = 'PATH DE LA FOTO';
-        $sala->SALA_FOTOCROQUIS = 'PATH DE FOTOCROQUIS';
+        $sala->SALA_FOTOSALA = 'default.jpg';
+        $sala->SALA_FOTOCROQUIS = 'default.jpg';
         $sala->SALA_OBSERVACIONES = 'SALA DISPONIBLE';
         $sala->ESTA_ID = 1;
         $sala->SEDE_ID = 1;
@@ -31,8 +31,8 @@ class TableSalasSeeder extends Seeder
         $sala = new \reservas\Sala;
         $sala->SALA_DESCRIPCION = 'SALA '.($i+100);
         $sala->SALA_CAPACIDAD = 20;
-        $sala->SALA_FOTOSALA = 'PATH DE LA FOTO';
-        $sala->SALA_FOTOCROQUIS = 'PATH DE FOTOCROQUIS';
+        $sala->SALA_FOTOSALA = 'default.jpg';
+        $sala->SALA_FOTOCROQUIS = 'default.jpg';
         $sala->SALA_OBSERVACIONES = 'SALA DISPONIBLE';
         $sala->ESTA_ID = 1;
         $sala->SEDE_ID = 2;
