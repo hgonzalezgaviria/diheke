@@ -47,6 +47,9 @@ Route::resource('tipoestados', 'TipoestadosController');
 //estados
 Route::resource('estados', 'EstadosController');
 
+//politicas
+Route::resource('politicas', 'PoliticasController');
+
 
 /*
 
