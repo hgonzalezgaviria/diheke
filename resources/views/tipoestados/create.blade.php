@@ -23,7 +23,7 @@
 
 	  	<div class="form-group">
 			{{ Form::label('TIES_OBSERVACIONES', 'Observaciones') }} 
-			{{ Form::text('TIES_OBSERVACIONES', old('TIES_OBSERVACIONES'), array('class' => 'form-control', 'required')) }}
+			{{ Form::textarea('TIES_OBSERVACIONES', old('TIES_OBSERVACIONES'), array('class' => 'form-control', 'required')) }}
 		</div>
 
 		<div class="text-right">
