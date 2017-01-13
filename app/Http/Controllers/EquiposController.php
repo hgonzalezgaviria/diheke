@@ -69,8 +69,25 @@ class EquiposController extends Controller
                             ->where('estados.ESTA_id','=',2)
                             ->get();
 
+        $sedes = \DB::table('sedes')
+                            ->select('sedes.*')
+                            ->get();
+
         // Carga el formulario para crear un nuevo registro (views/create.blade.php)
-        return view('equipos/create', compact('salas','estados'));
+        return view('equipos/create', compact('salas','estados','sedes'));
+    }
+
+    public function consultaSalas(){
+
+        $SEDE_ID = $_POST['sede'];
+
+        $salas = \DB::table('salas')
+                            ->select('salas.SALA_ID','salas.SALA_DESCRIPCION')
+                            ->where('salas.SEDE_ID','=',$SEDE_ID)
+                            ->get();
+
+        return json_encode($salas);
+        //return $salas;
     }
 
     /**
