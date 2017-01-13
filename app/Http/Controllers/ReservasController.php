@@ -53,14 +53,6 @@ class ReservasController extends Controller
      */
     public function index()
     {
-
-        $reserva = Reserva::find(2);
-        dump($reserva);
-
-        $equipo = $this->getEquipoDisp($reserva->RESE_ID, $reserva->RESE_FECHAINI, $reserva->RESE_FECHAFIN);
-        dd($equipo);
-
-
         $data = array(); //declaramos un array principal que va contener los datos
         $id = Reserva::all()->lists('RESE_ID'); //listamos todos los id de los eventos
         $titulo = Reserva::all()->lists('RESE_TITULO'); //lo mismo para lugar y fecha
@@ -91,7 +83,89 @@ class ReservasController extends Controller
        return json_encode($data); //para luego retornarlo y estar listo para consumirlo
     }
 
-    public function create(){
+
+
+    public function create()
+    {
+        // Carga el formulario para crear un nuevo registro (views/create.blade.php)
+        return view('reservas/create');
+    }
+
+    public function store()
+    {
+        //Validación de datos
+        $this->validate(request(), [
+                'start' => ['required', 'max:50'],
+                'end' => ['required', 'max:50'],
+                'back' => ['required', 'max:100'],
+                'title' => ['required', 'max:100'],
+                'sala' => ['required', 'max:100'],
+            ]);
+        dump(request()->except(['_token']));
+
+        $reserva = new Reserva;
+        $reserva->RESE_FECHAINI = Input::get('start');
+        $reserva->RESE_FECHAFIN = Input::get('end');
+        $reserva->RESE_TODOELDIA =false;
+        $reserva->RESE_COLOR = Input::get('back');
+        $reserva->RESE_TITULO = Input::get('title');
+
+        $sala = \reservas\Sala::findOrFail(Input::get('sala'));
+        $reserva->SALA_ID = $sala->SALA_ID;
+
+
+        if(Input::get('equipo') != 0){
+            $equipo = $this->getEquipoDisp($sala->SALA_ID, $reserva->RESE_FECHAINI, $reserva->RESE_FECHAFIN);
+            $reserva->EQUI_ID = $equipo->EQUI_ID;
+        }
+
+        //$reserva->RESE_CREADOPOR = auth()->user()->username;
+        //Se guarda modelo
+        $reserva->save();
+        dd($reserva);
+
+        // redirecciona al index de controlador
+        Session::flash('message', 'Reserva creado exitosamente!');
+        return redirect()->to('reservas');
+    }
+
+    protected function getEquipoDisp($SALA_ID, $start, $end){
+
+        $ids_EqReservados = Reserva::where('SALA_ID', $SALA_ID)
+/*
+                            ->where(function ($query) use ($start, $end) {
+                                    $query->where('RESE_FECHAINI', '>', $start)
+                                        ->where('RESE_FECHAFIN', '<', $end);
+                                })
+*/
+                            ->orWhere(function ($query) use ($start, $end) {
+                                    $query->where('RESE_FECHAINI', '>', $start)
+                                        ->where('RESE_FECHAFIN', '<', $start);
+                                })
+
+                                    ->get(['EQUI_ID','RESE_FECHAINI','RESE_FECHAFIN'])->toArray();
+
+
+        dump($ids_EqReservados);
+
+        $equipo = \reservas\Equipo::orderBy('EQUI_ID')
+                            ->where('ESTA_ID', 2)
+                            ->where('SALA_ID', $SALA_ID)
+                            ->whereNotIn('EQUI_ID', $ids_EqReservados)
+                            ->get()
+                            ->first();
+
+        dd($equipo);
+
+
+        return $equipo;
+    }
+
+
+
+
+
+    public function create2(){
         //Valores recibidos via ajax
         $title = $_POST['title'];
         $start = $_POST['start'];
@@ -116,20 +190,6 @@ class ReservasController extends Controller
 
         $reserva->save();
    }
-
-    protected function getEquipoDisp($SALA_ID, $start, $end){
-        $equipo = \reservas\Equipo::where('ESTA_ID', 2)
-                            ->join('RESERVAS', 'RESERVAS.EQUI_ID', '=', 'EQUIPOS.EQUI_ID')
-                            ->where('RESE_FECHAINI', '<', $start)  //es plantilla y tambien pública.
-                            ->where('RESE_FECHAFIN', '>', $end)
-                            ->where('SALA_ID', $SALA_ID)
-                            ->first();
-
-        $reservas = Reserva::where('EQUI_ID');
-
-        return $equipo;
-    }
-
 
    public function update(){
         //Valores recibidos via ajax

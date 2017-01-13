@@ -30,14 +30,21 @@ class Equipo extends Model
       	"EQUI_ID"
     ];
 
-    //Una Sala se encuentra en una Sede
+    //Una Equipo se encuentra en una Sala
 	public function sala()
 	{
 		$foreingKey = 'SALA_ID';
 		return $this->belongsTo(Sala::class, $foreingKey);
 	}
 
-	//Un Equipo tiene un estado
+    //Una Equipo tiene muchas reservas
+	public function reservas()
+	{
+		$foreingKey = 'SALA_ID';
+		return $this->hasMany(Reservas::class, $foreingKey);
+	}
+
+	//Un Equipo tiene un Estado
 	public function estado()
 	{
 		$foreingKey = 'ESTA_ID';

@@ -7,12 +7,72 @@
 
     $('#fechainicio').datetimepicker({
           locale: 'es',
-          format: 'YYYY-MM-DD HH:mm:ss'          
+          format: 'YYYY-MM-DD HH:mm:ss',
+          //format: 'DD/MM/YYYY hh:mm A',
+          stepping: 30,
+          minDate: new Date(),
+          icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-arrow-up",
+            down: "fa fa-arrow-down",
+            previous: 'fa fa-chevron-left',
+            next: 'fa fa-chevron-right',
+            today: 'glyphicon glyphicon-screenshot',
+            clear: 'fa fa-trash',
+            close: 'fa fa-times'
+          },
+          tooltips: {
+            //today: 'Go to today',
+            //clear: 'Clear selection',
+            //close: 'Close the picker',
+            selectMonth: 'Seleccione Mes',
+            prevMonth: 'Mes Anterior',
+            nextMonth: 'Mes Siguiente',
+            selectYear: 'Seleccione Año',
+            prevYear: 'Año Anterior',
+            nextYear: 'Año Siguiente',
+            selectDecade: 'Seleccione Década',
+            prevDecade: 'Década Anterior',
+            nextDecade: 'Década Siguiente',
+            prevCentury: 'Siglo Anterior',
+            nextCentury: 'Siglo Siguiente'
+          }
     });
 
     $('#fechafin').datetimepicker({
           locale: 'es',
-          format: 'YYYY-MM-DD HH:mm:ss'          
+          format: 'YYYY-MM-DD HH:mm:ss',
+          //format: 'DD/MM/YYYY hh:mm A',
+          stepping: 30,
+          minDate: new Date(),
+          icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-arrow-up",
+            down: "fa fa-arrow-down",
+            previous: 'fa fa-chevron-left',
+            next: 'fa fa-chevron-right',
+            today: 'glyphicon glyphicon-screenshot',
+            clear: 'fa fa-trash',
+            close: 'fa fa-times'
+          },
+          tooltips: {
+            //today: 'Go to today',
+            //clear: 'Clear selection',
+            //close: 'Close the picker',
+            selectMonth: 'Seleccione Mes',
+            prevMonth: 'Mes Anterior',
+            nextMonth: 'Mes Siguiente',
+            selectYear: 'Seleccione Año',
+            prevYear: 'Año Anterior',
+            nextYear: 'Año Siguiente',
+            selectDecade: 'Seleccione Década',
+            prevDecade: 'Década Anterior',
+            nextDecade: 'Década Siguiente',
+            prevCentury: 'Siglo Anterior',
+            nextCentury: 'Siglo Siguiente'
+          }  
     });
 
 
@@ -41,25 +101,15 @@
         var fechaini = $('#fechainicio').data("DateTimePicker").date();
         var fechafin = $('#fechafin').data("DateTimePicker").date();
 
-        //alert('prueba '+fechaini + "prueba2 "+fechafin);
 
         //var fechainicio = moment(fechaini, 'YYYY-DD-MM HH:mm:ss').format('YYYY-DD-MM HH:mm:ss');
         var fechainicio = moment(fechaini, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-
-
         var fechafinal = moment(fechafin,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
 
         var sala = getUrlParameter('sala');
         var equipo = getUrlParameter('equipo');
 
-        //var t = 'data' + 'title='+ title+'&start='+ fechainicio+'&allday='+allDay+'&background='+back+'&end='+fechafinal;
-        //var fechafinal = moment(fechafin.format('YYYY-MM-DD HH:mm:ss'));
-
-        //alert(t);
-
         crsfToken = document.getElementsByName("_token")[0].value;
-
-
         $.ajax({
              url: 'guardaEventos',
              data: 'title='+ title+'&start='+ fechainicio+'&allday='+allDay+'&background='+back+
@@ -159,38 +209,28 @@
         var end=copiedEventObject.end.format("YYYY-MM-DD HH:mm");
         var back=copiedEventObject.backgroundColor;
 
-        var fecha = new Date();
+        var fechaInicioStr = $('#fechainicio').data("DateTimePicker").date();
+        var fechaFinStr = $('#fechafin').data("DateTimePicker").date();
 
-        //var prueba = moment($('#fechainicio').val()).format("YYYY-MM-DD HH:mm:ss");
-
-        var fechita = $('#fechainicio').data("DateTimePicker").date();
-        var fechita2 = $('#fechafin').data("DateTimePicker").date();
-
-        var prueba = moment(fechita).format("YYYY-MM-DD HH:mm:ss");
-        var prueba2 = moment(fechita2).format("YYYY-MM-DD HH:mm:ss");
+        var fechaIni = moment(fechaInicioStr).format("YYYY-MM-DD HH:mm:ss");
+        var fechaFin = moment(fechaFinStr).format("YYYY-MM-DD HH:mm:ss");
         
-        //var prueba = "";
-
-
-        //alert('Start: '+start+' - End: '+end+ ' Prueba: '+prueba);
-
         crsfToken = document.getElementsByName("_token")[0].value;
-
         $.ajax({
-             url: 'guardaEventos',
-             data: 'title='+ title+'&start='+ prueba+'&allday='+allDay+'&background='+back+
-             '&end='+prueba2,
-             type: "POST",
-             headers: {
-                    "X-CSRF-TOKEN": crsfToken
-                },
-              success: function(events) {
-                console.log('Evento creado');      
-                $('#calendar').fullCalendar('refetchEvents' );
-              },
-              error: function(json){
-                console.log("Error al crear evento");
-              }        
+            url: 'guardaEventos',
+            data: 'title='+ title+'&start='+ fechaIni+'&allday='+allDay+'&background='+back+
+            '&end='+fechaFin,
+            type: "POST",
+            headers: {
+              "X-CSRF-TOKEN": crsfToken
+            },
+            success: function(events) {
+              console.log('Evento creado');      
+              $('#calendar').fullCalendar('refetchEvents');
+            },
+            error: function(json){
+              console.log("Error al crear evento");
+            }        
         });
 
       }      

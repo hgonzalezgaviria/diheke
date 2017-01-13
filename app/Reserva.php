@@ -33,4 +33,19 @@ class Reserva extends Model
     protected $hidden = [
       	"RESE_ID"
     ];
+
+
+    //Una Reserva se asocia a una sala
+    public function sala()
+    {
+        $foreingKey = 'SALA_ID';
+        return $this->belongsTo(Sala::class, $foreingKey);
+    }
+    
+    //Una Reserva puede tener asociado un equipo
+    public function equipo()
+    {
+        $foreingKey = 'EQUI_ID';
+        return $this->belongsTo(Equipo::class, $foreingKey);
+    }
 }
