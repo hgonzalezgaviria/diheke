@@ -50,6 +50,9 @@ Route::resource('estados', 'EstadosController');
 //politicas
 Route::resource('politicas', 'PoliticasController');
 
+//Consulta de equipos
+Route::resource('consultaEquipos', 'ConsultaEquiposController');
+
 
 /*
 
@@ -85,6 +88,7 @@ Route::get('cargaEventos{id?}','ReservasController@index');
 Route::post('reservas/guardaEventos', array('as' => 'guardaEventos','uses' => 'ReservasController@create'));
 Route::post('actualizaEventos','ReservasController@update');
 Route::post('eliminaEvento','ReservasController@delete');
+Route::post('consultaSalas', array('as' => 'consultaSalas','uses' => 'EquiposController@consultaSalas'));
 
 //recursos
 Route::resource('recursos', 'RecursosController');

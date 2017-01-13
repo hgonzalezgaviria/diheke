@@ -8,12 +8,14 @@
 
     $('#horaminima').datetimepicker({
           locale: 'es',
-          format: 'HH:mm:ss'          
+          format: 'HH:mm:ss',
+          allowInputToggle: true          
     });
 
      $('#horamaxima').datetimepicker({
           locale: 'es',
-          format: 'HH:mm:ss'          
+          format: 'HH:mm:ss' ,
+          allowInputToggle: true            
     });
 
 
