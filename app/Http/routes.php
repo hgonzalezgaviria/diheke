@@ -50,6 +50,9 @@ Route::resource('estados', 'EstadosController');
 //politicas
 Route::resource('politicas', 'PoliticasController');
 
+//Consulta de equipos
+Route::resource('consultaEquipos', 'ConsultaEquiposController');
+
 
 /*
 

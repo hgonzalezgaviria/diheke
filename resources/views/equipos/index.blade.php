@@ -11,11 +11,29 @@
       	en este caso el id es "tabla" e invocar la función Datatable, lo demas que ven sobre esta función
       	son configuraciones de presentación
       	*/
-	 	$('#tabla').DataTable({  
+	 	var table = $('#tabla').DataTable({  
 	        "sScrollY": "350px",
 	        "pagingType": "full_numbers",
 	        "bScrollCollapse": true,
 	 	});
+
+
+		// #SEDE_ID is a <input type="text"> element
+		$('#SEDE_ID').on( 'keyup', function () {
+		    table
+		        .columns( 3 )
+		        .search( this.value )
+		        .draw();
+		} );
+
+
+		// #SEDE_ID is a <input type="text"> element
+		$('#SALA_ID').change(function () {
+		    table
+		        .columns( 4 )
+		        .search( $('#SALA_ID option:selected').text() )
+		        .draw();
+		} );
 
 	  });
 
@@ -24,12 +42,15 @@
 
 @section('content')
 
+
 	<h1 class="page-header">Equipos</h1>
 	<div class="row well well-sm">
 
+		@include('equipos/FormFilters')
+
 		<div id="btn-create" class="pull-right">
 			<a class='btn btn-primary' role='button' href="{{ URL::to('equipos/create') }}">
-				<i class="fa fa-plus" aria-hidden="true"></i> Nuevo Elemento
+				<i class="fa fa-plus" aria-hidden="true"></i> Nuevo Equipo
 			</a>
 		</div>
 	</div>
@@ -40,6 +61,7 @@
 			<th class="col-md-2">ID</th>
 			<th class="col-md-2">Descripción</th>
 			<th class="col-md-2">Observaciones</th>
+			<th class="col-md-2">Sede</th>
 			<th class="col-md-2">Sala</th>
 			<th class="col-md-2">Estado</th>
 			<th class="col-md-2">Acciones</th>
@@ -54,7 +76,8 @@
 			<td>{{ $equipo -> EQUI_ID }}</td>
 			<td>{{ $equipo -> EQUI_DESCRIPCION }}</td>
 			<td>{{ $equipo -> EQUI_OBSERVACIONES }}</td>
-			<td>{{ $equipo -> sala -> SALA_DESCRIPCION }}</td>
+			<td>{{ $equipo -> sala -> sede -> SEDE_DESCRIPCION }}</td>
+			<td>{{ $equipo -> sala -> SALA_DESCRIPCION }}</td>			
 			<td>{{ $equipo -> estado -> ESTA_DESCRIPCION }}</td>
 
 			<td>

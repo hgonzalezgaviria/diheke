@@ -48,9 +48,22 @@ class EquiposController extends Controller
         $equipos = Equipo::all();
         //Se obtienen todas los contratos.
 
+        $salas = \reservas\Sala::orderBy('SALA_ID')
+                        ->select('SALA_ID', 'SALA_DESCRIPCION')
+                        ->get();
+
+        $arrSalas = [];
+        foreach ($salas as $sala) {
+            $arrSalas = array_add(
+                $arrSalas,
+                $sala->SALA_ID,
+                $sala->SALA_DESCRIPCION
+            );
+        }
+
 
         //Se carga la vista y se pasan los registros. ->paginate($cantPages)
-        return view('equipos/index', compact('equipos'));
+        return view('equipos/index', compact('equipos','arrSalas'));
     }
 
     /**
@@ -66,7 +79,7 @@ class EquiposController extends Controller
 
         $estados = \DB::table('estados')
                             ->select('estados.*')
-                            ->where('estados.ESTA_id','=',2)
+                            ->where('estados.TIES_ID','=',2)
                             ->get();
 
         // Carga el formulario para crear un nuevo registro (views/create.blade.php)
@@ -143,7 +156,7 @@ class EquiposController extends Controller
 
         $estados = \DB::table('estados')
                             ->select('estados.*')
-                            ->where('estados.ESTA_id','=',2)
+                            ->where('estados.TIES_ID','=',2)
                             ->get();
 
         // Muestra el formulario de edición y pasa el registro a editar
