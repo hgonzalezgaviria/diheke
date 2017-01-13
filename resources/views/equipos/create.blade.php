@@ -18,7 +18,7 @@
 
 	 	$( "#SEDE_ID" ).change(function() {
 		  	
-	 		var opcion = $("#SEDE_ID").val();
+ 		var opcion = $("#SEDE_ID").val();
 	 		crsfToken = document.getElementsByName("_token")[0].value;
 
 			$.ajax({
@@ -32,6 +32,7 @@
 	              success: function(sala) {
 	         
 	        $('#SALA_ID').empty();
+	      
 
 			for(var i = 0; i < sala.length; i++){
 			$("#SALA_ID").append('<option value=' + sala[i].SALA_ID + '>' + sala[i].SALA_DESCRIPCION + '</option>');
@@ -49,6 +50,18 @@
 
 	  });
 
+	  function habilitar(id) {
+	  	//alert(id);
+    if (id != "") {    
+			document.getElementById("SALA_ID").disabled=false;
+       
+    }else {
+    	//$("#SALA_ID").append('<option value="">Seleccione una sede..</option>');
+    		//document.getElementById("SALA_ID").value="Seleccione una sede..";
+
+    		document.getElementById("SALA_ID").disabled=true;    		
+    	}
+	}
     </script>
 
 @endsection
@@ -72,7 +85,7 @@
 
 		<div class="form-group">
 			{{ Form::label('sede', 'Sede') }} 
-			<select name="SEDE_ID" id="SEDE_ID" class="form-control" required>
+			<select name="SEDE_ID" id="SEDE_ID" class="form-control" required onchange="habilitar(this.value);">
 				<option value="">Seleccione..</option>
 	            @foreach($sedes as $sede)
 	            <option value="{{ $sede->SEDE_ID }}">{{ $sede->SEDE_DESCRIPCION }}</option>
@@ -82,8 +95,8 @@
 
 		<div class="form-group">
 			{{ Form::label('sala', 'Sala') }} 
-			<select name="SALA_ID" id="SALA_ID" class="form-control" required>
-				<option value="">Seleccione..</option>
+			<select name="SALA_ID" id="SALA_ID" class="form-control" required disabled>
+				<option value="">Seleccione una sede..</option>
 	            @foreach($salas as $sala)
 	            <option value="{{ $sala->SALA_ID }}">{{ $sala->SALA_DESCRIPCION }}</option>
 	            @endforeach
