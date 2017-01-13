@@ -186,8 +186,13 @@ class EquiposController extends Controller
                             ->where('estados.TIES_ID','=',2)
                             ->get();
 
+
+        $sedes = \DB::table('sedes')
+                            ->select('sedes.*')
+                            ->get();
+
         // Muestra el formulario de edición y pasa el registro a editar
-        return view('equipos/edit', compact('equipo','salas','estados'));
+        return view('equipos/edit', compact('equipo','salas','estados','sedes'));
     }
 
     /**

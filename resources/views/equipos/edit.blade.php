@@ -17,6 +17,39 @@
 
 	 	$("#SALA_ID option[value=" + '{{ $equipo->SALA_ID }}' + "]").attr("selected","selected");
 
+	 	 	$( "#SEDE_ID" ).change(function() {
+	 	 		alert('HECTOR');
+		  	
+ 		var opcion = $("#SEDE_ID").val();
+	 		crsfToken = document.getElementsByName("_token")[0].value;
+
+			$.ajax({
+	             url: '../consultaSalas',
+	             data: 'sede='+ opcion,
+	             dataType: "json",
+	             type: "POST",
+	             headers: {
+	                    "X-CSRF-TOKEN": crsfToken
+	                },
+	              success: function(sala) {
+	         
+	        $('#SALA_ID').empty();
+	      
+
+			for(var i = 0; i < sala.length; i++){
+			$("#SALA_ID").append('<option value=' + sala[i].SALA_ID + '>' + sala[i].SALA_DESCRIPCION + '</option>');
+			} 
+					
+	                
+	              },
+	              error: function(json){
+	                console.log("Error al crear evento");
+	              }        
+        	});
+
+
+		});
+
 	  });
 
     </script>
@@ -39,6 +72,16 @@
 		<div class="form-group">
 			{{ Form::label('EQUI_OBSERVACIONES', 'Observaciones') }} 
 			{{ Form::textarea('EQUI_OBSERVACIONES', old('EQUI_OBSERVACIONES'), array('class' => 'form-control', 'max' => '300', 'required')) }}
+		</div>
+
+		<div class="form-group">
+			{{ Form::label('sede', 'Sede') }} 
+			<select name="SEDE_ID" id="SEDE_ID" class="form-control" required >
+				<option value="">Seleccione..</option>
+	            @foreach($sedes as $sede)
+	            <option value="{{ $sede->SEDE_ID }}">{{ $sede->SEDE_DESCRIPCION }}</option>
+	            @endforeach
+	        </select>
 		</div>
 
 		<div class="form-group">
