@@ -46,24 +46,34 @@ class EquiposController extends Controller
     {
         //Se genera paginación cada $cantPages registros.
         $equipos = Equipo::all();
-        //Se obtienen todas los contratos.
-
-        $salas = \reservas\Sala::orderBy('SALA_ID')
-                        ->select('SALA_ID', 'SALA_DESCRIPCION')
+        //Se obtienen todas los equipos.
+/*
+        $sedes = \reservas\Sede::orderBy('SEDE_ID')
+                        ->select('SEDE_ID', 'SEDE_DESCRIPCION')
                         ->get();
 
-        $arrSalas = [];
-        foreach ($salas as $sala) {
-            $arrSalas = array_add(
-                $arrSalas,
-                $sala->SALA_ID,
-                $sala->SALA_DESCRIPCION
+        $arrSedes = [];
+        foreach ($sedes as $sede) {
+            $arrSedes = array_add(
+                $arrSedes,
+                $sede->SEDE_ID,
+                $sede->SEDE_DESCRIPCION
             );
         }
+        */
+
+          $salas = \DB::table('salas')
+                            ->select('salas.*')
+                            ->get();
+
+        $sedes = \DB::table('sedes')
+                           ->select('sedes.*')
+                           ->get();
+
 
 
         //Se carga la vista y se pasan los registros. ->paginate($cantPages)
-        return view('equipos/index', compact('equipos','arrSalas'));
+        return view('equipos/index', compact('equipos','sedes', 'salas'));
     }
 
     /**

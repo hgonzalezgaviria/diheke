@@ -12,26 +12,48 @@
       	son configuraciones de presentación
       	*/
 	 	var table = $('#tabla').DataTable({  
-	        "sScrollY": "350px",
+	 		"lengthMenu": [[5, 10, 15, 25,50,100], [5, 10, 15, 25,50,100]],
+	 		"sScrollY": "350px",
 	        "pagingType": "full_numbers",
 	        "bScrollCollapse": true,
+	    "language": { 
+		    "sProcessing":     "Procesando...", 
+		    "sLengthMenu":     "Mostrar _MENU_ registros", 
+		    "sZeroRecords":    "No se encontraron resultados", 
+		    "sEmptyTable":     "Ningún dato disponible en esta tabla", 
+		    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros", 
+		    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros", 
+		    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)", 
+		    "sInfoPostFix":    "", 
+		    "sSearch":         "Buscar:", 
+		    "sUrl":            "", 
+		    "sInfoThousands":  ",", 
+		    "sLoadingRecords": "Cargando...", 
+		    "oPaginate": { 
+		        "sFirst":    "Primero", 
+		        "sLast":     "Último", 
+		        "sNext":     "Siguiente", 
+		        "sPrevious": "Anterior"} 
+   					 },	        
 	 	});
+
+	 	
 
 
 		// #SEDE_ID is a <input type="text"> element
-		$('#SEDE_ID').on( 'keyup', function () {
+		$('#DES_ID').on( 'keyup', function () {
 		    table
-		        .columns( 3 )
+		        .columns( 1 )
 		        .search( this.value )
 		        .draw();
 		} );
 
 
 		// #SEDE_ID is a <input type="text"> element
-		$('#SALA_ID').change(function () {
+		$('#SEDE_ID').change(function () {
 		    table
-		        .columns( 4 )
-		        .search( $('#SALA_ID option:selected').text() )
+		        .columns( 3 )
+		        .search( $('#SEDE_ID option:selected').text() )
 		        .draw();
 		} );
 
