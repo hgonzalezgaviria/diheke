@@ -6,7 +6,12 @@
 		
 		{!! Html::style('assets/js/jquery-ui/jquery-ui.min.css') !!}
 		{!! Html::style('assets/css/jquery.dataTables.min.css') !!}
-		{!! Html::style('assets/css/buttons.dataTables.min.css') !!}
+		{!! Html::style('assets/css/datatable/buttons.dataTables.min.css') !!}
+		{{--{!! Html::style('assets/css/datatable/dataTables.bootstrap.min.css') !!}--}}
+		{{--{!! Html::style('assets/css/datatable/buttons.bootstrap.min.css') !!}--}}
+		{!! Html::style('assets/css/datatable/responsive.dataTables.min.css') !!}
+		{!! Html::style('assets/css/datatable/buttons.bootstrap4.min.css') !!}
+		{!! Html::style('assets/css/datatable/dataTables.bootstrap4.min.css') !!}
 		{!! Html::style('assets/css/fullcalendar.css') !!}
 		{!! Html::style('assets/css/msgBoxLight.css') !!}
 		{!! Html::style('assets/css/bootstrap.min.css') !!}
@@ -42,7 +47,8 @@
 		</div>
 
 		<!-- Scripts -->
-		{!! Html::script('assets/js/jquery-1.11.2.min.js') !!}
+		{{--{!! Html::script('assets/js/jquery-1.11.2.min.js') !!}--}}
+		{!! Html::script('assets/js/datatable/jquery-1.12.4.js') !!}
 		{!! Html::script('assets/js/jquery-ui.min.js') !!}
 		{!! Html::script('assets/js/moment.min.js') !!}
 		{!! Html::script('assets/js/fullcalendar.js') !!}
@@ -50,14 +56,21 @@
 		{!! Html::script('assets/js/bootstrap.min.js') !!}
 
 		{!! Html::script('assets/js/jquery.dataTables.min.js') !!}
-		{!! Html::script('assets/js/dataTables.buttons.min.js') !!}
-		{!! Html::script('assets/js/jszip.min.js') !!}
-		{!! Html::script('assets/js/pdfmake.min.js') !!}
-		{!! Html::script('assets/js/vfs_fonts.js') !!}
-		{!! Html::script('assets/js/buttons.html5.min.js') !!}
+		{!! Html::script('assets/js/datatable/dataTables.buttons.min.js') !!}
+		{!! Html::script('assets/js/datatable/jszip.min.js') !!}
+		{!! Html::script('assets/js/datatable/pdfmake.min.js') !!}
+		{!! Html::script('assets/js/datatable/vfs_fonts.js') !!}
+		{!! Html::script('assets/js/datatable/buttons.html5.min.js') !!}
 		{!! Html::script('assets/js/jquery.msgBox.js') !!}
 
 		{!! Html::script('assets/js/bootstrap-datetimepicker.js') !!}
+		{{--{!! Html::script('assets/js/datatable/dataTables.bootstrap.min.js') !!}--}}
+		{!! Html::script('assets/js/datatable/buttons.colVis.min.js') !!}
+		{!! Html::script('assets/js/datatable/buttons.print.min.js') !!}
+		{!! Html::script('assets/js/datatable/dataTables.responsive.min.js') !!}
+		{!! Html::script('assets/js/datatable/buttons.flash.min.js') !!}
+		{!! Html::script('assets/js/datatable/buttons.bootstrap4.min.js') !!}
+		{!! Html::script('assets/js/datatable/dataTables.bootstrap4.min.js') !!}
 		@yield('scripts')
 	</body>
 </html>

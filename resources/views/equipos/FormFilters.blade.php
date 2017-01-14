@@ -39,7 +39,7 @@
 	
 			<div class="input-group">			
 			<div class="input-group-addon">Salas</div>
-			<select name="SALA_ID" id="SALA_ID" class="form-control" required>
+			<select name="SALA_ID" id="SALA_ID" class="form-control" required >
 				<option value="">Seleccione una sede..</option>
 	            @foreach($salas as $sala)
 	            <option value="{{ $sala->SALA_ID }}">{{ $sala->SALA_DESCRIPCION }}</option>
