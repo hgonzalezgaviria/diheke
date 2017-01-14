@@ -9,72 +9,6 @@
 @parent
 @endsection
 
-@section('scripts')
-    
-     <script>
-
-      $(function () {
-
-
-      	/*para posicionar un combobox lo unico que hay que hacer es que el selector (select) tenga
-      	un id y referirce a el de la forma en que esta abajo de este comentario. Entonces le decimos
-      	que el select con id ESTA_ID se seleccione la opción que trae el campo ESTA_ID en el registro
-      	de equipo
-
-      	
-
-      	*/	
-
-	 	$( "#SEDE_ID" ).change(function() {
-		  	
- 		var opcion = $("#SEDE_ID").val();
-	 		crsfToken = document.getElementsByName("_token")[0].value;
-
-			$.ajax({
-	             url: '../consultaSalas',
-	             data: 'sede='+ opcion,
-	             dataType: "json",
-	             type: "POST",
-	             headers: {
-	                    "X-CSRF-TOKEN": crsfToken
-	                },
-	              success: function(sala) {
-	         
-	        $('#SALA_ID').empty();
-	      
-
-			for(var i = 0; i < sala.length; i++){
-			$("#SALA_ID").append('<option value=' + sala[i].SALA_ID + '>' + sala[i].SALA_DESCRIPCION + '</option>');
-			} 
-					
-	                
-	              },
-	              error: function(json){
-	                console.log("Error al crear evento");
-	              }        
-        	});
-
-
-		});
-
-	  });
-
-	  function habilitar(id) {
-	  	alert(id);
-    if (id != "") {    
-			document.getElementById("SALA_ID").disabled=false;
-       
-    }else {
-    	//$("#SALA_ID").append('<option value="">Seleccione una sede..</option>');
-    		//document.getElementById("SALA_ID").value="Seleccione una sede..";
-  
-    		document.getElementById("SALA_ID").disabled=true;    		
-    	}
-	}
-    </script>
-
-@endsection
-
 
 
 <!-- Filtrar datos en vista -->
@@ -90,8 +24,7 @@
 
 <div id="filters" class="collapse">
 	<div class="form-group col-xs-12 col-md-8">
-	<form>
-		
+		{{ Form::open(['id'=>'formFilter' , 'class' => 'form-horizontal']) }}
 
 			<div class="input-group">
 			<div class="input-group-addon">Sedes</div>
@@ -106,7 +39,7 @@
 	
 			<div class="input-group">			
 			<div class="input-group-addon">Salas</div>
-			<select name="SALA_ID" id="SALA_ID" class="form-control" required disabled>
+			<select name="SALA_ID" id="SALA_ID" class="form-control" required>
 				<option value="">Seleccione una sede..</option>
 	            @foreach($salas as $sala)
 	            <option value="{{ $sala->SALA_ID }}">{{ $sala->SALA_DESCRIPCION }}</option>
@@ -129,7 +62,7 @@
 
 
 				
-	</form>
+	{{ Form::close() }}
 	</div>
 </div>
 

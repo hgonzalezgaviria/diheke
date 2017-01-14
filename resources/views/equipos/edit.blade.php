@@ -24,7 +24,7 @@
 	 		crsfToken = document.getElementsByName("_token")[0].value;
 
 			$.ajax({
-	             url: '../consultaSalas',
+	             url: '../../consultaSalas',
 	             data: 'sede='+ opcion,
 	             dataType: "json",
 	             type: "POST",

@@ -22,6 +22,13 @@
 					</div>
 			  </li>
 
+			    <li class="list-group-item">
+					<div class="row">
+						<div class="col-lg-4"><strong>Sede:</strong></div>
+						<div class="col-lg-8">{{ $equipo -> sala -> sede -> SEDE_DESCRIPCION }}</div>
+					</div>
+			  </li>
+
 			  <li class="list-group-item">
 					<div class="row">
 						<div class="col-lg-4"><strong>Sala:</strong></div>

@@ -13,32 +13,41 @@
       	*/
 	 	var table = $('#tabla').DataTable({  
 	 		"lengthMenu": [[5, 10, 15, 25,50,100], [5, 10, 15, 25,50,100]],
-	 		"sScrollY": "350px",
+	 		//"sScrollY": "350px",
 	        "pagingType": "full_numbers",
 	        "bScrollCollapse": true,
-	    "language": { 
-		    "sProcessing":     "Procesando...", 
-		    "sLengthMenu":     "Mostrar _MENU_ registros", 
-		    "sZeroRecords":    "No se encontraron resultados", 
-		    "sEmptyTable":     "Ningún dato disponible en esta tabla", 
-		    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros", 
-		    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros", 
-		    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)", 
-		    "sInfoPostFix":    "", 
-		    "sSearch":         "Buscar:", 
-		    "sUrl":            "", 
-		    "sInfoThousands":  ",", 
-		    "sLoadingRecords": "Cargando...", 
-		    "oPaginate": { 
-		        "sFirst":    "Primero", 
-		        "sLast":     "Último", 
-		        "sNext":     "Siguiente", 
-		        "sPrevious": "Anterior"} 
-   					 },	        
+		    "language": { 
+			    "sProcessing":     "Procesando...", 
+			    "sLengthMenu":     "Mostrar _MENU_ registros", 
+			    "sZeroRecords":    "No se encontraron resultados", 
+			    "sEmptyTable":     "Ningún dato disponible en esta tabla", 
+			    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros", 
+			    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros", 
+			    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)", 
+			    "sInfoPostFix":    "", 
+			    "sSearch":         "Buscar:", 
+			    "sUrl":            "", 
+			    "sInfoThousands":  ",", 
+			    "sLoadingRecords": "Cargando...", 
+			    "oPaginate": { 
+			        "sFirst":    "Primero", 
+			        "sLast":     "Último", 
+			        "sNext":     "Siguiente", 
+			        "sPrevious": "Anterior"
+			    }
+			},
+        	dom: 'Bfrtip',
+	        buttons: [
+	            'copyHtml5',
+	            'excelHtml5',
+	            'csvHtml5',
+	            'pdfHtml5'
+	        ]        
 	 	});
 
 	 	
 
+	//BUSQUEDA POR COLUMNA
 
 		// #SEDE_ID is a <input type="text"> element
 		$('#DES_ID').on( 'keyup', function () {
@@ -50,12 +59,55 @@
 
 
 		// #SEDE_ID is a <input type="text"> element
+		$('#SALA_ID').change(function () {
+		    table
+		        .columns( 4 )
+		        .search( $('#SALA_ID option:selected').text() )
+		        .draw();
+		} );
+
+	//CARGA DE COMBO POR JQUERY
+
+	// #SEDE_ID is a <input type="text"> element
 		$('#SEDE_ID').change(function () {
 		    table
 		        .columns( 3 )
 		        .search( $('#SEDE_ID option:selected').text() )
 		        .draw();
+
+
+
+
+	 	crsfToken = document.getElementsByName("_token")[0].value;
+ 		var opcion = $("#SEDE_ID").val();
+			$.ajax({
+	             url: 'consultaSalas',
+	             data: 'sede='+ opcion,
+	             dataType: "json",
+	             type: "POST",
+	             headers: {
+	                    "X-CSRF-TOKEN": crsfToken
+	                },
+	              success: function(sala) {
+	         
+	        $('#SALA_ID').empty();
+	      
+
+			for(var i = 0; i < sala.length; i++){
+			$("#SALA_ID").append('<option value=' + sala[i].SALA_ID + '>' + sala[i].SALA_DESCRIPCION + '</option>');
+
+			} 
+	                
+	              },
+	              error: function(json){
+	                console.log("Error al crear evento");
+	              }        
+        	}); //Fin ajax
 		} );
+
+
+
+
 
 	  });
 

@@ -6,6 +6,7 @@
 		
 		{!! Html::style('assets/js/jquery-ui/jquery-ui.min.css') !!}
 		{!! Html::style('assets/css/jquery.dataTables.min.css') !!}
+		{!! Html::style('assets/css/buttons.dataTables.min.css') !!}
 		{!! Html::style('assets/css/fullcalendar.css') !!}
 		{!! Html::style('assets/css/msgBoxLight.css') !!}
 		{!! Html::style('assets/css/bootstrap.min.css') !!}
@@ -49,6 +50,11 @@
 		{!! Html::script('assets/js/bootstrap.min.js') !!}
 
 		{!! Html::script('assets/js/jquery.dataTables.min.js') !!}
+		{!! Html::script('assets/js/dataTables.buttons.min.js') !!}
+		{!! Html::script('assets/js/jszip.min.js') !!}
+		{!! Html::script('assets/js/pdfmake.min.js') !!}
+		{!! Html::script('assets/js/vfs_fonts.js') !!}
+		{!! Html::script('assets/js/buttons.html5.min.js') !!}
 		{!! Html::script('assets/js/jquery.msgBox.js') !!}
 
 		{!! Html::script('assets/js/bootstrap-datetimepicker.js') !!}
