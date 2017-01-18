@@ -62,12 +62,12 @@ class EquiposController extends Controller
         }
         */
 
-          $salas = \DB::table('salas')
-                            ->select('salas.*')
+          $salas = \DB::table('SALAS')
+                            ->select('SALAS.*')
                             ->get();
 
-        $sedes = \DB::table('sedes')
-                           ->select('sedes.*')
+        $sedes = \DB::table('SEDES')
+                           ->select('SEDES.*')
                            ->get();
 
 
@@ -83,17 +83,17 @@ class EquiposController extends Controller
      */
     public function create()
     {
-        $salas = \DB::table('salas')
-                            ->select('salas.*')
+        $salas = \DB::table('SALAS')
+                            ->select('SALAS.*')
                             ->get();
 
-        $estados = \DB::table('estados')
-                            ->select('estados.*')
-                            ->where('estados.TIES_ID','=',2)
+        $estados = \DB::table('ESTADOS')
+                            ->select('ESTADOS.*')
+                            ->where('ESTADOS.TIES_ID','=',2)
                             ->get();
 
-        $sedes = \DB::table('sedes')
-                            ->select('sedes.*')
+        $sedes = \DB::table('SEDES')
+                            ->select('SEDES.*')
                             ->get();
 
         // Carga el formulario para crear un nuevo registro (views/create.blade.php)
@@ -104,9 +104,9 @@ class EquiposController extends Controller
 
         $SEDE_ID = $_POST['sede'];
 
-        $salas = \DB::table('salas')
-                            ->select('salas.SALA_ID','salas.SALA_DESCRIPCION')
-                            ->where('salas.SEDE_ID','=',$SEDE_ID)
+        $salas = \DB::table('SALAS')
+                            ->select('SALAS.SALA_ID','SALAS.SALA_DESCRIPCION')
+                            ->where('SALAS.SEDE_ID','=',$SEDE_ID)
                             ->get();
 
         return json_encode($salas);
@@ -177,18 +177,18 @@ class EquiposController extends Controller
         // Se obtiene el registro
         $equipo = Equipo::find($id);
 
-        $salas = \DB::table('salas')
-                            ->select('salas.*')
+        $salas = \DB::table('SALAS')
+                            ->select('SALAS.*')
                             ->get();
 
-        $estados = \DB::table('estados')
-                            ->select('estados.*')
+        $estados = \DB::table('ESTADOS')
+                            ->select('ESTADOS.*')
                             ->where('estados.TIES_ID','=',2)
                             ->get();
 
 
-        $sedes = \DB::table('sedes')
-                            ->select('sedes.*')
+        $sedes = \DB::table('SEDES')
+                            ->select('SEDES.*')
                             ->get();
 
         // Muestra el formulario de edición y pasa el registro a editar
