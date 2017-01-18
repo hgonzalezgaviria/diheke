@@ -2,6 +2,10 @@
 <html>
 	<head>
 		<title>Reservas @yield('title')</title>
+		{!! Html::meta( null, 'IE=edge', [ 'http-equiv'=>'X-UA-Compatible' ] ) !!}
+		{!! Html::meta( null, 'text/html; charset=utf-8', [ 'http-equiv'=>'Content-Type' ] ) !!}
+		{!! Html::meta( 'viewport', 'width=device-width, initial-scale=1') !!}
+
 		{!! Html::favicon('favicon.ico') !!}
 		
 		{!! Html::style('assets/js/jquery-ui/jquery-ui.min.css') !!}
