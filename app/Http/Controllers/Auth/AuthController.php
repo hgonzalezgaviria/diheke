@@ -100,7 +100,7 @@ class AuthController extends Controller
 			'username' => 'required|max:15|unique:USERS',
 			'email' => 'required|email|max:255',
 			'password' => 'required|min:6|confirmed',
-			'ROLE_id' => 'required',
+			'ROLE_ID' => 'required',
 		]);
 	}
 
@@ -117,8 +117,8 @@ class AuthController extends Controller
         }
 
 		//Se crea una colección con los posibles roles.
-		$roles = Rol::orderBy('ROLE_id')
-						->select('ROLE_id', 'ROLE_descripcion')
+		$roles = Rol::orderBy('ROLE_ID')
+						->select('ROLE_ID', 'ROLE_DESCRIPCION')
 						->get();
 
         return view('auth.register', compact('roles'));
@@ -134,17 +134,19 @@ class AuthController extends Controller
     {
         $validator = $this->validator($request->all());
 
-        if ($validator->fails()) {
-            $this->throwValidationException(
-                $request, $validator
-            );
-        }
+		if( $validator->fails() ) {
+			$this->throwValidationException(
+				$request, $validator
+			);
+		}
 
-        //Auth::guard($this->getGuard())->login($this->create($request->all()));
-        $user = $this->create($request->all());
+		//Auth::guard($this->getGuard())->login($this->create($request->all()));
+		$usuario = $this->create($request->all());
 
-		Session::flash('message', 'Usuario '.$user->username.' creado exitosamente!');
-        return redirect('usuarios');
+	
+
+		Session::flash('message', 'Usuario '.$usuario->username.' creado exitosamente!');
+		return redirect('usuarios');
     }
 
 	/**
@@ -160,8 +162,8 @@ class AuthController extends Controller
 			'username' => $data['username'],
 			'email' => $data['email'],
 			'password' => bcrypt($data['password']),
-			'ROLE_id' => $data['ROLE_id'],
-			'USER_creadopor' => auth()->user()->username,
+			'ROLE_ID' => $data['ROLE_ID'],
+			'USER_CREADOPOR' => auth()->user()->username,
 		]);
 	}
 
@@ -186,7 +188,7 @@ class AuthController extends Controller
 	public function index()
 	{
 		//Se obtienen todos los registros.
-		$usuarios = User::orderBy('USER_id')->get();
+		$usuarios = User::orderBy('USER_ID')->get();
 
 		//Se carga la vista y se pasan los registros
 		return view('auth/index', compact('usuarios'));
@@ -195,13 +197,13 @@ class AuthController extends Controller
 	/**
 	 * Muestra información de un registro.
 	 *
-	 * @param  int  $USER_id
+	 * @param  int  $USER_ID
 	 * @return Response
 	 */
-	public function show($USER_id)
+	public function show($USER_ID)
 	{
 		// Se obtiene el registro
-		$usuario = User::findOrFail($USER_id);
+		$usuario = User::findOrFail($USER_ID);
 
 		// Muestra la vista y pasa el registro
 		return view('auth/show', compact('usuario'));
@@ -210,17 +212,17 @@ class AuthController extends Controller
 	/**
 	 * Muestra el formulario para editar un registro en particular.
 	 *
-	 * @param  int  $USER_id
+	 * @param  int  $USER_ID
 	 * @return Response
 	 */
-	public function edit($USER_id)
+	public function edit($USER_ID)
 	{
 		// Se obtiene el registro
-		$usuario = User::findOrFail($USER_id);
+		$usuario = User::findOrFail($USER_ID);
 
 		//Se crea una colección con los posibles roles.
-		$roles = Rol::orderBy('ROLE_id')
-						->select('ROLE_id', 'ROLE_descripcion')
+		$roles = Rol::orderBy('ROLE_ID')
+						->select('ROLE_ID', 'ROLE_DESCRIPCION')
 						->get();
 
 		// Muestra el formulario de edición y pasa el registro a editar
@@ -230,25 +232,25 @@ class AuthController extends Controller
     /**
      * Actualiza un registro en la base de datos.
      *
-     * @param  int  $USER_id
+     * @param  int  $USER_ID
      * @return Response
      */
-    public function update($USER_id)
+    public function update($USER_ID)
     {
         //Validación de datos
         $this->validate(request(), [
 			'name' => 'required|max:255',
 			'email' => 'required|email|max:255',
-			'ROLE_id' => 'required',
+			'ROLE_ID' => 'required',
         ]);
 
         // Se obtiene el registro
-        $usuario = User::findOrFail($USER_id);
+        $usuario = User::findOrFail($USER_ID);
 
         $usuario->name = Input::get('name');
         $usuario->email = Input::get('email');
-        $usuario->ROLE_id = Input::get('ROLE_id'); //Relación con Rol
-        $usuario->USER_modificadopor = auth()->user()->username;
+        $usuario->ROLE_ID = Input::get('ROLE_ID'); //Relación con Rol
+        $usuario->USER_MODIFICADOPOR = auth()->user()->username;
         //Se guarda modelo
         $usuario->save();
 
@@ -260,18 +262,18 @@ class AuthController extends Controller
     /**
 	 * Elimina un registro de la base de datos.
 	 *
-	 * @param  int  $USER_id
+	 * @param  int  $USER_ID
 	 * @return Response
 	 */
-	public function destroy($USER_id)
+	public function destroy($USER_ID)
 	{
-		$usuario = User::findOrFail($USER_id);
+		$usuario = User::findOrFail($USER_ID);
 
 		//Si el usuario fue creado por SYSTEM, no se puede borrar.
-		if($usuario->USER_creadopor == 'SYSTEM'){
+		if($usuario->USER_CREADOPOR == 'SYSTEM'){
 			Session::flash('error', '¡Usuario '.$usuario->username.' no se puede borrar!');
 	    } else {
-			$usuario->USER_eliminadopor = auth()->user()->username;
+			$usuario->USER_ELIMINADOPOR = auth()->user()->username;
 			$usuario->save();
 			$usuario->delete();
 			

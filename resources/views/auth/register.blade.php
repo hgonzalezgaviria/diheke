@@ -56,22 +56,22 @@
 							</div>
 						</div>
 
-						<div class="form-group{{ $errors->has('ROLE_id') ? ' has-error' : '' }}">
-							<label for="ROLE_id" class="col-md-4 control-label">Rol</label>
+						<div class="form-group{{ $errors->has('ROLE_ID') ? ' has-error' : '' }}">
+							<label for="ROLE_ID" class="col-md-4 control-label">Rol</label>
 
 							<div class="col-md-6">
-								<select class="form-control" id="ROLE_id" name="ROLE_id" class="form-control" required>
+								<select class="form-control" id="ROLE_ID" name="ROLE_ID" class="form-control" required>
 									<option value="">Seleccione un rol...</option>
 									@foreach($roles as $rol)
-									<option value="{{ $rol->ROLE_id }}">
-										{{ $rol->ROLE_descripcion }}
+									<option value="{{ $rol->ROLE_ID }}">
+										{{ $rol->ROLE_DESCRIPCION }}
 									</option>
 									@endforeach
 								</select>
 
-								@if ($errors->has('ROLE_id'))
+								@if ($errors->has('ROLE_ID'))
 									<span class="help-block">
-										<strong>{{ $errors->first('ROLE_id') }}</strong>
+										<strong>{{ $errors->first('ROLE_ID') }}</strong>
 									</span>
 								@endif
 							</div>

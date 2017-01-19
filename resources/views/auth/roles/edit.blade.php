@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', '/ Editar Rol '.$rol->ROLE_id)
+@section('title', '/ Editar Rol '.$rol->ROLE_ID)
 
 @section('content')
 
@@ -7,11 +7,11 @@
 
 	@include('partials/errors')
 
-	{{ Form::model($rol, ['action' => ['Auth\RolController@update', $rol->ROLE_id ], 'method' => 'PUT', 'class' => 'form-horizontal' ]) }}
+	{{ Form::model($rol, ['action' => ['Auth\RolController@update', $rol->ROLE_ID ], 'method' => 'PUT', 'class' => 'form-horizontal' ]) }}
 
 	  	<div class="form-group">
-			{{ Form::label('ROLE_descripcion', 'Descripción') }} 
-			{{ Form::text('ROLE_descripcion', old('ROLE_descripcion'), [ 'class' => 'form-control', 'max' => '255', 'required' ]) }}
+			{{ Form::label('ROLE_DESCRIPCION', 'Descripción') }} 
+			{{ Form::text('ROLE_DESCRIPCION', old('ROLE_DESCRIPCION'), [ 'class' => 'form-control', 'max' => '255', 'required' ]) }}
 		</div>
 
 		<!-- Botones -->

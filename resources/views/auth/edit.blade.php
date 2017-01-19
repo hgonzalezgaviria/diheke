@@ -11,7 +11,7 @@
 
 					@include('partials/errors')
 					
-					{{ Form::model($usuario, [ 'action' => [ 'Auth\AuthController@update', $usuario->USER_id ], 'method' => 'PUT', 'class' => 'form-horizontal' ]) }}
+					{{ Form::model($usuario, [ 'action' => [ 'Auth\AuthController@update', $usuario->USER_ID ], 'method' => 'PUT', 'class' => 'form-horizontal' ]) }}
 
 					  	<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
 							{{ Form::label('name', 'Nombre', [ 'class' => 'col-md-4 control-label' ]) }}
@@ -54,22 +54,22 @@
 						</div>
 
 
-					  	<div class="form-group{{ $errors->has('ROLE_id') ? ' has-error' : '' }}">
-							{{ Form::label('ROLE_id', 'Rol', [ 'class' => 'col-md-4 control-label' ]) }}
+					  	<div class="form-group{{ $errors->has('ROLE_ID') ? ' has-error' : '' }}">
+							{{ Form::label('ROLE_ID', 'Rol', [ 'class' => 'col-md-4 control-label' ]) }}
 							<div class="col-md-6">
 
-								<select class="form-control" id="ROLE_id" name="ROLE_id" class="form-control" required>
+								<select class="form-control" id="ROLE_ID" name="ROLE_ID" class="form-control" required>
 									<option value="" disabled>Seleccione un rol...</option>
 									@foreach($roles as $rol)
-									<option value="{{ $rol->ROLE_id }}" {{ $usuario->rol->ROLE_id == $rol->ROLE_id ? ' selected' : '' }}>
-										{{ $rol->ROLE_descripcion }}
+									<option value="{{ $rol->ROLE_ID }}" {{ $usuario->rol->ROLE_ID == $rol->ROLE_ID ? ' selected' : '' }}>
+										{{ $rol->ROLE_DESCRIPCION }}
 									</option>
 									@endforeach
 								</select>
 
-								@if ($errors->has('ROLE_id'))
+								@if ($errors->has('ROLE_ID'))
 									<span class="help-block">
-										<strong>{{ $errors->first('ROLE_id') }}</strong>
+										<strong>{{ $errors->first('ROLE_ID') }}</strong>
 									</span>
 								@endif
 							</div>

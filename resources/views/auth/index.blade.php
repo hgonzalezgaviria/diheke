@@ -55,88 +55,66 @@
 	</div>
 	
 <table class="table table-striped" id="tabla">
-	<thead>
-		<tr class="info">
-			<th class="">ID</th>
-			<th class="">Nombre</th>
-			<th class="">Login</th>
-			<th class="">Rol</th>
-			<th class="hidden-xs">Creado por</th>
-			<th style="width:230px;">Acciones</th>
-		</tr>
-	</thead>
-	<tbody>
+		<thead>
+			<tr class="active">
+				<th class="col-xs-1 col-sm-1 col-md-1 col-lg-1">ID</th>
+				<th class="col-xs-4 col-sm-4 col-md-4 col-lg-2">Nombre</th>
+				<th class="col-xs-2 col-sm-1 col-md-1 col-lg-1">Login</th>
+				<th class="col-xs-2 col-sm-1 col-md-1 col-lg-1">Rol</th>
+				<th class="hidden-xs col-sm-1 col-md-1 col-lg-1">Creador</th>
+				<th class="col-xs-1 col-sm-4 col-md-4 col-lg-4">Acciones</th>
+			</tr>
+		</thead>
+		<tbody>
 
 
-		@foreach($usuarios as $usuario)
-		<tr>
-			<td>{{ $usuario -> USER_id }}</td>
-			<td>{{ $usuario -> name }}</td>
-			<td>{{ $usuario -> username }}</td>
-			<td>{{ $usuario -> rol -> ROLE_descripcion }}</td>
-			<td class="hidden-xs">{{ $usuario -> USER_creadopor }}</td>
-			<td>
+			@foreach($usuarios as $usuario)
+			<tr>
+				<td>{{ $usuario -> USER_ID }}</td>
+				<td>{{ $usuario -> name }}</td>
+				<td>{{ $usuario -> username }}</td>
+				<td>{{ $usuario -> rol -> ROLE_DESCRIPCION }}</td>
+				<td class="hidden-xs">{{ $usuario -> USER_CREADOPOR }}</td>
+				<td>
 
-				<!-- Botón Ver (show) -->
-				<a class="btn btn-success btn-xs" href="{{ URL::to('usuarios/'.$usuario->USER_id) }}">
-					<span class="glyphicon glyphicon-eye-open"></span> Ver
-				</a><!-- Fin Botón Ver (show) -->
+					{{-- <!-- Botón Ver (show) -->
+					<a class="btn btn-success btn-xs" href="{{ URL::to('usuarios/'.$usuario->USER_ID) }}">
+						<span class="glyphicon glyphicon-eye-open"></span> <span class="hidden-xs">Ver</span>
+					</a><!-- Fin Botón Ver (show) --> --}}
 
-				<!-- Botón Contraseña (sendResetLinkEmail) -->
-				<a class="btn btn-warning btn-xs" href="{{ URL::to('password/email/'.$usuario->USER_id) }}">
-					<i class="fa fa-btn fa-envelope" aria-hidden="true"></i> Contraseña
-				</a><!-- Fin Botón Contraseña (sendResetLinkEmail) -->
+					{{-- <!-- Botón Contraseña (sendResetLinkEmail) -->
+					<a class="btn btn-warning btn-xs" href="{{ URL::to('password/email/'.$usuario->USER_ID) }}">
+						<i class="fa fa-envelope" aria-hidden="true"></i> <span class="hidden-xs">Contraseña</span>
+					</a><!-- Fin Botón Contraseña (sendResetLinkEmail) --> --}}
 
-				<!-- Botón Contraseña (showResetForm) -->
-				<a class="btn btn-warning btn-xs" href="{{ URL::to('password/reset?USER_id='.$usuario->USER_id) }}">
-					<i class="fa fa-btn fa-key" aria-hidden="true"></i> Contraseña
-				</a><!-- Fin Botón Contraseña (showResetForm) -->
+					<!-- Botón Contraseña (showResetForm) -->
+					<a class="btn btn-warning btn-xs" href="{{ URL::to('password/reset?USER_id='.$usuario->USER_id) }}">
+						<i class="fa fa-key" aria-hidden="true"></i> <span class="hidden-xs">Contraseña</span>
+					</a><!-- Fin Botón Contraseña (showResetForm) -->
 
-				<!-- Botón Editar (edit) -->
-				<a class="btn btn-info btn-xs" href="{{ URL::to('usuarios/'.$usuario->USER_id.'/edit') }}">
-					<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
-				</a><!-- Fin Botón Editar (edit) -->
+					<!-- Botón Editar (edit) -->
+					<a class="btn btn-info btn-xs" href="{{ URL::to('usuarios/'.$usuario->USER_ID.'/edit') }}">
+						<i class="fa fa-pencil-square-o" aria-hidden="true"></i> <span class="hidden-xs">Editar</span>
+					</a><!-- Fin Botón Editar (edit) -->
 
-				<!-- Botón Borrar (destroy) -->
-				{{ Form::button('<i class="fa fa-user-times" aria-hidden="true"></i> Borrar',[
-						'class'=>'btn btn-xs btn-danger',
-						'data-toggle'=>'modal',
-						'data-target'=>'#pregModal'.$usuario -> USER_id ])
-						}}
-
-				<!-- Mensaje Modal. Bloquea la pantalla mientras se procesa la solicitud -->
-				<div class="modal fade" id="pregModal{{ $usuario -> USER_id }}" role="dialog" tabindex="-1" >
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h4 class="modal-title">¿Borrar?</h4>
-							</div>
-							<div class="modal-body">
-								<p>
-									<i class="fa fa-exclamation-triangle"></i> ¿Desea borrar el usuario {{ $usuario -> username }}?
-								</p>
-							</div>
-							<div class="modal-footer">
-									{{ Form::open( ['url' => 'usuarios/'.$usuario->USER_id, 'class' => 'pull-right'] ) }}
-										{{ Form::hidden('_method', 'DELETE') }}
-										{{ Form::button(' NO ', ['class'=>'btn btn-xs btn-success', 'type'=>'button','data-dismiss'=>'modal']) }}
-										{{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> SI',[
-											'class'=>'btn btn-xs btn-danger',
-											'type'=>'submit',
-										]) }}
-									{{ Form::close() }}
-							</div>
-				  		</div>
-					</div>
-				</div><!-- Fin Botón Borrar (destroy) -->
-
-			</td>
-		</tr>
-		@endforeach
-	</tbody>
-</table>
+					<!-- Botón Borrar (destroy) -->
+					{{ Form::button('<i class="fa fa-user-times" aria-hidden="true"></i> <span class="hidden-xs">Borrar</span>',[
+							'class'=>'btn btn-xs btn-danger',
+							'data-toggle'=>'modal',
+							'data-user_id'=>$usuario->USER_ID,
+							'data-username'=>$usuario->username,
+							'data-action'=>'usuarios/'.$usuario->USER_ID,
+							'data-target'=>'#pregModalDelete',
+						])
+					}}
 
 
+				</td>
+			</tr>
+			@endforeach
+		</tbody>
+	</table>
 
-
+	@include('auth/index-modalDelete')
+	
 @endsection

@@ -10,8 +10,8 @@
 	{{ Form::open(['url' => 'roles', 'class' => 'form-horizontal']) }}
 
 	  	<div class="form-group">
-			{{ Form::label('ROLE_descripcion', 'Descripción') }} 
-			{{ Form::text('ROLE_descripcion', old('ROLE_descripcion'), [ 'class' => 'form-control', 'max' => '255', 'required' ]) }}
+			{{ Form::label('ROLE_DESCRIPCION', 'Descripción') }} 
+			{{ Form::text('ROLE_DESCRIPCION', old('ROLE_DESCRIPCION'), [ 'class' => 'form-control', 'max' => '255', 'required' ]) }}
 		</div>
 
 		<!-- Botones -->

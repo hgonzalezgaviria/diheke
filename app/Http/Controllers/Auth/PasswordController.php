@@ -39,8 +39,12 @@ class PasswordController extends Controller
         */
     }
 
-    public function sendEmail($USER_id){
-        dd($USER_id);
+    public function sendEmail($USER_ID){
+                dump($USER_id);
+        $user = \reservas\User::findOrFail($USER_id);
+
+
+        $this->sendResetLinkEmail($user);
 
     }
 
@@ -65,7 +69,7 @@ class PasswordController extends Controller
         if ( auth()->check() && is_null($token) ){
 
             if( auth()->user()->rol->ROLE_ROL == 'admin' )
-                $user = \reservas\User::findOrFail(Input::get('USER_id'));
+                $user = \reservas\User::findOrFail(Input::get('USER_ID'));
             else 
                 $user = auth()->user();
 

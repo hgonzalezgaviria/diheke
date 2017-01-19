@@ -44,7 +44,7 @@ class RolController extends Controller
 	public function index()
 	{
 		//Se obtienen todos los registros.
-		$roles = Rol::orderBy('ROLE_id')->get();
+		$roles = Rol::orderBy('ROLE_ID')->get();
 		//Se carga la vista y se pasan los registros
 		return view('auth/roles/index', compact('roles'));
 	}
@@ -69,19 +69,19 @@ class RolController extends Controller
 		//Validación de datos
 		$this->validate(request(), [
 			'ROLE_ROL' => 'required|max:15|unique:ROLES',
-			'ROLE_descripcion' => ['required', 'max:255'],
+			'ROLE_DESCRIPCION' => ['required', 'max:255'],
 		]);
 
 		//Permite seleccionar los datos que se desean guardar.
 		$rol = new Rol;
 		$rol->ROLE_ROL = Input::get('ROLE_ROL');
-		$rol->ROLE_descripcion = Input::get('ROLE_descripcion');
-        $rol->ROLE_creadopor = auth()->user()->username;
+		$rol->ROLE_DESCRIPCION = Input::get('ROLE_DESCRIPCION');
+        $rol->ROLE_CREADOPOR = auth()->user()->username;
         //Se guarda modelo
 		$rol->save();
 
 		// redirecciona al index de controlador
-		Session::flash('message', 'Rol '.$rol->ROLE_descripcion.' creado exitosamente!');
+		Session::flash('message', 'Rol '.$rol->ROLE_DESCRIPCION.' creado exitosamente!');
 		return redirect()->to('roles');
 	}
 
@@ -89,13 +89,13 @@ class RolController extends Controller
 	/**
 	 * Muestra el formulario para editar un registro en particular.
 	 *
-	 * @param  int  $ROLE_id
+	 * @param  int  $ROLE_ID
 	 * @return Response
 	 */
-	public function edit($ROLE_id)
+	public function edit($ROLE_ID)
 	{
 		// Se obtiene el registro
-		$rol = Rol::findOrFail($ROLE_id);
+		$rol = Rol::findOrFail($ROLE_ID);
 
 		// Muestra el formulario de edición y pasa el registro a editar
 		return view('auth/roles/edit', compact('rol'));
@@ -105,54 +105,54 @@ class RolController extends Controller
 	/**
 	 * Actualiza un registro en la base de datos.
 	 *
-	 * @param  int  $ROLE_id
+	 * @param  int  $ROLE_ID
 	 * @return Response
 	 */
-	public function update($ROLE_id)
+	public function update($ROLE_ID)
 	{
 		//Validación de datos
 		$this->validate(request(), [
 			'ROLE_ROL' => 'required|max:15|unique:ROLES',
-			'ROLE_descripcion' => ['required', 'max:300'],
+			'ROLE_DESCRIPCION' => ['required', 'max:300'],
 		]);
 
 		// Se obtiene el registro
-		$rol = Rol::findOrFail($ROLE_id);
+		$rol = Rol::findOrFail($ROLE_ID);
 
 		$rol->ROLE_ROL = Input::get('ROLE_ROL');
-		$rol->ROLE_descripcion = Input::get('ROLE_descripcion');
-        $rol->ROLE_modificadopor = auth()->user()->username;
+		$rol->ROLE_DESCRIPCION = Input::get('ROLE_DESCRIPCION');
+        $rol->ROLE_MODIFICADOPOR = auth()->user()->username;
         //Se guarda modelo
 		$rol->save();
 
 		// redirecciona al index de controlador
-		Session::flash('message', 'Rol '.$rol->ROLE_descripcion.' modificado exitosamente!');
+		Session::flash('message', 'Rol '.$rol->ROLE_DESCRIPCION.' modificado exitosamente!');
 		return redirect()->to('roles');
 	}
 
 	/**
 	 * Elimina un registro de la base de datos.
 	 *
-	 * @param  int  $ROLE_id
+	 * @param  int  $ROLE_ID
 	 * @return Response
 	 */
-	public function destroy($ROLE_id, $showMsg=True)
+	public function destroy($ROLE_ID, $showMsg=True)
 	{
-		$rol = Rol::findOrFail($ROLE_id);
+		$rol = Rol::findOrFail($ROLE_ID);
 
 		//Si la encuesta fue creada por SYSTEM, no se puede borrar.
-		if($rol->ROLE_creadopor == 'SYSTEM'){
-			Session::flash('error', 'Rol '.$rol->ROLE_descripcion.' no se puede borrar!');
+		if($rol->ROLE_CREADOPOR == 'SYSTEM'){
+			Session::flash('error', 'Rol '.$rol->ROLE_DESCRIPCION.' no se puede borrar!');
 			return redirect()->to('roles');
 	    } else {
 
-	        $rol->ROLE_eliminadopor = auth()->user()->username;
+	        $rol->ROLE_ELIMINADOPOR = auth()->user()->username;
 			$rol->save();
 			$rol->delete();
 
 			// redirecciona al index de controlador
 			if($showMsg){
-				Session::flash('message', 'Rol '.$rol->ROLE_descripcion.' eliminado exitosamente!');
+				Session::flash('message', 'Rol '.$rol->ROLE_DESCRIPCION.' eliminado exitosamente!');
 				return redirect()->to('roles');
 			}
 		}
