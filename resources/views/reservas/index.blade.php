@@ -95,9 +95,9 @@
     $('#probando').click(function() {
 
 
-        var title = 'RES';
-        var allDay = false;
-        var back = 'rgb(51, 122, 183)';
+        var titulo = 'R.S';
+        var todoeldia = false;
+        var fondo = 'rgb(51, 122, 183)';
         var fechaini = $('#fechainicio').data("DateTimePicker").date();
         var fechafin = $('#fechafin').data("DateTimePicker").date();
 
@@ -106,26 +106,38 @@
         var fechainicio = moment(fechaini, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
         var fechafinal = moment(fechafin,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
 
+
+
         var sala = getUrlParameter('sala');
         var equipo = getUrlParameter('equipo');
 
+        
+        if(equipo != 0){
+          titulo = 'R.E';
+          alert(titulo + " " + sala);
+        }
+
+       
+        
         crsfToken = document.getElementsByName("_token")[0].value;
+
         $.ajax({
              url: 'guardaEventos',
-             data: 'title='+ title+'&start='+ fechainicio+'&allday='+allDay+'&background='+back+
+             data: 'title='+ titulo+'&start='+ fechainicio+'&allday='+todoeldia+'&background='+fondo+
              '&end='+fechafinal+'&sala='+sala+'&equipo='+equipo,
              type: "POST",
              headers: {
                     "X-CSRF-TOKEN": crsfToken
                 },
               success: function(events) {
-                console.log('Evento creado');   
-                $('#calendar').fullCalendar('refetchEvents' );
+                console.log('Evento creado ');   
+                $('#calendar').fullCalendar('refetchEvents');
               },
-              error: function(json){
+              error:   function(json){
                 console.log("Error al crear evento");
               }        
         });
+        
  
         
     });
@@ -179,6 +191,18 @@
 
       events: { url:"../cargaEventos"},
 
+      //con esta funcion llamaremos el popup para mostrar los detalles de la reserva
+      eventClick: function(calEvent, jsEvent, view) {
+
+        alert('Event: ' + calEvent.title);
+        alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+        alert('View: ' + view.name);
+
+        // change the border color just for fun
+        $(this).css('border-color', 'red');
+
+      },
+
       editable: true,
       droppable: true, // this allows things to be dropped onto the calendar !!!
 
@@ -203,6 +227,8 @@
           // if so, remove the element from the "Draggable Events" list
           $(this).remove();
         }
+
+
         //Guardamos el evento creado en base de datos
         var title=copiedEventObject.title;
         var start=copiedEventObject.start.format("YYYY-MM-DD HH:mm");
@@ -233,7 +259,10 @@
             }        
         });
 
-      }      
+      }
+
+      
+
     });
 
     /* AGREGANDO EVENTOS AL PANEL */
@@ -248,6 +277,8 @@
 
       //$('#add-new-event').css({"background-color": currColor, "border-color": currColor});
     });
+
+
     $("#add-new-event").click(function (e) {
       e.preventDefault();
       //Get value and make sure it is not null
@@ -268,6 +299,8 @@
       //Remove event from text input
       $("#new-event").val("");
     });
+
+
   });
     </script>
 @endsection

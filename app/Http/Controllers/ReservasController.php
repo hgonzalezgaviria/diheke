@@ -94,21 +94,24 @@ class ReservasController extends Controller
     public function store()
     {
         //Validación de datos
+        
         $this->validate(request(), [
                 'start' => ['required', 'max:50'],
                 'end' => ['required', 'max:50'],
-                'back' => ['required', 'max:100'],
+                'background' => ['required', 'max:100'],
                 'title' => ['required', 'max:100'],
                 'sala' => ['required', 'max:100'],
             ]);
-        dump(request()->except(['_token']));
+        
+        $titulo = Input::get('title');
 
         $reserva = new Reserva;
         $reserva->RESE_FECHAINI = Input::get('start');
         $reserva->RESE_FECHAFIN = Input::get('end');
-        $reserva->RESE_TODOELDIA =false;
-        $reserva->RESE_COLOR = Input::get('back');
-        $reserva->RESE_TITULO = Input::get('title');
+        $reserva->RESE_TODOELDIA = false;
+        $reserva->RESE_COLOR = Input::get('background');
+        //$reserva->SALA_ID = 1;
+        //$reserva->EQUI_ID = null;        
 
         $sala = \reservas\Sala::findOrFail(Input::get('sala'));
         $reserva->SALA_ID = $sala->SALA_ID;
@@ -116,13 +119,20 @@ class ReservasController extends Controller
 
         if(Input::get('equipo') != 0){
             $equipo = $this->getEquipoDisp($sala->SALA_ID, $reserva->RESE_FECHAINI, $reserva->RESE_FECHAFIN);
+            $titulo = "R.E";
             $reserva->EQUI_ID = $equipo->EQUI_ID;
         }
 
-        //$reserva->RESE_CREADOPOR = auth()->user()->username;
-        //Se guarda modelo
+        $reserva->RESE_TITULO = $titulo;
+        $reserva->RESE_CREADOPOR = auth()->user()->username;
         $reserva->save();
-        dd($reserva);
+
+        
+        //Se guarda modelo
+        //var_dump($reserva);
+
+        
+        //dd($reserva);
 
         // redirecciona al index de controlador
         Session::flash('message', 'Reserva creado exitosamente!');
