@@ -194,10 +194,12 @@
       //con esta funcion llamaremos el popup para mostrar los detalles de la reserva
       eventClick: function(calEvent, jsEvent, view) {
 
+        /*
         alert('Event: ' + calEvent.title);
         alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
         alert('View: ' + view.name);
-
+        */
+        $('#myModal').modal('show');
         // change the border color just for fun
         $(this).css('border-color', 'red');
 
@@ -386,6 +388,24 @@
    </div><!-- /.panel-body -->
   </div><!-- /.panel -->
 </div>
+</div>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Detalle de Reserva</h4>
+        </div>
+        <div class="modal-body">
+          <p>This is a large modal.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 @endsection
