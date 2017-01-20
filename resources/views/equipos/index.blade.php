@@ -4,10 +4,10 @@
 @section('scripts')
     <script>
 
+
      $(document).ready(function (){
 
-
-      	/*
+      	/*      	
       	para realizar la paginacion de una tabla lo unico que hay que hacer es asignarle un id a la tabla,
       	en este caso el id es "tabla" e invocar la función Datatable, lo demas que ven sobre esta función
       	son configuraciones de presentación
@@ -16,7 +16,7 @@
 	 	var table = $('#tabla').DataTable({ 
 	 		"lengthMenu": [[5, 10, 15, 25,50,100], [5, 10, 15, 25,50,100]],
 	 		//"sScrollY": "350px",
-	        "pagingType": "full_numbers",
+	        "pagingType": "simple_numbers",
 	        "bScrollCollapse": true,
 	        "responsive": true,
 		    "language": { 
@@ -80,7 +80,7 @@
                     doc.content.splice( 1, 0, {
                         margin: [ 0, 0, 0, 12 ],
                         alignment: 'center',
-                        image: ''
+                        image: '{{ $dataUri }}' //Variable que devuelve del controlador
                     } );
                 }
             },
@@ -197,36 +197,7 @@
 				return hoy;
 		}
 
-			// Code taken from MatthewCrumley (http://stackoverflow.com/a/934925/298479)
-	function getBase64Image(imgPath) {
 		
-		// Create an empty img element
-		var img = document.createElement('img');
-		img.src = imgPath;
-
-
-		// Create an empty canvas element
-		var canvas = document.createElement('canvas');
-		canvas.width = img.width;
-		canvas.height = img.height;
-
-		// Copy the image contents to the canvas
-		var ctx = canvas.getContext('2d');
-		ctx.drawImage(img, 0, 0);		
-
-		// Get the data-URL formatted image
-		// Firefox supports PNG and JPEG. You could check img.src to guess the
-		// original format, but be aware the using "image/jpg" will re-encode the image.
-		
-		return canvas.toDataURL('image/jpg');
-	};
-
-	alert(getBase64Image('{{ asset('assets/img/logo_redondo.jpg') }}'));
-
-	
-	
-
-
 
     </script>
 @endsection
@@ -246,6 +217,7 @@
 		</div>
 	</div>
 	
+{{ Form::open(['id'=>'indexequi' , 'class' => 'form-horizontal']) }}
 <table class="table table-striped" id="tabla">
 	<thead>
 		<tr class="info">
@@ -313,7 +285,7 @@
 											'data-backdrop'=>'static',
 											'data-target'=>'#msgModal',
 										]) }}
-									{{ Form::close() }}
+									
 							</div>
 				  		</div>
 					</div>
@@ -323,6 +295,7 @@
 		</tr>
 		@endforeach
 	</tbody>
+	{{ Form::close() }}
 </table>
 
 
