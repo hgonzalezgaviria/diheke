@@ -9,13 +9,15 @@
 		{!! Html::favicon('favicon.ico') !!}
 		
 		{!! Html::style('assets/js/jquery-ui/jquery-ui.min.css') !!}
-		{!! Html::style('assets/css/jquery.dataTables.min.css') !!}
+		{{--{!! Html::style('assets/css/jquery.dataTables.min.css') !!}--}}
 		{!! Html::style('assets/css/datatable/buttons.dataTables.min.css') !!}
 		{{--{!! Html::style('assets/css/datatable/dataTables.bootstrap.min.css') !!}--}}
 		{{--{!! Html::style('assets/css/datatable/buttons.bootstrap.min.css') !!}--}}
 		{!! Html::style('assets/css/datatable/responsive.dataTables.min.css') !!}
 		{!! Html::style('assets/css/datatable/buttons.bootstrap4.min.css') !!}
 		{!! Html::style('assets/css/datatable/dataTables.bootstrap4.min.css') !!}
+		{!! Html::style('assets/css/datatable/rowReorder.dataTables.min.css') !!}
+		{!! Html::style('assets/css/datatable/responsive.bootstrap.min.css') !!}
 		{!! Html::style('assets/css/fullcalendar.css') !!}
 		{!! Html::style('assets/css/msgBoxLight.css') !!}
 		{!! Html::style('assets/css/bootstrap.min.css') !!}
@@ -53,13 +55,14 @@
 		<!-- Scripts -->
 		{{--{!! Html::script('assets/js/jquery-1.11.2.min.js') !!}--}}
 		{!! Html::script('assets/js/datatable/jquery-1.12.4.js') !!}
+		{!! Html::script('assets/js/jquery-2.0.0.min.js') !!}
 		{!! Html::script('assets/js/jquery-ui.min.js') !!}
 		{!! Html::script('assets/js/moment.min.js') !!}
 		{!! Html::script('assets/js/fullcalendar.js') !!}
 		{!! Html::script('assets/js/es.js') !!}
 		{!! Html::script('assets/js/bootstrap.min.js') !!}
 
-		{!! Html::script('assets/js/jquery.dataTables.min.js') !!}
+		{!! Html::script('assets/js/datatable/jquery.dataTables.min.js') !!}
 		{!! Html::script('assets/js/datatable/dataTables.buttons.min.js') !!}
 		{!! Html::script('assets/js/datatable/jszip.min.js') !!}
 		{!! Html::script('assets/js/datatable/pdfmake.min.js') !!}
@@ -75,6 +78,8 @@
 		{!! Html::script('assets/js/datatable/buttons.flash.min.js') !!}
 		{!! Html::script('assets/js/datatable/buttons.bootstrap4.min.js') !!}
 		{!! Html::script('assets/js/datatable/dataTables.bootstrap4.min.js') !!}
+		{!! Html::script('assets/js/datatable/dataTables.rowReorder.min.js') !!}
+		{!! Html::script('assets/js/datatable/responsive.bootstrap.min.js') !!}
 		@yield('scripts')
 	</body>
 </html>

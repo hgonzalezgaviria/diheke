@@ -15,6 +15,10 @@
 	 		"sScrollY": "350px",
 	        "pagingType": "full_numbers",
 	        "bScrollCollapse": true,
+	        rowReorder: {
+            selector: 'td:nth-child(2)'
+        		},
+	        "responsive": true,
 	    "language": { 
 		    "sProcessing":     "Procesando...", 
 		    "sLengthMenu":     "Mostrar _MENU_ registros", 

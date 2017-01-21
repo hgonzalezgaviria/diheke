@@ -18,6 +18,9 @@
 	 		//"sScrollY": "350px",
 	        "pagingType": "simple_numbers",
 	        "bScrollCollapse": true,
+	         rowReorder: {
+            selector: 'td:nth-child(2)'
+        		},
 	        "responsive": true,
 		    "language": { 
 			    "sProcessing":     "Procesando...", 
@@ -218,7 +221,8 @@
 	</div>
 	
 {{ Form::open(['id'=>'indexequi' , 'class' => 'form-horizontal']) }}
-<table class="table table-striped" id="tabla">
+<!--<table class="table table-striped" id="tabla">-->
+<table class="table table-striped table-bordered dt-responsive nowrap" id="tabla">
 	<thead>
 		<tr class="info">
 			<th class="col-md-2">ID</th>
