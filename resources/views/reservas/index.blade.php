@@ -194,12 +194,18 @@
       //con esta funcion llamaremos el popup para mostrar los detalles de la reserva
       eventClick: function(calEvent, jsEvent, view) {
 
-        /*
-        alert('Event: ' + calEvent.title);
-        alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-        alert('View: ' + view.name);
-        */
+        
+        var start = moment(calEvent.start).format('YYYY-MM-DD HH:mm:ss');
+        var end = moment(calEvent.end).format('YYYY-MM-DD HH:mm:ss');
+
+
+        $('#divmodal').empty();
+        $('#divmodal').append("<p>Titulo: " +  calEvent.title + "</p>");
+        $('#divmodal').append("<p>Fecha de Inicio: " +  start + "</p>");
+        $('#divmodal').append("<p>Fecha Fin: " +  end + "</p>");
         $('#myModal').modal('show');
+
+
         // change the border color just for fun
         $(this).css('border-color', 'red');
 
@@ -397,8 +403,8 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Detalle de Reserva</h4>
         </div>
-        <div class="modal-body">
-          <p>This is a large modal.</p>
+        <div class="modal-body" id="divmodal">
+          <p></p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
