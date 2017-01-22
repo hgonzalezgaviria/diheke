@@ -18,6 +18,7 @@
 	 		//"sScrollY": "350px",
 	        "pagingType": "simple_numbers",
 	        "bScrollCollapse": true,
+	        //lengthChange: false,
 	         rowReorder: {
             selector: 'td:nth-child(2)'
         		},
@@ -48,7 +49,7 @@
 					 +"<'row'<'form-inline'"
 					 +" <'col-sm-6 col-md-6 col-lg-6'l>"
 					 +"<'col-sm-6 col-md-6 col-lg-6'p>>>",//'Bfrtip',
-        	//lengthChange: false,
+        	
 	        buttons: [
 	             {//Bton CVS
                 extend: 'csvHtml5',
