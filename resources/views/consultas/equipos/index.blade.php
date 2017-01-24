@@ -2,23 +2,50 @@
 @section('title', '/ Consulta Equipos')
 @section('scripts')
     <script>
-     $(function () {
+/**/
 
-      	/*
-      	para realizar la paginacion de una tabla lo unico que hay que hacer es asignarle un id a la tabla,
-      	en este caso el id es "tabla" e invocar la función Datatable, lo demas que ven sobre esta función
-      	son configuraciones de presentación
-      	*/
-	 	$('#tabla').DataTable({  
-	        "sScrollY": "350px",
-	        "pagingType": "full_numbers",
-	        "bScrollCollapse": true,
-	 	});
 
-	 	$('')
+
+
+ var ids="";
+
+		$(".switch").change(function() {
+   		$('input[type=checkbox]:checked').each(function(){
+
+   			
+    
+    		ids = $('input[type=checkbox]:checked').attr('id');
+    		
+			alert(ids);
+
+			//var htmlvar=
 
 	
-	  });
+if ($('input.checkbox_check').is(':checked')){
+		$('#switchon').html('Switched off.');
+
+	}
+
+	else {
+		$('#switchon').html('Switched on.');
+        // Hacer algo si el checkbox ha sido deseleccionado
+        //$(htmlvar).html('Switched off.');
+    }
+		  
+
+
+});
+
+});
+
+		$('.switch:checked').each(
+    function() {
+        alert("El checkbox con valor " + $(this).val() + " está seleccionado");
+    }
+);
+
+		
+
     </script>
 @endsection
 @section('content')
@@ -39,41 +66,54 @@
 
 	</div>
 	
+	{{ Form::open(['id'=>'consulequi' , 'class' => 'form-horizontal']) }}
 <table class="table table-striped" id="tabla">
-	<thead>
-		<tr class="info">
-			<th class="col-md-2">ID Equipo</th>
-			<th class="col-md-2">Descripción</th>
-			<th class="col-md-2">Observaciones</th>
-			<th class="col-md-2">Estado</th>
-			<th class="col-md-2">Sala</th>
-			<th class="col-md-2">Sede</th>
 
-		</tr>
-	</thead>
 	<tbody>
 
 
-		@foreach($politicas as $politica)
-		<tr>
-			<td>{{ $politica -> POLI_ID }}</td>
-			<td>{{ $politica -> POLI_HORA_MIN }}</td>
-			<td>{{ $politica -> POLI_HORA_MAX }}</td>
-			<td>{{ $politica -> POLI_HORAS_MIN_RESERVA }}</td>
-			<td>{{ $politica -> POLI_DIAS_MIN_CANCELAR }}</td>
-			<td>
-
-				
-
 		
+	@for ($i = 0; $i < 10; $i++)
+    
+<div class="col-md-4 zoom-in-hover">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+	 		<div class="panel-body">
+		<center>
+			<IMG SRC='{{ asset('assets/img/monitor.png') }}' WIDTH=60 HEIGHT=60>
+		</center>
+			<!--
+				<div class="checkbox">
+	  		<label>
+	    	<input type="checkbox"  data-toggle="toggle" class="filter-toggle" id="switch{{$i}}" value="1" data-onstyle="success" data-offstyle="danger">
+	  		</label>
+		</div>
 
-			</td>
-		</tr>
-		@endforeach
+		<div id="switchON">
+	    		<label class="switch">
+					<input class="switch-input" type="checkbox" id="switch{{$i}}" />
+					<span class="switch-label" data-on="On" data-off="Off"></span> 
+					<span class="switch-handle"></span> 
+				</label>
+			</div>
+		
+			
+			-->
+			<div class="checkbox">
+	  		<label>
+	    	<input type="checkbox"  data-toggle="toggle" class="filter-toggle" id="switch{{$i}}" value="1" data-onstyle="success" data-offstyle="danger">
+	  		</label>
+		</div>
+		
+			<div class="alert alert-info" id="switchon">Switched off.</div>
+
+		  </div>
+	  </div>
+  </div>
+</div>
+		@endfor
 	</tbody>
 </table>
 
-
-
-
+{{ Form::close() }}
 @endsection

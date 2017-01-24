@@ -25,6 +25,8 @@
 		{!! Html::style('assets/css/bootstrap-theme.min.css') !!}
 		{!! Html::style('assets/css/dropdown-menu.css') !!}
 		{!! Html::style('assets/css/style.css') !!}
+		{!! Html::style('assets/css/styleon_off.css') !!}
+		{!! Html::style('assets/css/bootstrap-toggle.min.css') !!}
 
 		{!! Html::style('assets/css/bootstrap-datetimepicker.min.css') !!}
 		<style>
@@ -80,6 +82,7 @@
 		{!! Html::script('assets/js/datatable/dataTables.bootstrap4.min.js') !!}
 		{!! Html::script('assets/js/datatable/dataTables.rowReorder.min.js') !!}
 		{!! Html::script('assets/js/datatable/responsive.bootstrap.min.js') !!}
+		{!! Html::script('assets/js/bootstrap-toggle.min.js') !!}
 		@yield('scripts')
 	</body>
 </html>

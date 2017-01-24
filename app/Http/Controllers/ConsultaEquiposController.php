@@ -118,7 +118,7 @@ class ConsultaEquiposController extends Controller
 		// Muestra la vista y pasa el registro
 		return view('politicas/show', compact('politica'));
 
-		$SQL= "SELECT e.EQUI_ID, e.EQUI_DESCRIPCION, e.EQUI_OBSERVACIONES, es.ESTA_DESCRIPCION from equipos e, estados es, salas sa, sedes se, tipoestados tes WHERE e.SALA_ID=sa.SALA_ID and sa.SEDE_ID=se.SEDE_ID and es.ESTA_ID=e.ESTA_ID and es.TIES_ID=tes.TIES_ID"
+		$SQL= "SELECT e.EQUI_ID, e.EQUI_DESCRIPCION, e.EQUI_OBSERVACIONES, es.ESTA_DESCRIPCION from equipos e, estados es, salas sa, sedes se, tipoestados tes WHERE e.SALA_ID=sa.SALA_ID and sa.SEDE_ID=se.SEDE_ID and es.ESTA_ID=e.ESTA_ID and es.TIES_ID=tes.TIES_ID";
 	}
 
 
