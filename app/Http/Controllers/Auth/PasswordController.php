@@ -32,7 +32,7 @@ class PasswordController extends Controller
      */
     public function __construct()
     {
-        /*
+        /* Se inactiva middleware ya que los cambios de contraseña puede realizarlos el rol admin.
         $this->middleware('guest',
             ['except' => ['showResetForm']]
         );
@@ -58,7 +58,7 @@ class PasswordController extends Controller
      */
     public function showResetForm( $token = null )
     {
-
+        //Si no está autenticado y no llegó un token, redirige a recuperar por email.
         if (auth()->guest() && is_null( $token )) {
             //return redirect('password/reset');
             return view( 'auth.passwords.email' );
@@ -66,11 +66,12 @@ class PasswordController extends Controller
 
 
         $email = Input::get('email');
+        //Si está autenticado y no llegó un token...
         if ( auth()->check() && is_null($token) ){
-
-            if( auth()->user()->rol->ROLE_ROL == 'admin' )
-                $user = \reservas\User::findOrFail(Input::get('USER_ID'));
-            else 
+            //Si el rol es admin y el id recibido por GET no es null...
+            if( auth()->user()->rol->ROLE_rol == 'admin' && Input::get('USER_id') !== null)
+                $user = \reservas\User::findOrFail(Input::get('USER_id'));
+            else
                 $user = auth()->user();
 
             $email = $user->email;
