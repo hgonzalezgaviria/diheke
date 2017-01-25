@@ -150,7 +150,7 @@
 		</div>
 		
 		
-			<div class="alert alert-info" id="switch{{$i}}">Switched off.</div>
+			<div class="alert alert-info" id="switch{{$i}}">{{ $equipo -> estado -> ESTA_DESCRIPCION }}</div>
 
 		  </div>
 	  </div>
