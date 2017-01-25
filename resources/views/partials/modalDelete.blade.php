@@ -29,8 +29,6 @@
 
 @section('scripts')
 	<script type="text/javascript">
-    	@include('datatable')
-
 		//Carga de datos a mensajes modales para eliminar y clonar registros
 		$(document).ready(function () {
 			$('#pregModalDelete').on('show.bs.modal', function (event) {

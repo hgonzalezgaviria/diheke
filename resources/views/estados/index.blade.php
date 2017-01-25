@@ -1,6 +1,8 @@
 @extends('layout')
 @section('title', '/ Estados')
 
+@include('datatable')
+
 @section('content')
 
 	<h1 class="page-header">Estados</h1>
