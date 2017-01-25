@@ -72,9 +72,11 @@ class ConsultaEquiposController extends Controller
 			);
 		}
 
+		$equipos = \reservas\Equipo::all();
+
 
 		//Se carga la vista y se pasan los registros
-		return view('consultas/equipos/index', compact('politicas','arrSedes','arrSalas'));
+		return view('consultas/equipos/index', compact('politicas','arrSedes','arrSalas','equipos'));
 	}
 
 	/**

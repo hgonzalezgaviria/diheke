@@ -22,12 +22,12 @@
 
 	
 if ($('input.checkbox_check').is(':checked')){
-		$('#switchon').html('Switched off.');
+		$(".alert alert-info").html('Switched off.');
 
 	}
 
 	else {
-		$('#switchon').html('Switched on.');
+		$(".alert alert-info").html('Switched on.');
         // Hacer algo si el checkbox ha sido deseleccionado
         //$(htmlvar).html('Switched off.');
     }
@@ -73,7 +73,10 @@ if ($('input.checkbox_check').is(':checked')){
 
 
 		
-	@for ($i = 0; $i < 10; $i++)
+	
+
+	@foreach ($equipos as $i => $equipo)
+
     
 <div class="col-md-4 zoom-in-hover">
 	<div class="panel panel-default">
@@ -99,19 +102,22 @@ if ($('input.checkbox_check').is(':checked')){
 		
 			
 			-->
-			<div class="checkbox">
-	  		<label>
-	    	<input type="checkbox"  data-toggle="toggle" class="filter-toggle" id="switch{{$i}}" value="1" data-onstyle="success" data-offstyle="danger">
-	  		</label>
-		</div>
+	
+		<div id="switchON">
+	    		<label class="switch">
+					<input class="switch-input" type="checkbox" id="switch{{$equipo->EQUI_ID}}" />
+					<span class="switch-label" data-on="On" data-off="Off"></span> 
+					<span class="switch-handle"></span> 
+				</label>
+			</div>
 		
-			<div class="alert alert-info" id="switchon">Switched off.</div>
+			<div class="alert alert-info" id="switch{{$i}}">Switched off.</div>
 
 		  </div>
 	  </div>
   </div>
 </div>
-		@endfor
+		@endforeach
 	</tbody>
 </table>
 
