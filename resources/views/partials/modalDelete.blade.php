@@ -64,10 +64,14 @@
 			</div>
 
 			<div class="modal-body">
-				<h4>
-					<i class="fa fa-exclamation-triangle fa-3x fa-fw"></i>
-					 ¿Borrar <span class="modelo"></span> <span class="descripcion"></span>?
-				</h4>
+				<div class="row">
+					<div class="col-xs-2">
+						<i class="fa fa-exclamation-triangle fa-3x fa-fw"></i>
+					</div>
+					<div class="col-xs-10">
+						<h4>¿Borrar <span class="modelo"></span> <span class="descripcion"></span>?</h4>
+					</div>
+				</div>
 			</div>
 
 			<div class="modal-footer">
