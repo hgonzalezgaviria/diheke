@@ -3,47 +3,25 @@
 @section('scripts')
     <script>
 /**/
+	 $(function () {
+
+	 		//con la siguiente linea se enciende o no el boton
+			//$('#switch').bootstrapToggle('on');
 
 
+		    $('.switch-input').change(function() {
+		      //$('#console-event').html('Toggle: ' + $(this).prop('checked'))
+		      //alert('checkbox en estado: '+ $(this).prop('checked'));
 
 
- var ids="";
+		     
+		      
 
-		$(".switch").change(function() {
-   		$('input[type=checkbox]:checked').each(function(){
-
-   			
-    
-    		ids = $('input[type=checkbox]:checked').attr('id');
-    		
-			alert(ids);
-
-			//var htmlvar=
-
-	
-if ($('input.checkbox_check').is(':checked')){
-		$(".alert alert-info").html('Switched off.');
-
-	}
-
-	else {
-		$(".alert alert-info").html('Switched on.');
-        // Hacer algo si el checkbox ha sido deseleccionado
-        //$(htmlvar).html('Switched off.');
-    }
-		  
+		    });
+		 
 
 
-});
-
-});
-
-		$('.switch:checked').each(
-    function() {
-        alert("El checkbox con valor " + $(this).val() + " está seleccionado");
-    }
-);
-
+	  });	
 		
 
     </script>
