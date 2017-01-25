@@ -120,6 +120,18 @@ $dataUri = 'data:image/' . $type . ';base64,' . base64_encode($data);
         //return $salas;
     }
 
+     public function consultarEquipos(){
+
+        //$SEDE_ID = $_POST['sede'];
+
+        $equipos = \DB::table('EQUIPOS')
+                            ->select('EQUIPOS.*')
+                            ->get();
+
+        return json_encode($equipos);
+        //return $salas;
+    }
+
     /**
      * Guarda el registro nuevo en la base de datos.
      *

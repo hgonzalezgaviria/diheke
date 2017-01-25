@@ -89,6 +89,7 @@ Route::post('reservas/guardaEventos', array('as' => 'guardaEventos','uses' => 'R
 Route::post('actualizaEventos','ReservasController@update');
 Route::post('eliminaEvento','ReservasController@delete');
 Route::post('consultaSalas', array('as' => 'consultaSalas','uses' => 'EquiposController@consultaSalas'));
+Route::post('consultarEquipos', array('as'=>'consultarEquipos','uses' => 'EquiposController@consultarEquipos'));
 
 //recursos
 Route::resource('recursos', 'RecursosController');
