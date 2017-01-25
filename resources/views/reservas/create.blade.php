@@ -10,6 +10,7 @@
 				  format: 'YYYY-MM-DD HH:mm',
 				  //format: 'DD/MM/YYYY hh:mm A',
 				  stepping: 30,
+				  useCurrent: false,  //Important! See issue #1075. Requerido para minDate
 				  minDate: new Date(),
 				  icons: {
 					time: "fa fa-clock-o",
@@ -45,6 +46,7 @@
 				  format: 'YYYY-MM-DD HH:mm',
 				  //format: 'DD/MM/YYYY hh:mm A',
 				  stepping: 30,
+				  useCurrent: false,  //Important! See issue #1075. Requerido para minDate
 				  minDate: new Date(),
 				  icons: {
 					time: "fa fa-clock-o",
