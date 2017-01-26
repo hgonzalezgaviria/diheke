@@ -1,10 +1,6 @@
 @extends('layout')
 @section('title', '/ Usuarios Locales')
-@section('scripts')
-    <script>
-   @include('datatable')
-    </script>
-@endsection
+@include('datatable')
 @section('content')
 
 	<h1 class="page-header">Usuarios Locales</h1>
@@ -63,16 +59,22 @@
 						<i class="fa fa-pencil-square-o" aria-hidden="true"></i> <span class="hidden-xs">Editar</span>
 					</a><!-- Fin Botón Editar (edit) -->
 
-					<!-- Botón Borrar (destroy) -->
-					{{ Form::button('<i class="fa fa-user-times" aria-hidden="true"></i> <span class="hidden-xs">Borrar</span>',[
-							'class'=>'btn btn-xs btn-danger',
-							'data-toggle'=>'modal',
-							'data-user_id'=>$usuario->USER_ID,
-							'data-username'=>$usuario->username,
-							'data-action'=>'usuarios/'.$usuario->USER_ID,
-							'data-target'=>'#pregModalDelete',
-						])
-					}}
+
+					<!-- Botón Borrar (destroy) -->			
+				<!-- Mensaje Modal. Bloquea la pantalla mientras se procesa la solicitud -->				
+									
+										{{ Form::button('<i class="fa fa-user-times" aria-hidden="true"></i> <span class="hidden-xs">Borrar</span>',[
+										'class'=>'btn btn-xs btn-danger',
+										'data-toggle'=>'modal',
+										'data-id'=>$usuario->USER_ID,
+											'data-modelo'=>'usuario',
+											'data-descripcion'=>$usuario->username,
+											'data-action'=>'usuarios/'.$usuario->USER_ID,
+											'data-target'=>'#pregModalDelete',
+										]) }}
+					<!-- Fin Botón Borrar (destroy) -->
+
+	
 
 
 				</td>
@@ -81,6 +83,6 @@
 		</tbody>
 	</table>
 
-	@include('auth/index-modalDelete')
-	
+	{{--@include('auth/index-modalDelete')--}}
+	@include('partials/modalDelete') <!-- incluye el modal del Delete -->	
 @endsection

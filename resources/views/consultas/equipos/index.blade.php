@@ -8,9 +8,8 @@
 	 		//con la siguiente linea se enciende o no el boton
 			//$('#switch').bootstrapToggle('on');
 
-
+		// INICIO Obtiene id de cada checkbox y lo adiciona a un arreglo
 		var arraid = [];
-
 			var i = 0;
 			//alert('estado equipo '+ '{{ $equipos }}');
 			$( ".filter-toggle" ).each(function( i ) {
@@ -21,12 +20,12 @@
 
 			    //console.log('equipo '+equipo);
 
-			});
-
+			});// FIN Obtiene id de cada checkbox y lo adiciona a un arreglo
 
 			 
-	 	crsfToken = document.getElementsByName("_token")[0].value;
- 		//var opcion = $("#SEDE_ID").val();
+	 	
+		// INICIO Obtiene los equipos por medio de ajax y Json
+	 	crsfToken = document.getElementsByName("_token")[0].value; 		
 			$.ajax({
 	             url: 'consultarEquipos',
 	             data: 'equipos=null',
@@ -35,16 +34,16 @@
 	             headers: {
 	                    "X-CSRF-TOKEN": crsfToken
 	                },
-	              success: function(equipo) {
-	         
-	        
-	      
+	              success: function(equipo) {   
 
 					for(var i = 0; i < equipo.length; i++){
 					
 						if((equipo[i].EQUI_ID == arraid[i]) && equipo[i].ESTA_ID == 3){
 							//console.log('si señor '+equipo[i].EQUI_ID+' == '+arraid[i]);
 							$('#'+arraid[i]).bootstrapToggle('on');
+							$('#'+arraid[i]).bootstrapToggle('disable');
+						}else {
+							$('#'+arraid[i]).bootstrapToggle('disable');
 						}
 					//console.log(equipo[i].ESTA_ID);
 
@@ -82,6 +81,7 @@
 
     </script>
 @endsection
+@parent
 @section('content')
 
 	<h1 class="page-header">Consultas De Equipos</h1>
@@ -120,20 +120,7 @@
 			<IMG SRC='{{ asset('assets/img/monitor.png') }}' WIDTH=60 HEIGHT=60>
 		</center>
 			<!--
-				<div class="checkbox">
-	  		<label>
-	    	<input type="checkbox"  data-toggle="toggle" class="filter-toggle" id="switch{{$i}}" value="1" data-onstyle="success" data-offstyle="danger">
-	  		</label>
-		</div>
-
-		<div id="switchON">
-	    		<label class="switch">
-					<input class="switch-input" type="checkbox" id="switch{{$i}}" />
-					<span class="switch-label" data-on="On" data-off="Off"></span> 
-					<span class="switch-handle"></span> 
-				</label>
-			</div>
-		
+				
 		<div id="switchON">
 	    		<label class="switch">
 					<input class="switch-input" type="checkbox" id="{{$equipo->EQUI_ID}}" />
@@ -143,13 +130,16 @@
 			</div>
 			
 			-->
+			<center>
 		<div class="checkbox">
 	  		<label>
-	    	<input type="checkbox"  data-toggle="toggle" class="filter-toggle" id="{{$equipo->EQUI_ID}}" value="1" data-onstyle="success" data-offstyle="danger">
+
+	    	<input type="checkbox"  data-toggle="toggle" class="filter-toggle" id="{{$equipo->EQUI_ID}}" value="1" data-onstyle="success" data-offstyle="danger" data-width="100" data-on="<i class='fa fa-check'></i>" data-off="<i class='fa fa-close'></i>" >
 	  		</label>
 		</div>
+		</center>
 		
-		
+		<br>
 			<div class="alert alert-info" id="switch{{$i}}">{{ $equipo -> estado -> ESTA_DESCRIPCION }}</div>
 
 		  </div>

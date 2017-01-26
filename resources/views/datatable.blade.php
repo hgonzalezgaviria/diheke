@@ -1,7 +1,9 @@
 @section('head')
 	{!! Html::style('assets/css/bootstrap.vertical-tabs.css') !!}
 	{!! Html::style('assets/css/hover-zoom.css') !!}
+@parent
 @endsection
+
 
 @section('scripts')
     <script>
@@ -22,6 +24,7 @@
 	              rowReorder: {
             selector: 'td:nth-child(2)'
         		},
+        		rowReorder: false,
 	        "responsive": true,
 	    "language": { 
 		    "sProcessing":     "Procesando...", 

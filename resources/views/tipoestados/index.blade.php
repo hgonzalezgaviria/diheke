@@ -1,11 +1,6 @@
 @extends('layout')
 @section('title', '/ Tipos de Estados')
-@section('scripts')
-    <script>
-   @include('datatable')
-    </script>
-@endsection
-
+@include('datatable')
 @section('content')
 
 	<h1 class="page-header">Tipos de Estados</h1>
@@ -46,41 +41,21 @@
 					<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
 				</a>
 
-				<!-- Botón Borrar (destroy) -->
-				{{ Form::button('<i class="fa fa-user-times" aria-hidden="true"></i> Borrar',[
-						'class'=>'btn btn-xs btn-danger',
-						'data-toggle'=>'modal',
-						'data-target'=>'#pregModal'.$tipoestado->TIES_ID ])
-						}}
-
-				<!-- Mensaje Modal. Bloquea la pantalla mientras se procesa la solicitud -->
-				<div class="modal fade" id="pregModal{{ $tipoestado->TIES_ID }}" role="dialog" tabindex="-1" >
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h4 class="modal-title">¿Borrar?</h4>
-							</div>
-							<div class="modal-body">
-								<p>
-									<i class="fa fa-exclamation-triangle"></i> ¿Desea borrar el Tipo de Estado {{ $tipoestado -> TIES_DESCRIPCION }}?
-								</p>
-							</div>
-							<div class="modal-footer">
-										{{ Form::open(array('url' => 'tipoestados/'.$tipoestado->TIES_ID, 'class' => 'pull-right')) }}
-									{{ Form::hidden('_method', 'DELETE') }}
-					
-										{{ Form::button(' NO ', ['class'=>'btn btn-xs btn-success', 'type'=>'button','data-dismiss'=>'modal']) }}
-										{{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> SI',[
-											'class'=>'btn btn-xs btn-danger',
-											'type'=>'submit',
+				<!-- Botón Borrar (destroy) -->			
+				<!-- Mensaje Modal. Bloquea la pantalla mientras se procesa la solicitud -->				
+									
+										{{ Form::button('<i class="fa fa-user-times" aria-hidden="true"></i> Borrar',[
+										'class'=>'btn btn-xs btn-danger',
+										'data-toggle'=>'modal',
+										'data-id'=>$tipoestado->TIES_ID,
+											'data-modelo'=>'tipoestado',
+											'data-descripcion'=>$tipoestado -> TIES_DESCRIPCION,
+											'data-action'=>'tipoestados/'.$tipoestado->TIES_ID,
+											'data-target'=>'#pregModalDelete',
 										]) }}
-									{{ Form::close() }}
-							</div>
-				  		</div>
-					</div>
-				</div><!-- Fin Botón Borrar (destroy) -->
+					<!-- Fin Botón Borrar (destroy) -->
 
-			
+							
 				
 			</td>
 		</tr>
@@ -88,5 +63,5 @@
 	</tbody>
 </table>
 
-
+@include('partials/modalDelete') <!-- incluye el modal del Delete -->
 @endsection
