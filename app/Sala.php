@@ -81,9 +81,17 @@ class Sala extends Model
      * @param  null
      * @return integer
      */
-    public function equiposDisp()
+    public function equiposDisp($idsala)
     {
-    	return false;
+
+    	  $estados = \DB::table('EQUIPOS')
+                            ->select('ESTADOS.*')
+                            ->where('EQUIPOS.SALA_ID','=',$idsala)
+                            ->where('EQUIPOS.ESTA_ID','=',3) //Estado 3 Disponibles
+                            ->where('EQUIPOS.EQUI_FECHAELIMINADO','=',null)
+                            ->count();
+             //dd("mensaje: " . $idsala);              
+    	return $estados;
 	}
 
 

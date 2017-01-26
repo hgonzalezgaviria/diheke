@@ -114,8 +114,9 @@
     
 <div class="col-md-4 zoom-in-hover">
 	<div class="panel panel-default">
-		<div class="panel-heading">
+		<div class="panel-heading"><center><b>Equipo {{$equipo->EQUI_ID}} </b></center></div>
 	 		<div class="panel-body">
+
 		<center>
 			<IMG SRC='{{ asset('assets/img/monitor.png') }}' WIDTH=60 HEIGHT=60>
 		</center>
@@ -143,7 +144,7 @@
 			<div class="alert alert-info" id="switch{{$i}}">{{ $equipo -> estado -> ESTA_DESCRIPCION }}</div>
 
 		  </div>
-	  </div>
+	  
   </div>
 </div>
 		@endforeach

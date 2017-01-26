@@ -33,7 +33,7 @@
 						<div class="panel-body">
 							{{$sala->SALA_DESCRIPCION}}<br>
 							Cantidad de equipos: {{$sala->SALA_CAPACIDAD}}<br>
-							Equipos disponibles: {{$sala->equiposDisp()}}<br>
+							Equipos disponibles: {{$sala->equiposDisp($sala->SALA_ID)}}<br>
 							{{ Form::open( ['url' => 'reservas/show', 'method' => 'get', 'class'=>'form-vertical' ]  ) }}
 
 								{{ Form::hidden('sala', $sala->SALA_ID) }}
