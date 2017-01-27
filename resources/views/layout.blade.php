@@ -29,6 +29,7 @@
 		{!! Html::style('assets/css/bootstrap-toggle.min.css') !!}
 
 		{!! Html::style('assets/css/bootstrap-datetimepicker.min.css') !!}
+		{!! Html::style('assets/css/bootstrap-colorpicker.min.css') !!}
 		<style>
 			.page-header{
 				margin-top:10px;
@@ -83,6 +84,8 @@
 		{!! Html::script('assets/js/datatable/dataTables.rowReorder.min.js') !!}
 		{!! Html::script('assets/js/datatable/responsive.bootstrap.min.js') !!}
 		{!! Html::script('assets/js/bootstrap-toggle.min.js') !!}
+		{!! Html::script('assets/js/bootstrap-colorpicker.js') !!}
+		
 		@yield('scripts')
 	</body>
 </html>

@@ -7,7 +7,7 @@
 
     $('#fechainicio').datetimepicker({
           locale: 'es',
-          format: 'YYYY-MM-DD HH:mm:ss',
+          format: 'YYYY-MM-DD HH:mm',
           //format: 'DD/MM/YYYY hh:mm A',
           stepping: 30,
           useCurrent: false,  //Important! See issue #1075. Requerido para minDate
@@ -43,7 +43,7 @@
 
     $('#fechafin').datetimepicker({
           locale: 'es',
-          format: 'YYYY-MM-DD HH:mm:ss',
+          format: 'YYYY-MM-DD HH:mm',
           //format: 'DD/MM/YYYY hh:mm A',
           stepping: 30,
           useCurrent: false,  //Important! See issue #1075. Requerido para minDate
@@ -94,15 +94,39 @@
       }
     };
 
-    $('#probando').click(function() {
+
+    $('#color').colorpicker({
+            color: '#AA3399',
+            format: 'rgb'
+    });
+   
+
+    $('#reservar').click(function() {
+
 
 
         var titulo = 'R.S';
         var todoeldia = false;
         var fondo = 'rgb(51, 122, 183)';
-        var fechaini = $('#fechainicio').data("DateTimePicker").date();
-        var fechafin = $('#fechafin').data("DateTimePicker").date();
 
+        //alert( $('#color').val());
+        var color = $('#color').val();
+
+        
+        if(color != null){
+          fondo = color;
+          //console.log('no es nulo '+color)
+        }
+        
+
+        var fechaini = $('#fechainicio').data("DateTimePicker").date();
+        //var fechafin = $('#fechafin').data("DateTimePicker").date();
+
+        var nhoras = $('#nhoras').val();
+
+        //se le adiciona el numero de horas
+
+        var fechafin = moment(fechaini).add(nhoras, 'hours');
 
         //var fechainicio = moment(fechaini, 'YYYY-DD-MM HH:mm:ss').format('YYYY-DD-MM HH:mm:ss');
         var fechainicio = moment(fechaini, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
@@ -113,15 +137,60 @@
         var sala = getUrlParameter('sala');
         var equipo = getUrlParameter('equipo');
 
+
         
         if(equipo != 0){
           titulo = 'R.E';
           alert(titulo + " " + sala);
         }
 
-       
+        var reserva = new Object();
+        //event.start = fechainicio;
+        //event.end = fechafinal;var fechaini = $('#fechainicio').data("DateTimePicker").date();
+        var finicio = $('#fechainicio').data("DateTimePicker").date();
+        finicio = moment(finicio, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+
+        /*
+        var ffinal = $('#fechafin').data("DateTimePicker").date();
+        ffinal = moment(finicio, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+
+
+        var array = $('#calendar').fullCalendar('clientEvents');
+          for(i in array){
+
+              var fechai = new Date();
+              fechai = moment(array[i].start, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+              fechaf = moment(array[i].end, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+              //console.log(fechai + ' - ' + finicio);
+
+              if(finicio == fechai){
+                finicio = moment(finicio).add(1, 'minutes');
+              }
+
+              console.log('finicio con minutos '+finicio);
+
+              if((finicio>fechai  && finicio<fechaf) && (ffinal>fechai && ffinal<fechaf)){
+                console.log('Fec. Reservada inicial: '+ fechai + ' es mayor o igual a la fecha de reserva inicial ' + finicio
+                  + '\n' + 'Fec. Reservada final: '+ fechaf + ' es menor o igual a la fecha de reserva final '+
+                  ffinal);
+              }
+
+              reserva.start = array[i].start;
+              reserva.end   = array[i].end;
+
+              //console.log('Inicio Arreglo: '+ reserva.start + ' Inicio Datetime: '+ finicio);
+              //console.log('Inicio Arreglo: '+ reserva.start);
+          }
+        */    
         
         crsfToken = document.getElementsByName("_token")[0].value;
+        console.log(titulo + '\n'+
+          fechainicio + '\n' +
+          todoeldia + '\n' +
+          fondo + '\n' +
+          fechafinal + '\n' +
+          sala + '\n' +
+          equipo + '\n');
 
         $.ajax({
              url: 'guardaEventos',
@@ -172,7 +241,6 @@
     }
 
     ini_events($('#external-events div.external-event'));
-
     /* initialize the calendar
      -----------------------------------------------------------------*/
     //Date for the calendar events (dummy data)
@@ -362,8 +430,8 @@
 
                 <br>
 
-                <div class='input-group date' id='fechafin'>
-                    <input type='text' class="form-control" />
+                <div class='input-group date' >
+                    <input type='number' class="form-control" id="nhoras" placeholder="No. de horas" />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -371,7 +439,25 @@
 
                 <br>
 
-                <button id="probando" type="button" class="btn btn-primary btn-flat">Crear Reserva</button>
+                <!--
+                <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
+                 <ul class="list-inline" id="color-chooser">
+                   <li><a class="text-success" href="#"><i class="fa fa-circle fa-3x"></i></a></li>
+                   <li><a class="text-primary" href="#"><i class="fa fa-circle fa-3x"></i></a></li>
+                   <li><a class="text-danger" href="#"><i class="fa fa-circle fa-3x"></i></a></li>
+                 </ul>
+               </div>
+               -->
+              <div id="cp3" class="input-group colorpicker-component">
+                  <input type="text" value="#00AABB" class="form-control" id="color" readonly="true" />
+                  <span class="input-group-addon"><i></i></span>
+              </div>
+
+                <br>
+
+                <button id="reservar" type="button" class="btn btn-primary btn-flat">Crear Reserva</button>
+
+                
 
               {!! Form::open(['route' => ['guardaEventos'], 'method' => 'POST', 'id' =>'form-calendario']) !!}
               {!! Form::close() !!}
