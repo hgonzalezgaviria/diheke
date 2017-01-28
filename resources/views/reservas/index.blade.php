@@ -96,8 +96,9 @@
 
 
     $('#color').colorpicker({
-            color: '#AA3399',
-            format: 'rgb'
+            //color: '#AA3399',
+            format: 'rgb',
+            input: 'color'
     });
    
 
@@ -144,35 +145,52 @@
           alert(titulo + " " + sala);
         }
 
+
         var reserva = new Object();
-        //event.start = fechainicio;
-        //event.end = fechafinal;var fechaini = $('#fechainicio').data("DateTimePicker").date();
         var finicio = $('#fechainicio').data("DateTimePicker").date();
         finicio = moment(finicio, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+        
+        //variable para almacenar el valor de la fecha de inicio formateada a YYYY-MM-DD de la
+        //reserva que se pretende realizar
+        var finiciovalida = $('#fechainicio').data("DateTimePicker").date();
+        finiciovalida = moment(finiciovalida, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
 
-        /*
-        var ffinal = $('#fechafin').data("DateTimePicker").date();
-        ffinal = moment(finicio, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-
-
+        //trae todos los eventos del fullcalendar 
         var array = $('#calendar').fullCalendar('clientEvents');
+
           for(i in array){
 
+              //objeto tipo date para almacenar el valor de la fecha inicial de la reserva que esta en bd
               var fechai = new Date();
               fechai = moment(array[i].start, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-              fechaf = moment(array[i].end, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-              //console.log(fechai + ' - ' + finicio);
 
-              if(finicio == fechai){
-                finicio = moment(finicio).add(1, 'minutes');
-              }
+              //objeto tipo date para almacenar el valor de la fecha final de la reserva que esta en bd
+              var ffinal = new Date();
+              ffinal = moment(array[i].end, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
 
-              console.log('finicio con minutos '+finicio);
+              //objeto tipo date para almacenar el valor de la fecha inicial de la reserva que se pretende
+              //realizar
+              var finicioreserva = new Date();
+              finicioreserva = moment(array[i].start, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
 
-              if((finicio>fechai  && finicio<fechaf) && (ffinal>fechai && ffinal<fechaf)){
-                console.log('Fec. Reservada inicial: '+ fechai + ' es mayor o igual a la fecha de reserva inicial ' + finicio
-                  + '\n' + 'Fec. Reservada final: '+ fechaf + ' es menor o igual a la fecha de reserva final '+
-                  ffinal);
+              //objeto tipo date para almacenar el valor de la fecha final de la reserva que se pretende
+              //realizar
+              var ffinalreserva = new Date();
+              ffinalreserva = moment(fechafin, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+
+              //si la fecha de inicio de base de datos (formato YYYY-MM-DD) es igual a la fecha de inicio
+              //de reserva que se pretende realizar, se validan las demas condiciones
+              if(finiciovalida == finicioreserva){
+                //alert(fechafin);
+                
+                if(finicio>=fechai && finicio<=ffinal){
+                  alert('se quedo en la primera mijo');
+                  
+                }else if(ffinalreserva>=fechai && ffinalreserva<=ffinal){
+                    alert('paso la primera pero se quedo en la segunda mijo');
+                }
+
+
               }
 
               reserva.start = array[i].start;
@@ -181,8 +199,8 @@
               //console.log('Inicio Arreglo: '+ reserva.start + ' Inicio Datetime: '+ finicio);
               //console.log('Inicio Arreglo: '+ reserva.start);
           }
-        */    
-        
+          
+       /*
         crsfToken = document.getElementsByName("_token")[0].value;
         console.log(titulo + '\n'+
           fechainicio + '\n' +
@@ -208,6 +226,7 @@
                 console.log("Error al crear evento");
               }        
         });
+        */
         
  
         
@@ -449,7 +468,7 @@
                </div>
                -->
               <div id="cp3" class="input-group colorpicker-component">
-                  <input type="text" value="#00AABB" class="form-control" id="color" readonly="true" />
+                  <input type="text" class="form-control" id="color" readonly="true" />
                   <span class="input-group-addon"><i></i></span>
               </div>
 
