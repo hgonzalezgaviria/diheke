@@ -40,8 +40,8 @@ class PasswordController extends Controller
     }
 
     public function sendEmail($USER_ID){
-                dump($USER_id);
-        $user = \reservas\User::findOrFail($USER_id);
+                dump($USER_ID);
+        $user = \reservas\User::findOrFail($USER_ID);
 
 
         $this->sendResetLinkEmail($user);
@@ -69,8 +69,8 @@ class PasswordController extends Controller
         //Si está autenticado y no llegó un token...
         if ( auth()->check() && is_null($token) ){
             //Si el rol es admin y el id recibido por GET no es null...
-            if( auth()->user()->rol->ROLE_rol == 'admin' && Input::get('USER_id') !== null)
-                $user = \reservas\User::findOrFail(Input::get('USER_id'));
+            if( auth()->user()->rol->ROLE_rol == 'admin' && Input::get('USER_ID') !== null)
+                $user = \reservas\User::findOrFail(Input::get('USER_ID'));
             else
                 $user = auth()->user();
 

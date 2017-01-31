@@ -13,7 +13,7 @@
 
     <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
       <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
-      Se solicitó cambiar contraseña del usuario <strong style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">{{$user->username}}</strong> en {{Html::link(URL::to('/'),'Encuestas Uniajc',['target'=>'_blank'])}}.
+      Se solicitó cambiar contraseña del usuario <strong style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">{{$user->username}}</strong> en {{Html::link(URL::to('/'),'Reservas Uniajc',['target'=>'_blank'])}}.
       </td>
     </tr>
 
@@ -35,7 +35,7 @@
       <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
         <div class="footer">
           <div class="text-right" style="color: #606060;padding-right:20px;">
-            <small>Powered by <i>Shinseiki86</i></small>
+            <small>Powered by <i>diheke</i></small>
           </div>
         </div>
       </td>
