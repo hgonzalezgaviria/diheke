@@ -98,7 +98,7 @@ class AuthController extends Controller
 		return Validator::make($data, [
 			'name' => 'required|max:255',
 			'username' => 'required|max:15|unique:USERS',
-			'email' => 'required|email|max:255',
+			'email' => 'required|email|max:255|unique:USERS',
 			'password' => 'required|min:6|confirmed',
 			'ROLE_ID' => 'required',
 		]);
@@ -237,6 +237,8 @@ class AuthController extends Controller
      */
     public function update($USER_ID)
     {
+
+
         //Validación de datos
         $this->validate(request(), [
 			'name' => 'required|max:255',

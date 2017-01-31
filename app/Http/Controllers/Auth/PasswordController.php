@@ -69,7 +69,7 @@ class PasswordController extends Controller
         //Si está autenticado y no llegó un token...
         if ( auth()->check() && is_null($token) ){
             //Si el rol es admin y el id recibido por GET no es null...
-            if( auth()->user()->rol->ROLE_rol == 'admin' && Input::get('USER_ID') !== null)
+            if( auth()->user()->rol->ROLE_ROL == 'admin' && Input::get('USER_ID') !== null)
                 $user = \reservas\User::findOrFail(Input::get('USER_ID'));
             else
                 $user = auth()->user();
