@@ -179,9 +179,12 @@
               ffinalreserva = moment(fechafin, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
 
               //si la fecha de inicio de base de datos (formato YYYY-MM-DD) es igual a la fecha de inicio
-              //de reserva que se pretende realizar, se validan las demas condiciones
+              //de reserva que se pretende realizar, se validan las demas condiciones. Es decir que no va
+              //revisar todas las reservas sino unicamente las reservas del día en que se pretende realizar
+              //la nueva reserva
               if(finiciovalida == finicioreserva){
                 //alert(fechafin);
+                
                 
                 if(finicio>=fechai && finicio<=ffinal){
                   alert('se quedo en la primera mijo');

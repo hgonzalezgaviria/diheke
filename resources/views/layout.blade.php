@@ -29,7 +29,17 @@
 		{!! Html::style('assets/css/bootstrap-toggle.min.css') !!}
 
 		{!! Html::style('assets/css/bootstrap-datetimepicker.min.css') !!}
+<<<<<<< HEAD
 		{!! Html::style('assets/css/bootstrap-colorpicker.min.css') !!}
+=======
+
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	    <!--[if lt IE 9]>
+			{!! Html::script('assets/js/IE9/html5shiv.min.js') !!}
+			{!! Html::script('assets/js/IE9/respond.min.js') !!}
+	    <![endif]-->
+	    
+>>>>>>> c39daea23cd7abd254975badde807f8939d8f67c
 		<style>
 			.page-header{
 				margin-top:10px;
