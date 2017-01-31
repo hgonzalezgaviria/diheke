@@ -12,6 +12,7 @@ class TablePoliticasSeeder extends Seeder
      Public function run() {
 
            $politica = new \reservas\Politica;
+           $politica->POLI_DESCRIPCION = 'SALAS SISTEMAS';
            $politica->POLI_HORA_MIN = '10:00:00';
            $politica->POLI_HORA_MAX = '12:00:00';
            $politica->POLI_HORAS_MIN_RESERVA = 1;

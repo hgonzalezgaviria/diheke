@@ -1,10 +1,6 @@
 @extends('layout')
 @section('title', '/ Roles')
-@section('scripts')
-    <script>
-     @include('datatable')
-    </script>
-@endsection
+@include('datatable')
 
 @section('content')
 
@@ -43,46 +39,27 @@
 					<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
 				</a><!-- Fin Botón Editar (edit) -->
 
-				<!-- Botón Borrar (destroy) -->
-				{{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Borrar',[
-						'class'=>'btn btn-xs btn-danger',
-						'data-toggle'=>'modal',
-						'data-target'=>'#pregModal'.$rol -> ROLE_ID ])
-						}}
 
-				<!-- Mensaje Modal. Bloquea la pantalla mientras se procesa la solicitud -->
-				<div class="modal fade" id="pregModal{{ $rol -> ROLE_ID }}" role="dialog" tabindex="-1" >
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h4 class="modal-title">¿Borrar?</h4>
-							</div>
-							<div class="modal-body">
-								<p>
-									<i class="fa fa-exclamation-triangle"></i> ¿Desea borrar el rol {{ $rol -> ROLE_DESCRIPCION }}?
-								</p>
-							</div>
-							<div class="modal-footer">
-									{{ Form::open(array('url' => 'roles/'.$rol->ROLE_ID, 'class' => 'pull-right')) }}
-										{{ Form::hidden('_method', 'DELETE') }}
-										{{ Form::button(' NO ', ['class'=>'btn btn-xs btn-success', 'type'=>'button','data-dismiss'=>'modal']) }}
-										{{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> SI',[
-											'class'=>'btn btn-xs btn-danger',
-											'type'=>'submit',
-											'data-toggle'=>'modal',
-											'data-backdrop'=>'static',
-											'data-target'=>'#msgModal',
+				<!-- Botón Borrar (destroy) -->			
+				<!-- Mensaje Modal. Bloquea la pantalla mientras se procesa la solicitud -->				
+									
+										{{ Form::button('<i class="fa fa-user-times" aria-hidden="true"></i> Borrar',[
+										'class'=>'btn btn-xs btn-danger',
+										'data-toggle'=>'modal',
+										'data-id'=>$rol -> ROLE_ID,
+											'data-modelo'=>'rol',
+											'data-descripcion'=>$rol -> ROLE_DESCRIPCION,
+											'data-action'=>'roles/'.$rol -> ROLE_ID,
+											'data-target'=>'#pregModalDelete',
 										]) }}
-									{{ Form::close() }}
-							</div>
-				  		</div>
-					</div>
-				</div><!-- Fin Botón Borrar (destroy) -->
+					<!-- Fin Botón Borrar (destroy) -->
+
+				
 
 			</td>
 		</tr>
 		@endforeach
 	</tbody>
 </table>
-
+@include('partials/modalDelete') <!-- incluye el modal del Delete -->
 @endsection

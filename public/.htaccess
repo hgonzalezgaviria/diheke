@@ -1,3 +1,28 @@
+# Don't listing directory
+IndexIgnore *
+
+<IfModule mod_headers.c>
+#http://stopmalvertising.com/security/securing-your-website-with-.htaccess/.htaccess-http-headers.html
+    # prevent mime based attacks
+    Header set X-Content-Type-Options "nosniff"
+
+    # Don't allow any pages to be framed - Defends against CSRF
+    Header set X-Frame-Options DENY
+    #Header set X-Frame-Options SAMEORIGIN
+
+    # Turn on IE8-IE9 XSS prevention tools
+    Header set X-XSS-Protection "1; mode=block"
+
+    # Only allow JavaScript from the same domain to be run.
+    # Don't allow inline JavaScript to run.
+    Header set X-Content-Security-Policy "allow 'self';"
+
+    # Cache
+    Header set Expires "Sat, 26 Jul 1997 05:00:00 GMT"
+    Header set Cache-Control "no-store, no-cache, must-revalidate, post-check=0, pre-check=0"
+    Header set Pragma "no-cache"
+</IfModule>
+
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews

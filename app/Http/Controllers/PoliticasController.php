@@ -70,6 +70,7 @@ class PoliticasController extends Controller
 	{
 		//Validación de datos
 		$this->validate(request(), [
+			'POLI_DESCRIPCION' => ['required', 'max:300'],
 			'POLI_HORA_MIN' => ['required', 'max:8'],
 			'POLI_HORA_MAX' => ['required', 'max:8'],
 			'POLI_HORAS_MIN_RESERVA' => ['required','max:2'],
@@ -134,6 +135,7 @@ class PoliticasController extends Controller
 		//Validación de datos
 		//Validación de datos
 		$this->validate(request(), [
+			'POLI_DESCRIPCION' => ['required', 'max:300'],
 			'POLI_HORA_MIN' => ['required', 'max:8'],
 			'POLI_HORA_MAX' => ['required', 'max:8'],
 			'POLI_HORAS_MIN_RESERVA' => ['required','max:2'],

@@ -21,6 +21,7 @@ class Politica extends Model
 	
 
 	protected $fillable = [
+		'POLI_DESCRIPCION',
 		'POLI_HORA_MIN',
 		'POLI_HORA_MAX',
 		'POLI_HORAS_MIN_RESERVA',

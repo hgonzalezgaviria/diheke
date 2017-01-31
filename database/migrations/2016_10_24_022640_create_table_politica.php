@@ -15,6 +15,7 @@ class CreateTablePolitica extends Migration
         //
         Schema::create('POLITICAS', function (Blueprint $table) {
          $table->increments('POLI_ID');
+         $table->string('POLI_DESCRIPCION', 300);
          $table->time('POLI_HORA_MIN');
          $table->time('POLI_HORA_MAX');
          $table->integer('POLI_HORAS_MIN_RESERVA');

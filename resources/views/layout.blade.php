@@ -29,6 +29,13 @@
 		{!! Html::style('assets/css/bootstrap-toggle.min.css') !!}
 
 		{!! Html::style('assets/css/bootstrap-datetimepicker.min.css') !!}
+
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	    <!--[if lt IE 9]>
+			{!! Html::script('assets/js/IE9/html5shiv.min.js') !!}
+			{!! Html::script('assets/js/IE9/respond.min.js') !!}
+	    <![endif]-->
+	    
 		<style>
 			.page-header{
 				margin-top:10px;

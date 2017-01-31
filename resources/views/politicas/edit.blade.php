@@ -28,6 +28,11 @@
 
 	{{ Form::model($politica, array('action' => array('PoliticasController@update', $politica->POLI_ID), 'method' => 'PUT', 'class' => 'form-horizontal')) }}
 
+	<div class="form-group">
+			{{ Form::label('POLI_DESCRIPCION', 'Descripción') }} 
+			{{ Form::text('POLI_DESCRIPCION', old('POLI_DESCRIPCION'), array('class' => 'form-control', 'max' => '300', 'required')) }}
+		</div>
+
 	  	<div class="form-group">
 		{{ Form::label('POLI_HORA_MIN', 'Hora Mínima') }}
 		  	<div class='input-group date' id='horaminima'>

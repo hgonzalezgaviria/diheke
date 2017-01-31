@@ -8,6 +8,12 @@
 	<div class="jumbotron text-center">
 		<p>
 			<ul class="list-group">
+				  <li class="list-group-item">
+					<div class="row">
+						<div class="col-lg-4"><strong>Descripción:</strong></div>
+						<div class="col-lg-8">{{ $politica -> POLI_DESCRIPCION }}</div>
+					</div>
+			  </li>
 			  <li class="list-group-item">
 					<div class="row">
 						<div class="col-lg-4"><strong>Hora Mínima:</strong></div>
