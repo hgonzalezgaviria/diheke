@@ -244,6 +244,7 @@ class AuthController extends Controller
 			'name' => 'required|max:255',
 			'email' => 'required|email|max:255',
 			'ROLE_ID' => 'required',
+			'email' => 'required|email|max:255|unique:USERS,email,'.$USER_ID.',USER_ID'
         ]);
 
         // Se obtiene el registro
