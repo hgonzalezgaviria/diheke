@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
 				->comment('Nombre completo del usuario.');
 			$table->string('username')->unique()
 				->comment('Cuenta del usuario, con la cual realizará la autenticación. Valor único en la tabla');
-			$table->string('email')
+			$table->string('email')->unique()
 				->comment('Correo electrónico del usuario.');
 			$table->string('password')
 				->comment('Contraseña del usuario cifrada.');
