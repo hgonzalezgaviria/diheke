@@ -41,9 +41,9 @@
           }
     });
 
-    $('#fechafin').datetimepicker({
+    $('#fechahasta').datetimepicker({
           locale: 'es',
-          format: 'YYYY-MM-DD HH:mm',
+          format: 'YYYY-MM-DD',
           //format: 'DD/MM/YYYY hh:mm A',
           stepping: 30,
           useCurrent: false,  //Important! See issue #1075. Requerido para minDate
@@ -75,6 +75,27 @@
             prevCentury: 'Siglo Anterior',
             nextCentury: 'Siglo Siguiente'
           }  
+    });
+
+    $('#fechahasta').hide();
+    $('.checkbox').hide();
+
+    $("input[name=radio]").click(function(){
+      
+      var sel = $("input[name=radio]:checked").val();
+
+      if(sel == "hasta"){
+        $('#fechahasta').show();
+      }else{
+        $('#fechahasta').hide();
+      }
+
+      if(sel == "semana"){
+        $('.checkbox').show();
+      }else{
+        $('.checkbox').hide();
+      }
+
     });
 
 
@@ -155,8 +176,13 @@
         var finiciovalida = $('#fechainicio').data("DateTimePicker").date();
         finiciovalida = moment(finiciovalida, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
 
+        var fechahasta = $('#fechahasta').data("DateTimePicker").date();
+        fechahasta = moment(fechahasta, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
+
         //trae todos los eventos del fullcalendar 
         var array = $('#calendar').fullCalendar('clientEvents');
+
+        var puedereservar = false;
 
           for(i in array){
 
@@ -185,51 +211,103 @@
               if(finiciovalida == finicioreserva){
                 //alert(fechafin);
                 
-                
+
+                //si esta condicion es verdadera no puede reservar
                 if(finicio>=fechai && finicio<=ffinal){
-                  alert('se quedo en la primera mijo');
+                  
+                  $.msgBox({
+                    title:"Error",
+                    content:"¡Fecha inicial no disponible para la reserva! "+finicio,
+                    type:"error"
+                  });
+
+                  break;
                   
                 }else if(ffinalreserva>=fechai && ffinalreserva<=ffinal){
-                    alert('paso la primera pero se quedo en la segunda mijo');
+                    
+                    $.msgBox({
+                      title:"Error",
+                      content:"¡Fecha final no disponible para la reserva! "+ffinalreserva,
+                      type:"error"
+                    });
+
+                    break;
+
+                }else{
+                  puedereservar = true;
                 }
 
 
+              }else{
+                  puedereservar = true;
               }
 
-              reserva.start = array[i].start;
-              reserva.end   = array[i].end;
-
-              //console.log('Inicio Arreglo: '+ reserva.start + ' Inicio Datetime: '+ finicio);
-              //console.log('Inicio Arreglo: '+ reserva.start);
           }
-          
-       /*
-        crsfToken = document.getElementsByName("_token")[0].value;
-        console.log(titulo + '\n'+
-          fechainicio + '\n' +
-          todoeldia + '\n' +
-          fondo + '\n' +
-          fechafinal + '\n' +
-          sala + '\n' +
-          equipo + '\n');
 
-        $.ajax({
-             url: 'guardaEventos',
-             data: 'title='+ titulo+'&start='+ fechainicio+'&allday='+todoeldia+'&background='+fondo+
-             '&end='+fechafinal+'&sala='+sala+'&equipo='+equipo,
-             type: "POST",
-             headers: {
-                    "X-CSRF-TOKEN": crsfToken
-                },
-              success: function(events) {
-                console.log('Evento creado ');   
-                $('#calendar').fullCalendar('refetchEvents');
-              },
-              error:   function(json){
-                console.log("Error al crear evento");
-              }        
-        });
-        */
+          
+
+        if(puedereservar){
+
+            /*
+            crsfToken = document.getElementsByName("_token")[0].value;
+
+            $.ajax({
+                 url: 'guardaEventos',
+                 data: 'title='+ titulo+'&start='+ fechainicio+'&allday='+todoeldia+'&background='+fondo+
+                 '&end='+fechafinal+'&sala='+sala+'&equipo='+equipo,
+                 type: "POST",
+                 headers: {
+                        "X-CSRF-TOKEN": crsfToken
+                    },
+                  success: function(events) {
+                    
+                     $.msgBox({
+                      title:"Éxito",
+                      content:"¡Su reserva se ha realizado satisfactoriamente!",
+                      type:"success"
+                     });
+
+                    $('#calendar').fullCalendar('refetchEvents');
+                  },
+                  error:   function(json){
+                    console.log("Error al crear evento");
+                  }        
+            });
+            */
+
+             //while(finiciovalida <= fechahasta){
+              var fini = $('#fechainicio').data("DateTimePicker").date();
+              fini = moment(fini, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
+
+
+              var fecha = null;
+              var fecreservaini = moment(fechainicio).add(0, 'days');
+              fecreservaini = moment(fecreservaini,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
+
+              alert(fini + " - " + fechahasta);
+
+
+              while(fini < fechahasta){
+
+                  fini = moment(fini).add(1, 'days');
+
+                  //fecha = moment(fini).add(1, 'days');
+                  fecha = fini;
+                  fecha = moment(fecha,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
+
+                  console.log(fecha + " - " + fechahasta);
+
+                  fini = moment(fini,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
+
+              }
+              
+
+             console.log('****termine****');
+
+        }
+
+        
+        
         
  
         
@@ -476,6 +554,48 @@
               </div>
 
                 <br>
+
+                Tipo de Repetición:
+                <div class="radio">
+                  <label><input type="radio" name="radio" name="semestre" value="semestre">Semestral</label>
+                </div>
+                <div class="radio">
+                  <label><input type="radio" name="radio" name="mensual" value="mensual">Mensual</label>
+                </div>
+                 <div class="radio">
+                  <label><input type="radio" name="radio" name="semana" value="semana">En la Semana</label>
+                </div>
+                <div class="radio disabled">
+                  <label><input type="radio" name="radio" name="hasta" value="hasta">Hasta una Fecha</label>
+                </div>
+
+                <div class='input-group date' id='fechahasta'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+
+                <br>
+
+                <div class="checkbox">
+                  <label><input type="checkbox" value="lu">Lunes</label>
+                </div>
+                <div class="checkbox">
+                  <label><input type="checkbox" value="ma">Martes</label>
+                </div>
+                <div class="checkbox disabled">
+                  <label><input type="checkbox" value="mi">Miercoles</label>
+                </div>
+                <div class="checkbox disabled">
+                  <label><input type="checkbox" value="mi">Jueves</label>
+                </div>
+                <div class="checkbox disabled">
+                  <label><input type="checkbox" value="mi">Viernes</label>
+                </div>
+                <div class="checkbox disabled">
+                  <label><input type="checkbox" value="mi">Sabado</label>
+                </div>
 
                 <button id="reservar" type="button" class="btn btn-primary btn-flat">Crear Reserva</button>
 
