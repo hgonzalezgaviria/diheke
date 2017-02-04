@@ -86,6 +86,7 @@ Route::resource('tiporecursofisico', 'TipoRecursoFisicoController');
 Route::resource('reservas', 'ReservasController');
 Route::get('cargaEventos{id?}','ReservasController@index');
 Route::post('reservas/guardaEventos', array('as' => 'guardaEventos','uses' => 'ReservasController@store'));
+Route::post('reservas/guardarReservas', array('as' => 'guardarReservas','uses' => 'ReservasController@guardarReservas'));
 Route::post('actualizaEventos','ReservasController@update');
 Route::post('eliminaEvento','ReservasController@delete');
 Route::post('consultaSalas', array('as' => 'consultaSalas','uses' => 'EquiposController@consultaSalas'));

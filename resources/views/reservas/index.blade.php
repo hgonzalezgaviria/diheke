@@ -284,10 +284,17 @@
               var fecreservaini = moment(fechainicio).add(0, 'days');
               fecreservaini = moment(fecreservaini,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
 
-              alert(fini + " - " + fechahasta);
-
+              //alert(fini + " - " + fechahasta);
+              var i = 0;
+              var arrreservas = [];
 
               while(fini < fechahasta){
+
+                  fechainicio = moment(fechainicio).add(1, 'days');
+                  fechainicio = moment(fechainicio,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+
+                  fechafinal = moment(fechafinal).add(1, 'days');
+                  fechafinal = moment(fechafinal,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
 
                   fini = moment(fini).add(1, 'days');
 
@@ -295,14 +302,45 @@
                   fecha = fini;
                   fecha = moment(fecha,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
 
-                  console.log(fecha + " - " + fechahasta);
+                  console.log(fecha + " - " + fechahasta + " - " + fechainicio + " - " + fechafinal);
 
                   fini = moment(fini,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
 
+                  arrreservas[i] = [titulo, fechainicio, todoeldia, fondo, fechafinal, sala, equipo];
+                  i++;
               }
-              
 
+ 
+             arrreservas = JSON.stringify(arrreservas);
              console.log('****termine****');
+
+             //arrreservas = JSON.stringify(arrreservas);
+
+
+             crsfToken = document.getElementsByName("_token")[0].value;
+
+             var request;
+
+            request = $.ajax({
+                 url: 'guardarReservas',
+                 data: {reservas : arrreservas},
+                 dataType: 'json',
+                 type: "POST",
+                 headers: {
+                        "X-CSRF-TOKEN": crsfToken
+                    },
+                  success: function(events) {
+                    
+                    console.log('succes****');
+                    $('#calendar').fullCalendar('refetchEvents');
+                  },
+                  error:   function(json){
+                    console.log("Error al crear evento");
+                  }        
+            });
+
+
+             
 
         }
 

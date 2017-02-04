@@ -8,6 +8,7 @@ use reservas\Http\Requests;
 use reservas\Reserva;
 
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Redirector;
@@ -137,6 +138,14 @@ class ReservasController extends Controller
         // redirecciona al index de controlador
         Session::flash('message', 'Reserva creado exitosamente!');
         return redirect()->to('reservas');
+    }
+
+    public function guardarReservas(Request $request)
+    {
+      $reservas = Input::all();
+      $correcto = "correcto";
+      return $reservas;
+      //return Response::json($correcto);
     }
 
     protected function getEquipoDisp($SALA_ID, $start, $end){
