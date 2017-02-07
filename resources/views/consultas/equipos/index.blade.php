@@ -41,9 +41,9 @@
 						if((equipo[i].EQUI_ID == arraid[i]) && equipo[i].ESTA_ID == 3){
 							//console.log('si señor '+equipo[i].EQUI_ID+' == '+arraid[i]);
 							$('#'+arraid[i]).bootstrapToggle('on');
-							$('#'+arraid[i]).bootstrapToggle('disable');
+						//	$('#'+arraid[i]).bootstrapToggle('disable');
 						}else {
-							$('#'+arraid[i]).bootstrapToggle('disable');
+						//	$('#'+arraid[i]).bootstrapToggle('disable');
 						}
 					//console.log(equipo[i].ESTA_ID);
 
@@ -68,6 +68,44 @@
 		     var equipo = $(this).closest(".switch-input").attr("id");
 			   // also tried $(this).parent(".head-div") -- same effect
 			  alert('id seleccionado ' + abc); // Shows as Undefined
+
+		     
+		      
+
+		    });
+
+		    //Captura onchange al momento de cambiar
+		    $('.filter-toggle').change(function() {
+		    	      //$('#console-event').html('Toggle: ' + $(this).prop('checked'))
+		      //alert('checkbox en estado: '+ $(this).prop('checked'));
+
+		  
+			    
+			     var checkeado =  $(this).prop('checked');
+			     if(!checkeado){
+			     	$("#modalPrestamoEquipos").modal();
+			     	//ert(checkeado);  
+
+			     }
+
+			      
+			    //console.log('equipo '+equipo);
+
+		
+		     
+
+		      //if
+		      //if($(".filter-toggle").is(':checked')) {  
+            //alert(checkeado);  
+     //   } else {  
+
+        	//}
+
+		      
+		       //$("#myModal").modal();
+		     //var equipo = $(this).closest(".filter-toggle").attr("id");
+			   // also tried $(this).parent(".head-div") -- same effect
+			  //alert('id seleccionado ' + equipo); // Shows as Undefined
 
 		     
 		      
@@ -152,4 +190,6 @@
 </table>
 
 {{ Form::close() }}
+
+@include('consultas/equipos/index-modalPrestamo')
 @endsection

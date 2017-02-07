@@ -94,3 +94,6 @@ Route::post('consultarEquipos', array('as'=>'consultarEquipos','uses' => 'Equipo
 
 //recursos
 Route::resource('recursos', 'RecursosController');
+
+//Salas para equipos
+Route::get('salas/{SALA_ID}/reservarSalaEquipos', 'SalasController@reservarSalaEquipos')->name('reservasSalaEquipos');

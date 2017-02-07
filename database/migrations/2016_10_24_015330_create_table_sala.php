@@ -21,8 +21,10 @@ class CreateTableSala extends Migration
             $table->string('SALA_FOTOSALA', 500);
             $table->string('SALA_FOTOCROQUIS', 500);
             $table->string('SALA_OBSERVACIONES', 300);
+            $table->integer('SALA_PRESTAMO'); 
             $table->integer('ESTA_ID')->unsigned();
             $table->integer('SEDE_ID')->unsigned(); 
+            
 
 
              //Traza

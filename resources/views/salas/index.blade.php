@@ -44,6 +44,16 @@
 				</a><!-- Fin Botón Editar (edit) -->
 
 
+	{{ Form::button('<i class="fa fa-files-o" aria-hidden="true"></i> <span class="hidden-xs">Reservar</span>',[
+								'class'=>'btn btn-xs btn-warning',
+								'data-toggle'=>'modal',
+								'data-sala_id'=>$sala -> SALA_ID,
+								'data-action'=>'salas/' + $sala -> SALA_ID + '/reservarSalaEquipos',
+								'data-target'=>'#pregModalReservar',
+							])
+						}}
+
+
 				<!-- Botón Borrar (destroy) -->			
 				<!-- Mensaje Modal. Bloquea la pantalla mientras se procesa la solicitud -->				
 									
@@ -65,7 +75,6 @@
 	</tbody>
 </table>
 
-
-
+@include('salas/index-modalReservar')
 @include('partials/modalDelete')
 @endsection

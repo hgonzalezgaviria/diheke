@@ -289,6 +289,22 @@ class SalasController extends Controller
 			Session::flash('message', 'Sala '.$sala->SALA_ID.' eliminada exitosamente!');
 			return redirect()->to('salas');
 		}
+	}	
+
+	public function reservarSalaEquipos($SALA_ID, $showMsg=True)
+	{
+		$sala = Sala::findOrFail($SALA_ID);
+
+		if($sala) {
+    		$sala->SALA_PRESTAMO = 1;
+    		$sala->save();
+			}
+
+				// redirecciona al index de controlador
+		if($showMsg){
+			Session::flash('message', 'Sala '.$sala->SALA_ID.' Actualiza exitosamente!');
+			return redirect()->to('salas');
+		}
 	}
 
 

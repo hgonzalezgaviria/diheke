@@ -20,6 +20,7 @@ class TableSalasSeeder extends Seeder
         $sala->SALA_FOTOSALA = 'default.jpg';
         $sala->SALA_FOTOCROQUIS = 'default.jpg';
         $sala->SALA_OBSERVACIONES = 'SALA DISPONIBLE';
+        $sala->SALA_PRESTAMO = 0;
         $sala->ESTA_ID = 1;
         $sala->SEDE_ID = 1;
         $sala->SALA_CREADOPOR =  'USER_PRUEBA';
@@ -34,8 +35,9 @@ class TableSalasSeeder extends Seeder
         $sala->SALA_FOTOSALA = 'default.jpg';
         $sala->SALA_FOTOCROQUIS = 'default.jpg';
         $sala->SALA_OBSERVACIONES = 'SALA DISPONIBLE';
+        $sala->SALA_PRESTAMO = 0;
         $sala->ESTA_ID = 1;
-        $sala->SEDE_ID = 2;
+        $sala->SEDE_ID = 2;        
         $sala->SALA_CREADOPOR =  'USER_PRUEBA';
         $sala->save();
       }
