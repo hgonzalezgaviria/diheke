@@ -311,7 +311,7 @@
               }
 
  
-             arrreservas = JSON.stringify(arrreservas);
+             //arrreservas = JSON.stringify(arrreservas);
              console.log('****termine****');
 
              //arrreservas = JSON.stringify(arrreservas);
@@ -324,7 +324,7 @@
             request = $.ajax({
                  url: 'guardarReservas',
                  data: {reservas : arrreservas},
-                 dataType: 'json',
+                 //dataType: 'json',
                  type: "POST",
                  headers: {
                         "X-CSRF-TOKEN": crsfToken

@@ -143,8 +143,45 @@ class ReservasController extends Controller
     public function guardarReservas(Request $request)
     {
       $reservas = Input::all();
+
+      /*
+      for ($i=0; $i < $hasta; $i++) { 
+          for ($j=0; $j < 7; $j++) { 
+              
+          }
+      }
+      */
+      foreach ($reservas as $res) {
+          
+        foreach ($res as $k) {
+         
+        
+        //Insertando evento a base de datos
+        $reserva = new Reserva;
+        
+        $reserva->RESE_TITULO = $k[0];
+        $reserva->RESE_FECHAINI = $k[1];
+        $reserva->RESE_TODOELDIA = $k[2];
+        $reserva->RESE_COLOR = $k[3];
+        $reserva->RESE_FECHAFIN = $k[4];
+        $reserva->SALA_ID = $k[5];
+        $reserva->EQUI_ID = NULL;
+        $reserva->RESE_CREADOPOR = auth()->user()->username;
+        
+        
+        $reserva->save();
+        
+        }
+
+        
+
+        
+
+
+      }
+
       $correcto = "correcto";
-      return $reservas;
+      return $reserva;
       //return Response::json($correcto);
     }
 
