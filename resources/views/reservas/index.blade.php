@@ -80,6 +80,7 @@
     $('#fechahasta').hide();
     $('.checkbox').hide();
 
+    var sel = null;
     $("input[name=radio]").click(function(){
       
       var sel = $("input[name=radio]:checked").val();
@@ -221,6 +222,7 @@
                     type:"error"
                   });
 
+                  puedereservar = false;
                   break;
                   
                 }else if(ffinalreserva>=fechai && ffinalreserva<=ffinal){
@@ -231,6 +233,7 @@
                       type:"error"
                     });
 
+                    puedereservar = false;
                     break;
 
                 }else{
@@ -248,96 +251,93 @@
 
         if(puedereservar){
 
-            /*
-            crsfToken = document.getElementsByName("_token")[0].value;
+            
+                crsfToken = document.getElementsByName("_token")[0].value;
 
-            $.ajax({
-                 url: 'guardaEventos',
-                 data: 'title='+ titulo+'&start='+ fechainicio+'&allday='+todoeldia+'&background='+fondo+
-                 '&end='+fechafinal+'&sala='+sala+'&equipo='+equipo,
-                 type: "POST",
-                 headers: {
-                        "X-CSRF-TOKEN": crsfToken
-                    },
-                  success: function(events) {
-                    
-                     $.msgBox({
-                      title:"Éxito",
-                      content:"¡Su reserva se ha realizado satisfactoriamente!",
-                      type:"success"
-                     });
+                $.ajax({
+                     url: 'guardaEventos',
+                     data: 'title='+ titulo+'&start='+ fechainicio+'&allday='+todoeldia+'&background='+fondo+
+                     '&end='+fechafinal+'&sala='+sala+'&equipo='+equipo,
+                     type: "POST",
+                     headers: {
+                            "X-CSRF-TOKEN": crsfToken
+                        },
+                      success: function(events) {
+                        
+                         $.msgBox({
+                          title:"Éxito",
+                          content:"¡Su reserva se ha realizado satisfactoriamente!",
+                          type:"success"
+                         });
 
-                    $('#calendar').fullCalendar('refetchEvents');
-                  },
-                  error:   function(json){
-                    console.log("Error al crear evento");
-                  }        
-            });
-            */
+                        $('#calendar').fullCalendar('refetchEvents');
+                      },
+                      error:   function(json){
+                        console.log("Error al crear evento");
+                      }        
+                });
+            
 
-             //while(finiciovalida <= fechahasta){
-              var fini = $('#fechainicio').data("DateTimePicker").date();
-              fini = moment(fini, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
+                if( (fechahasta!=null && fechahasta!="") && (sel!=null && sel=="hasta")){
 
-
-              var fecha = null;
-              var fecreservaini = moment(fechainicio).add(0, 'days');
-              fecreservaini = moment(fecreservaini,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
-
-              //alert(fini + " - " + fechahasta);
-              var i = 0;
-              var arrreservas = [];
-
-              while(fini < fechahasta){
-
-                  fechainicio = moment(fechainicio).add(1, 'days');
-                  fechainicio = moment(fechainicio,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-
-                  fechafinal = moment(fechafinal).add(1, 'days');
-                  fechafinal = moment(fechafinal,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-
-                  fini = moment(fini).add(1, 'days');
-
-                  //fecha = moment(fini).add(1, 'days');
-                  fecha = fini;
-                  fecha = moment(fecha,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
-
-                  console.log(fecha + " - " + fechahasta + " - " + fechainicio + " - " + fechafinal);
-
-                  fini = moment(fini,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
-
-                  arrreservas[i] = [titulo, fechainicio, todoeldia, fondo, fechafinal, sala, equipo];
-                  i++;
-              }
-
- 
-             //arrreservas = JSON.stringify(arrreservas);
-             console.log('****termine****');
-
-             //arrreservas = JSON.stringify(arrreservas);
+              
+                    var fini = $('#fechainicio').data("DateTimePicker").date();
+                    fini = moment(fini, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
 
 
-             crsfToken = document.getElementsByName("_token")[0].value;
+                    var fecha = null;
+                    var fecreservaini = moment(fechainicio).add(0, 'days');
+                    fecreservaini = moment(fecreservaini,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
 
-             var request;
+                    //alert(fini + " - " + fechahasta);
+                    var i = 0;
+                    var arrreservas = [];
 
-            request = $.ajax({
-                 url: 'guardarReservas',
-                 data: {reservas : arrreservas},
-                 //dataType: 'json',
-                 type: "POST",
-                 headers: {
-                        "X-CSRF-TOKEN": crsfToken
-                    },
-                  success: function(events) {
-                    
-                    console.log('succes****');
-                    $('#calendar').fullCalendar('refetchEvents');
-                  },
-                  error:   function(json){
-                    console.log("Error al crear evento");
-                  }        
-            });
+                    while(fini < fechahasta){
+
+                        fechainicio = moment(fechainicio).add(1, 'days');
+                        fechainicio = moment(fechainicio,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+
+                        fechafinal = moment(fechafinal).add(1, 'days');
+                        fechafinal = moment(fechafinal,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+
+                        fini = moment(fini).add(1, 'days');
+
+                        //fecha = moment(fini).add(1, 'days');
+                        fecha = fini;
+                        fecha = moment(fecha,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
+
+                        //console.log(fecha + " - " + fechahasta + " - " + fechainicio + " - " + fechafinal);
+
+                        fini = moment(fini,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
+
+                        arrreservas[i] = [titulo, fechainicio, todoeldia, fondo, fechafinal, sala, equipo];
+                        i++;
+                    }
+
+                    crsfToken = document.getElementsByName("_token")[0].value;
+
+                    var request;
+
+                    request = $.ajax({
+                         url: 'guardarReservas',
+                         data: {reservas : arrreservas},
+                         //dataType: 'json',
+                         type: "POST",
+                         headers: {
+                                "X-CSRF-TOKEN": crsfToken
+                            },
+                          success: function(events) {
+                            
+                            console.log('succes****');
+                            $('#calendar').fullCalendar('refetchEvents');
+                          },
+                          error:   function(json){
+                            console.log("Error al crear evento");
+                          }        
+                    });
+
+                }
 
 
              
