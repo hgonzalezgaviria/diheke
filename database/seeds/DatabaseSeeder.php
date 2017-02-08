@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TableReservasSeeder::class);
         $this->call(TableRecursosSeeder::class);
         $this->call(TablePoliticasSeeder::class);
+        $this->call(TableFestivosSeeder::class);
         
         
     }

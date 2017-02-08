@@ -77,23 +77,37 @@
           }  
     });
 
+    //ocultamos el campo de fecha hasta cuando se cargue el DOM
     $('#fechahasta').hide();
+
+    //ocultamos todos los checkbox cuando se cargue el dom
     $('.checkbox').hide();
 
+
+    //variable "sel" para asignar cual es el Radio Button seleccionado
     var sel = null;
+
+    //agregamos un callback para determinar cual es el Radio Button que se encuentra en estado seleccionado
     $("input[name=radio]").click(function(){
       
-      var sel = $("input[name=radio]:checked").val();
+      //asignamos a la variable "sel" el valor del R.B seleccionado
+      sel = $("input[name=radio]:checked").val();
 
+      //si el R.B es el de reservar hasta una fecha, se muestra el campo de fecha hasta
       if(sel == "hasta"){
+        //con esta linea mostramos el campo de fecha hasta
         $('#fechahasta').show();
       }else{
+        //con esta linea ocultamos el campo de fecha hasta
         $('#fechahasta').hide();
       }
 
+      //si el R.B es el de reservar semanalmente, se muestran todos los checkbox 
       if(sel == "semana"){
+        //con esta linea mostramos todos los checkbox
         $('.checkbox').show();
       }else{
+        //con esta linea ocultamos todos los checkbox
         $('.checkbox').hide();
       }
 
@@ -117,6 +131,7 @@
     };
 
 
+    //configuracion del colorpicker para que tenga el formato RGB
     $('#color').colorpicker({
             //color: '#AA3399',
             format: 'rgb',
