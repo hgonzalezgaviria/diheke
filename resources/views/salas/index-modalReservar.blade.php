@@ -1,6 +1,6 @@
 @section('scripts')
 	<script type="text/javascript">
-		//Carga de datos a mensajes modales para eliminar y clonar registros
+		
 		$(document).ready(function () {
 		$('.modal').on('show.bs.modal', function (event) {
 

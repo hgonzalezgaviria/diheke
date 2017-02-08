@@ -275,7 +275,7 @@ class SalasController extends Controller
 	 * @param  int  $SALA_ID
 	 * @return Response
 	 */
-	public function destroy($SALA_ID, $showMsg=True)
+	public function destroy($SALA_ID, $showMsg=true)
 	{
 		$sala = Sala::findOrFail($SALA_ID);
 
@@ -291,14 +291,16 @@ class SalasController extends Controller
 		}
 	}	
 
-	public function reservarSalaEquipos($SALA_ID, $showMsg=True)
+	public function reservarSalaEquipos($SALA_ID, $showMsg=true)
 	{
 		$sala = Sala::findOrFail($SALA_ID);
 
-		if($sala) {
-    		$sala->SALA_PRESTAMO = 1;
+	$sala->SALA_PRESTAMO =  $sala->SALA_PRESTAMO ? false : true;
+
+		//if($sala) {
+    		//$sala->SALA_PRESTAMO = 1;
     		$sala->save();
-			}
+		//	}
 
 				// redirecciona al index de controlador
 		if($showMsg){

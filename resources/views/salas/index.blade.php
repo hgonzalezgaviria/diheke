@@ -43,15 +43,30 @@
 					<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
 				</a><!-- Fin Botón Editar (edit) -->
 
+	@if($sala->SALA_PRESTAMO)
 
-	{{ Form::button('<i class="fa fa-files-o" aria-hidden="true"></i> <span class="hidden-xs">Reservar</span>',[
-								'class'=>'btn btn-xs btn-warning',
+		{{ Form::button('<i class="fa fa-files-o" aria-hidden="true"></i> <span class="hidden-xs">Liberar</span>',[
+								'class'=>'btn btn-xs btn-default',
 								'data-toggle'=>'modal',
 								'data-sala_id'=>$sala -> SALA_ID,
-								'data-action'=>'salas/' + $sala -> SALA_ID + '/reservarSalaEquipos',
+								'data-action'=>'salas/' . $sala -> SALA_ID . '/reservarSalaEquipos',
 								'data-target'=>'#pregModalReservar',
 							])
 						}}
+		@else
+	{{ Form::button('<i class="fa fa-files-o" aria-hidden="true"></i> <span class="hidden-xs">Ocupar</span>',[
+								'class'=>'btn btn-xs btn-warning',
+								'data-toggle'=>'modal',
+								'data-sala_id'=>$sala -> SALA_ID,
+								'data-action'=>'salas/' . $sala -> SALA_ID . '/reservarSalaEquipos',
+								'data-target'=>'#pregModalReservar',
+							])
+						}}
+
+		@endif
+
+
+
 
 
 				<!-- Botón Borrar (destroy) -->			
