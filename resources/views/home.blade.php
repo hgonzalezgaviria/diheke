@@ -6,6 +6,43 @@
 @endsection
 
 @section('scripts')
+	<script type="text/javascript">
+		$(document).ready(function () {
+
+			//var sedes = {!! $sedes !!};
+			var salas = {!! $salas !!};
+
+			$('.tabs-left a').click(function (e) {
+			  e.preventDefault()
+			  var navTop = $('.nav-top a');
+			  navTop.attr('data-sede', $(this).data('sede'));
+			  //$(this).tab('show')
+			})
+
+			$('#tab-salas').click(function (e) {
+			  e.preventDefault()
+			  var tabContent = $('.tab-content').find('#salas');
+			  tabContent.empty();
+
+			  for (var i = 0 ; i < salas.length; i++) {
+			  	if(salas[i].SEDE_ID == $(this).data('sede')){
+			   	  tabContent.append(salas[i].SALA_DESCRIPCION+'<br>');
+			    }
+			  }
+
+			  
+			  //$(this);
+			  $(this).tab('show')
+			})
+
+			$('#tab-salas').on('shown.bs.tab', function (e) {
+			  console.log(e.target) // newly activated tab
+			  console.log(e.relatedTarget) // previous active tab
+			})
+
+		});
+	</script>
+@parent
 @endsection
 
 @section('content')
@@ -14,70 +51,22 @@
 <div class="col-xs-2"><h3>Sedes</h3>
 	<ul class="nav nav-tabs tabs-left">
 		@foreach($sedes as $sede)
-		<li><a href="#Sede{{$sede->SEDE_ID}}" data-toggle="tab">{{$sede->SEDE_DESCRIPCION}}</a></li>
+		<li><a href="#Sede{{$sede->SEDE_ID}}" data-toggle="tab" data-sede="{{$sede->SEDE_ID}}">{{$sede->SEDE_DESCRIPCION}}</a></li>
 		@endforeach
 	</ul>
 </div>
 
-<div class="col-xs-9">
-	<div class="tab-content">
-<h3>Salas</h3>
-		@foreach($sedes as $sede)
-		<div class="tab-pane fade" id="Sede{{$sede->SEDE_ID}}">
-			@foreach($salas as $sala)
-				@if($sala->SEDE_ID == $sede->SEDE_ID)
-				{{-- <a href="{{ url('reservas/show?sede='.$sala->SEDE_ID.'&sala='.$sala->SALA_ID) }}"> --}}
-				<div class="col-md-4 zoom-in-hover">
-					<div class="panel panel-default">
-						<div class="panel-heading">Sala {{$sala->SALA_ID}} en Sede {{$sala->SEDE_ID}}</div>
-						<div class="panel-body">
-							{{$sala->SALA_DESCRIPCION}}<br>
-							Cantidad de equipos: {{$sala->SALA_CAPACIDAD}}<br>
-							Equipos disponibles: {{$sala->equiposDisp($sala->SALA_ID)}}<br>
-							{{ Form::open( ['url' => 'reservas/show', 'method' => 'get', 'class'=>'form-vertical' ]  ) }}
-
-								{{ Form::hidden('sala', $sala->SALA_ID) }}
-								<div class="row">
-									<div class="col-xs-6">
-										<div class="input-group">
-											{{ Form::label('equipo', 'Equipo', [ 'class'=>'form-control' ]) }}
-											<span class="input-group-addon">
-												<input type="radio"
-													title="Requerido!" 
-													value="1"
-													name="equipo"
-													class="">
-											</span>
-										</div>
-									</div>
-
-									<div class="col-xs-6">
-										<div class="input-group">
-											{{ Form::label('equipo', 'Sala', [ 'class'=>'form-control' ]) }}
-											<span class="input-group-addon">
-												<input type="radio"
-													value="0"
-													name="equipo"
-													class="">
-											</span>
-										</div>
-									</div>
-								</div>
-
-								{{ Form::button('<i class="fa fa-ticket" aria-hidden="true"></i> Reservar', [ 'class'=>'btn btn-primary', 'type'=>'submit' ]) }}
-
-							{{ Form::close() }}
-						</div>
-					</div>
-				</div>
-				{{-- </a> --}}
-				@endif
-			@endforeach
-		</div>
-		@endforeach
-	</div>
-	  <!-- /tabs -->
-	  
+<div class="col-xs-10">
+			<ul class="nav nav-tabs nav-top">
+				<li><a href="#salas" id="tab-salas" data-toggle="tab" data-sede="">Salas</a></li>
+				<li><a href="#equipos" id="tab-equipos" data-toggle="tab" data-sede="">Equipos</a></li>
+			</ul>
 </div>
+
+
+<div class="tab-content">
+	<div class="tab-pane fade" id="salas"></div>
+	<div class="tab-pane fade" id="equipos"></div>
+</div>	  
 
 @endsection

@@ -1,10 +1,54 @@
 @extends('layout')
 @section('title', '/ Salas')
 @include('datatable')
+@section('scripts')
+    <script>
+
+
+     $(document).ready(function (){
+
+     	var table1 = $('#tabla').DataTable();
+	//BUSQUEDA POR COLUMNA
+
+		// #SEDE_ID is a <input type="text"> element
+		$('#DES_ID').on( 'keyup', function () {
+		    table1
+		        .columns( 1 )
+		        .search( this.value )
+		        .draw();
+		} );
+
+
+	
+	//CARGA DE COMBO POR JQUERY
+
+	// #SEDE_ID is a <input type="text"> element
+		$('#SEDE_ID').change(function () {
+		    table1
+		        .columns( 4 )
+		        .search( $('#SEDE_ID option:selected').text() )
+		        .draw();
+
+
+	
+		} );
+
+
+
+
+
+	  });
+		
+
+    </script>
+@parent
+@endsection
 @section('content')
 
 	<h1 class="page-header">Salas</h1>
 	<div class="row well well-sm">
+
+	@include('salas/FormFilters')
 
 		<div id="btn-create" class="pull-right">
 			<a class='btn btn-primary' role='button' href="{{ URL::to('salas/create') }}">
