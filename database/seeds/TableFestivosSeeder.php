@@ -17,5 +17,11 @@ class TableFestivosSeeder extends Seeder
            $festivo->FEST_CREADOPOR =  'USER_PRUEBA';
            $festivo->save();
 
+           $festivo = new \reservas\Festivo;
+           $festivo->FEST_FECHA = '2017-02-18';
+           $festivo->FEST_DESCRIPCION = 'DIA FESTIVO DE PRUEBA';
+           $festivo->FEST_CREADOPOR =  'USER_PRUEBA';
+           $festivo->save();
+
 	}
 }

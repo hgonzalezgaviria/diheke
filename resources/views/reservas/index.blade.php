@@ -137,11 +137,43 @@
             format: 'rgb',
             input: 'color'
     });
-   
 
+    $('#probar').click(function() {
+
+    });
+   
+    
+    
     $('#reservar').click(function() {
 
+        var arrfestivos = [];
+        var arrfest = [];
+        
+        crsfToken = document.getElementsByName("_token")[0].value;
 
+        var festrequest;
+
+        festrequest = $.ajax({
+             url: 'getFestivos',
+             async: false,
+             data: 'reservas=' + 'probando',
+             dataType: 'json',
+             type: "POST",
+             headers: {
+                    "X-CSRF-TOKEN": crsfToken
+                },
+              success: function(festivos) {
+              
+                for(var i = 0; i < festivos.length; i++){
+                  var ffest = moment(festivos[i].FEST_FECHA, 'YYYY-MM-DD').format('YYYY-MM-DD');
+                  arrfestivos[i] = ffest;
+                }
+
+              },
+              error:   function(json){
+                console.log("Error al consultar festivos");
+              }        
+        });
 
         var titulo = 'R.S';
         var todoeldia = false;
@@ -150,11 +182,12 @@
         //alert( $('#color').val());
         var color = $('#color').val();
 
-        
         if(color != null){
           fondo = color;
           //console.log('no es nulo '+color)
         }
+
+        //console.log("Mi arreglo: "+arrfestivos);
         
 
         var fechaini = $('#fechainicio').data("DateTimePicker").date();
@@ -174,13 +207,14 @@
 
         var sala = getUrlParameter('sala');
         var equipo = getUrlParameter('equipo');
+        equipo = null;
 
-
-        
+        /*
         if(equipo != 0){
           titulo = 'R.E';
           alert(titulo + " " + sala);
         }
+        */
 
 
         var reserva = new Object();
@@ -260,37 +294,38 @@
                   puedereservar = true;
               }
 
-          }
-
-          
+          }  
 
         if(puedereservar){
 
             
-                crsfToken = document.getElementsByName("_token")[0].value;
+                if(sel!="hasta"){
 
-                $.ajax({
-                     url: 'guardaEventos',
-                     data: 'title='+ titulo+'&start='+ fechainicio+'&allday='+todoeldia+'&background='+fondo+
-                     '&end='+fechafinal+'&sala='+sala+'&equipo='+equipo,
-                     type: "POST",
-                     headers: {
-                            "X-CSRF-TOKEN": crsfToken
+                  crsfToken = document.getElementsByName("_token")[0].value;
+
+                  $.ajax({
+                       url: 'guardaEventos',
+                       data: 'title='+ titulo+'&start='+ fechainicio+'&allday='+todoeldia+'&background='+fondo+
+                       '&end='+fechafinal+'&sala='+sala+'&equipo='+equipo,
+                       type: "POST",
+                       headers: {
+                              "X-CSRF-TOKEN": crsfToken
+                          },
+                        success: function(events) {
+                          
+                           $.msgBox({
+                            title:"Éxito",
+                            content:"¡Su reserva se ha realizado satisfactoriamente!",
+                            type:"success"
+                           });
+
+                          $('#calendar').fullCalendar('refetchEvents');
                         },
-                      success: function(events) {
-                        
-                         $.msgBox({
-                          title:"Éxito",
-                          content:"¡Su reserva se ha realizado satisfactoriamente!",
-                          type:"success"
-                         });
-
-                        $('#calendar').fullCalendar('refetchEvents');
-                      },
-                      error:   function(json){
-                        console.log("Error al crear evento");
-                      }        
-                });
+                        error:   function(json){
+                          console.log("Error al crear evento");
+                        }        
+                  });
+              }
             
 
                 if( (fechahasta!=null && fechahasta!="") && (sel!=null && sel=="hasta")){
@@ -310,6 +345,8 @@
 
                     while(fini < fechahasta){
 
+
+
                         fechainicio = moment(fechainicio).add(1, 'days');
                         fechainicio = moment(fechainicio,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
 
@@ -322,11 +359,29 @@
                         fecha = fini;
                         fecha = moment(fecha,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
 
-                        //console.log(fecha + " - " + fechahasta + " - " + fechainicio + " - " + fechafinal);
-
                         fini = moment(fini,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
 
-                        arrreservas[i] = [titulo, fechainicio, todoeldia, fondo, fechafinal, sala, equipo];
+                        //alert("Festivo: "+arrfestivos[0]);
+                        
+                        for(var j = 0; j < arrfestivos.length; j++){
+                          
+                          var fest = moment(arrfestivos[j], 'YYYY-MM-DD').format('YYYY-MM-DD');
+                          //arrfestivos[i] = ffest;
+
+                          if(fest != fini){
+
+                            console.log("Son Diferentes "+fest+" a "+fini);
+                            arrreservas[i] = [titulo, fechainicio, todoeldia, fondo, fechafinal, sala, equipo];
+
+                          }
+
+                        }
+                        
+
+                        //console.log("esta es fini "+fini);
+
+                        
+                        
                         i++;
                     }
 
@@ -344,8 +399,14 @@
                             },
                           success: function(events) {
                             
-                            console.log('succes****');
-                            $('#calendar').fullCalendar('refetchEvents');
+                            
+                              $('#calendar').fullCalendar('refetchEvents');
+                                $.msgBox({
+                                title:"Éxito",
+                                content:"¡Su reserva se ha realizado satisfactoriamente!",
+                                type:"success"
+                              });
+
                           },
                           error:   function(json){
                             console.log("Error al crear evento");
@@ -651,6 +712,8 @@
                 </div>
 
                 <button id="reservar" type="button" class="btn btn-primary btn-flat">Crear Reserva</button>
+
+                <button id="probar" type="button" class="btn btn-primary btn-flat">Probar</button>
 
                 
 
