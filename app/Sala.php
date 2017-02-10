@@ -27,7 +27,7 @@ class Sala extends Model
 		'SALA_CREADOPOR'
 	];
     protected $hidden = [
-      	"SALA_ID"
+      	//"SALA_ID"
     ];
 
 
@@ -69,6 +69,7 @@ class Sala extends Model
 							'SALA_CAPACIDAD',
 							'SALA_OBSERVACIONES',
 							'SEDE_ID',
+							'ESTA_ID',
                         ])
                         ->get();
         return $salas;
