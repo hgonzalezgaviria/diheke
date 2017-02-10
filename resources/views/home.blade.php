@@ -110,7 +110,7 @@
 </div>
 
 
-<div class="tab-content">
+<div class="tab-content col-xs-offset-2">
   <div class="tab-pane fade" id="salas"></div>
   <div class="tab-pane fade" id="equipos"></div>
 </div>    
