@@ -53,6 +53,8 @@ Route::resource('politicas', 'PoliticasController');
 //Consulta de equipos
 Route::resource('consultaEquipos', 'ConsultaEquiposController');
 
+Route::post('prestamoEquipo', 'PrestamoEquiposController@crearPrestamo');
+
 
 /*
 

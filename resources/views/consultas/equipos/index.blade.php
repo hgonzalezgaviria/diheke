@@ -74,12 +74,14 @@
 		    	      //$('#console-event').html('Toggle: ' + $(this).prop('checked'))
 		      //alert('checkbox en estado: '+ $(this).prop('checked'));
 
-			     var checkeado =  $(this).prop('checked');
-			     if(!checkeado){
-			     	$("#modalPrestamoEquipos").modal();
-			     	//ert(checkeado);  
+			    var checkeado =  $(this).prop('checked');
+			    if(!checkeado){
 
-			     }
+		     		var equipo = $(this).attr("id");
+			     	$('#frmPrestamo').find('#equipo').val(equipo)
+			     	$("#modalPrestamoEquipos").modal('show');
+			     	//ert(checkeado);  
+			    }
 
 		      //if
 		      //if($(".filter-toggle").is(':checked')) {  
@@ -141,7 +143,7 @@
 					<center>
 						<div class="checkbox">
 			  				<label>
-			    				<input type="checkbox"  data-toggle="toggle" class="filter-toggle" id="{{$equipo->EQUI_ID}}" value="1" data-onstyle="success" data-offstyle="danger" data-width="100" data-on="<i class='fa fa-check'></i>" data-off="<i class='fa fa-close'></i>" >
+			    				<input type="checkbox" data-toggle="toggle" class="filter-toggle" id="{{$equipo->EQUI_ID}}" value="1" data-onstyle="success" data-offstyle="danger" data-width="100" data-on="<i class='fa fa-check'></i>" data-off="<i class='fa fa-close'></i>" >
 			  				</label>
 						</div>
 					</center>
