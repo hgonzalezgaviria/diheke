@@ -51,4 +51,12 @@ class Equipo extends Model
 		return $this->belongsTo(Estado::class, $foreingKey);
 	}
 
+
+	public function prestamo()
+	{
+		$foreingKey = 'EQUI_ID';
+		return $this->hasMany(Prestamo::class, $foreingKey);
+	}
+
+
 }
