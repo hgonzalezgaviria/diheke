@@ -52,6 +52,7 @@ class Equipo extends Model
 	}
 
 
+	    //Una Equipo tiene muchos prestamos
 	public function prestamo()
 	{
 		$foreingKey = 'EQUI_ID';
