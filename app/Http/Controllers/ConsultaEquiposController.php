@@ -50,29 +50,15 @@ class ConsultaEquiposController extends Controller
 						->select('SEDE_ID', 'SEDE_DESCRIPCION')
 						->get();
 
-		$sala = Input::get('sala')->get();
+		$sala = Input::get('sala');
+
 		//$equipos = \reservas\Equipo::all();
-		$equipos = \reservas\Equipo::where('SALA_ID',$sala);
+		$equipos = \reservas\Equipo::where('SALA_ID',$sala)->get();
 
 
 		//Se carga la vista y se pasan los registros
 		return view('consultas/equipos/index', compact('sala','equipos'));
 	}
-
-	/**
-	 * Muestra el formulario para crear un nuevo registro.
-	 *
-	 * @return Response
-	 */
-
-
-
-	/**
-	 * Guarda el registro nuevo en la base de datos.
-	 *
-	 * @return Response
-	 */
-	
 
 
 	/**
@@ -90,14 +76,16 @@ class ConsultaEquiposController extends Controller
 
      public function consultarEquipos(){
 
-        $SEDE_ID = $_POST['sede'];
+        //$SEDE_ID = $_POST['sede'];
+        $SALA_ID = $_POST['sala'];
 
-		$sala = Input::get('sala')->get();
         $equipos = \DB::table('EQUIPOS')
                             ->select('EQUIPOS.*')
-                            ->join
-                            ->where('SEDE_ID')
+                            ->where('SALA_ID', $SALA_ID)
                             ->get();
+
+        /*$equipos = \reservas\Equipo::where('SALA_ID', $SALA_ID)
+        			->get();*/
 
         return json_encode($equipos);
         //return $salas;

@@ -5,22 +5,17 @@
 /**/
 	 $(function () {
 
-	 		//con la siguiente linea se enciende o no el boton
-			//$('#switch').bootstrapToggle('on');
+ 		//con la siguiente linea se enciende o no el boton
+		//$('#switch').bootstrapToggle('on');
 
 		// INICIO Obtiene id de cada checkbox y lo adiciona a un arreglo
 		var arraid = [];
-			var i = 0;
-			//alert('estado equipo '+ '{{ $equipos }}');
-			$( ".filter-toggle" ).each(function( i ) {
-			    
-			    var equipo = $(this).closest(".filter-toggle").attr("id");
-			    arraid[i] = equipo;
-			    i++;
-
-			    //console.log('equipo '+equipo);
-
-			});// FIN Obtiene id de cada checkbox y lo adiciona a un arreglo
+		var i = 0;
+		$( ".filter-toggle" ).each(function( i ) {
+		    var equipo = $(this).closest(".filter-toggle").attr("id");
+		    arraid[i] = equipo;
+		    i++;
+		});// FIN Obtiene id de cada checkbox y lo adiciona a un arreglo
 
 		var sala = '{{$sala}}';
 	 	
@@ -79,20 +74,12 @@
 		    	      //$('#console-event').html('Toggle: ' + $(this).prop('checked'))
 		      //alert('checkbox en estado: '+ $(this).prop('checked'));
 
-		  
-			    
 			     var checkeado =  $(this).prop('checked');
 			     if(!checkeado){
 			     	$("#modalPrestamoEquipos").modal();
 			     	//ert(checkeado);  
 
 			     }
-
-			      
-			    //console.log('equipo '+equipo);
-
-		
-		     
 
 		      //if
 		      //if($(".filter-toggle").is(':checked')) {  
@@ -118,64 +105,60 @@
 		
 
     </script>
-@endsection
 @parent
+@endsection
+
 @section('content')
 
 	<h1 class="page-header">Consultas De Equipos</h1>
 	
 	{{ Form::open(['id'=>'consulequi' , 'class' => 'form-horizontal']) }}
-<table class="table table-striped" id="tabla">
-
-	<tbody>
-
-
-		
 	
-
 	@foreach ($equipos as $i => $equipo)
+		<div class="col-md-4 zoom-in-hover">
+			<div class="panel panel-default">
 
-    
-<div class="col-md-4 zoom-in-hover">
-	<div class="panel panel-default">
-		<div class="panel-heading"><center><b>Equipo {{$equipo->EQUI_ID}} </b></center></div>
-	 		<div class="panel-body">
+				<div class="panel-heading">
+					<center><b>Equipo {{$equipo->EQUI_ID}} </b></center>
+				</div>
 
-		<center>
-			<IMG SRC='{{ asset('assets/img/monitor.png') }}' WIDTH=60 HEIGHT=60>
-		</center>
-			<!--
+			 	<div class="panel-body">
+
+					<center>
+						<IMG SRC='{{ asset('assets/img/monitor.png') }}' WIDTH=60 HEIGHT=60>
+					</center>
+
+					<!--
+					<div id="switchON">
+			    		<label class="switch">
+							<input class="switch-input" type="checkbox" id="{{$equipo->EQUI_ID}}" />
+							<span class="switch-label" data-on="On" data-off="Off"></span> 
+							<span class="switch-handle"></span> 
+						</label>
+					</div>
+					-->
+
+					<center>
+						<div class="checkbox">
+			  				<label>
+			    				<input type="checkbox"  data-toggle="toggle" class="filter-toggle" id="{{$equipo->EQUI_ID}}" value="1" data-onstyle="success" data-offstyle="danger" data-width="100" data-on="<i class='fa fa-check'></i>" data-off="<i class='fa fa-close'></i>" >
+			  				</label>
+						</div>
+					</center>
 				
-		<div id="switchON">
-	    		<label class="switch">
-					<input class="switch-input" type="checkbox" id="{{$equipo->EQUI_ID}}" />
-					<span class="switch-label" data-on="On" data-off="Off"></span> 
-					<span class="switch-handle"></span> 
-				</label>
+					<br>
+
+					<div class="alert alert-info" id="switch{{$i}}">
+						{{ $equipo -> estado -> ESTA_DESCRIPCION }}
+					</div>
+
+				</div> <!-- panel-body -->
+
 			</div>
-			
-			-->
-			<center>
-		<div class="checkbox">
-	  		<label>
-
-	    	<input type="checkbox"  data-toggle="toggle" class="filter-toggle" id="{{$equipo->EQUI_ID}}" value="1" data-onstyle="success" data-offstyle="danger" data-width="100" data-on="<i class='fa fa-check'></i>" data-off="<i class='fa fa-close'></i>" >
-	  		</label>
 		</div>
-		</center>
-		
-		<br>
-			<div class="alert alert-info" id="switch{{$i}}">{{ $equipo -> estado -> ESTA_DESCRIPCION }}</div>
+	@endforeach
 
-		  </div>
-	  
-  </div>
-</div>
-		@endforeach
-	</tbody>
-</table>
-
-{{ Form::close() }}
+	{{ Form::close() }}
 
 @include('consultas/equipos/index-modalPrestamo')
 @endsection
