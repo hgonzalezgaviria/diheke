@@ -44,39 +44,19 @@ class ConsultaEquiposController extends Controller
 	public function index()
 	{
 		//Se obtienen todos los registros.
-		$politicas = Politica::all();
+		
 
 		$sedes = \reservas\Sede::orderBy('SEDE_ID')
 						->select('SEDE_ID', 'SEDE_DESCRIPCION')
 						->get();
 
-		$arrSedes = [];
-		foreach ($sedes as $sede) {
-			$arrSedes = array_add(
-				$arrSedes,
-				$sede->SEDE_ID,
-				$sede->SEDE_DESCRIPCION
-			);
-		}
-
-		$salas = \reservas\Sala::orderBy('SALA_ID')
-						->select('SALA_ID', 'SALA_DESCRIPCION')
-						->get();
-
-		$arrSalas = [];
-		foreach ($salas as $sala) {
-			$arrSalas = array_add(
-				$arrSalas,
-				$sala->SALA_ID,
-				$sala->SALA_DESCRIPCION
-			);
-		}
-
-		$equipos = \reservas\Equipo::all();
+		$sala = Input::get('sala')->get();
+		//$equipos = \reservas\Equipo::all();
+		$equipos = \reservas\Equipo::where('SALA_ID',$sala);
 
 
 		//Se carga la vista y se pasan los registros
-		return view('consultas/equipos/index', compact('politicas','arrSedes','arrSalas','equipos'));
+		return view('consultas/equipos/index', compact('sala','equipos'));
 	}
 
 	/**
@@ -104,24 +84,28 @@ class ConsultaEquiposController extends Controller
 	public function show($POLI_ID)
 	{
 		// Se obtiene el registro
-		$politica = Politica::findOrFail($POLI_ID);
 
-		// Muestra la vista y pasa el registro
-		return view('politicas/show', compact('politica'));
 	}
 
 
-	
-	public function consultaEquipos($SEDE_ID, $SALA_ID)
-	{
-		// Se obtiene el registro
-		$politica = Politica::findOrFail($POLI_ID);
+     public function consultarEquipos(){
 
-		// Muestra la vista y pasa el registro
-		return view('politicas/show', compact('politica'));
+        $SEDE_ID = $_POST['sede'];
 
-		$SQL= "SELECT e.EQUI_ID, e.EQUI_DESCRIPCION, e.EQUI_OBSERVACIONES, es.ESTA_DESCRIPCION from equipos e, estados es, salas sa, sedes se, tipoestados tes WHERE e.SALA_ID=sa.SALA_ID and sa.SEDE_ID=se.SEDE_ID and es.ESTA_ID=e.ESTA_ID and es.TIES_ID=tes.TIES_ID";
-	}
+		$sala = Input::get('sala')->get();
+        $equipos = \DB::table('EQUIPOS')
+                            ->select('EQUIPOS.*')
+                            ->join
+                            ->where('SEDE_ID')
+                            ->get();
+
+        return json_encode($equipos);
+        //return $salas;
+    }
+
+
+
+
 
 
 

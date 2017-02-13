@@ -14,7 +14,8 @@ class Sala extends Model
 	use SoftDeletes;
 	const DELETED_AT = 'SALA_FECHAELIMINADO';
 	protected $dates = ['SALA_FECHAELIMINADO'];
-	
+
+	protected $appends = ['equipos_disp'];
 
 	protected $fillable = [
 		'SALA_DESCRIPCION',
@@ -24,7 +25,8 @@ class Sala extends Model
 		'SALA_OBSERVACIONES',
 		'ESTA_ID',
 		'SEDE_ID',
-		'SALA_CREADOPOR'
+		'SALA_CREADOPOR',
+		'SALA_PRESTAMO',
 	];
     protected $hidden = [
       	//"SALA_ID"
@@ -70,6 +72,7 @@ class Sala extends Model
 							'SALA_OBSERVACIONES',
 							'SEDE_ID',
 							'ESTA_ID',
+							'SALA_PRESTAMO',
                         ])
                         ->get();
         return $salas;
@@ -82,16 +85,15 @@ class Sala extends Model
      * @param  null
      * @return integer
      */
-    public function equiposDisp($idsala)
+    public function getEquiposDispAttribute()
     {
-
     	  $estados = \DB::table('EQUIPOS')
                             ->select('ESTADOS.*')
-                            ->where('EQUIPOS.SALA_ID','=',$idsala)
+                            ->where('EQUIPOS.SALA_ID','=',$this->SALA_ID)
                             ->where('EQUIPOS.ESTA_ID','=',3) //Estado 3 Disponibles
                             ->where('EQUIPOS.EQUI_FECHAELIMINADO','=',null)
                             ->count();
-             //dd("mensaje: " . $idsala);              
+             //dd("mensaje: " . $idsala);  s            
     	return $estados;
 	}
 

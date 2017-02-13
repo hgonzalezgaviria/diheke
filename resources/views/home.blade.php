@@ -38,9 +38,9 @@
                           '<div class="panel panel-default">'+
                             '<div class="panel-heading">'+salas[i].SALA_DESCRIPCION+'<br></div>'+
                               '<div class="panel-body">'+
-                              'Cantidad de equipos:' + salas[i].SALA_CAPACIDAD+'<br><br>'+	
+                              'Cantidad de equipos:' + salas[i].SALA_CAPACIDAD+'<br><br>'+  
                               '{{ Form::open( ['url' => 'reservas/show', 'method' => 'get', 'class'=>'form-vertical' ]  ) }}'+
-                              '	<input name="sala" type="hidden" value='+salas[i].SALA_ID+'>'+
+                              ' <input name="sala" type="hidden" value='+salas[i].SALA_ID+'>'+
                               '{{ Form::button('<i class="fa fa-ticket" aria-hidden="true"></i> Reservar', [ 'class'=>'btn btn-primary', 'type'=>'submit' ]) }}'+
                               '{{ Form::close() }}'+
                             '</div>'+
@@ -59,15 +59,21 @@
         tabContent.empty();
 
         for (var i = 0 ; i < salas.length; i++) {
-          if(salas[i].SEDE_ID == $(this).data('sede')){
+          if(salas[i].SEDE_ID == $(this).data('sede') && 
+            salas[i].ESTA_ID==1 &&
+            salas[i].SALA_PRESTAMO==1 &&
+          salas[i].equipos_disp > 0
+          ){
+
 
             var html = '<div class="col-xs-3 zoom-in-hover">'+
                           '<div class="panel panel-default">'+
                             '<div class="panel-heading">'+salas[i].SALA_DESCRIPCION+'<br></div>'+
                               '<div class="panel-body">'+
-                              'Cantidad de equipos:' + salas[i].SALA_CAPACIDAD+'<br><br>'+	
-                              '{{ Form::open( ['url' => 'reservas/show', 'method' => 'get', 'class'=>'form-vertical' ]  ) }}'+
-                              '	<input name="sala" type="hidden" value='+salas[i].SALA_ID+'>'+
+                              'Total equipos:' + salas[i].SALA_CAPACIDAD+'<br>'+  
+                              'Total disponibles:' + salas[i].equipos_disp+'<br><br>'+  
+                              '{{ Form::open( ['url' => 'consultaEquipos', 'method' => 'get', 'class'=>'form-vertical' ]  ) }}'+
+                              ' <input name="sala" type="hidden" value='+salas[i].SALA_ID+'>'+
                               '{{ Form::button('<i class="fa fa-ticket" aria-hidden="true"></i> Reservar', [ 'class'=>'btn btn-primary', 'type'=>'submit' ]) }}'+
                               '{{ Form::close() }}'+
                             '</div>'+

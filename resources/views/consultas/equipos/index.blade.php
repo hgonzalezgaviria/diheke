@@ -22,13 +22,13 @@
 
 			});// FIN Obtiene id de cada checkbox y lo adiciona a un arreglo
 
-			 
+		var sala = '{{$sala}}';
 	 	
 		// INICIO Obtiene los equipos por medio de ajax y Json
 	 	crsfToken = document.getElementsByName("_token")[0].value; 		
 			$.ajax({
 	             url: 'consultarEquipos',
-	             data: 'equipos=null',
+	             data: 'equipos=null&sala='+sala,
 	             dataType: "json",
 	             type: "POST",
 	             headers: {
@@ -123,20 +123,6 @@
 @section('content')
 
 	<h1 class="page-header">Consultas De Equipos</h1>
-	<div class="row well well-sm">
-
-			
-			{{ Form::label('SALA_ID', 'Salas') }} 
-			{{ Form::select('SALA_ID', [null => 'Seleccione una sala...'] + $arrSalas , old('SALA_ID'), ['class' => 'form-control', 'required']) }}
-		
-
-			
-			{{ Form::label('SEDE_ID', 'Sedes') }} 
-			{{ Form::select('SEDE_ID', [null => 'Seleccione una sede...'] + $arrSedes , old('SEDE_ID'), ['class' => 'form-control', 'required']) }}
-		
-		
-
-	</div>
 	
 	{{ Form::open(['id'=>'consulequi' , 'class' => 'form-horizontal']) }}
 <table class="table table-striped" id="tabla">

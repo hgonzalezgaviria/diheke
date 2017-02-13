@@ -91,7 +91,7 @@ Route::post('reservas/getFestivos', array('as' => 'getFestivos','uses' => 'Festi
 Route::post('actualizaEventos','ReservasController@update');
 Route::post('eliminaEvento','ReservasController@delete');
 Route::post('consultaSalas', array('as' => 'consultaSalas','uses' => 'EquiposController@consultaSalas'));
-Route::post('consultarEquipos', array('as'=>'consultarEquipos','uses' => 'EquiposController@consultarEquipos'));
+Route::post('consultarEquipos', array('as'=>'consultarEquipos','uses' => 'ConsultaEquiposController@consultarEquipos'));
 
 //recursos
 Route::resource('recursos', 'RecursosController');
