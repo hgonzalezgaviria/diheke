@@ -38,7 +38,7 @@
 							$('#'+arraid[i]).bootstrapToggle('on');
 						//	$('#'+arraid[i]).bootstrapToggle('disable');
 						}else {
-						//	$('#'+arraid[i]).bootstrapToggle('disable');
+							$('#'+arraid[i]).bootstrapToggle('disable');
 						}
 					//console.log(equipo[i].ESTA_ID);
 
@@ -53,19 +53,15 @@
 
 			
 			
-
-
-
+			/*
 		    $('.switch-input').change(function() {
 		      //$('#console-event').html('Toggle: ' + $(this).prop('checked'))
 		      //alert('checkbox en estado: '+ $(this).prop('checked'));
 
 		     var equipo = $(this).closest(".switch-input").attr("id");
 			   // also tried $(this).parent(".head-div") -- same effect
-			  alert('id seleccionado ' + abc); // Shows as Undefined
-
-		     
-		      
+			  alert('id seleccionado ' + abc); // Shows as Undefined		     
+		      */
 
 		    });
 

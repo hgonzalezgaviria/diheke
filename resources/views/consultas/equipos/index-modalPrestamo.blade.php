@@ -38,20 +38,20 @@
 
           <div class="modal-body" style="padding:40px 50px;">
 
-            <form id="frmPrestamo" method="POST" action="{{URL('reservas/prestamoEquipo')}}" accept-charset="UTF-8">
+            <form id="frmPrestamo" method="POST" action="{{URL('prestamoEquipo')}}" accept-charset="UTF-8">
              {{ Form::token() }}
               <div class="form-group">
                 <label for="equipo"> Equipo</label>
-                <input type="text" class="form-control" id="equipo" placeholder="ID del equipo a prestar" readonly>
+                <input type="text" class="form-control" name = "equipo" id="equipo" placeholder="ID del equipo a prestar" readonly>
               </div>
 
               <div class="form-group">
                 <label for="doc_usuario"> Cod/ID</label>
-                <input type="text" class="form-control" id="doc_usuario" placeholder="Ingrese el codigo del documento" required>
+                <input type="text" class="form-control" name = "doc_usuario" id="doc_usuario" placeholder="Ingrese el codigo del documento" required>
               </div>
               <div class="form-group">
                 <label for="nombre"> Nombre Completo</label>
-                <input type="text" class="form-control" id="nombre" placeholder=" Ingrese el nombre" required>
+                <input type="text" class="form-control" name = "nombre" id="nombre" placeholder=" Ingrese el nombre" required>
               </div>
 
            
