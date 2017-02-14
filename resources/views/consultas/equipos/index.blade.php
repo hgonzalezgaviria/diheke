@@ -53,18 +53,7 @@
 
 			
 			
-			/*
-		    $('.switch-input').change(function() {
-		      //$('#console-event').html('Toggle: ' + $(this).prop('checked'))
-		      //alert('checkbox en estado: '+ $(this).prop('checked'));
-
-		     var equipo = $(this).closest(".switch-input").attr("id");
-			   // also tried $(this).parent(".head-div") -- same effect
-			  alert('id seleccionado ' + abc); // Shows as Undefined		     
-		      */
-
-		    });
-
+		
 		    //Captura onchange al momento de cambiar
 		    $('.filter-toggle').change(function() {
 		    	      //$('#console-event').html('Toggle: ' + $(this).prop('checked'))
@@ -125,16 +114,6 @@
 					<center>
 						<IMG SRC='{{ asset('assets/img/monitor.png') }}' WIDTH=60 HEIGHT=60>
 					</center>
-
-					<!--
-					<div id="switchON">
-			    		<label class="switch">
-							<input class="switch-input" type="checkbox" id="{{$equipo->EQUI_ID}}" />
-							<span class="switch-label" data-on="On" data-off="Off"></span> 
-							<span class="switch-handle"></span> 
-						</label>
-					</div>
-					-->
 
 					<center>
 						<div class="checkbox">
