@@ -2,9 +2,88 @@
 @section('title', '/ Consulta Prestamos')
 @include('datatable')
 @section('content')
+@section('scripts')
+    <script>
 
-	<h1 class="page-header">Sedes</h1>
+
+     $(document).ready(function (){
+
+     	var table1 = $('#tabla').DataTable();
+	//BUSQUEDA POR COLUMNA
+
+		$('#COD_ID').on( 'keyup', function () {
+		    table1
+		        .columns( 1 )
+		        .search( this.value )
+		        .draw();
+		} );
+
+
+		$('#SALA_ID').change(function () {
+		    table1
+		        .columns( 4 )
+		        .search( $('#SALA_ID option:selected').text() )
+		        .draw();
+		} );
+
+	//CARGA DE COMBO POR JQUERY
+
+		$('#SEDE_ID').change(function () {
+		    table1
+		        .columns( 5 )
+		        .search( $('#SEDE_ID option:selected').text() )
+		        .draw();
+
+
+		      //Habilitar selector de Salas
+
+			 
+	 	crsfToken = document.getElementsByName("_token")[0].value;
+ 		var opcion = $("#SEDE_ID").val();
+			$.ajax({
+	             url: 'consultaSalas',
+	             data: 'sede='+ opcion,
+	             dataType: "json",
+	             type: "POST",
+	             headers: {
+	                    "X-CSRF-TOKEN": crsfToken
+	                },
+	              success: function(sala) {
+	         
+	        $('#SALA_ID').empty();
+	      
+
+			for(var i = 0; i < sala.length; i++){
+			$("#SALA_ID").append('<option value=' + sala[i].SALA_ID + '>' + sala[i].SALA_DESCRIPCION + '</option>');
+
+			} 
+	                
+	              },
+	              error: function(json){
+	                console.log("Error al crear evento");
+	              }        
+        	}); //Fin ajax
+		} );
+
+
+
+
+	  });
+		
+
+    </script>
+@parent
+@endsection
+
+	<h1 class="page-header">Consulta Prestamos</h1>
 	<div class="row well well-sm">
+	@include('consultas/prestamos/FormFilters')
+
+	<div id="btn-create" class="pull-right">
+			<a class='btn btn-primary' role='button' href="#">
+				<i class="fa fa-plus" aria-hidden="true"></i> Todos los datos
+			</a>
+		</div>
 
 	</div>
 	
@@ -16,7 +95,7 @@
 			<th class="col-xs-2">Nombre completo</th>
 			<th class="col-xs-1">Equipo</th>			
 			<th class="col-xs-2">Sala</th>
-			<th class="col-xs-2">Usuario</th>
+			<th class="col-xs-2">Sede</th>
 			<th class="col-xs-2">Fecha Inicio P</th>
 			<th class="col-xs-1">Tiempo trans</th>
 			<th> </th>
@@ -31,15 +110,14 @@
 			<td>{{ $prestamo -> PRES_ID }}</td>
 			<td>{{ $prestamo -> PRES_IDUSARIO }}</td>
 			<td>{{ $prestamo -> PRES_NOMBREUSARIO }}</td>
-			<td>{{ $prestamo -> EQUI_ID }}</td>
-			 	
+			<td>{{ $prestamo -> EQUI_ID }}</td>			 	
 			<td>{{ $prestamo -> equipo -> sala -> SALA_DESCRIPCION }}</td>
-			<td>{{ $prestamo -> PRES_CREADOPOR }}</td>
+			<td>{{ $prestamo -> equipo -> sala -> sede -> SEDE_DESCRIPCION }}</td>
 			<td>{{ $prestamo -> PRES_FECHACREADO }}</td>
 			<td>{{ $prestamo -> PRES_FECHACREADO }}</td>
 			<td>
 
-				<!-- Botón Terminar (show) -->
+				<!-- Botón Terminar () -->
 					{{ Form::button('<i class="fa fa-files-o" aria-hidden="true"></i> <span class="hidden-xs">Terminar</span>',[
 								'class'=>'btn btn-xs btn-success btn-xs',
 								'data-toggle'=>'modal',
@@ -49,13 +127,6 @@
 							])
 						}}
 						<!-- Fin Botón Terminar (show) -->
-
-
-	
-
-				
-				
-
 			</td>
 		</tr>
 		@endforeach

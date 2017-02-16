@@ -67,9 +67,17 @@ class PrestamoEquiposController extends Controller
        //dd($totalDuration);
 
 
+        //Para el filtro
+        $salas = \DB::table('SALAS')
+                            ->select('SALAS.*')
+                            ->get();
+
+        $sedes = \DB::table('SEDES')
+                           ->select('SEDES.*')
+                           ->get();
 
         //Se carga la vista y se pasan los registros
-        return view('consultas/prestamos/index', compact('equipoPrestamos'));
+        return view('consultas/prestamos/index', compact('equipoPrestamos','salas','sedes'));
     }
 
 

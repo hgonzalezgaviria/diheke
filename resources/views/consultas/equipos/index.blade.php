@@ -103,6 +103,26 @@
 @section('content')
 
 	<h1 class="page-header">Consultas De Equipos</h1>
+
+	<div class="row well well-sm"><!--Radio buttons -->
+		
+		  		<label  class="radio-inline">
+		    	<input type="radio" name="opciones" id="opciones_1" value="opcion_1" checked>
+		    	Todos
+		  		</label>		
+	
+		  		<label  class="radio-inline">
+		    	<input type="radio" name="opciones" id="opciones_2" value="opcion_2">
+		    	Disponibles
+		  		</label>
+		
+			
+		  		<label  class="radio-inline">
+		    	<input type="radio" name="opciones" id="opciones_3" value="opcion_3">
+		    	Ocupados
+		  		</label>		
+
+	</div>
 	
 	{{ Form::open(['id'=>'consulequi' , 'class' => 'form-horizontal']) }}
 	

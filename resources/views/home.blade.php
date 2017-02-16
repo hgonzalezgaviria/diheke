@@ -30,10 +30,12 @@
         e.preventDefault()
         var tabContent = $('.tab-content').find('#salas');
         tabContent.empty();
+        var nohaySalas=false;
 
         for (var i = 0 ; i < salas.length; i++) {
           if(salas[i].SEDE_ID == $(this).data('sede') && (salas[i].ESTA_ID==1)){
 
+            nohaySalas=true;
             var html = '<div class="col-xs-3 zoom-in-hover">'+
                           '<div class="panel panel-default">'+
                             '<div class="panel-heading">'+salas[i].SALA_DESCRIPCION+'<br></div>'+
@@ -49,6 +51,18 @@
             tabContent.append(html);
           }
         }
+               if(!nohaySalas){
+          var html='<br><br><br>'+
+          '<div class="col-xs-12">'+
+          '<div class="alert alert-info" id="note">'+
+                    'Para la sede seleccionada no hay salas disponibles.'+
+                    '<br><br>'+ 
+                    'Ayuda: Debe ingresar al mantenimiento de salas e ingresar las salas para esta sede.'+
+                    '</div>';
+                    '</div>';
+                    tabContent.append(html);
+
+        } 
         $(this).tab('show')
       }) // Fin tab salas
 
@@ -57,7 +71,7 @@
         e.preventDefault()
         var tabContent = $('.tab-content').find('#equipos');
         tabContent.empty();
-
+        var nohayEquipos=false;
         for (var i = 0 ; i < salas.length; i++) {
           if(salas[i].SEDE_ID == $(this).data('sede') && 
             salas[i].ESTA_ID==1 &&
@@ -65,7 +79,7 @@
           salas[i].equipos_disp > 0
           ){
 
-
+            nohayEquipos=true;
             var html = '<div class="col-xs-3 zoom-in-hover">'+
                           '<div class="panel panel-default">'+
                             '<div class="panel-heading">'+salas[i].SALA_DESCRIPCION+'<br></div>'+
@@ -82,6 +96,19 @@
             tabContent.append(html);
           }
         }
+
+        if(!nohayEquipos){
+          var html='<br><br><br>'+
+          '<div class="col-xs-12">'+
+          '<div class="alert alert-info" id="note">'+
+                    'Para la sede seleccionada no hay salas disponibles para prestamos de Equipos.'+
+                    '<br><br>'+ 
+                    'Ayuda: Debe ingresar al mantenimiento de salas y habilitar una sala para prestamos de equipos.'+
+                    '</div>';
+                    '</div>';
+                    tabContent.append(html);
+
+        } 
         $(this).tab('show')
       }) // Fin tab equipos
 
