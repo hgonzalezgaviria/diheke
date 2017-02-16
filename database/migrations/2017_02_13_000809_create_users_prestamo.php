@@ -28,6 +28,9 @@ class CreateUsersPrestamo extends Migration
             $table->integer('EQUI_ID')->unsigned()
                 ->comment = "Campo foráneo de la tabla EQUIPOS.";
 
+            $table->datetime('PRES_FECHAFIN')->nullable()
+                ->comment = "fecha fin del prestamo del equipo";
+
 
              //Traza
             $table->string('PRES_CREADOPOR')
@@ -63,6 +66,7 @@ class CreateUsersPrestamo extends Migration
     public function down()
     {
         //
-         Schema::drop('PRESTAMOS');
+
+        Schema::drop('PRESTAMOS');
     }
 }
