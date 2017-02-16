@@ -20,7 +20,9 @@ class FestivosController extends Controller
     public function getFestivos()
     {
         //Se obtienen todas los festivos.
-        $festivos = Festivo::all();
+        //$festivos = Festivo::all();
+
+        $festivos = Festivo::orderBy('FEST_FECHA', 'desc')->get();
         
         return json_encode($festivos);
     }

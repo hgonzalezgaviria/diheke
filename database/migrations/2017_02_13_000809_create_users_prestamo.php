@@ -63,5 +63,6 @@ class CreateUsersPrestamo extends Migration
     public function down()
     {
         //
+         Schema::drop('PRESTAMOS');
     }
 }

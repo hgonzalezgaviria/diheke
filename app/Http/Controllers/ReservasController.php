@@ -154,22 +154,24 @@ class ReservasController extends Controller
       foreach ($reservas as $res) {
           
         foreach ($res as $k) {
-         
         
-        //Insertando evento a base de datos
-        $reserva = new Reserva;
-        
-        $reserva->RESE_TITULO = $k[0];
-        $reserva->RESE_FECHAINI = $k[1];
-        $reserva->RESE_TODOELDIA = $k[2];
-        $reserva->RESE_COLOR = $k[3];
-        $reserva->RESE_FECHAFIN = $k[4];
-        $reserva->SALA_ID = $k[5];
-        $reserva->EQUI_ID = NULL;
-        $reserva->RESE_CREADOPOR = auth()->user()->username;
-        
-        
-        $reserva->save();
+            if($k[0] != null){
+            
+                //Insertando evento a base de datos
+                $reserva = new Reserva;
+                
+                $reserva->RESE_TITULO = $k[0];
+                $reserva->RESE_FECHAINI = $k[1];
+                $reserva->RESE_TODOELDIA = $k[2];
+                $reserva->RESE_COLOR = $k[3];
+                $reserva->RESE_FECHAFIN = $k[4];
+                $reserva->SALA_ID = $k[5];
+                $reserva->EQUI_ID = NULL;
+                $reserva->RESE_CREADOPOR = auth()->user()->username;
+                
+                
+                $reserva->save();
+            }
         
         }
 

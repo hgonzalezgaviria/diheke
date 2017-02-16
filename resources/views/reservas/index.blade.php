@@ -232,7 +232,13 @@
         //trae todos los eventos del fullcalendar 
         var array = $('#calendar').fullCalendar('clientEvents');
 
+        
+
         var puedereservar = false;
+
+        if(array[0] == null){
+          puedereservar = true;
+        }
 
           for(i in array){
 
@@ -294,39 +300,67 @@
                   puedereservar = true;
               }
 
-          }  
+          }
+
+
 
         if(puedereservar){
 
-            
-                if(sel!="hasta"){
+              if(sel == null){
 
-                  crsfToken = document.getElementsByName("_token")[0].value;
+                    //====================================================================================
+                    //este bloque sirve para validar que el día en que se pretende hacer la reserva no sea un festivo
+                    var finiciores = moment(fechainicio, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
+                    for(var j = 0; j < arrfestivos.length; j++){
+                            
+                            var fest = moment(arrfestivos[j], 'YYYY-MM-DD').format('YYYY-MM-DD');
+                            //arrfestivos[i] = ffest;
 
-                  $.ajax({
-                       url: 'guardaEventos',
-                       data: 'title='+ titulo+'&start='+ fechainicio+'&allday='+todoeldia+'&background='+fondo+
-                       '&end='+fechafinal+'&sala='+sala+'&equipo='+equipo,
-                       type: "POST",
-                       headers: {
-                              "X-CSRF-TOKEN": crsfToken
-                          },
-                        success: function(events) {
-                          
-                           $.msgBox({
-                            title:"Éxito",
-                            content:"¡Su reserva se ha realizado satisfactoriamente!",
-                            type:"success"
-                           });
+                            if(fest == finiciores){
 
-                          $('#calendar').fullCalendar('refetchEvents');
-                        },
-                        error:   function(json){
-                          console.log("Error al crear evento");
-                        }        
-                  });
+                              $.msgBox({
+                                  title:"Error",
+                                  content:"¡No se puede realizar la reserva, este día es festivo!",
+                                  type:"error"
+                                });
+
+                              puedereservar = false;
+
+                            }
+
+                    }
+                    //====================================================================================
+                    
+
+                    
+                    if(sel!="hasta" && puedereservar==true){
+
+                      crsfToken = document.getElementsByName("_token")[0].value;
+
+                      $.ajax({
+                           url: 'guardaEventos',
+                           data: 'title='+ titulo+'&start='+ fechainicio+'&allday='+todoeldia+'&background='+fondo+
+                           '&end='+fechafinal+'&sala='+sala+'&equipo='+equipo,
+                           type: "POST",
+                           headers: {
+                                  "X-CSRF-TOKEN": crsfToken
+                              },
+                            success: function(events) {
+                              
+                               $.msgBox({
+                                title:"Éxito",
+                                content:"¡Su reserva se ha realizado satisfactoriamente!",
+                                type:"success"
+                               });
+
+                              $('#calendar').fullCalendar('refetchEvents');
+                            },
+                            error:   function(json){
+                              console.log("Error al crear evento");
+                            }        
+                      });
+                    }
               }
-            
 
                 if( (fechahasta!=null && fechahasta!="") && (sel!=null && sel=="hasta")){
 
@@ -343,45 +377,39 @@
                     var i = 0;
                     var arrreservas = [];
 
-                    while(fini < fechahasta){
-
-
+                    while(fini <= fechahasta){
 
                         fechainicio = moment(fechainicio).add(1, 'days');
                         fechainicio = moment(fechainicio,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-
                         fechafinal = moment(fechafinal).add(1, 'days');
                         fechafinal = moment(fechafinal,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-
                         fini = moment(fini).add(1, 'days');
-
                         //fecha = moment(fini).add(1, 'days');
                         fecha = fini;
                         fecha = moment(fecha,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
 
                         fini = moment(fini,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
 
-                        //alert("Festivo: "+arrfestivos[0]);
-                        
+                        var diasemana =  moment(fechainicio, 'YYYY-MM-DD HH:mm').format('dddd');
+                        //alert("dia de la semana: "+diasemana);
+
+                        var cnt = 0;
                         for(var j = 0; j < arrfestivos.length; j++){
                           
                           var fest = moment(arrfestivos[j], 'YYYY-MM-DD').format('YYYY-MM-DD');
                           //arrfestivos[i] = ffest;
 
-                          if(fest != fini){
-
-                            console.log("Son Diferentes "+fest+" a "+fini);
+                          if((fest == fini) || (diasemana == "domingo")){
+                            arrreservas[i] = [null, null, null, null, null, null, null];
+                            cnt +=1;
+                          }
+                          else if( (fest != fini && cnt == 0)){
                             arrreservas[i] = [titulo, fechainicio, todoeldia, fondo, fechafinal, sala, equipo];
-
+                            cnt = 0;
                           }
 
                         }
-                        
 
-                        //console.log("esta es fini "+fini);
-
-                        
-                        
                         i++;
                     }
 
