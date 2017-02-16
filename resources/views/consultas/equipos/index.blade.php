@@ -85,8 +85,13 @@
 		      
 
 		    });
-		 
+		 //Funcio para habilitar el checkbox si cancela el prestamo
+			$('#modalPrestamoEquipos').on('hide.bs.modal', function (event) {
+				
+				var equipo = $(this).find('#equipo').val();
+				$('#'+equipo).bootstrapToggle('on');
 
+			})
 
 	  });	
 		

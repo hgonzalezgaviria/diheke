@@ -22,13 +22,14 @@ class Prestamo extends Model
 	protected $fillable = [
 		'PRES_IDUSARIO', 
 		'PRES_NOMBREUSARIO', 
-		'EQUI_ID',
+		'EQUI_ID',		
 		'PRES_CREADOPOR',
-	];
+		'PRES_FECHAFIN',
+			];
 
 
 
-	//Un prestamo tiene un equipos
+	//Un prestamo tiene un equipo
 	public function equipo()
 	{		
 		$foreingKey = 'EQUI_ID';
