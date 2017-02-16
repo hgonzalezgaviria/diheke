@@ -53,10 +53,19 @@ class PrestamoEquiposController extends Controller
                         ->where('PRES_FECHAFIN', null)
                         ->get();
 
-        //$sala = Input::get('sala');
+       
+        //$fechaActual = \Carbon\Carbon::now()->toDateTimeString(); 
+       //$fechaRegistro = $equipoPrestamos ->PRES_FECHACREADO;
+        //$fechaRegistro = \Carbon\Carbon::parse($fechaini->finish_time)
+       // $fechaRegistro = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', '2017-2-16 12:30:34');
 
-        //$equipos = \reservas\Equipo::all();
-       // $equipos = \reservas\Equipo::where('SALA_ID',$sala)->get();
+        //$startTime = \Carbon\Carbon::parse($this-> $fechaActual);
+        //$finishTime = \Carbon\Carbon::parse($this-> $fechaRegistro);
+        //$diff_in_hours = $fechaActual->diffInHours($fechaRegistro);
+        //$totalDuration = $fechaRegistro->diffForHumans($fechaActual);
+        //$totalDuration = $finishTime->diffForHumans($startTime);
+       //dd($totalDuration);
+
 
 
         //Se carga la vista y se pasan los registros
@@ -70,30 +79,6 @@ class PrestamoEquiposController extends Controller
      * @param  int  $ESFI_ID
      * @return Response
      */
-    public function show()
-    {
-        // Se obtiene el registro
-
-    }
-
-
-     public function consultarEquipos(){
-
-        //$SEDE_ID = $_POST['sede'];
-        $SALA_ID = $_POST['sala'];
-
-        $equipos = \DB::table('EQUIPOS')
-                            ->select('EQUIPOS.*')
-                            ->where('SALA_ID', $SALA_ID)
-                            ->get();
-
-        /*$equipos = \reservas\Equipo::where('SALA_ID', $SALA_ID)
-                    ->get();*/
-
-        return json_encode($equipos);
-        //return $salas;
-    }
-
 
 
 	public function crearPrestamo()
@@ -120,9 +105,31 @@ class PrestamoEquiposController extends Controller
 
 
 
-   		Session::flash('message-modal', 'Equipos prestamo!'. $equipo->EQUI_ID);
+   		Session::flash('message-modal', 'Equipo en prestamo:  '.' '.  $equipo->EQUI_ID);
         return redirect()->back();
 
 
 	}
+
+
+        public function finalizarPrestamo($PRES_ID, $showMsg=true)
+    {
+        $prestamo = Prestamo::findOrFail($PRES_ID);
+        $idquipo= $prestamo -> EQUI_ID;
+
+            $prestamo ->PRES_FECHAFIN = \Carbon\Carbon::now()->toDateTimeString();  
+            $prestamo->save();       
+
+             //Cambia el estado del equipo, una vez es liberado
+            $equipo = Equipo::findOrFail($idquipo);
+            $equipo->ESTA_ID = 3;
+            $equipo->EQUI_MODIFICADOPOR = auth()->user()->username;
+            $equipo->save();
+
+                // redirecciona al index de controlador
+        if($showMsg){
+            Session::flash('message-modal', 'Solicitud '.$prestamo->PRES_ID.' a finalizado exitosamente!');
+            return redirect()->to('consultaPrestamos');
+        }
+    }
 }

@@ -87,6 +87,9 @@
 					<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
 				</a><!-- Fin Botón Editar (edit) -->
 
+	
+	<!-- Botón Ocupar/reservar (salaparaequipos) -->		
+
 	@if($sala->SALA_PRESTAMO)
 
 		{{ Form::button('<i class="fa fa-files-o" aria-hidden="true"></i> <span class="hidden-xs">Liberar</span>',[
@@ -108,10 +111,7 @@
 						}}
 
 		@endif
-
-
-
-
+		<!-- FIN Botón Ocupar/reservar (salaparaequipos) -->					
 
 				<!-- Botón Borrar (destroy) -->			
 				<!-- Mensaje Modal. Bloquea la pantalla mientras se procesa la solicitud -->				

@@ -39,10 +39,19 @@
 			<td>{{ $prestamo -> PRES_FECHACREADO }}</td>
 			<td>
 
-				<!-- Botón Ver (show) -->
-				<a class="btn btn-small btn-success btn-xs" href="">
-					<span class="glyphicon glyphicon-eye-open"></span> Terminar
-				</a><!-- Fin Botón Ver (show) -->
+				<!-- Botón Terminar (show) -->
+					{{ Form::button('<i class="fa fa-files-o" aria-hidden="true"></i> <span class="hidden-xs">Terminar</span>',[
+								'class'=>'btn btn-xs btn-success btn-xs',
+								'data-toggle'=>'modal',
+								'data-pres_id'=>$prestamo -> PRES_ID,
+								'data-action'=>'prestamos/' . $prestamo -> PRES_ID . '/finalizarPrestamo',
+								'data-target'=>'#pregModalTerminarPrestamo',
+							])
+						}}
+						<!-- Fin Botón Terminar (show) -->
+
+
+	
 
 				
 				
@@ -52,8 +61,5 @@
 		@endforeach
 	</tbody>
 </table>
-
-
-
-
+@include('consultas/prestamos/index-modalTerminar')
 @endsection

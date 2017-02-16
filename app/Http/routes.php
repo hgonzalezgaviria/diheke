@@ -102,3 +102,6 @@ Route::resource('recursos', 'RecursosController');
 
 //Salas para equipos
 Route::get('salas/{SALA_ID}/reservarSalaEquipos', 'SalasController@reservarSalaEquipos')->name('reservasSalaEquipos');
+
+//Finalizar prestamos para equipos
+Route::get('prestamos/{PRES_ID}/finalizarPrestamo', 'PrestamoEquiposController@finalizarPrestamo')->name('finalizarPrestamo');

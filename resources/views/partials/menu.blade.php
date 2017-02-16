@@ -88,6 +88,23 @@
 							<i class="fa fa-calendar" aria-hidden="true"></i> Reservas
 						</a>
 					</li>
+					
+					<!-- Menu de Consultas-->
+					<li class="dropdown">						
+						<ul class="nav navbar-nav">
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+								<i class="fa fa-search" aria-hidden="true"></i> Consultas
+									<span class="caret"></span>
+								</a>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="{{ url('/consultaPrestamos') }}"><i class="fa fa-ticket"></i> Prestamos</a></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<!-- FIN Menu de Consultas-->
+
 				@elseif (in_array(Auth::user()->rol->ROLE_ROL , ['user','estudiante','docente']))
 					<li>
 						<a href="{{ url('/prueba') }}">
