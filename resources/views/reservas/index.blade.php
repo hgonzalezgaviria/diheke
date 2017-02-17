@@ -303,10 +303,10 @@
           }
 
 
-
+        //alert("el valor de sel es: "+sel+ " Puede reservar es "+puedereservar);
         if(puedereservar){
 
-              if(sel == null){
+              if(sel!="hasta" && sel!="semestre" && sel!="mensual" && sel!="semana"){
 
                     //====================================================================================
                     //este bloque sirve para validar que el día en que se pretende hacer la reserva no sea un festivo
@@ -314,16 +314,10 @@
                     for(var j = 0; j < arrfestivos.length; j++){
                             
                             var fest = moment(arrfestivos[j], 'YYYY-MM-DD').format('YYYY-MM-DD');
+                            var diasem =  moment(finiciores, 'YYYY-MM-DD HH:mm').format('dddd');
                             //arrfestivos[i] = ffest;
 
-                            if(fest == finiciores){
-
-                              $.msgBox({
-                                  title:"Error",
-                                  content:"¡No se puede realizar la reserva, este día es festivo!",
-                                  type:"error"
-                                });
-
+                            if(fest == finiciores || diasem == "domingo"){
                               puedereservar = false;
 
                             }
@@ -333,7 +327,7 @@
                     
 
                     
-                    if(sel!="hasta" && puedereservar==true){
+                    if(puedereservar){
 
                       crsfToken = document.getElementsByName("_token")[0].value;
 
@@ -359,6 +353,13 @@
                               console.log("Error al crear evento");
                             }        
                       });
+                    }else{
+
+                        $.msgBox({
+                                  title:"Error",
+                                  content:"¡No se puede realizar la reserva, este día es domingo o festivo!",
+                                  type:"error"
+                                });
                     }
               }
 
@@ -376,17 +377,31 @@
                     //alert(fini + " - " + fechahasta);
                     var i = 0;
                     var arrreservas = [];
+                    var cont = 0;
 
-                    while(fini <= fechahasta){
+                    while(fini < fechahasta){
 
-                        fechainicio = moment(fechainicio).add(1, 'days');
-                        fechainicio = moment(fechainicio,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-                        fechafinal = moment(fechafinal).add(1, 'days');
-                        fechafinal = moment(fechafinal,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-                        fini = moment(fini).add(1, 'days');
+
+                      if(cont != 0){
+                          fechainicio = moment(fechainicio).add(1, 'days');
+                          fechainicio = moment(fechainicio,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+                          fechafinal = moment(fechafinal).add(1, 'days');
+                          fechafinal = moment(fechafinal,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+                          fini = moment(fini).add(1, 'days');
+                      }else if(cont == 1){
+                          fechainicio = moment(fechainicio).add(1, 'days');
+                          fechainicio = moment(fechainicio,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+                          fechafinal = moment(fechafinal).add(1, 'days');
+                          fechafinal = moment(fechafinal,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+                          fini = moment(fini).add(1, 'days');
+                      }
+
+                      cont = 1;
+                        
+
                         //fecha = moment(fini).add(1, 'days');
-                        fecha = fini;
-                        fecha = moment(fecha,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
+                        //fecha = fini;
+                        //fecha = moment(fecha,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
 
                         fini = moment(fini,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
 
@@ -409,6 +424,9 @@
                           }
 
                         }
+
+                        
+                        
 
                         i++;
                     }
