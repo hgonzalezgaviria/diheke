@@ -12,13 +12,13 @@ class TableFestivosSeeder extends Seeder
     Public function run() {
 
            $festivo = new \reservas\Festivo;
-           $festivo->FEST_FECHA = '2017-02-15';
+           $festivo->FEST_FECHA = '2017-02-20';
            $festivo->FEST_DESCRIPCION = 'DIA FESTIVO DE PRUEBA';
            $festivo->FEST_CREADOPOR =  'USER_PRUEBA';
            $festivo->save();
 
            $festivo = new \reservas\Festivo;
-           $festivo->FEST_FECHA = '2017-02-18';
+           $festivo->FEST_FECHA = '2017-02-23';
            $festivo->FEST_DESCRIPCION = 'DIA FESTIVO DE PRUEBA';
            $festivo->FEST_CREADOPOR =  'USER_PRUEBA';
            $festivo->save();
