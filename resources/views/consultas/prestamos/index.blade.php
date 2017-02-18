@@ -5,7 +5,7 @@
 @section('scripts')
     <script>
 
-
+    	
      $(document).ready(function (){
 
      	var table1 = $('#tabla').DataTable();

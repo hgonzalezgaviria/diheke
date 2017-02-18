@@ -55,16 +55,8 @@ class PrestamoEquiposController extends Controller
 
        
         //$fechaActual = \Carbon\Carbon::now()->toDateTimeString(); 
-       //$fechaRegistro = $equipoPrestamos ->PRES_FECHACREADO;
-        //$fechaRegistro = \Carbon\Carbon::parse($fechaini->finish_time)
-       // $fechaRegistro = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', '2017-2-16 12:30:34');
-
-        //$startTime = \Carbon\Carbon::parse($this-> $fechaActual);
-        //$finishTime = \Carbon\Carbon::parse($this-> $fechaRegistro);
-        //$diff_in_hours = $fechaActual->diffInHours($fechaRegistro);
-        //$totalDuration = $fechaRegistro->diffForHumans($fechaActual);
-        //$totalDuration = $finishTime->diffForHumans($startTime);
-       //dd($totalDuration);
+       // $fechaRegistro=Prestamo::all()->lists('PRES_FECHACREADO');
+         //dd($equipoPrestamos);
 
 
         //Para el filtro
@@ -77,7 +69,7 @@ class PrestamoEquiposController extends Controller
                            ->get();
 
         //Se carga la vista y se pasan los registros
-        return view('consultas/prestamos/index', compact('equipoPrestamos','salas','sedes'));
+        return view('consultas/prestamos/index', compact('equipoPrestamos','salas','sedes','fechaRegistro'));
     }
 
 
@@ -126,6 +118,7 @@ class PrestamoEquiposController extends Controller
         $idquipo= $prestamo -> EQUI_ID;
 
             $prestamo ->PRES_FECHAFIN = \Carbon\Carbon::now()->toDateTimeString();  
+            $prestamo->PRES_MODIFICADOPOR = auth()->user()->username;
             $prestamo->save();       
 
              //Cambia el estado del equipo, una vez es liberado

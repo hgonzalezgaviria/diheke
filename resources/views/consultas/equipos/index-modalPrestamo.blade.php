@@ -47,11 +47,14 @@
 
               <div class="form-group">
                 <label for="doc_usuario"> Cod/ID</label>
-                <input type="text" class="form-control" name = "doc_usuario" id="doc_usuario" placeholder="Ingrese el codigo del documento" required>
+                <input type="number" class="form-control" name = "doc_usuario"
+                pattern="/^([0-9])*$/" data-toggle="tooltip" title="Numero de ID alumno solo Numeros"
+                 id="doc_usuario" placeholder="Ingrese el codigo del documento" required>
               </div>
               <div class="form-group">
                 <label for="nombre"> Nombre Completo</label>
-                <input type="text" class="form-control" name = "nombre" id="nombre" placeholder=" Ingrese el nombre" required>
+                <input type="text" class="form-control" name = "nombre"
+                pattern="[A-Za-z]{3}" data-toggle="tooltip" title="Nombre de alumno solo letras" id="nombre" placeholder=" Ingrese el nombre" required>
               </div>
 
            

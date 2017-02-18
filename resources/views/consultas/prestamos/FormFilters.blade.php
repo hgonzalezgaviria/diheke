@@ -54,7 +54,7 @@
 			<div class="input-group-addon control-label">Identificación</div>
 			<input type="text"
 				class="form-control"
-				id= "	"
+				id= "COD_ID"
 				placeholder="Por Cod/Ced..."
 			>
 			
