@@ -8,6 +8,18 @@
     	
      $(document).ready(function (){
 
+		//Formato de fecha
+		var formatDate = function(strDate){
+			var strDateFormatted = moment(strDate).format('DD/MM/YYYY hh:mm A');
+			return strDateFormatted;
+		}
+
+		$('.fecha').each(function( index ) {
+			var fecha = $( this );
+			var fechaStr = formatDate(fecha.text().trim());
+			fecha.html(fechaStr);
+		});
+
      	var table1 = $('#tabla').DataTable();
 	//BUSQUEDA POR COLUMNA
 
@@ -113,8 +125,8 @@
 			<td>{{ $prestamo -> EQUI_ID }}</td>			 	
 			<td>{{ $prestamo -> equipo -> sala -> SALA_DESCRIPCION }}</td>
 			<td>{{ $prestamo -> equipo -> sala -> sede -> SEDE_DESCRIPCION }}</td>
-			<td>{{ $prestamo -> PRES_FECHACREADO }}</td>
-			<td>{{ $prestamo -> PRES_FECHACREADO }}</td>
+			<td class="fecha">{{ $prestamo -> PRES_FECHACREADO }}</td>
+			<td class="fecha">{{ $prestamo -> PRES_FECHACREADO }}</td>
 			<td>
 
 				<!-- Botón Terminar () -->
