@@ -3,6 +3,7 @@
 @include('datatable')
 @section('content')
 @section('scripts')
+	{!! Html::script('assets/js/jquery.countdown.min.js') !!}
     <script>
 
     	
@@ -13,6 +14,15 @@
 			var strDateFormatted = moment(strDate).format('DD/MM/YYYY hh:mm A');
 			return strDateFormatted;
 		}
+
+		//Contador
+		$('.counterTime').countdown($('#fechaInicio').text(), {elapse: true})
+		.on('update.countdown', function(event) {
+			var $this = $(this);
+			var totalHours = event.offset.totalDays * 24 + event.offset.hours;
+			$this.html(event.strftime(totalHours + ' hr %M min %S seg'));
+			//$this.html(event.strftime(totalHours + ':%M:%S'));
+		});
 
 		$('.fecha').each(function( index ) {
 			var fecha = $( this );
@@ -125,8 +135,8 @@
 			<td>{{ $prestamo -> EQUI_ID }}</td>			 	
 			<td>{{ $prestamo -> equipo -> sala -> SALA_DESCRIPCION }}</td>
 			<td>{{ $prestamo -> equipo -> sala -> sede -> SEDE_DESCRIPCION }}</td>
-			<td class="fecha">{{ $prestamo -> PRES_FECHACREADO }}</td>
-			<td class="fecha">{{ $prestamo -> PRES_FECHACREADO }}</td>
+			<td id="fechaInicio" class="fecha">{{ $prestamo -> PRES_FECHACREADO }}</td>
+			<td class="counterTime"></td>
 			<td>
 
 				<!-- Botón Terminar () -->
