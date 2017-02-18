@@ -52,11 +52,9 @@ class DropTables extends Command
                 $droplist = implode(',', $droplist);
 
                 DB::beginTransaction();
-                //turn off referential integrity
-                //DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+                DB::statement('SET FOREIGN_KEY_CHECKS = 0');//turn off referential integrity
                 DB::statement("DROP TABLE $droplist");
-                //turn referential integrity back on
-                //DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+                DB::statement('SET FOREIGN_KEY_CHECKS = 1');//turn referential integrity back on
                 DB::commit();
                 $this->comment(PHP_EOL."Todas las tablas fueron borradas en ".env('DB_DATABASE').PHP_EOL);
                 break;
