@@ -16,12 +16,15 @@
 		}
 
 		//Contador
-		$('.counterTime').countdown($('#fechaInicio').text(), {elapse: true})
-		.on('update.countdown', function(event) {
-			var $this = $(this);
-			var totalHours = event.offset.totalDays * 24 + event.offset.hours;
-			$this.html(event.strftime(totalHours + ' hr %M min %S seg'));
-			//$this.html(event.strftime(totalHours + ':%M:%S'));
+		$('.counterTime').each(function() {
+			var $this = $(this), fechaInicio = $(this).parent().find('.fechaInicio').text();
+			$this.countdown(fechaInicio, {elapse: true})
+			.on('update.countdown', function(event) {
+				var $this = $(this);
+				var totalHours = event.offset.totalDays * 24 + event.offset.hours;
+				//$this.html(event.strftime(totalHours + ' hr %M min %S seg'));
+				$this.html(event.strftime(totalHours + ':%M:%S'));
+			});
 		});
 
 		$('.fecha').each(function( index ) {
@@ -135,8 +138,8 @@
 			<td>{{ $prestamo -> EQUI_ID }}</td>			 	
 			<td>{{ $prestamo -> equipo -> sala -> SALA_DESCRIPCION }}</td>
 			<td>{{ $prestamo -> equipo -> sala -> sede -> SEDE_DESCRIPCION }}</td>
-			<td id="fechaInicio" class="fecha">{{ $prestamo -> PRES_FECHACREADO }}</td>
-			<td class="counterTime"></td>
+			<td class="fechaInicio">{{ $prestamo -> PRES_FECHACREADO }}</td>
+			<td class="counterTime text-right"></td>
 			<td>
 
 				<!-- Botón Terminar () -->
