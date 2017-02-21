@@ -168,9 +168,10 @@ class ReservasController extends Controller
                 $reserva->SALA_ID = $k[5];
                 $reserva->EQUI_ID = NULL;
                 $reserva->RESE_CREADOPOR = auth()->user()->username;
-                
-                
+
                 $reserva->save();
+
+                $reservaid = $reserva->RESE_ID;
             }
         
         }

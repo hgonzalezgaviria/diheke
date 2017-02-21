@@ -382,27 +382,21 @@
 
                                 var finicioran = new Date();
                             
-                            
-                    var auxini = new Date();
-                    var auxfin = new Date();
+                    var reservastras = null;      
                     while(fini < fechahasta){
 
 
                               if(cont != 0){
                                 fechainicio = moment(fechainicio).add(1, 'days');
                                 fechainicio = moment(fechainicio,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-                                auxini =  moment(fechainicio,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
                                 fechafinal = moment(fechafinal).add(1, 'days');
                                 fechafinal = moment(fechafinal,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-                                auxfin =  moment(fechafinal,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
                                 fini = moment(fini).add(1, 'days');
                               }else if(cont == 1){
                                 fechainicio = moment(fechainicio).add(1, 'days');
                                 fechainicio = moment(fechainicio,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-                                auxini =  moment(fechainicio,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
                                 fechafinal = moment(fechafinal).add(1, 'days');
                                 fechafinal = moment(fechafinal,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-                                auxfin =  moment(fechafinal,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
                                 fini = moment(fini).add(1, 'days');
                               }
 
@@ -473,6 +467,7 @@
                                                               type:"error"
                                                             });
                                                             */
+                                                          //reservastras += fechairan + " - " + ffinalran + "\n";
                                                            
 
                                                             puedehacerreservas = false;
@@ -487,6 +482,8 @@
                                                               type:"error"
                                                             });
                                                             */
+
+                                                          //reservastras += fechairan + " - " + ffinalran + "\n";
 
                                                             puedehacerreservas = false;
                                                             break;
@@ -538,7 +535,7 @@
 
                                                   $.msgBox({
                                                     title:"Error",
-                                                    content:"¡No se puede realizar reservas, algunas se traslapan! ",
+                                                    content:"¡No se puede realizar reservas, algunas se traslapan en el horario! ",
                                                     type:"error"
                                                   });
 
