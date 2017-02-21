@@ -59,6 +59,6 @@ class Reserva extends Model
     {
         $foreingKey = 'RESE_ID';
         $otherKey   = 'AUTO_ID';
-        return $this->belongsToMany(Autorizacion::class, 'RESERVAS_AUTORIZADAS', $foreingKey,  $otherKey);
+        return $this->belongsToMany(Autorizacione::class, 'RESERVAS_AUTORIZADAS', $foreingKey,  $otherKey);
     }
 }

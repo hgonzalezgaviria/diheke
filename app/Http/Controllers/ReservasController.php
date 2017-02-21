@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use reservas\Http\Requests;
 use reservas\Reserva;
+use reservas\Autorizacione;
+use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Log;
@@ -32,7 +34,7 @@ class ReservasController extends Controller
 
             if(in_array(explode("@", $action)[1], $arrActionsAdmin))//Si la acción del controlador se encuentra en la lista de acciones de admin...
             {
-                if( ! in_array($role , ['admin','editor']))//Si el rol no es admin o editor, se niega el acceso.
+                if( ! in_array($role , ['admin','editor','docente']))//Si el rol no es admin o editor, se niega el acceso.
                 {
                     Session::flash('error', '¡Usuario no tiene permisos!');
                     abort(403, '¡Usuario no tiene permisos!.');
@@ -142,6 +144,13 @@ class ReservasController extends Controller
 
     public function guardarReservas(Request $request)
     {
+
+      $role = isset(auth()->user()->rol->ROLE_ROL) ? auth()->user()->rol->ROLE_ROL : 'guest';
+      $fechaactual = Carbon::now();
+      $cont = 0;
+      $idauto = null;
+
+
       $reservas = Input::all();
 
       /*
@@ -151,11 +160,35 @@ class ReservasController extends Controller
           }
       }
       */
+
       foreach ($reservas as $res) {
           
         foreach ($res as $k) {
         
             if($k[0] != null){
+
+                if($cont == 0 && $role != 'admin'){
+                    $idauto = \DB::table('AUTORIZACIONES')->insertGetId(
+                        [
+                        'AUTO_FECHASOLICITUD' => $fechaactual, 
+                        'AUTO_ESTADO' => 'NAP'
+                        ]
+                    );
+                }
+
+                if($cont == 0 && $role == 'admin'){
+                    $idauto = \DB::table('AUTORIZACIONES')->insertGetId(
+                        [
+                        'AUTO_FECHASOLICITUD' => $fechaactual, 
+                        'AUTO_FECHAAPROBACION' => $fechaactual,
+                        'AUTO_ESTADO' => 'AUT'
+                        ]
+                    );
+                }
+
+
+
+                $cont++;
             
                 //Insertando evento a base de datos
                 $reserva = new Reserva;
@@ -172,14 +205,139 @@ class ReservasController extends Controller
                 $reserva->save();
 
                 $reservaid = $reserva->RESE_ID;
+
+                \DB::table('RESERVAS_AUTORIZADAS')->insertGetId(
+                        [
+                        'RESE_ID' => $reservaid, 
+                        'AUTO_ID' => $idauto
+                        ]
+                );
+                
             }
         
         }
 
-        
+      }
 
-        
+      $correcto = "correcto";
+      return $reserva;
+      //return Response::json($correcto);
+    }
 
+    public function consultaMaterias(){
+
+        //$SEDE_ID = $_POST['sede'];
+
+        $materias = \DB::table('MATERIAS')
+                            ->select(
+                                    'MATERIAS.MATE_CODIGOMATERIA',
+                                    'MATERIAS.MATE_NOMBRE',
+                                    'MATERIAS.UNID_ID')
+                            //->where('SALAS.SEDE_ID','=',$SEDE_ID)
+                            ->get();
+
+        return json_encode($materias);
+        //return $salas;materias
+    
+    }
+
+    public function consultaFacultades(){
+
+        //$SEDE_ID = $_POST['sede'];
+
+        $facultades = \DB::table('UNIDADES')
+                            ->select(
+                                    'UNIDADES.UNID_ID',
+                                    'UNIDADES.UNID_NOMBRE',
+                                    'UNIDADES.UNID_CODIGO')
+                            //->where('SALAS.SEDE_ID','=',$SEDE_ID)
+                            ->get();
+
+        return json_encode($facultades);
+        //return $salas;materias
+    
+    }
+
+    public function consultaGrupos(){
+
+        //$SEDE_ID = $_POST['sede'];
+
+        $grupos = \DB::table('GRUPOS')
+                            ->select(
+                                    'GRUPOS.GRUP_ID',
+                                    'GRUPOS.GRUP_NOMBRE',
+                                    'GRUPOS.MATE_CODIGOMATERIA')
+                            //->where('SALAS.SEDE_ID','=',$SEDE_ID)
+                            ->get();
+
+        return json_encode($grupos);
+        //return $salas;materias
+    
+    }
+
+
+    public function guardarReservasDocente(Request $request)
+    {
+      $reservas = Input::all();
+
+      /*
+      for ($i=0; $i < $hasta; $i++) { 
+          for ($j=0; $j < 7; $j++) { 
+              
+          }
+      }
+      */
+
+      $fechaactual = Carbon::now();
+
+      $cont = 0;
+      $idauto = null;
+
+      foreach ($reservas as $res) {
+          
+        foreach ($res as $k) {
+        
+            if($k[0] != null){
+            
+
+                if($cont == 0){
+                    $idauto = \DB::table('AUTORIZACIONES')->insertGetId(
+                        [
+                        'AUTO_FECHASOLICITUD' => $fechaactual, 
+                        'AUTO_ESTADO' => 'NAP'
+                        ]
+                    );
+                }
+
+                $cont++;
+
+                //Insertando evento a base de datos
+                $reserva = new Reserva;
+                
+                $reserva->RESE_TITULO = $k[0];
+                $reserva->RESE_FECHAINI = $k[1];
+                $reserva->RESE_TODOELDIA = $k[2];
+                $reserva->RESE_COLOR = $k[3];
+                $reserva->RESE_FECHAFIN = $k[4];
+                $reserva->SALA_ID = $k[5];
+                $reserva->EQUI_ID = NULL;
+                $reserva->RESE_CREADOPOR = auth()->user()->username;
+
+                $reserva->save();
+
+                $reservaid = $reserva->RESE_ID;
+
+                \DB::table('RESERVAS_AUTORIZADAS')->insertGetId(
+                        [
+                        'RESE_ID' => $reservaid, 
+                        'AUTO_ID' => $idauto
+                        ]
+                );
+
+                
+            }
+        
+        }
 
       }
 

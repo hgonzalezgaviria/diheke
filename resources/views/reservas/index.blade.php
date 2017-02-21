@@ -77,6 +77,112 @@
           }  
         });
 
+    var cmaterias = 0;
+    $("#asignaturas").click(function(){
+
+      
+
+
+      if(cmaterias == 0){
+
+            crsfToken = document.getElementsByName("_token")[0].value;
+
+            $.ajax({
+                     url: '../consultaMaterias',
+                     data: 'sede='+ null,
+                     dataType: "json",
+                     type: "POST",
+                     headers: {
+                            "X-CSRF-TOKEN": crsfToken
+                        },
+                  success: function(materia) {
+                 
+                          $('#asignaturas').empty();
+              
+                          for(var i = 0; i < materia.length; i++){
+                            $("#asignaturas").append('<option value=' + materia[i].MATE_CODIGOMATERIA + '>' + materia[i].MATE_NOMBRE + '</option>');
+                          } 
+                  },
+                  error: function(json){
+                          console.log("Error al traer los datos");
+                  }        
+              });
+
+
+            cmaterias++;
+      }
+
+    });
+
+    var cfacultades = 0;
+    $("#facultades").click(function(){
+
+      if(cfacultades == 0){
+
+            crsfToken = document.getElementsByName("_token")[0].value;
+
+            $.ajax({
+                     url: '../consultaFacultades',
+                     data: 'sede='+ null,
+                     dataType: "json",
+                     type: "POST",
+                     headers: {
+                            "X-CSRF-TOKEN": crsfToken
+                        },
+                  success: function(facultades) {
+                 
+                          $('#facultades').empty();
+              
+                          for(var i = 0; i < facultades.length; i++){
+                            $("#facultades").append('<option value=' + facultades[i].UNID_ID + '>' + facultades[i].UNID_NOMBRE + '</option>');
+                          } 
+                  },
+                  error: function(json){
+                          console.log("Error al traer los datos");
+                  }        
+              });
+
+
+            cfacultades++;
+      }
+
+    });
+
+    var cgrupos = 0;
+    $("#grupos").click(function(){
+
+      if(cgrupos == 0){
+
+            crsfToken = document.getElementsByName("_token")[0].value;
+
+            $.ajax({
+                     url: '../consultaGrupos',
+                     data: 'sede='+ null,
+                     dataType: "json",
+                     type: "POST",
+                     headers: {
+                            "X-CSRF-TOKEN": crsfToken
+                        },
+                  success: function(grupos) {
+                 
+                          $('#grupos').empty();
+              
+                          for(var i = 0; i < facultades.length; i++){
+                            $("#grupos").append('<option value=' + grupos[i].GRUP_ID + '>' + grupos[i].GRUP_NOMBRE + '</option>');
+                          } 
+                  },
+                  error: function(json){
+                          console.log("Error al traer los datos");
+                  }        
+              });
+
+
+            cgrupos++;
+      }
+
+    });
+
+
     //ocultamos el campo de fecha hasta cuando se cargue el DOM
     $('#fechahasta').hide();
 
@@ -762,7 +868,7 @@
               </div>
 
               <!-- /btn-group -->
-            </div><br/><br/>
+            </div>
             <!-- /input-group -->
 
 
@@ -802,13 +908,7 @@
 
             Tipo de Repetición:
             <div class="radio">
-              <label><input type="radio" name="radio" name="semestre" value="semestre">Semestral</label>
-            </div>
-            <div class="radio">
-              <label><input type="radio" name="radio" name="mensual" value="mensual">Mensual</label>
-            </div>
-            <div class="radio">
-              <label><input type="radio" name="radio" name="semana" value="semana">En la Semana</label>
+              <label><input type="radio" name="radio" name="ninguna" value="ninguna">Ninguna</label>
             </div>
             <div class="radio disabled">
               <label><input type="radio" name="radio" name="hasta" value="hasta">Hasta una Fecha</label>
@@ -821,27 +921,45 @@
               </span>
             </div>
 
-            <br>
-
-            <div class="checkbox">
-              <label><input type="checkbox" value="lu">Lunes</label>
-            </div>
-            <div class="checkbox">
-              <label><input type="checkbox" value="ma">Martes</label>
-            </div>
-            <div class="checkbox disabled">
-              <label><input type="checkbox" value="mi">Miercoles</label>
-            </div>
-            <div class="checkbox disabled">
-              <label><input type="checkbox" value="mi">Jueves</label>
-            </div>
-            <div class="checkbox disabled">
-              <label><input type="checkbox" value="mi">Viernes</label>
-            </div>
-            <div class="checkbox disabled">
-              <label><input type="checkbox" value="mi">Sabado</label>
+             <div class="form-group">
+                <label>Facultad:</label>
+                <div class="selectContainer">
+                    <select class="form-control" name="size" id="facultades">
+                      <option value="">Seleccione..</option>
+                    </select>
+                </div>
             </div>
 
+            <div class="form-group">
+                <label>Docente:</label>
+                <div class="selectContainer">
+                    <select class="form-control" name="size" id="docentes">
+                      <option value="">Seleccione..</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Grupo:</label>
+                <div class="selectContainer">
+                    <select class="form-control" name="size" id="grupos">
+                      <option value="">Seleccione..</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Asignatura:</label>
+                <div class="selectContainer">
+                    <select class="form-control" name="size" id="asignaturas">
+                      <option value="">Seleccione..</option>
+                    </select>
+                </div>
+            </div>
+
+
+
+             <br>
             <button id="reservar" type="button" class="btn btn-primary btn-flat">Crear Reserva</button>
 
             <button id="probar" type="button" class="btn btn-primary btn-flat">Probar</button>

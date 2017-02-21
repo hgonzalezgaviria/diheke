@@ -16,8 +16,8 @@ class CreateTableAutorizacion extends Migration
         Schema::create('AUTORIZACIONES', function (Blueprint $table) {
 
             $table->increments('AUTO_ID');
-            $table->date('AUTO_FECHASOLICITUD');
-            $table->date('AUTO_FECHAAPROBACION')->nullable();
+            $table->datetime('AUTO_FECHASOLICITUD');
+            $table->datetime('AUTO_FECHAAPROBACION')->nullable();
             $table->string('AUTO_ESTADO', 3);
 
              //Traza
