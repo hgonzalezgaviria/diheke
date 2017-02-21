@@ -98,10 +98,21 @@
                   success: function(materia) {
                  
                           $('#asignaturas').empty();
-              
-                          for(var i = 0; i < materia.length; i++){
-                            $("#asignaturas").append('<option value=' + materia[i].MATE_CODIGOMATERIA + '>' + materia[i].MATE_NOMBRE + '</option>');
-                          } 
+
+                          var registros = materia.length;
+                          if(registros > 0){
+                              for(var i = 0; i < materia.length; i++){
+                                $("#asignaturas").append('<option value=' + materia[i].MATE_CODIGOMATERIA + '>' + materia[i].MATE_NOMBRE + '</option>');
+                              }
+                          }else{
+
+                              $.msgBox({
+                                            title:"Información",
+                                            content:"¡No hay datos disponibles!",
+                                            type:"info"
+                              }); 
+
+                          }
                   },
                   error: function(json){
                           console.log("Error al traer los datos");
@@ -132,10 +143,21 @@
                   success: function(facultades) {
                  
                           $('#facultades').empty();
-              
-                          for(var i = 0; i < facultades.length; i++){
-                            $("#facultades").append('<option value=' + facultades[i].UNID_ID + '>' + facultades[i].UNID_NOMBRE + '</option>');
-                          } 
+
+                          var registros = facultades.length;
+                          if(registros > 0){
+                              for(var i = 0; i < facultades.length; i++){
+                                $("#facultades").append('<option value=' + facultades[i].UNID_ID + '>' + facultades[i].UNID_NOMBRE + '</option>');
+                              }
+                          }else{
+
+                              $.msgBox({
+                                            title:"Información",
+                                            content:"¡No hay datos disponibles!",
+                                            type:"info"
+                              }); 
+
+                          }
                   },
                   error: function(json){
                           console.log("Error al traer los datos");
@@ -164,12 +186,25 @@
                             "X-CSRF-TOKEN": crsfToken
                         },
                   success: function(grupos) {
-                 
+
                           $('#grupos').empty();
+
+                          var registros = grupos.length;
+
+                          if(registros > 0){
               
-                          for(var i = 0; i < facultades.length; i++){
-                            $("#grupos").append('<option value=' + grupos[i].GRUP_ID + '>' + grupos[i].GRUP_NOMBRE + '</option>');
-                          } 
+                              for(var i = 0; i < grupos.length; i++){
+                                $("#grupos").append('<option value=' + grupos[i].GRUP_ID + '>' + grupos[i].GRUP_NOMBRE + '</option>');
+                              } 
+                          }else{
+
+                              $.msgBox({
+                                            title:"Información",
+                                            content:"¡No hay datos disponibles!",
+                                            type:"info"
+                              }); 
+
+                          }
                   },
                   error: function(json){
                           console.log("Error al traer los datos");
