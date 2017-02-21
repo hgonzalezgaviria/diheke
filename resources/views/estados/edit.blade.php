@@ -14,7 +14,7 @@
 	<!-- if there are creation errors, they will show here -->
 	{{ Html::ul($errors->all() )}}
 
-		{{ Form::model($estado, array('action' => array('EstadosController@update', $estado->ESTA_ID,), 'method' => 'PUT', 'class' => 'form-horizontal')) }}
+		{{ Form::model($estado, array('action' => array('EstadosController@update', $estado->ESTA_ID,), 'method' => 'PUT', 'class' => 'form-vertical')) }}
 
 	  	<div class="form-group">
 			{{ Form::label('ESTA_DESCRIPCION', 'Descripción') }} 

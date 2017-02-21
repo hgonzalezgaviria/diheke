@@ -14,7 +14,7 @@
 	<!-- if there are creation errors, they will show here -->
 	{{ Html::ul($errors->all() )}}
 
-		{{ Form::model($tipoestado, array('action' => array('TipoestadosController@update', $tipoestado->TIES_ID), 'method' => 'PUT', 'class' => 'form-horizontal')) }}
+		{{ Form::model($tipoestado, array('action' => array('TipoestadosController@update', $tipoestado->TIES_ID), 'method' => 'PUT', 'class' => 'form-vertical')) }}
 
 	  	<div class="form-group">
 			{{ Form::label('TIES_DESCRIPCION', 'Descripción') }} 

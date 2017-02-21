@@ -24,7 +24,7 @@
 
 <div id="filters" class="collapse">
 	<div class="form-group col-xs-12 col-md-8">
-		{{ Form::open(['id'=>'formFilter' , 'class' => 'form-horizontal']) }}
+		{{ Form::open(['id'=>'formFilter' , 'class' => 'form-vertical']) }}
 
 			<div class="input-group">
 			<div class="input-group-addon">Sedes</div>

@@ -7,7 +7,7 @@
 
 	@include('partials/errors')
 	
-		{{ Form::open(array('url' => 'sedes', 'class' => 'form-horizontal')) }}
+		{{ Form::open(array('url' => 'sedes', 'class' => 'form-vertical')) }}
 
 	  	<div class="form-group">
 			{{ Form::label('SEDE_DESCRIPCION', 'Descripción') }} 

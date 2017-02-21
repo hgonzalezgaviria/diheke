@@ -26,7 +26,7 @@
 
 	@include('partials/errors')
 
-	{{ Form::model($politica, array('action' => array('PoliticasController@update', $politica->POLI_ID), 'method' => 'PUT', 'class' => 'form-horizontal')) }}
+	{{ Form::model($politica, array('action' => array('PoliticasController@update', $politica->POLI_ID), 'method' => 'PUT', 'class' => 'form-vertical')) }}
 
 	<div class="form-group">
 			{{ Form::label('POLI_DESCRIPCION', 'Descripción') }} 

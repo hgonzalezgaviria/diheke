@@ -223,7 +223,7 @@
 		</div>
 	</div>
 	
-{{ Form::open(['id'=>'indexequi' , 'class' => 'form-horizontal']) }}
+{{ Form::open(['id'=>'indexequi' , 'class' => 'form-vertical']) }}
 <!--<table class="table table-striped" id="tabla">-->
 <table class="table table-striped table-bordered dt-responsive nowrap" id="tabla">
 	<thead>

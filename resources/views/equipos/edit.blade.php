@@ -62,7 +62,7 @@
 
 	@include('partials/errors')
 
-	{{ Form::model($equipo, array('action' => array('EquiposController@update', $equipo->EQUI_ID), 'method' => 'PUT', 'class' => 'form-horizontal')) }}
+	{{ Form::model($equipo, array('action' => array('EquiposController@update', $equipo->EQUI_ID), 'method' => 'PUT', 'class' => 'form-vertical')) }}
 
 	  	<div class="form-group">
 			{{ Form::label('EQUI_DESCRIPCION', 'Descripción') }} 

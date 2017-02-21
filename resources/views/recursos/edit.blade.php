@@ -14,7 +14,7 @@
 	<!-- if there are creation errors, they will show here -->
 	{{ Html::ul($errors->all() )}}
 
-		{{ Form::model($recurso, [ 'action' => [ 'RecursosController@update', $recurso->RECU_ID ], 'method' => 'PUT', 'class' => 'form-horizontal' ]) }}
+		{{ Form::model($recurso, [ 'action' => [ 'RecursosController@update', $recurso->RECU_ID ], 'method' => 'PUT', 'class' => 'form-vertical' ]) }}
 
 	  	<div class="form-group">
 			{{ Form::label('RECU_DESCRIPCION', 'Descripción') }} 
