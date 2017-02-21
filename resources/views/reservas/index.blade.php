@@ -350,7 +350,7 @@
                               }
                           }
 
-                          if((fechahasta!=null && fechahasta!="") && (sel!=null && sel=="hasta")){
+    if((fechahasta!=null && fechahasta!="") && (sel!=null && sel=="hasta")){
 
                             
                                 var fini = $('#fechainicio').data("DateTimePicker").date();
@@ -378,26 +378,31 @@
 
                                 //variable para almacenar el valor de la fecha de inicio formateada a YYYY-MM-DD de la
                                 //reserva que se pretende realizar
-                                var finiciovalida = new Date();
+                                var finiciovalidaran = new Date();
 
-                                var finicio = new Date();
+                                var finicioran = new Date();
                             
                             
-
+                    var auxini = new Date();
+                    var auxfin = new Date();
                     while(fini < fechahasta){
 
 
                               if(cont != 0){
                                 fechainicio = moment(fechainicio).add(1, 'days');
                                 fechainicio = moment(fechainicio,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+                                auxini =  moment(fechainicio,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
                                 fechafinal = moment(fechafinal).add(1, 'days');
                                 fechafinal = moment(fechafinal,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+                                auxfin =  moment(fechafinal,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
                                 fini = moment(fini).add(1, 'days');
                               }else if(cont == 1){
                                 fechainicio = moment(fechainicio).add(1, 'days');
                                 fechainicio = moment(fechainicio,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+                                auxini =  moment(fechainicio,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
                                 fechafinal = moment(fechafinal).add(1, 'days');
                                 fechafinal = moment(fechafinal,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+                                auxfin =  moment(fechafinal,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
                                 fini = moment(fini).add(1, 'days');
                               }
 
@@ -428,72 +433,77 @@
                                         for(k in reservastodas){
 
                                                 //objeto tipo date para almacenar el valor de la fecha inicial de la reserva del arreglo
-                                                var fechai = new Date();
-                                                fechai = moment(reservastodas[k].start, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+                                                var fechairan = new Date();
+                                                fechairan = moment(reservastodas[k].start, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
 
                                                 //objeto tipo date para almacenar el valor de la fecha final de la reserva que esta en bd
-                                                var ffinal = new Date();
-                                                ffinal = moment(reservastodas[k].end, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+                                                var ffinalran = new Date();
+                                                ffinalran = moment(reservastodas[k].end, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
 
-                                                finiciovalida = moment(fechainicio, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
+                                                finiciovalidaran = moment(fechainicio, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
 
-                                                finicio = moment(fechainicio, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+                                                finicioran = moment(fechainicio, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
 
                                                 //objeto tipo date para almacenar el valor de la fecha inicial de la reserva que se pretende realizar
-                                                var finicioreserva = new Date();
-                                                finicioreserva = moment(reservastodas[k].start, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
+                                                var finicioreservaran = new Date();
+                                                finicioreservaran = moment(reservastodas[k].start, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
 
-                                                finicio = moment(fechai, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+                                                
 
                                                 //objeto tipo date para almacenar el valor de la fecha final de la reserva que se pretende
                                                 //realizar
-                                                var ffinalreserva = new Date();
-                                                ffinalreserva = moment(fechafinal, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+                                                var ffinalreservaran = new Date();
+                                                ffinalreservaran = moment(fechafinal, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
 
                                                           //si la fecha de inicio de base de datos (formato YYYY-MM-DD) es igual a la fecha de inicio
                                                   //de reserva que se pretende realizar, se validan las demas condiciones. Es decir que no va
                                                   //revisar todas las reservas sino unicamente las reservas del día en que se pretende realizar
                                                   //la nueva reserva
-                                                  if(finiciovalida == finicioreserva){
+                                                  if(finiciovalidaran == finicioreservaran){
                                                         //alert(fechafin);
                                                         
 
                                                           //si esta condicion es verdadera no puede reservar
-                                                          if(finicio>=fechai && finicio<=ffinal){
+                                                          if(finicioran>=fechairan && finicioran<=ffinalran){
                                                             
+                                                            /*
                                                             $.msgBox({
-                                                              title:"Error",
-                                                              content:"¡Fecha inicial no disponible para la reserva! "+finicio,
+                                                              title:"Error con fecha inicial",
+                                                              content:"¡No se puede realizar reserva, existen algunas que se traslapan! "+finicioran,
                                                               type:"error"
                                                             });
+                                                            */
+                                                           
 
-                                                            puedereservar = false;
+                                                            puedehacerreservas = false;
                                                             break;
                                                             
-                                                          }else if(ffinalreserva>=fechai && ffinalreserva<=ffinal){
+                                                          }else if(ffinalreservaran>=fechairan && ffinalreservaran<=ffinalran){
                                                             
+                                                            /*
                                                             $.msgBox({
-                                                              title:"Error",
-                                                              content:"¡Fecha final no disponible para la reserva! "+ffinalreserva,
+                                                              title:"Error con fecha final",
+                                                              content:"¡No se puede realizar reserva, existen algunas que se traslapan! "+ffinalreservaran,
                                                               type:"error"
                                                             });
+                                                            */
 
-                                                            puedereservar = false;
+                                                            puedehacerreservas = false;
                                                             break;
 
                                                           }else{
-                                                            puedereservar = true;
+                                                            puedehacerreservas = true;
                                                           }
 
                                                   }else{
-                                                      puedereservar = true;
+                                                      puedehacerreservas = true;
                                                   }
-                                        }
+                                        }//aqui cierra el for
 
                                                   i++;
-                    }
+                    }//aqui cierra el while
 
-                                                if(puedereservar){
+                                                if(puedehacerreservas){
 
                                                     crsfToken = document.getElementsByName("_token")[0].value;
 
@@ -524,24 +534,24 @@
                                                       console.log("Error al crear evento");
                                                     }        
                                                     });
+                                                }else if(puedehacerreservas == false){
+
+                                                  $.msgBox({
+                                                    title:"Error",
+                                                    content:"¡No se puede realizar reservas, algunas se traslapan! ",
+                                                    type:"error"
+                                                  });
+
                                                 }
-                                              }
+    }//aqui cierra el if de si es reserva de rango
 
                                               
 
                                               
 
-                                            }
+                                            }//aqui cierra el if de si puede reservar
 
-                                            if(!puedereservar){
-
-                                              $.msgBox({
-                                                title:"Error",
-                                                content:"¡No se puede realizar reservas, algunas se traslapan! ",
-                                                type:"error"
-                                              });
-
-                                            }
+                                            
 
 
                                             
