@@ -5,7 +5,7 @@ namespace reservas;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Autorizacione extends Model
+class Autorizacion extends Model
 {
     //
     protected $table = 'AUTORIZACIONES';
@@ -26,4 +26,13 @@ class Autorizacione extends Model
       	"AUTO_ID"
     ];
 
+	/*
+	 * Las reservas que están autorizadas.
+	 */
+	public function reservas()
+	{
+		$foreingKey = 'AUTO_ID';
+		$otherKey   = 'RESE_ID';
+		return $this->belongsToMany(Reserva::class, 'RESERVAS_AUTORIZADAS', $foreingKey,  $otherKey);
+	}
 }

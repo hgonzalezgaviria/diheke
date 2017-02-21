@@ -48,4 +48,17 @@ class Reserva extends Model
         $foreingKey = 'EQUI_ID';
         return $this->belongsTo(Equipo::class, $foreingKey);
     }
+
+
+    /*
+     * Las reservas que están autorizadas.
+     * en el constructor, para relacionar una reserva usar:
+     * $reserva->autorizaciones()->sync([x, y , z], false); //Sin el false, reemplaza las relaciones existentes.
+     */
+    public function autorizaciones()
+    {
+        $foreingKey = 'RESE_ID';
+        $otherKey   = 'AUTO_ID';
+        return $this->belongsToMany(Autorizacion::class, 'RESERVAS_AUTORIZADAS', $foreingKey,  $otherKey);
+    }
 }
