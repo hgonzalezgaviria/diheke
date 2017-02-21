@@ -1,9 +1,3 @@
-@section('head')
-	{!! Html::style('assets/css/bootstrap.vertical-tabs.css') !!}
-	{!! Html::style('assets/css/hover-zoom.css') !!}
-@parent
-@endsection
-
 
 @section('scripts')
     <script>

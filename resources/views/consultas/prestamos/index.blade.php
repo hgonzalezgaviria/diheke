@@ -15,26 +15,41 @@
 			return strDateFormatted;
 		}
 
-		//Contador
-		$('.counterTime').each(function() {
-			var $this = $(this), fechaInicio = $(this).parent().find('.fechaInicio').text();
-			$this.countdown(fechaInicio, {elapse: true})
-			.on('update.countdown', function(event) {
-				var $this = $(this);
-				var totalHours = event.offset.totalDays * 24 + event.offset.hours;
-				//$this.html(event.strftime(totalHours + ' hr %M min %S seg'));
-				$this.html(event.strftime(totalHours + ':%M:%S'));
+
+		var setCounterTime = function(){
+			//Contador
+			$('.counterTime').each(function() {
+				var $this = $(this), fechaInicio = $(this).parent().find('.fechaInicio').data('fechainicio');
+				$this.countdown(fechaInicio, {elapse: true})
+				.on('update.countdown', function(event) {
+					var $this = $(this);
+					var totalHours = event.offset.totalDays * 24 + event.offset.hours;
+					$this.html(event.strftime(totalHours + ' hr %M min %S seg'));
+					//$this.html(event.strftime(totalHours + ':%M:%S'));
+				});
 			});
-		});
 
-		$('.fecha').each(function( index ) {
-			var fecha = $( this );
-			var fechaStr = formatDate(fecha.text().trim());
-			fecha.html(fechaStr);
-		});
 
-     	var table1 = $('#tabla').DataTable();
-	//BUSQUEDA POR COLUMNA
+			//Cambiar de formato de fecha inicio
+			$('.fechaInicio').each(function( index ) {
+				var fecha = $( this );
+				var fechaStr = formatDate(fecha.data('fechainicio'));
+				fecha.html(fechaStr);
+			});
+
+		}
+
+	    var table1 = $('#tabla').DataTable();
+		setCounterTime();
+
+		table1.on( 'draw.dt', function () {
+		    setCounterTime();
+		} );
+
+		/*
+		Button filter
+		*/
+		//BUSQUEDA POR COLUMNA
 
 		$('#COD_ID').on( 'keyup', function () {
 		    table1
@@ -90,9 +105,6 @@
         	}); //Fin ajax
 		} );
 
-
-
-
 	  });
 		
 
@@ -138,7 +150,7 @@
 			<td>{{ $prestamo -> EQUI_ID }}</td>			 	
 			<td>{{ $prestamo -> equipo -> sala -> SALA_DESCRIPCION }}</td>
 			<td>{{ $prestamo -> equipo -> sala -> sede -> SEDE_DESCRIPCION }}</td>
-			<td class="fechaInicio">{{ $prestamo -> PRES_FECHACREADO }}</td>
+			<td class="fechaInicio" data-fechainicio="{{ $prestamo -> PRES_FECHACREADO }}"></td>
 			<td class="counterTime text-right"></td>
 			<td>
 

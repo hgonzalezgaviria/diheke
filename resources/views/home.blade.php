@@ -36,7 +36,7 @@
           if(salas[i].SEDE_ID == $(this).data('sede') && (salas[i].ESTA_ID==1)){
 
             nohaySalas=true;
-            var html = '<div class="col-xs-3 zoom-in-hover">'+
+            var html = '<div class="col-xs-10 col-sm-3 col-md-3 col-lg-3 zoom-in-hover">'+
                           '<div class="panel panel-default">'+
                             '<div class="panel-heading">'+salas[i].SALA_DESCRIPCION+'<br></div>'+
                               '<div class="panel-body">'+
@@ -80,7 +80,7 @@
           ){
 
             nohayEquipos=true;
-            var html = '<div class="col-xs-3 zoom-in-hover">'+
+            var html = '<div class="col-xs-10 col-sm-3 col-md-3 col-lg-3 zoom-in-hover">'+
                           '<div class="panel panel-default">'+
                             '<div class="panel-heading">'+salas[i].SALA_DESCRIPCION+'<br></div>'+
                               '<div class="panel-body">'+
@@ -127,7 +127,7 @@
 @section('content')
 <h1 class="page-header">Inicio</h1>
 
-<div class="col-xs-2"><h3>Sedes</h3>
+<div class="col-xs-4 col-sm-2"><h3>Sedes</h3>
   <ul class="nav nav-tabs tabs-left">
     @foreach($sedes as $sede)
     <li><a href="#Sede{{$sede->SEDE_ID}}" data-toggle="tab" data-sede="{{$sede->SEDE_ID}}">{{$sede->SEDE_DESCRIPCION}}</a></li>
@@ -135,7 +135,7 @@
   </ul>
 </div>
 
-<div class="col-xs-10">
+<div class="col-xs-8 col-sm-10">
       <ul class="nav nav-tabs tabs-top">
         <li class="hide"><a href="#salas" id="tab-salas" data-toggle="tab" data-sede="">Salas</a></li>
         <li class="hide"><a href="#equipos" id="tab-equipos" data-toggle="tab" data-sede="">Equipos</a></li>
@@ -143,7 +143,7 @@
 </div>
 
 
-<div class="tab-content col-xs-offset-2">
+<div class="tab-content col-xs-offset-4 col-sm-offset-2">
   <div class="tab-pane fade" id="salas"></div>
   <div class="tab-pane fade" id="equipos"></div>
 </div>    

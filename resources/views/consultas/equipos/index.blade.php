@@ -90,6 +90,8 @@
 				
 				var equipo = $(this).find('#equipo').val();
 				$('#'+equipo).bootstrapToggle('on');
+				$('#doc_usuario').val('');
+				$('#nombre').val('');
 
 			})
 
