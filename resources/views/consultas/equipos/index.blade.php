@@ -129,7 +129,7 @@
 	{{ Form::open(['id'=>'consulequi' , 'class' => 'form-vertical']) }}
 	
 	@foreach ($equipos as $i => $equipo)
-		<div class="col-md-4 zoom-in-hover">
+		<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 zoom-in-hover">
 			<div class="panel panel-default">
 
 				<div class="panel-heading">

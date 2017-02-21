@@ -43,7 +43,7 @@
                               'Cantidad de equipos:' + salas[i].SALA_CAPACIDAD+'<br><br>'+  
                               '{{ Form::open( ['url' => 'reservas/show', 'method' => 'get', 'class'=>'form-vertical' ]  ) }}'+
                               ' <input name="sala" type="hidden" value='+salas[i].SALA_ID+'>'+
-                              '{{ Form::button('<i class="fa fa-ticket" aria-hidden="true"></i> Reservar', [ 'class'=>'btn btn-primary', 'type'=>'submit' ]) }}'+
+                              '{{ Form::button('<i class="fa fa-ticket" aria-hidden="true"></i> Reservar', [ 'class'=>'btn-xs btn-primary btn-xs', 'type'=>'submit' ]) }}'+
                               '{{ Form::close() }}'+
                             '</div>'+
                           '</div>'+
@@ -88,7 +88,7 @@
                               'Total disponibles:' + salas[i].equipos_disp+'<br><br>'+  
                               '{{ Form::open( ['url' => 'consultaEquipos', 'method' => 'get', 'class'=>'form-vertical' ]  ) }}'+
                               ' <input name="sala" type="hidden" value='+salas[i].SALA_ID+'>'+
-                              '{{ Form::button('<i class="fa fa-ticket" aria-hidden="true"></i> Reservar', [ 'class'=>'btn btn-primary', 'type'=>'submit' ]) }}'+
+                              '{{ Form::button('<i class="fa fa-ticket" aria-hidden="true"></i> Reservar', [ 'class'=>'btn-xs btn-primary btn-xs', 'type'=>'submit' ]) }}'+
                               '{{ Form::close() }}'+
                             '</div>'+
                           '</div>'+

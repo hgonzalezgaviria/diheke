@@ -35,7 +35,25 @@
 		</script>
 	@parent
 	@endsection
+
+	@elseif (Session::has('message-modal-nok'))
+		@section('scripts')
+		<script type="text/javascript">
+			$(document).ready(function () {
+				var modal = $('#messageModal');
+				modal.find('#message').text('{{Session::get('message-modal-nok')}}');
+				modal.find('.modal-header')
+					.addClass('alert-warning')
+					.find('.modal-title').text('¡Advertencia!');
+				modal.modal('show');
+			})
+		</script>
+	@parent
+	@endsection
+
 @endif
+
+
 
 
 

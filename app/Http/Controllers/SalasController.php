@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Redirector;
 
 use reservas\Sala;
+use reservas\Equipo;
+use reservas\Prestamo;
 
 class SalasController extends Controller
 {
@@ -298,21 +300,61 @@ class SalasController extends Controller
 	public function reservarSalaEquipos($SALA_ID, $showMsg=true)
 	{
 		$sala = Sala::findOrFail($SALA_ID);
+		$descripcionmsj='';
+		$mensaje='';
 
-	$sala->SALA_PRESTAMO =  $sala->SALA_PRESTAMO ? false : true;
+		//dd($this->validaEquipoEnPrestamos($SALA_ID));
+		
 
-		//if($sala) {
+		$sala->SALA_PRESTAMO =  $sala->SALA_PRESTAMO ? false : true;
+
+		if($this->validaEquipoEnPrestamos($SALA_ID)) {
     		//$sala->SALA_PRESTAMO = 1;
-    		$sala->save();
-		//	}
+    			$descripcionmsj='La Sala '.$sala->SALA_ID.' Tiene Equipos En prestamos no se puede liberar';    	
+    			$mensaje='message-modal-nok';
+		}else{
+				$sala->save();
+				$descripcionmsj='La Sala '.$sala->SALA_ID.' Actualiza exitosamente!';    		
+				$mensaje='message-modal';
+		}
 
 				// redirecciona al index de controlador
 		if($showMsg){
-			Session::flash('message', 'Sala '.$sala->SALA_ID.' Actualiza exitosamente!');
+			Session::flash($mensaje, $descripcionmsj);
 			return redirect()->to('salas');
 		}
 	}
 
+	/*
+	Funcion que valida si la sala que esta asigna para prestamos tiene equipos en prestamos
+	*/
+	public function validaEquipoEnPrestamos($SALA_ID)
+	{
+		//$sala = Equipo::findOrFail($SALA_ID);
+		 $data = array(); //declaramos un array principal que va contener los datos
+		 $ocupacion=false;
+		   $idequiposSalas = \reservas\Equipo::orderBy('EQUI_ID')
+                        ->select('EQUI_ID')
+                        ->where('SALA_ID', $SALA_ID)
+                        ->get();
+
+			$idequiposPrestamo = \reservas\Prestamo::orderBy('EQUI_ID')
+                        ->select('EQUI_ID')
+                        ->where('PRES_FECHAFIN', null)
+                        ->get();
+              foreach ($idequiposSalas as $equipos) {
+
+              	foreach ($idequiposPrestamo as $equipop) {
+              		if ($equipos->EQUI_ID == $equipop->EQUI_ID){
+//              			dd($equipos->EQUI_ID);
+              			 $ocupacion=true;
+              			 break;
+              		}
+              	}
+
+              }
+			return $ocupacion;
+		}
 
 }
 
