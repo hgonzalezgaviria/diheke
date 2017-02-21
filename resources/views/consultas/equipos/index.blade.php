@@ -126,7 +126,7 @@
 
 	</div>
 	
-	{{ Form::open(['id'=>'consulequi' , 'class' => 'form-horizontal']) }}
+	{{ Form::open(['id'=>'consulequi' , 'class' => 'form-vertical']) }}
 	
 	@foreach ($equipos as $i => $equipo)
 		<div class="col-md-4 zoom-in-hover">

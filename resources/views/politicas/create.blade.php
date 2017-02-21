@@ -29,7 +29,7 @@
 
 	@include('partials/errors')
 	
-		{{ Form::open(array('url' => 'politicas', 'class' => 'form-horizontal')) }}
+		{{ Form::open(array('url' => 'politicas', 'class' => 'form-vertical')) }}
 
 			<div class="form-group">
 			{{ Form::label('POLI_DESCRIPCION', 'Descripción') }} 

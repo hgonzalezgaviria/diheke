@@ -11,7 +11,7 @@
 
 	@include('partials/errors')
 
-	{{ Form::model($sede, array('action' => array('SedesController@update', $sede->SEDE_ID), 'method' => 'PUT', 'class' => 'form-horizontal')) }}
+	{{ Form::model($sede, array('action' => array('SedesController@update', $sede->SEDE_ID), 'method' => 'PUT', 'class' => 'form-vertical')) }}
 
 	  	<div class="form-group">
 			{{ Form::label('SEDE_DESCRIPCION', 'Descripción') }} 

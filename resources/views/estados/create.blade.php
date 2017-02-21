@@ -14,7 +14,7 @@
 	<!-- if there are creation errors, they will show here -->
 	{{ Html::ul($errors->all() )}}
 
-		{{ Form::open(array('url' => 'estados', 'class' => 'form-horizontal')) }}
+		{{ Form::open(array('url' => 'estados', 'class' => 'form-vertical')) }}
 
 	  	<div class="form-group">
 			{{ Form::label('ESTA_DESCRIPCION', 'Descripción') }} 

@@ -71,7 +71,7 @@
 
 	@include('partials/errors')
 	
-		{{ Form::open(array('url' => 'equipos', 'class' => 'form-horizontal')) }}
+		{{ Form::open(array('url' => 'equipos', 'class' => 'form-vertical')) }}
 
 	  	<div class="form-group">
 			{{ Form::label('EQUI_DESCRIPCION', 'Descripción') }} 

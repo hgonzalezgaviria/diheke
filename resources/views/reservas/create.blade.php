@@ -90,7 +90,7 @@
 	<!-- if there are creation errors, they will show here -->
 	{{ Html::ul($errors->all() )}}
 
-		{{ Form::open(['url' => 'reservas', 'class' => 'form-horizontal']) }}
+		{{ Form::open(['url' => 'reservas', 'class' => 'form-vertical']) }}
 
 		{{ Form::hidden('back', 'rgb(192,192,192)') }}
 		{{ Form::hidden('title', 'Prueba') }}
