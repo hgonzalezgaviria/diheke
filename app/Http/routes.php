@@ -31,6 +31,11 @@ Route::get('/prueba', function(){
 	return View::make('prueba');
 });
 
+//upload tablas Academusoft
+Route::get('upload', 'UploadFacultadController@index');
+Route::delete('eliminarRegistros', 'UploadFacultadController@eliminarRegistros');
+Route::post('upload', 'UploadFacultadController@upload');
+
 
 //Sedes (EspacioFisico)
 Route::resource('sedes', 'SedesController');

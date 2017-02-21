@@ -9,7 +9,8 @@
         "laravel/framework": "5.2.*",
         "styde/html": "~1.0",
         "phpoffice/phpexcel": "^1.8",
-        "maddhatter/laravel-fullcalendar": "~1.0"
+        "maddhatter/laravel-fullcalendar": "~1.0",
+        "maatwebsite/excel": "^2.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

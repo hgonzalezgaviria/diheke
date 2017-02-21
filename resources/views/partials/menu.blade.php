@@ -20,7 +20,7 @@
 			<ul class="nav navbar-nav">
 
 			@unless (Auth::guest())
-				<li ><a href="{{ URL::to('home') }}"><i class="fa fa-home" aria-hidden="true"></i>Inicio</a></li>
+				<li ><a href="{{ URL::to('home') }}"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a></li>
 
             	@if (in_array(Auth::user()->rol->ROLE_ROL , ['audit','admin']))
 					<li class="dropdown">
@@ -70,6 +70,11 @@
 
 							<li role="separator" class="divider"></li>
 							
+							<li>
+								<a href="{{ url('/upload') }}">
+									<i class="fa fa-btn fa-key"></i> Academusoft
+								</a>
+							</li>
 
 							<li role="separator" class="divider"></li>
 
