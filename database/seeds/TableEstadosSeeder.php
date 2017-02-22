@@ -31,9 +31,28 @@ class TableEstadosSeeder extends Seeder
            $estado->ESTA_CREADOPOR =  'SYSTEM';
            $estado->save();
 
-          $estado = new \reservas\Estado;
+           $estado = new \reservas\Estado;
            $estado->ESTA_DESCRIPCION = ' OCUPADO';
            $estado->TIES_ID = 2;
+           $estado->ESTA_CREADOPOR =  'SYSTEM';
+           $estado->save();
+
+           //APROBACIONES DE RESERVAS
+           $estado = new \reservas\Estado;
+           $estado->ESTA_DESCRIPCION = 'PENDIENTE';
+           $estado->TIES_ID = 3;
+           $estado->ESTA_CREADOPOR =  'SYSTEM';
+           $estado->save();
+
+           $estado = new \reservas\Estado;
+           $estado->ESTA_DESCRIPCION = 'APROBADA';
+           $estado->TIES_ID = 3;
+           $estado->ESTA_CREADOPOR =  'SYSTEM';
+           $estado->save();
+
+           $estado = new \reservas\Estado;
+           $estado->ESTA_DESCRIPCION = 'RECHAZADA';
+           $estado->TIES_ID = 3;
            $estado->ESTA_CREADOPOR =  'SYSTEM';
            $estado->save();
 

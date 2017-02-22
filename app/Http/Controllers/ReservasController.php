@@ -64,10 +64,11 @@ class ReservasController extends Controller
         $allDay = Reserva::all()->lists('RESE_TODOELDIA');
         $background = Reserva::all()->lists('RESE_COLOR');
         $count = count($id); //contamos los ids obtenidos para saber el numero exacto de eventos
- 
+
         //hacemos un ciclo para anidar los valores obtenidos a nuestro array principal $data
         for($i=0;$i<$count;$i++){
             $data[$i] = array(
+                
                 "title"=>$titulo[$i], //obligatoriamente "title", "start" y "url" son campos requeridos
                 "start"=>$fechaini[$i], //por el plugin asi que asignamos a cada uno el valor correspondiente
                 "end"=>$fechafin[$i],
@@ -79,6 +80,7 @@ class ReservasController extends Controller
                 //en el campo "url" concatenamos el el URL con el id del evento para luego
                 //en el evento onclick de JS hacer referencia a este y usar el método show
                 //para mostrar los datos completos de un evento
+                
             );
         }
  
@@ -171,7 +173,7 @@ class ReservasController extends Controller
                     $idauto = \DB::table('AUTORIZACIONES')->insertGetId(
                         [
                         'AUTO_FECHASOLICITUD' => $fechaactual, 
-                        'AUTO_ESTADO' => 'NAP'
+                        'AUTO_ESTADO' => 5
                         ]
                     );
                 }
@@ -181,7 +183,7 @@ class ReservasController extends Controller
                         [
                         'AUTO_FECHASOLICITUD' => $fechaactual, 
                         'AUTO_FECHAAPROBACION' => $fechaactual,
-                        'AUTO_ESTADO' => 'AUT'
+                        'AUTO_ESTADO' => 6
                         ]
                     );
                 }

@@ -18,7 +18,8 @@ class CreateTableAutorizacion extends Migration
             $table->increments('AUTO_ID');
             $table->datetime('AUTO_FECHASOLICITUD');
             $table->datetime('AUTO_FECHAAPROBACION')->nullable();
-            $table->string('AUTO_ESTADO', 3);
+            $table->unsignedInteger('AUTO_ESTADO');
+            $table->string('AUTO_OBSERVACIONES', 300)->nullable();
 
              //Traza
             $table->string('AUTO_CREADOPOR')

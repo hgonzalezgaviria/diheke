@@ -15,6 +15,7 @@ class ReservasAutorizadas extends Migration
         //
         Schema::create('RESERVAS_AUTORIZADAS', function (Blueprint $table) {
 
+            $table->increments('REAU_ID');
             $table->integer('AUTO_ID')->unsigned();
             $table->integer('RESE_ID')->unsigned();
             

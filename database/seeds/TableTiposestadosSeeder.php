@@ -24,6 +24,14 @@ class TableTiposestadosSeeder extends Seeder
            $tipoestado->TIES_CREADOPOR =  'USER_PRUEBA';
            $tipoestado->save();
 
+           $tipoestado = new \reservas\Tipoestado;
+           $tipoestado->TIES_DESCRIPCION = 'ESTADOS DE APROBACIONES';
+           $tipoestado->TIES_OBSERVACIONES =  'ESTADOS PARA LAS APROBACIONES DE RESERVAS DE SALAS';
+           $tipoestado->TIES_CREADOPOR =  'USER_PRUEBA';
+           $tipoestado->save();
+
+
+
 	  }
   
 }
