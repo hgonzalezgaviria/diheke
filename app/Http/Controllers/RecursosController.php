@@ -61,8 +61,17 @@ class RecursosController extends Controller
      */
     public function create()
     {
+
+          $salas = \DB::table('SALAS')
+                            ->select('SALAS.*')
+                            ->get();        
+
+        $sedes = \DB::table('SEDES')
+                            ->select('SEDES.*')
+                            ->get();
         // Carga el formulario para crear un nuevo registro (views/create.blade.php)
-        return view('recursos/create');
+        return view('recursos/create', compact('salas','sedes'));
+        //return view('equipos/create', compact('salas','estados','sedes'));
     }
 
     /**
@@ -76,17 +85,25 @@ class RecursosController extends Controller
         $this->validate(request(), [
                 'RECU_DESCRIPCION' => ['required', 'max:50'],
                 'RECU_VERSION' => ['required', 'max:50'],
-                'RECU_OBSERVACIONES' => ['required', 'max:100']
+                'RECU_OBSERVACIONES' => ['required', 'max:100'],
+                'SALA_ID' => ['required']
             ]);
         //Guarda todos los datos recibidos del formulario
         $recurso = request()->except(['_token']);
 
 
+
+
         $recurso= Recurso::create($recurso);
 
         $recurso->RECU_CREADOPOR = auth()->user()->username;
+
         //Se guarda modelo
+
         $recurso->save();
+
+        $idsSalas = is_array(Input::get('SALA_ID')) ? Input::get('SALA_ID') : [];
+        $recurso->salas()->sync($idsSalas);
 
         
 
@@ -123,8 +140,18 @@ class RecursosController extends Controller
         // Se obtiene el registro
         $recurso = Recurso::find($RECU_ID);
 
+        $idsSalas = $recurso->salas()->getRelatedIds()->toArray();
+
+           $salas = \DB::table('SALAS')
+                            ->select('SALAS.*')
+                            ->get();        
+
+        $sedes = \DB::table('SEDES')
+                            ->select('SEDES.*')
+                            ->get();
+
         // Muestra el formulario de edición y pasa el registro a editar
-        return view('recursos/edit')->with('recurso', $recurso);
+        return view('recursos/edit', compact('recurso','idsSalas','salas','sedes'));
     }
 
     /**
@@ -175,6 +202,20 @@ class RecursosController extends Controller
         // redirecciona al index de controlador
         Session::flash('message', 'Recurso '.$RECU_ID.' borrado!');
         return redirect()->to('recursos');
+    }
+
+
+    public function consultaSalas(){
+
+        $SEDE_ID = $_POST['sede'];
+
+        $salas = \DB::table('SALAS')
+                            ->select('SALAS.SALA_ID','SALAS.SALA_DESCRIPCION')
+                            ->where('SALAS.SEDE_ID','=',$SEDE_ID)
+                            ->get();
+
+        return json_encode($salas);
+        //return $salas;
     }
 
 }

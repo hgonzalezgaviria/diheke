@@ -19,7 +19,6 @@ class CreateTableRecurso extends Migration
             $table->string('RECU_VERSION', 50);
             $table->string('RECU_OBSERVACIONES', 300);
 
-            $table->integer('SALA_ID')->unsigned();
 
             
             //Traza
@@ -36,9 +35,6 @@ class CreateTableRecurso extends Migration
             $table->timestamp('RECU_FECHAELIMINADO')->nullable()
                 ->comment('Fecha en que se eliminó el registro en la tabla.');
                 
-            $table->foreign('SALA_ID')
-                  ->references('SALA_ID')->on('SALAS')
-                  ->onDelete('cascade');
             
         });
 

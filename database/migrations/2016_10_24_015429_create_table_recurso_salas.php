@@ -16,8 +16,8 @@ class CreateTableRecursoSalas extends Migration
         Schema::create('RECURSOSALAS', function (Blueprint $table) {
 
          $table->increments('RESA_ID');
-         $table->integer('SALA_ID')->unsigned();
-         $table->integer('RECU_ID')->unsigned();
+         $table->integer('SALA_ID')->unsigned()->nullable();
+         $table->integer('RECU_ID')->unsigned()->nullable();
 
             $table->foreign('SALA_ID')
                   ->references('SALA_ID')->on('SALAS')
@@ -27,7 +27,7 @@ class CreateTableRecursoSalas extends Migration
                   ->references('RECU_ID')->on('RECURSOS')
                   ->onDelete('cascade');
 
-        $table->timestamps();
+      
             
         });
     }

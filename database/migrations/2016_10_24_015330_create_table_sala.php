@@ -51,6 +51,7 @@ class CreateTableSala extends Migration
             $table->foreign('SEDE_ID')
                   ->references('SEDE_ID')->on('SEDES')
                   ->onDelete('cascade');
+  
             
         });
     }

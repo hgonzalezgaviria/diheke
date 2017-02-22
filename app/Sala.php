@@ -25,6 +25,7 @@ class Sala extends Model
 		'SALA_OBSERVACIONES',
 		'ESTA_ID',
 		'SEDE_ID',
+		'RECU_ID',
 		'SALA_CREADOPOR',
 		'SALA_PRESTAMO',
 	];
@@ -52,6 +53,16 @@ class Sala extends Model
 	{
 		$foreingKey = 'ESTA_ID';
 		return $this->belongsTo(Estado::class, $foreingKey);
+	}
+
+		/*
+	 * Muchos a muchos...
+	 */
+	public function recursos()
+	{
+		$foreingKey = 'SALA_ID';
+		$otherKey   = 'RECU_ID';
+		return $this->belongsToMany(Sala::class, 'RECURSOSALAS', $foreingKey,  $otherKey);
 	}
 
     /**
