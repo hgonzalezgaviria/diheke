@@ -38,7 +38,14 @@
             nohaySalas=true;
             var html = '<div class="col-xs-10 col-sm-3 col-md-3 col-lg-3 zoom-in-hover">'+
                           '<div class="panel panel-default">'+
-                            '<div class="panel-heading">'+salas[i].SALA_DESCRIPCION+'<br></div>'+
+                            '<div align="letf" class="panel-heading">'+salas[i].SALA_DESCRIPCION+
+                              '<a  href="#modalRecursos" data-toggle="modal"'+
+                              'data-modelo="salas"'+
+                              'data-id='+salas[i].SALA_ID+
+                              ','+                              
+                              'data-descripcion='+salas[i].SALA_DESCRIPCION+
+                              ','+
+                              'data-target="#modalRecursos"><span pull-right class="glyphicon glyphicon-wrench"></span></a>'+ '<br>'+ '</div>'+
                               '<div class="panel-body">'+
                               'Cantidad de equipos:' + salas[i].SALA_CAPACIDAD+'<br><br>'+  
                               '{{ Form::open( ['url' => 'reservas/show', 'method' => 'get', 'class'=>'form-vertical' ]  ) }}'+
@@ -122,6 +129,7 @@
     });
   </script>
 @parent
+@include('partials/modalRecursos')
 @endsection
 
 @section('content')
@@ -146,6 +154,8 @@
 <div class="tab-content col-xs-offset-4 col-sm-offset-2">
   <div class="tab-pane fade" id="salas"></div>
   <div class="tab-pane fade" id="equipos"></div>
-</div>    
+</div>   
+
+
 
 @endsection

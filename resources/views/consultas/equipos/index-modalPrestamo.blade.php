@@ -54,7 +54,7 @@
               <div class="form-group">
                 <label for="nombre"> Nombre Completo</label>
                 <input type="text" class="form-control" name = "nombre"
-                pattern="[A-Za-z]{3}" data-toggle="tooltip" title="Nombre de alumno solo letras" id="nombre" placeholder=" Ingrese el nombre" required>
+                data-toggle="tooltip" title="Nombre de alumno solo letras" id="nombre" placeholder=" Ingrese el nombre" required>
               </div>
 
            
