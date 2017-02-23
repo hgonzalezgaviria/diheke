@@ -46,9 +46,11 @@ class Recurso extends Model
      */
     public static function getRecursos()
     {
-        $recursos = self::orderBy('RECU_ID')
+        $recursos = self::with('salas')->orderBy('RECU_ID') 
+        //$salas = self::with('recursos')->orderBy('SALA_ID')
         				//->where('RECU_ESTADO', 'ACTIVO')
                         ->select([
+                        	'RECU_ID',
                         	'RECU_DESCRIPCION',
                         	'RECU_VERSION',
                         	'RECU_OBSERVACIONES',

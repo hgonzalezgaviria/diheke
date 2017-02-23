@@ -21,17 +21,21 @@
 			<th class="col-md-1">Descripción</th>
 			<th class="col-md-2">Versión</th>
 			<th class="col-md-2">Observaciones</th>
+			<th class="col-md-2">Salas</th>
 			<th class="col-md-2">Acciones</th>
 
 		</tr>
 	</thead>
 	<tbody>
-		@foreach($recursos as $recurso)
+		@foreach($recursos as $i => $recurso)
 		<tr>
 			<td>{{ $recurso -> RECU_ID }}</td>
 			<td>{{ $recurso -> RECU_DESCRIPCION }}</td>
 			<td>{{ $recurso -> RECU_VERSION }}</td>
 			<td>{{ $recurso -> RECU_OBSERVACIONES }}</td>
+		{{--dd( $recursos[$i]['salas']['SALA_DESCRIPCION'])--}}
+		{{dd( $i -> salas-> sala['SALA_DESCRIPCION'])}}
+			
 			<td>
 
 

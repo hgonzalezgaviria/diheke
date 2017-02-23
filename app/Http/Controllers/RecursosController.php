@@ -47,7 +47,8 @@ class RecursosController extends Controller
     public function index()
     {
         //Se obtienen todas los contratos.
-        $recursos = Recurso::all();
+        //$recursos = Recurso::all();
+        $recursos = \reservas\Recurso::getRecursos();
 
 
         //Se carga la vista y se pasan los registros. ->paginate($cantPages)

@@ -62,11 +62,12 @@
                if(!nohaySalas){
           var html='<br><br><br>'+
           '<div class="col-xs-12">'+
-          '<div class="alert alert-info" id="note">'+
+          '<div class="alert alert-danger" id="note">'+
                     'Para la sede seleccionada no hay salas disponibles.'+
-                    '<br><br>'+ 
-                    'Ayuda: Debe ingresar al mantenimiento de salas e ingresar las salas para esta sede.'+
-                    '</div>';
+                    '</div>'+                    
+                    '<div class="alert alert-success" id="note2">'+
+                    'Acción: Debe ingresar al mantenimiento de salas e ingresar las salas para esta sede.'+
+                    '</div>'+
                     '</div>';
                     tabContent.append(html);
 
@@ -114,11 +115,12 @@
         if(!nohayEquipos){
           var html='<br><br><br>'+
           '<div class="col-xs-12">'+
-          '<div class="alert alert-info" id="note">'+
+          '<div class="alert alert-danger" id="note">'+
                     'Para la sede seleccionada no hay salas disponibles para prestamos de Equipos.'+
-                    '<br><br>'+ 
-                    'Ayuda: Debe ingresar al mantenimiento de salas y habilitar una sala para prestamos de equipos.'+
-                    '</div>';
+                    '</div>'+                    
+                    '<div class="alert alert-success" id="note2">'+
+                    'Acción: Debe ingresar al mantenimiento de salas y habilitar una sala para prestamos de equipos.'+
+                    '</div>'+
                     '</div>';
                     tabContent.append(html);
 
