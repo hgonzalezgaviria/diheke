@@ -113,7 +113,7 @@
 
 		<div class="form-group">
 			{{ Form::label('sala', 'Sala') }} 
-			<select name="SALA_ID[]" id="SALA_ID" class="form-control chosen-select" multiple data-placeholder="Seleccione los salas..." disabled>
+			<select name="SALA_ID[]" id="SALA_ID" class="form-control chosen-select" multiple data-placeholder="Seleccione los salas..." >
 
 				<option value=""></option>
 	            @foreach($salas as $sala)

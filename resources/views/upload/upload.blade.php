@@ -22,9 +22,7 @@
 		</div>
 		<!-- Botones -->
 		<div class="text-right">
-			<a class="btn btn-primary" role="button" href="{{ URL::to('encuestas') }}">
-				<i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar
-			</a>
+			
 			{{ Form::button('<i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar', [ 'class'=>'btn btn-primary', 'type'=>'submit' ]) }}
 		</div>
 

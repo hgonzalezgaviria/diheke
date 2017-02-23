@@ -62,7 +62,7 @@ class Sala extends Model
 	{
 		$foreingKey = 'SALA_ID';
 		$otherKey   = 'RECU_ID';
-		return $this->belongsToMany(Sala::class, 'RECURSOSALAS', $foreingKey,  $otherKey);
+		return $this->belongsToMany(Recurso::class, 'RECURSOSALAS', $foreingKey,  $otherKey);
 	}
 
     /**
@@ -73,8 +73,9 @@ class Sala extends Model
      */
     public static function getSalas()
     {
-        $salas = self::orderBy('SALA_ID')
-        				//->join('TIPOESTADOS', 'TIPOESTADOS.TIES_ID', '=', 'SALAS.SALA_ID')
+        $salas = self::with('recursos')->orderBy('SALA_ID')
+        				//->join('RECURSOSALAS', 'RECURSOSALAS.SALA_ID', '=', 'SALAS.SALA_ID')
+        				//->join('RECURSOS', 'RECURSOS.RECU_ID', '=', 'RECURSOSALAS.RECU_ID')
         				//->where('TIES_DESCRIPCION', 'ACTIVO')
                         ->select([
                         	'SALA_ID',
@@ -86,6 +87,7 @@ class Sala extends Model
 							'SALA_PRESTAMO',
                         ])
                         ->get();
+                        //dd($salas);
         return $salas;
     }
 

@@ -46,6 +46,16 @@
 	//				alert(modal.find('.descripcion').text(descripcion));
 				modal.find('.descripcion').text(descripcion);
 
+				var index = button.data('index');
+				var salas = {!! $salas !!};
+				var recursos = salas[index]['recursos'];
+				var html = '';
+				for (var i = 0 ; i < recursos.length; i++){
+					html += recursos[i].RECU_DESCRIPCION +' '+ recursos[i].RECU_VERSION +'<br>';
+
+					modal.find('.recursos').html(html);
+				}
+
 				var urlForm = button.data('action'); // Se cambia acción del formulario.
 				$('.frmModal').attr('action', urlForm);
 			});
@@ -63,12 +73,14 @@
 			</div>
 
 			<div class="modal-body">
+
 				<div class="row">
 					<div class="col-xs-2">
 						<i class="fa fa-info-circle fa-3x fa-fw"></i>
 					</div>
 					<div class="col-xs-10">
-						<h4>XXXXXX</h4>
+						<h3><span class="descripcion"></span></h3>
+						<h4><span class="recursos"></span></h4>
 					</div>
 				</div>
 			</div>

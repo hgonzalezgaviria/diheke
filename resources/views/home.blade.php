@@ -9,6 +9,9 @@
   <script type="text/javascript">
     $(document).ready(function () {
 
+
+    $('[data-toggle="tooltip"]').tooltip();   
+
       //var sedes = {!! $sedes !!};
       var salas = {!! $salas !!};
 
@@ -34,18 +37,16 @@
 
         for (var i = 0 ; i < salas.length; i++) {
           if(salas[i].SEDE_ID == $(this).data('sede') && (salas[i].ESTA_ID==1)){
-
             nohaySalas=true;
             var html = '<div class="col-xs-10 col-sm-3 col-md-3 col-lg-3 zoom-in-hover">'+
                           '<div class="panel panel-default">'+
                             '<div align="letf" class="panel-heading">'+salas[i].SALA_DESCRIPCION+
                               '<a  href="#modalRecursos" data-toggle="modal"'+
-                              'data-modelo="salas"'+
-                              'data-id='+salas[i].SALA_ID+
-                              ','+                              
-                              'data-descripcion='+salas[i].SALA_DESCRIPCION+
-                              ','+
-                              'data-target="#modalRecursos"><span pull-right class="glyphicon glyphicon-wrench"></span></a>'+ '<br>'+ '</div>'+
+                              'data-modelo="salas" '+
+                              'data-index='+i+' '+                         
+                              'data-id='+salas[i].SALA_ID+' '+                         
+                              'data-descripcion="'+salas[i].SALA_DESCRIPCION+'" '+
+                              'data-target="#modalRecursos"><span data-toggle="tooltip" title="Recursos de la Sala" class="pull-right glyphicon glyphicon-eye-open"></span></a><br></div>'+
                               '<div class="panel-body">'+
                               'Cantidad de equipos:' + salas[i].SALA_CAPACIDAD+'<br><br>'+  
                               '{{ Form::open( ['url' => 'reservas/show', 'method' => 'get', 'class'=>'form-vertical' ]  ) }}'+
@@ -89,7 +90,13 @@
             nohayEquipos=true;
             var html = '<div class="col-xs-10 col-sm-3 col-md-3 col-lg-3 zoom-in-hover">'+
                           '<div class="panel panel-default">'+
-                            '<div class="panel-heading">'+salas[i].SALA_DESCRIPCION+'<br></div>'+
+                            '<div class="panel-heading">'+salas[i].SALA_DESCRIPCION+
+                              '<a  href="#modalRecursos" data-toggle="modal"'+
+                              'data-modelo="salas" '+
+                              'data-index='+i+' '+                         
+                              'data-id='+salas[i].SALA_ID+' '+                         
+                              'data-descripcion="'+salas[i].SALA_DESCRIPCION+'" '+
+                              'data-target="#modalRecursos"><span data-toggle="tooltip" title="Recursos de la Sala" class="pull-right glyphicon glyphicon-eye-open"></span></a><br></div>'+
                               '<div class="panel-body">'+
                               'Total equipos:' + salas[i].SALA_CAPACIDAD+'<br>'+  
                               'Total disponibles:' + salas[i].equipos_disp+'<br><br>'+  
