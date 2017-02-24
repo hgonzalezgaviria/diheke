@@ -18,7 +18,7 @@
 	 	$("#SALA_ID option[value=" + '{{ $equipo->SALA_ID }}' + "]").attr("selected","selected");
 
 	 	 	$( "#SEDE_ID" ).change(function() {
-	 	 		alert('HECTOR');
+	 	 		//alert('HECTOR');
 		  	
  		var opcion = $("#SEDE_ID").val();
 	 		crsfToken = document.getElementsByName("_token")[0].value;

@@ -21,7 +21,7 @@
 			<th class="col-md-1">Descripción</th>
 			<th class="col-md-2">Versión</th>
 			<th class="col-md-2">Observaciones</th>
-			<th class="col-md-2">Salas</th>
+			
 			<th class="col-md-2">Acciones</th>
 
 		</tr>
@@ -33,8 +33,9 @@
 			<td>{{ $recurso -> RECU_DESCRIPCION }}</td>
 			<td>{{ $recurso -> RECU_VERSION }}</td>
 			<td>{{ $recurso -> RECU_OBSERVACIONES }}</td>
-		{{--dd( $recursos[$i]['salas']['SALA_DESCRIPCION'])--}}
-		{{dd( $i -> salas-> sala['SALA_DESCRIPCION'])}}
+			
+		{{--dd( $recursos[$i]['salas'])--}}
+		{{--dd( $i -> salas-> sala['SALA_DESCRIPCION'])--}}
 			
 			<td>
 
@@ -63,6 +64,20 @@
 										]) }}
 					<!-- Fin Botón Borrar (destroy) -->
 			
+				<!-- Botón Borrar (destroy) -->			
+				<!-- Mensaje Modal. Bloquea la pantalla mientras se procesa la solicitud -->				
+									
+										{{ Form::button('<i class="	fa fa-external-link" aria-hidden="true"></i> Salas',[
+										'class'=>'btn btn-xs btn-default',
+										'data-toggle'=>'modal',
+										'data-id'=>$recurso->RECU_ID,
+											'data-modelo'=>'recurso',
+											'data-index'=>$i, 
+											'data-descripcion'=>$recurso -> RECU_DESCRIPCION,
+											'data-target'=>'#modalSalas',
+										]) }}
+					<!-- Fin Botón Borrar (destroy) -->
+			
 			</td>
 		</tr>
 		@endforeach
@@ -70,4 +85,5 @@
 </table>
 
 @include('partials/modalDelete')
+@include('recursos/modalSalas')
 @endsection

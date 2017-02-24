@@ -179,6 +179,9 @@ class RecursosController extends Controller
         $recurso->RECU_MODIFICADOPOR = auth()->user()->username;
         $recurso->save();
 
+        $idsSalas = is_array(Input::get('SALA_ID')) ? Input::get('SALA_ID') : [];
+        $recurso->salas()->sync($idsSalas);
+
         // redirecciona al index de controlador
         Session::flash('message', 'Recurso actualizado exitosamente!');
         return redirect()->to('recursos/');

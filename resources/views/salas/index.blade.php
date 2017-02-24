@@ -92,7 +92,7 @@
 
 	@if($sala->SALA_PRESTAMO)
 
-		{{ Form::button('<i class="fa fa-files-o" aria-hidden="true"></i> <span class="hidden-xs">Liberar</span>',[
+		{{ Form::button('<i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Liberar',[
 								'class'=>'btn btn-xs btn-default',
 								'data-toggle'=>'modal',
 								'data-sala_id'=>$sala -> SALA_ID,
@@ -101,7 +101,7 @@
 							])
 						}}
 		@else
-	{{ Form::button('<i class="fa fa-files-o" aria-hidden="true"></i> <span class="hidden-xs">Ocupar</span>',[
+	{{ Form::button('<i class="fa fa-calendar-minus-o" aria-hidden="true"></i> Ocupar ',[
 								'class'=>'btn btn-xs btn-warning',
 								'data-toggle'=>'modal',
 								'data-sala_id'=>$sala -> SALA_ID,

@@ -12,6 +12,7 @@
 
       $(function () {
 
+$("#SALA_ID option[value=" + '{{ $recurso->SALA_ID }}' + "]").attr("selected","selected");
 
 
       	/*para posicionar un combobox lo unico que hay que hacer es que el selector (select) tenga
@@ -27,9 +28,9 @@
 		  	
  		var opcion = $("#SEDE_ID").val();
 	 		crsfToken = document.getElementsByName("_token")[0].value;
-
+	 		
 			$.ajax({
-	             url: '../consultaSalas',
+	             url: '../../consultaSalas',
 	             data: 'sede='+ opcion,
 	             dataType: "json",
 	             type: "POST",
@@ -46,8 +47,9 @@
 							
 	                
 	             },
-	             error: function(json){
-	                console.log("Error al crear evento");
+	             error: function(req, err){
+
+	                console.log("Error al crear evento"+ req );
 	             }        
         	});
 
@@ -103,7 +105,7 @@
 
 		<div class="form-group">
 			{{ Form::label('sede', 'Sede') }} 
-			<select name="SEDE_ID" id="SEDE_ID" class="form-control" required onchange="habilitar(this.value);">
+			<select name="SEDE_ID" id="SEDE_ID" class="form-control"  onchange="habilitar(this.value);">
 				<option value="">Seleccione..</option>
 	            @foreach($sedes as $sede)
 	            <option value="{{ $sede->SEDE_ID }}">{{ $sede->SEDE_DESCRIPCION }}</option>
@@ -115,17 +117,13 @@
 			{{ Form::label('sala', 'Sala') }} 
 			<select name="SALA_ID[]" id="SALA_ID" class="form-control chosen-select" multiple data-placeholder="Seleccione los salas..." >
 
-				<option value=""></option>
+				
 	            @foreach($salas as $sala)
 	            <option value="{{ $sala->SALA_ID }}"
 	            		{{ in_array($sala->SALA_ID, $idsSalas) ? 'selected' : '' }}>
 					{{ $sala->SALA_DESCRIPCION }}
 	            </option>
 	            @endforeach
-
-		
-					
-				
 	        </select>
 		</div>
 
