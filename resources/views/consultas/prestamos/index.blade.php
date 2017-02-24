@@ -42,6 +42,12 @@
 	    var table1 = $('#tabla').DataTable();
 		setCounterTime();
 
+		$( table1.column( 6 ).header() ).addClass( 'all' );
+		$( table1.column( 7 ).header() ).addClass( 'all' );
+		table1.responsive.rebuild();
+		table1.responsive.recalc();
+		table1.draw();
+
 		table1.on( 'draw.dt', function () {
 		    setCounterTime();
 		} );
