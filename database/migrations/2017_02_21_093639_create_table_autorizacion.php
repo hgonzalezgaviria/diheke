@@ -19,7 +19,27 @@ class CreateTableAutorizacion extends Migration
             $table->datetime('AUTO_FECHASOLICITUD');
             $table->datetime('AUTO_FECHAAPROBACION')->nullable();
             $table->unsignedInteger('AUTO_ESTADO');
+            $table->unsignedInteger('UNID_ID')->nullable();
+            $table->unsignedInteger('DOCE_ID')->nullable();
+            $table->unsignedInteger('GRUP_ID')->nullable();
+            $table->string('MATE_CODIGOMATERIA')->nullable();
             $table->string('AUTO_OBSERVACIONES', 300)->nullable();
+
+
+            //Relaciones
+            $table->foreign('UNID_ID')
+                  ->references('UNID_ID')->on('UNIDADES')
+                  ->onDelete('cascade');
+
+
+            $table->foreign('GRUP_ID')
+                  ->references('GRUP_ID')->on('GRUPOS')
+                  ->onDelete('cascade');
+
+            $table->foreign('MATE_CODIGOMATERIA')
+                  ->references('MATE_CODIGOMATERIA')->on('MATERIAS')
+                  ->onDelete('cascade');
+
 
              //Traza
             $table->string('AUTO_CREADOPOR')

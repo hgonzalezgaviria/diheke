@@ -169,11 +169,17 @@ class ReservasController extends Controller
         
             if($k[0] != null){
 
+                
                 if($cont == 0 && $role != 'admin'){
                     $idauto = \DB::table('AUTORIZACIONES')->insertGetId(
                         [
                         'AUTO_FECHASOLICITUD' => $fechaactual, 
-                        'AUTO_ESTADO' => 5
+                        'AUTO_ESTADO' => 5,
+                        'UNID_ID' => $k[7],
+                        'DOCE_ID' => $k[8],
+                        'GRUP_ID' => $k[9],
+                        'MATE_CODIGOMATERIA' => $k[10],
+                        'AUTO_OBSERVACIONES' =>  'REGISTRO AUTOMATICO'
                         ]
                     );
                 }
@@ -183,12 +189,17 @@ class ReservasController extends Controller
                         [
                         'AUTO_FECHASOLICITUD' => $fechaactual, 
                         'AUTO_FECHAAPROBACION' => $fechaactual,
-                        'AUTO_ESTADO' => 6
+                        'AUTO_ESTADO' => 6,
+                        'UNID_ID' => $k[7],
+                        'DOCE_ID' => $k[8],
+                        'GRUP_ID' => $k[9],
+                        'MATE_CODIGOMATERIA' => $k[10],
+                        'AUTO_OBSERVACIONES' =>  'REGISTRO AUTOMATICO'
                         ]
                     );
                 }
 
-
+                
 
                 $cont++;
             
@@ -208,12 +219,15 @@ class ReservasController extends Controller
 
                 $reservaid = $reserva->RESE_ID;
 
+                
                 \DB::table('RESERVAS_AUTORIZADAS')->insertGetId(
                         [
                         'RESE_ID' => $reservaid, 
                         'AUTO_ID' => $idauto
                         ]
                 );
+
+                
                 
             }
         
@@ -256,6 +270,23 @@ class ReservasController extends Controller
                             ->get();
 
         return json_encode($facultades);
+        //return $salas;materias
+    
+    }
+
+    public function consultaDocentes(){
+
+        $UNID_ID = $_POST['unidad'];
+
+        $docentes = \DB::table('DOCENTES')
+                            ->select(
+                                    'DOCENTES.DOCE_IDENTIFICACION',
+                                    'DOCENTES.DOCE_NOMBRES',
+                                    'DOCENTES.DOCE_APELLIDOS')
+                            ->where('DOCENTES.UNID_ID','=',$UNID_ID)
+                            ->get();
+
+        return json_encode($docentes);
         //return $salas;materias
     
     }

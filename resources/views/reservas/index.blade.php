@@ -77,6 +77,107 @@
           }  
         });
 
+    $('#fechahastad').datetimepicker({
+      locale: 'es',
+      format: 'YYYY-MM-DD',
+          //format: 'DD/MM/YYYY hh:mm A',
+          stepping: 1,
+          useCurrent: false,  //Important! See issue #1075. Requerido para minDate
+          minDate: new Date(),
+          icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-arrow-up",
+            down: "fa fa-arrow-down",
+            previous: 'fa fa-chevron-left',
+            next: 'fa fa-chevron-right',
+            today: 'glyphicon glyphicon-screenshot',
+            clear: 'fa fa-trash',
+            close: 'fa fa-times'
+          },
+          tooltips: {
+            //today: 'Go to today',
+            //clear: 'Clear selection',
+            //close: 'Close the picker',
+            selectMonth: 'Seleccione Mes',
+            prevMonth: 'Mes Anterior',
+            nextMonth: 'Mes Siguiente',
+            selectYear: 'Seleccione Año',
+            prevYear: 'Año Anterior',
+            nextYear: 'Año Siguiente',
+            selectDecade: 'Seleccione Década',
+            prevDecade: 'Década Anterior',
+            nextDecade: 'Década Siguiente',
+            prevCentury: 'Siglo Anterior',
+            nextCentury: 'Siglo Siguiente'
+          }  
+        });
+
+    $('#fechainiciod').datetimepicker({
+      locale: 'es',
+      format: 'YYYY-MM-DD HH:mm',
+          //format: 'DD/MM/YYYY hh:mm A',
+          stepping: 1,
+          useCurrent: false,  //Important! See issue #1075. Requerido para minDate
+          minDate: new Date(),
+          icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-arrow-up",
+            down: "fa fa-arrow-down",
+            previous: 'fa fa-chevron-left',
+            next: 'fa fa-chevron-right',
+            today: 'glyphicon glyphicon-screenshot',
+            clear: 'fa fa-trash',
+            close: 'fa fa-times'
+          },
+          tooltips: {
+            //today: 'Go to today',
+            //clear: 'Clear selection',
+            //close: 'Close the picker',
+            selectMonth: 'Seleccione Mes',
+            prevMonth: 'Mes Anterior',
+            nextMonth: 'Mes Siguiente',
+            selectYear: 'Seleccione Año',
+            prevYear: 'Año Anterior',
+            nextYear: 'Año Siguiente',
+            selectDecade: 'Seleccione Década',
+            prevDecade: 'Década Anterior',
+            nextDecade: 'Década Siguiente',
+            prevCentury: 'Siglo Anterior',
+            nextCentury: 'Siglo Siguiente'
+          }
+        });
+
+    $("#reservadias").click(function(){
+
+      
+      var nrodias = adiassel.length;
+
+      var fechahastad = $('#fechahastad').data("DateTimePicker").date();
+      fechahastad = moment(fechahastad, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
+      
+
+      if(nrodias > 0){
+
+        for(var i = 0; i<nrodias ; i++){
+
+          console.log("Valor "+adiassel[i] + " Fecha: " + fechahastad);
+
+        }
+        
+      }else{
+
+        $.msgBox({
+            title:"Error",
+            content:"¡No ha seleccionado ningun día!",
+            type:"error"
+        }); 
+
+      }
+
+    });
+
     var cmaterias = 0;
     $("#asignaturas").click(function(){
 
@@ -217,6 +318,255 @@
 
     });
 
+    //var cdocentes = 0;
+    $("#docentes").click(function(){
+
+      //if(cdocentes == 0){
+
+
+            var opcion = $("#facultades").val();
+
+            crsfToken = document.getElementsByName("_token")[0].value;
+
+            $.ajax({
+                     url: '../consultaDocentes',
+                     data: 'unidad='+ opcion,
+                     dataType: "json",
+                     type: "POST",
+                     headers: {
+                            "X-CSRF-TOKEN": crsfToken
+                        },
+                  success: function(docentes) {
+
+                          $('#docentes').empty();
+
+                          var registros = grupos.length;
+
+                          if(registros > 0){
+              
+                              for(var i = 0; i < docentes.length; i++){
+                                $("#docentes").append('<option value=' + docentes[i].DOCE_IDENTIFICACION + '>' + docentes[i].DOCE_NOMBRES + " " + docentes[i].DOCE_APELLIDOS + '</option>');
+                              } 
+                          }else{
+
+                              $.msgBox({
+                                            title:"Información",
+                                            content:"¡No hay datos disponibles!",
+                                            type:"info"
+                              }); 
+
+                          }
+                  },
+                  error: function(json){
+                          console.log("Error al traer los datos");
+                  }        
+              });
+
+
+            //cdocentes++;
+      //}
+
+    });
+
+    //===========================================================
+    var cfacultadesd = 0;
+    $("#facultadesd").click(function(){
+
+      if(cfacultadesd == 0){
+
+            crsfToken = document.getElementsByName("_token")[0].value;
+
+            $.ajax({
+                     url: '../consultaFacultades',
+                     data: 'sede='+ null,
+                     dataType: "json",
+                     type: "POST",
+                     headers: {
+                            "X-CSRF-TOKEN": crsfToken
+                        },
+                  success: function(facultades) {
+                 
+                          $('#facultadesd').empty();
+
+                          var registros = facultades.length;
+                          if(registros > 0){
+                              for(var i = 0; i < facultades.length; i++){
+                                $("#facultadesd").append('<option value=' + facultades[i].UNID_ID + '>' + facultades[i].UNID_NOMBRE + '</option>');
+                              }
+                          }else{
+
+                              $.msgBox({
+                                            title:"Información",
+                                            content:"¡No hay datos disponibles!",
+                                            type:"info"
+                              }); 
+
+                          }
+                  },
+                  error: function(json){
+                          console.log("Error al traer los datos");
+                  }        
+              });
+
+
+            cfacultadesd++;
+      }
+
+
+      var opcion = $("#facultadesd").val();
+
+      if(opcion != null){
+
+            crsfToken = document.getElementsByName("_token")[0].value;
+
+            $.ajax({
+                     url: '../consultaDocentes',
+                     data: 'unidad='+ opcion,
+                     dataType: "json",
+                     type: "POST",
+                     headers: {
+                            "X-CSRF-TOKEN": crsfToken
+                        },
+                  success: function(docentes) {
+
+                          $('#docentesd').empty();
+
+                          var registros = grupos.length;
+
+                          if(registros > 0){
+              
+                              for(var i = 0; i < docentes.length; i++){
+                                $("#docentesd").append('<option value=' + docentes[i].DOCE_IDENTIFICACION + '>' + docentes[i].DOCE_NOMBRES + " " + docentes[i].DOCE_APELLIDOS + '</option>');
+                              } 
+                          }else{
+
+                              $.msgBox({
+                                            title:"Información",
+                                            content:"¡No hay datos disponibles!",
+                                            type:"info"
+                              }); 
+
+                          }
+                  },
+                  error: function(json){
+                          console.log("Error al traer los datos");
+                  }        
+              });
+        }
+
+    });
+
+    var cgruposd = 0;
+    $("#gruposd").click(function(){
+
+      if(cgruposd == 0){
+
+            crsfToken = document.getElementsByName("_token")[0].value;
+
+            $.ajax({
+                     url: '../consultaGrupos',
+                     data: 'sede='+ null,
+                     dataType: "json",
+                     type: "POST",
+                     headers: {
+                            "X-CSRF-TOKEN": crsfToken
+                        },
+                  success: function(grupos) {
+
+                          $('#gruposd').empty();
+
+                          var registros = grupos.length;
+
+                          if(registros > 0){
+              
+                              for(var i = 0; i < grupos.length; i++){
+                                $("#gruposd").append('<option value=' + grupos[i].GRUP_ID + '>' + grupos[i].GRUP_NOMBRE + '</option>');
+                              } 
+                          }else{
+
+                              $.msgBox({
+                                            title:"Información",
+                                            content:"¡No hay datos disponibles!",
+                                            type:"info"
+                              }); 
+
+                          }
+                  },
+                  error: function(json){
+                          console.log("Error al traer los datos");
+                  }        
+              });
+
+
+            cgruposd++;
+      }
+
+    });
+
+    var cmateriasd = 0;
+    $("#asignaturasd").click(function(){
+
+      
+
+
+      if(cmateriasd == 0){
+
+            crsfToken = document.getElementsByName("_token")[0].value;
+
+            $.ajax({
+                     url: '../consultaMaterias',
+                     data: 'sede='+ null,
+                     dataType: "json",
+                     type: "POST",
+                     headers: {
+                            "X-CSRF-TOKEN": crsfToken
+                        },
+                  success: function(materia) {
+                 
+                          $('#asignaturasd').empty();
+
+                          var registros = materia.length;
+                          if(registros > 0){
+                              for(var i = 0; i < materia.length; i++){
+                                $("#asignaturasd").append('<option value=' + materia[i].MATE_CODIGOMATERIA + '>' + materia[i].MATE_NOMBRE + '</option>');
+                              }
+                          }else{
+
+                              $.msgBox({
+                                            title:"Información",
+                                            content:"¡No hay datos disponibles!",
+                                            type:"info"
+                              }); 
+
+                          }
+                  },
+                  error: function(json){
+                          console.log("Error al traer los datos");
+                  }        
+              });
+
+
+            cmateriasd++;
+      }
+
+    });
+
+    
+    //=================================================
+
+    //agregamos un callback para determinar cual es el Radio Button que se encuentra en estado seleccionado
+    var adiassel = [];
+    $("input[name=chkdias]").click(function(){
+      //asignamos a la variable "sel" el valor del R.B seleccionado
+      adiassel = $("input[name=chkdias]:checked").map(function(){
+                    return $(this).val();
+                }).get();
+
+      
+
+    });
+
+
 
     //ocultamos el campo de fecha hasta cuando se cargue el DOM
     $('#fechahasta').hide();
@@ -251,6 +601,16 @@
         //con esta linea ocultamos todos los checkbox
         $('.checkbox').hide();
       }
+
+      //si el R.B es el de reservar por días, se muestran modal con esas caracteristicas
+      if(sel == "pordias"){
+        
+        $('#modalresdias').modal('show');
+      }else{
+       
+      }
+
+      
 
     });
 
@@ -342,6 +702,10 @@
                   var fechafinal = moment(fechafin,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
 
 
+                  var facultad = $("#facultades").val();
+                  var docente = $("#docentes").val();
+                  var materia = $("#asignaturas").val();
+                  var grupo = $("#grupos").val();
 
                   var sala = getUrlParameter('sala');
                   var equipo = getUrlParameter('equipo');
@@ -460,7 +824,9 @@
                                       $.ajax({
                                            url: 'guardaEventos',
                                            data: 'title='+ titulo+'&start='+ fechainicio+'&allday='+todoeldia+'&background='+fondo+
-                                           '&end='+fechafinal+'&sala='+sala+'&equipo='+equipo,
+                                           '&end='+fechafinal+'&sala='+sala+'&equipo='+equipo
+                                           +'&facultad='+facultad+'&materia='+materia+'&grupo='+grupo
+                                           +'&docente='+docente,
                                            type: "POST",
                                            headers: {
                                             "X-CSRF-TOKEN": crsfToken
@@ -555,11 +921,16 @@
                                   //arrfestivos[i] = ffest;
 
                                   if((fest == fini) || (diasemana == "domingo")){
-                                    arrreservas[i] = [null, null, null, null, null, null, null];
+                                    arrreservas[i] = [null, null, null, null, null, 
+                                                      null, null, null, null, null, null];
                                     cnt +=1;
                                   }
                                   else if( (fest != fini && cnt == 0)){
-                                    arrreservas[i] = [titulo, fechainicio, todoeldia, fondo, fechafinal, sala, equipo];
+                                    arrreservas[i] = [titulo, fechainicio, 
+                                                      todoeldia, fondo, 
+                                                      fechafinal, sala, 
+                                                      equipo, facultad,
+                                                      docente, grupo, materia];
                                     cnt = 0;
                                   }
 
@@ -640,6 +1011,8 @@
 
                                                   i++;
                     }//aqui cierra el while
+
+                    alert(arrreservas);
 
                                                 if(puedehacerreservas){
 
@@ -948,6 +1321,9 @@
             <div class="radio disabled">
               <label><input type="radio" name="radio" name="hasta" value="hasta">Hasta una Fecha</label>
             </div>
+            <div class="radio disabled">
+              <label><input type="radio" name="radio" name="pordias" value="pordias">Por días</label>
+            </div>
 
             <div class='input-group date' id='fechahasta'>
               <input type='text' class="form-control" />
@@ -1042,6 +1418,149 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="modalresdias" tabindex="-1" role="dialog" 
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" 
+                   data-dismiss="modal">
+                       <span aria-hidden="true">&times;</span>
+                       <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Reservas por días
+                </h4>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="modal-body">
+                
+                  <div class="form-horizontal" role="form">
+
+                  <!--
+                    <div class="form-group">
+                      <label  class="col-sm-2 control-label"
+                                for="inputEmail3">Email</label>
+                      <div class="col-sm-10">
+                          <input type="email" class="form-control" 
+                          id="inputEmail3" placeholder="Email"/>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label"
+                            for="inputPassword3" >Password</label>
+                      <div class="col-sm-10">
+                          <input type="password" class="form-control"
+                              id="inputPassword3" placeholder="Password"/>
+                      </div>
+                    </div>
+                  -->
+
+                  <div class="form-group">
+                  <label class="col-sm-2 control-label">Facultad:</label>
+                  <div class="col-sm-10">
+                      <select class="form-control" name="size" id="facultadesd">
+                        <option value="">Seleccione..</option>
+                      </select>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label class="col-sm-2 control-label">Docente:</label>
+                  <div class="col-sm-10">
+                      <select class="form-control" name="size" id="docentesd">
+                        <option value="">Seleccione..</option>
+                      </select>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label class="col-sm-2 control-label">Grupo:</label>
+                  <div class="col-sm-10">
+                      <select class="form-control" name="size" id="gruposd">
+                        <option value="">Seleccione..</option>
+                      </select>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label class="col-sm-2 control-label">Asignatura:</label>
+                  <div class="col-sm-10" id="pruebalo">
+                      <select class="form-control" name="size" id="asignaturasd">
+                        <option value="">Seleccione..</option>
+                      </select>
+                  </div>
+              </div>
+
+                 <div class="otros">
+                   <label class="otros"> <input type="checkbox" value="lunes" name="chkdias" id="lu"> Lunes</label>
+                 </div>
+                 <div class="otros">
+                   <label><input type="checkbox" value="martes" name="chkdias" id="ma"> Martes</label>
+                 </div>
+                 <div class="otros">
+                   <label><input type="checkbox" value="miercoles" name="chkdias" id="mi"> Miercoles</label>
+                 </div>
+                 <div class="otros">
+                   <label><input type="checkbox" value="jueves" name="chkdias" id="ju"> Jueves</label>
+                 </div>
+                 <div class="otros">
+                   <label><input type="checkbox" value="viernes" name="chkdias" id="vi"> Viernes</label>
+                 </div>
+                 <div class="otros">
+                   <label><input type="checkbox" value="sabado" name="chkdias" id="sa"> Sabado</label>
+                 </div>
+
+            
+                  </div>  
+
+                  <label class="col-sm-2 control-label">Hasta:</label>
+                  <div class='input-group date' id='fechahastad'>
+              <input type='text' class="form-control" />
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+              </span>
+            </div>
+
+            <!--
+            <div class='input-group date' id='fechainiciod'>
+              <input type='text' class="form-control" />
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+              </span>
+            </div>
+
+            <br>
+
+            <div class='input-group date' >
+              <input type='number' class="form-control" id="nhorasd" placeholder="No. de horas" />
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+              </span>
+            </div>
+            -->
+   
+          </div>
+            
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal" id="cerrarmodal">
+                            Cerrar
+                </button>
+                <button type="button" class="btn btn-primary" id="reservadias">
+                    Reservar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 </div>
 
 @endsection
