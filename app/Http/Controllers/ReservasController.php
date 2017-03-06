@@ -278,12 +278,16 @@ class ReservasController extends Controller
 
         $UNID_ID = $_POST['unidad'];
 
-        $docentes = \DB::table('DOCENTES')
+        $docentes = \DB::table('PERSONANATURALGENERAL')
                             ->select(
-                                    'DOCENTES.DOCE_IDENTIFICACION',
-                                    'DOCENTES.DOCE_NOMBRES',
-                                    'DOCENTES.DOCE_APELLIDOS')
-                            ->where('DOCENTES.UNID_ID','=',$UNID_ID)
+                                    'PERSONANATURALGENERAL.PEGE_ID',
+                                    'PERSONANATURALGENERAL.PENG_PRIMERNOMBRE',
+                                    'PERSONANATURALGENERAL.PENG_PRIMERAPELLIDO',
+                                    'PERSONANATURALGENERAL.PENG_SEGUNDOAPELLIDO',
+                                    'PERSONANATURALGENERAL.PENG_SEGUNDONOMBRE')
+                            ->join('PERSONAGENERAL','PERSONAGENERAL.PEGE_ID','=','PERSONANATURALGENERAL.PEGE_ID')
+                            ->join('DOCENTESUNIDADES','PERSONAGENERAL.PEGE_ID','=','DOCENTESUNIDADES.PEGE_ID')
+                            ->where('DOCENTESUNIDADES.UNID_ID','=',$UNID_ID)
                             ->get();
 
         return json_encode($docentes);

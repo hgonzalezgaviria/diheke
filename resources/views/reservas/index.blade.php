@@ -229,6 +229,14 @@
     var cfacultades = 0;
     $("#facultades").click(function(){
 
+      var facu = $("#facultades").val();
+
+      if(facu != null){
+
+        llenarDocentes(facu);
+
+      }
+
       if(cfacultades == 0){
 
             crsfToken = document.getElementsByName("_token")[0].value;
@@ -318,55 +326,50 @@
 
     });
 
-    //var cdocentes = 0;
-    $("#docentes").click(function(){
-
-      //if(cdocentes == 0){
 
 
-            var opcion = $("#facultades").val();
+    function llenarDocentes(facultad){
 
-            crsfToken = document.getElementsByName("_token")[0].value;
+              var opcion = $("#facultades").val();
 
-            $.ajax({
-                     url: '../consultaDocentes',
-                     data: 'unidad='+ opcion,
-                     dataType: "json",
-                     type: "POST",
-                     headers: {
-                            "X-CSRF-TOKEN": crsfToken
-                        },
-                  success: function(docentes) {
+              crsfToken = document.getElementsByName("_token")[0].value;
 
-                          $('#docentes').empty();
+              $.ajax({
+                       url: '../consultaDocentes',
+                       data: 'unidad='+ opcion,
+                       dataType: "json",
+                       type: "POST",
+                       headers: {
+                              "X-CSRF-TOKEN": crsfToken
+                          },
+                    success: function(docentes, error) {
 
-                          var registros = grupos.length;
+                            $('#docentes').empty();
 
-                          if(registros > 0){
-              
-                              for(var i = 0; i < docentes.length; i++){
-                                $("#docentes").append('<option value=' + docentes[i].DOCE_IDENTIFICACION + '>' + docentes[i].DOCE_NOMBRES + " " + docentes[i].DOCE_APELLIDOS + '</option>');
-                              } 
-                          }else{
+                            var registros = grupos.length;
 
-                              $.msgBox({
-                                            title:"Información",
-                                            content:"¡No hay datos disponibles!",
-                                            type:"info"
-                              }); 
+                            if(registros > 0){
+                
+                                for(var i = 0; i < docentes.length; i++){
+                                  $("#docentes").append('<option value=' + docentes[i].PEGE_ID + '>' + docentes[i].PENG_PRIMERNOMBRE + " " + docentes[i].PENG_SEGUNDONOMBRE + " " + docentes[i].PENG_PRIMERAPELLIDO + " " + docentes[i].PENG_SEGUNDOAPELLIDO + '</option>' );
+                                } 
 
-                          }
-                  },
-                  error: function(json){
-                          console.log("Error al traer los datos");
-                  }        
-              });
+                            }else{
 
+                                $.msgBox({
+                                              title:"Información",
+                                              content:"¡No hay datos disponibles!",
+                                              type:"info"
+                                }); 
 
-            //cdocentes++;
-      //}
+                            }
+                    },
+                    error: function(json){
+                            console.log("Error al traer los datos");
+                    }        
+                });
 
-    });
+    }
 
     //===========================================================
     var cfacultadesd = 0;
