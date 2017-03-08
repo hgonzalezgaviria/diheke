@@ -40,10 +40,11 @@ class CreateTableAutorizacion extends Migration
                   ->references('MATE_CODIGOMATERIA')->on('MATERIAS')
                   ->onDelete('cascade');
 
+            
             $table->foreign('PEGE_ID')
-                  ->references('PERSONAGENERAL')->on('PEGE_ID')
+                  ->references('PEGE_ID')->on('PERSONAGENERAL')
                   ->onDelete('cascade');
-
+            
 
              //Traza
             $table->string('AUTO_CREADOPOR')

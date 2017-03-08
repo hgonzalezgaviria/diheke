@@ -63,37 +63,9 @@ Route::resource('consultaPrestamos', 'PrestamoEquiposController');
 Route::post('prestamoEquipo', 'PrestamoEquiposController@crearPrestamo');
 
 
-/*
-
-
-
-
-
-
-//Estados elemento recurso físico
-Route::resource('estadoelementorecursofisico', 'EstadoElementoRecursoFisicoController');
-
-//Elementos recurso físico
-Route::resource('elementorecursofisico', 'ElementoRecursoFisicoController');
-
-//Tipo de espacio físico
-Route::resource('tipoespaciofisico', 'TipoEspacioFisicoController');
-
-//Tipo de posesión
-Route::resource('tipoposesion', 'TipoPosesionController');
-
-//Localidades
-Route::resource('localidad', 'LocalidadController');
-
-
-//Tipos Recurso Físico
-Route::resource('tiporecursofisico', 'TipoRecursoFisicoController');
-
-*/
-
 //reservas
 Route::resource('reservas', 'ReservasController');
-Route::get('cargaEventos{id?}','ReservasController@index');
+Route::get('cargaEventos{sala?}','ReservasController@index');
 Route::post('reservas/guardaEventos', array('as' => 'guardaEventos','uses' => 'ReservasController@store'));
 Route::post('reservas/guardarReservas', array('as' => 'guardarReservas','uses' => 'ReservasController@guardarReservas'));
 Route::post('reservas/getFestivos', array('as' => 'getFestivos','uses' => 'FestivosController@getFestivos'));

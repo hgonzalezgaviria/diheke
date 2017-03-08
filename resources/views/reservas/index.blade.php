@@ -1015,7 +1015,7 @@
                                                   i++;
                     }//aqui cierra el while
 
-                    alert(arrreservas);
+                    alert(puedehacerreservas);
 
                                                 if(puedehacerreservas){
 
@@ -1102,6 +1102,8 @@
       });
     }
 
+    var salad = getUrlParameter('sala');
+
     ini_events($('#external-events div.external-event'));
     /* initialize the calendar
     -----------------------------------------------------------------*/
@@ -1121,7 +1123,11 @@
         day: 'dia'
       },
 
-      events: { url:"../cargaEventos"},
+      events: { url:"../cargaEventos" + salad},
+
+      eventRender: function(event, element) { 
+            element.find('.fc-title').append("<br/>" + event.title); 
+      },
 
       //con esta funcion llamaremos el popup para mostrar los detalles de la reserva
       eventClick: function(calEvent, jsEvent, view) {

@@ -54,28 +54,31 @@ class ReservasController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index($sala = null)
     {
+
+        //$sala = $request->input('sala');
+        
         $data = array(); //declaramos un array principal que va contener los datos
-        $id = Reserva::all()->lists('RESE_ID'); //listamos todos los id de los eventos
-        $titulo = Reserva::all()->lists('RESE_TITULO'); //lo mismo para lugar y fecha
-        $fechaini = Reserva::all()->lists('RESE_FECHAINI');
-        $fechafin = Reserva::all()->lists('RESE_FECHAFIN');
-        $allDay = Reserva::all()->lists('RESE_TODOELDIA');
-        $background = Reserva::all()->lists('RESE_COLOR');
-        $count = count($id); //contamos los ids obtenidos para saber el numero exacto de eventos
+
+        $reservas = Reserva::where('SALA_ID', $sala)
+                    ->get(); //listamos todos los id de los eventos
+
+        $count = count($reservas); //contamos los ids obtenidos para saber el numero exacto de eventos
+        
 
         //hacemos un ciclo para anidar los valores obtenidos a nuestro array principal $data
         for($i=0;$i<$count;$i++){
             $data[$i] = array(
                 
-                "title"=>$titulo[$i], //obligatoriamente "title", "start" y "url" son campos requeridos
-                "start"=>$fechaini[$i], //por el plugin asi que asignamos a cada uno el valor correspondiente
-                "end"=>$fechafin[$i],
-                "allDay"=>$allDay[$i],
-                "backgroundColor"=>$background[$i],
+                "title"=>$reservas[$i]->RESE_TITULO, //obligatoriamente "title", "start" y "url" son campos requeridos
+                "start"=>$reservas[$i]->RESE_FECHAINI, //por el plugin asi que asignamos a cada uno el valor correspondiente
+                "end"=>$reservas[$i]->RESE_FECHAFIN,
+                "allDay"=>$reservas[$i]->ALLDAY,
+                "backgroundColor"=>$reservas[$i]->RESE_COLOR,
                 //"borderColor"=>$borde[$i],
-                "id"=>$id[$i]
+                "id"=>$reservas[$i]->RESE_ID,
+                "sala" => $sala
                 //"url"=>"cargaEventos".$id[$i]
                 //en el campo "url" concatenamos el el URL con el id del evento para luego
                 //en el evento onclick de JS hacer referencia a este y usar el método show
@@ -176,7 +179,7 @@ class ReservasController extends Controller
                         'AUTO_FECHASOLICITUD' => $fechaactual, 
                         'AUTO_ESTADO' => 5,
                         'UNID_ID' => $k[7],
-                        'DOCE_ID' => $k[8],
+                        'PEGE_ID' => $k[8],
                         'GRUP_ID' => $k[9],
                         'MATE_CODIGOMATERIA' => $k[10],
                         'AUTO_OBSERVACIONES' =>  'REGISTRO AUTOMATICO'
@@ -191,7 +194,7 @@ class ReservasController extends Controller
                         'AUTO_FECHAAPROBACION' => $fechaactual,
                         'AUTO_ESTADO' => 6,
                         'UNID_ID' => $k[7],
-                        'DOCE_ID' => $k[8],
+                        'PEGE_ID' => $k[8],
                         'GRUP_ID' => $k[9],
                         'MATE_CODIGOMATERIA' => $k[10],
                         'AUTO_OBSERVACIONES' =>  'REGISTRO AUTOMATICO'
