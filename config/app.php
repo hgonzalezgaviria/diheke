@@ -156,6 +156,7 @@ return [
         reservas\Providers\EventServiceProvider::class,
         reservas\Providers\RouteServiceProvider::class,
         MaddHatter\LaravelFullcalendar\ServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
         //Add by DiegoCortes
         Styde\Html\HtmlServiceProvider::class,
@@ -209,6 +210,7 @@ return [
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Calendar' => MaddHatter\LaravelFullcalendar\Facades\Calendar::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],
 

@@ -10,6 +10,11 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::get('layoutPDF', 'ExportarPdfController@layoutPDF');
+Route::get('streamPDF', 'ExportarPdfController@streamPDF');
+Route::get('savePDF', 'ExportarPdfController@savePDF');
+//Route::get('encuestas/{ENCU_id}/downloadZIP', 'ExportarPdfController@downloadZIP');
+
 
 //Autenticación
 Route::auth();

@@ -251,5 +251,5 @@ $dataUri = 'data:image/' . $type . ';base64,' . base64_encode($data);
         Session::flash('message', 'Equipo '.$id.' borrado!');
         return redirect()->to('equipos');
     }
-    
+
 }

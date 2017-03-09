@@ -59,5 +59,6 @@ class Equipo extends Model
 		return $this->hasMany(Prestamo::class, $foreingKey);
 	}
 
+    
 
 }

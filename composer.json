@@ -11,7 +11,8 @@
         "phpoffice/phpexcel": "^1.8",
         "maddhatter/laravel-fullcalendar": "~1.0",
         "maatwebsite/excel": "^2.1",
-        "nesbot/carbon": "~1.14"
+        "nesbot/carbon": "~1.14",
+        "barryvdh/laravel-dompdf": "^0.8.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
