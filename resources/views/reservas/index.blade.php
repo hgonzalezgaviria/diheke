@@ -149,34 +149,60 @@
           }
         });
 
+
+
+
     $("#reservadias").click(function(){
 
       
       var nrodias = adiassel.length;
 
-      var fechahastad = $('#fechahastad').data("DateTimePicker").date();
-      fechahastad = moment(fechahastad, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
-      
+      var finid = $('#fechainiciod').data("DateTimePicker").date();
+      var ffind = $('#fechahastad').data("DateTimePicker").date();
+      //ffind = moment(ffind, 'YYYY-MM-DD').format('YYYY-MM-DD');  
 
       if(nrodias > 0){
 
+        /*
         for(var i = 0; i<nrodias ; i++){
 
           console.log("Valor "+adiassel[i] + " Fecha: " + fechahastad);
 
         }
+        */
+        
+        var cont = 0;
+        while(finid <= ffind){
+
+
+          var fini = moment(finid, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
+          var ffin = moment(ffind, 'YYYY-MM-DD').format('YYYY-MM-DD'); 
+
+          
+
+          finid = moment(finid).add(1, 'days');
+
+          console.log(fini + " <= " + ffin + " cont ");
+
+
+        }
+
+
         
       }else{
 
         $.msgBox({
             title:"Error",
-            content:"¡No ha seleccionado ningun día!",
+            content:"¡Faltan datos para la reserva!",
             type:"error"
         }); 
 
       }
 
     });
+
+
+
 
     var cmaterias = 0;
     $("#asignaturas").click(function(){
@@ -371,9 +397,60 @@
 
     }
 
+    function llenarDocentesd(facultad){
+
+              var opcion = $("#facultadesd").val();
+
+              crsfToken = document.getElementsByName("_token")[0].value;
+
+              $.ajax({
+                       url: '../consultaDocentes',
+                       data: 'unidad='+ opcion,
+                       dataType: "json",
+                       type: "POST",
+                       headers: {
+                              "X-CSRF-TOKEN": crsfToken
+                          },
+                    success: function(docentes, error) {
+
+                            $('#docentesd').empty();
+
+                            var registros = grupos.length;
+
+                            if(registros > 0){
+                
+                                for(var i = 0; i < docentes.length; i++){
+                                  $("#docentesd").append('<option value=' + docentes[i].PEGE_ID + '>' + docentes[i].PENG_PRIMERNOMBRE + " " + docentes[i].PENG_SEGUNDONOMBRE + " " + docentes[i].PENG_PRIMERAPELLIDO + " " + docentes[i].PENG_SEGUNDOAPELLIDO + '</option>' );
+                                } 
+
+                            }else{
+
+                                $.msgBox({
+                                              title:"Información",
+                                              content:"¡No hay datos disponibles!",
+                                              type:"info"
+                                }); 
+
+                            }
+                    },
+                    error: function(json){
+                            console.log("Error al traer los datos");
+                    }        
+                });
+
+    }
+
     //===========================================================
     var cfacultadesd = 0;
     $("#facultadesd").click(function(){
+
+      var facu = $("#facultadesd").val();
+
+      if(facu != null){
+
+        llenarDocentesd(facu);
+
+      }
 
       if(cfacultadesd == 0){
 
@@ -557,7 +634,7 @@
     
     //=================================================
 
-    //agregamos un callback para determinar cual es el Radio Button que se encuentra en estado seleccionado
+    //agregamos un callback para determinar cual es el check box que se encuentra en estado seleccionado
     var adiassel = [];
     $("input[name=chkdias]").click(function(){
       //asignamos a la variable "sel" el valor del R.B seleccionado
@@ -565,7 +642,7 @@
                     return $(this).val();
                 }).get();
 
-      
+      console.log(adiassel);
 
     });
 
@@ -582,6 +659,7 @@
     var sel = null;
 
     //agregamos un callback para determinar cual es el Radio Button que se encuentra en estado seleccionado
+    //radios
     $("input[name=radio]").click(function(){
       
       //asignamos a la variable "sel" el valor del R.B seleccionado
@@ -801,7 +879,7 @@
         //alert("el valor de sel es: "+sel+ " Puede reservar es "+puedereservar);
         if(puedereservar){
 
-                          if(sel!="hasta" && sel!="semestre" && sel!="mensual" && sel!="semana"){
+                          if(sel!="hasta" && sel!="semestre" && sel!="mensual" && sel!="semana" && sel!="pordias"){
 
                               //====================================================================================
                               //este bloque sirve para validar que el día en que se pretende hacer la reserva no sea un festivo
@@ -1015,7 +1093,7 @@
                                                   i++;
                     }//aqui cierra el while
 
-                    alert(puedehacerreservas);
+                    //alert(puedehacerreservas);
 
                                                 if(puedehacerreservas){
 
@@ -1057,21 +1135,16 @@
                                                   });
 
                                                 }
-    }//aqui cierra el if de si es reserva de rango
+      }//aqui cierra el if de si es reserva de rango
 
                                               
 
                                               
 
-                                            }//aqui cierra el if de si puede reservar
+  }//aqui cierra el if de si puede reservar
 
                                             
-
-
-                                            
-                                            
-                                            
-                                            
+                                             
                                             
     });
 
@@ -1125,8 +1198,10 @@
 
       events: { url:"../cargaEventos" + salad},
 
+
       eventRender: function(event, element) { 
-            element.find('.fc-title').append("<br/>" + event.title); 
+            var endd = moment(event.end).format('HH:mm');
+            element.find('.fc-title').append(" " + endd); 
       },
 
       //con esta funcion llamaremos el popup para mostrar los detalles de la reserva
@@ -1209,41 +1284,6 @@
 
       
 
-    });
-
-    /* AGREGANDO EVENTOS AL PANEL */
-    var currColor = "#3c8dbc"; //Red by default
-    //Color chooser button
-    var colorChooser = $("#color-chooser-btn");
-    $("#color-chooser > li > a").click(function (e) {
-      e.preventDefault();
-      //Save color
-      currColor = $(this).css("color");
-      //Add color effect to button
-
-      //$('#add-new-event').css({"background-color": currColor, "border-color": currColor});
-    });
-
-
-    $("#add-new-event").click(function (e) {
-      e.preventDefault();
-      //Get value and make sure it is not null
-      var val = $("#new-event").val();
-      if (val.length == 0) {
-        return;
-      }
-
-      //Create events
-      var event = $("<div />");
-      event.css({"background-color": currColor, "border-color": currColor, "color": "#fff"}).addClass("external-event");
-      event.html(val);
-      $('#external-events').prepend(event);
-
-      //Add draggable funtionality
-      ini_events(event);
-
-      //Remove event from text input
-      $("#new-event").val("");
     });
 
 
@@ -1525,7 +1565,17 @@
                  </div>
 
             
-                  </div>  
+                  </div>
+
+                  <label class="col-sm-2 control-label">Fecha Inicial:</label>
+                  <div class='input-group date' id='fechainiciod'>
+              <input type='text' class="form-control" />
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+              </span>
+            </div>
+
+            <br>
 
                   <label class="col-sm-2 control-label">Hasta:</label>
                   <div class='input-group date' id='fechahastad'>
@@ -1534,6 +1584,8 @@
                 <span class="glyphicon glyphicon-calendar"></span>
               </span>
             </div>
+
+
 
             <!--
             <div class='input-group date' id='fechainiciod'>
