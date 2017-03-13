@@ -298,6 +298,27 @@ class ReservasController extends Controller
     
     }
 
+    public function consultaDocentesd(){
+
+        $UNID_ID = $_POST['unidad'];
+
+        $docentes = \DB::table('PERSONANATURALGENERAL')
+                            ->select(
+                                    'PERSONANATURALGENERAL.PEGE_ID',
+                                    'PERSONANATURALGENERAL.PENG_PRIMERNOMBRE',
+                                    'PERSONANATURALGENERAL.PENG_PRIMERAPELLIDO',
+                                    'PERSONANATURALGENERAL.PENG_SEGUNDOAPELLIDO',
+                                    'PERSONANATURALGENERAL.PENG_SEGUNDONOMBRE')
+                            ->join('PERSONAGENERAL','PERSONAGENERAL.PEGE_ID','=','PERSONANATURALGENERAL.PEGE_ID')
+                            ->join('DOCENTESUNIDADES','PERSONAGENERAL.PEGE_ID','=','DOCENTESUNIDADES.PEGE_ID')
+                            ->where('DOCENTESUNIDADES.UNID_ID','=',$UNID_ID)
+                            ->get();
+
+        return json_encode($docentes);
+        //return $salas;materias
+    
+    }
+
     public function consultaGrupos(){
 
         //$SEDE_ID = $_POST['sede'];

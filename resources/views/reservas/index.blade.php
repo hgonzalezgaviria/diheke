@@ -154,48 +154,163 @@
 
     $("#reservadias").click(function(){
 
-      
+      var fondod = null;
+      var titulod = 'RS.D';
+      var todoeldiad = false;
+      var fondod = 'rgb(255, 255, 0)';
+      var colord = $('#color').val();
+
+      if(colord != null){
+        fondod = colord;
+        //console.log('no es nulo '+color)
+      }
+
+      var facultadd = $("#facultadesd").val();
+      var docented = $("#docentesd").val();
+      var materiad = $("#asignaturasd").val();
+      var grupod = $("#gruposd").val();
+
+      var sala = getUrlParameter('sala');
+      var equipod = getUrlParameter('equipo');
+      equipod = null;
+
+      //variable para validar cuantos días se seleccionaron
       var nrodias = adiassel.length;
 
+      //variables de fechas de inicio de reserva y fecha final para validar el rango
       var finid = $('#fechainiciod').data("DateTimePicker").date();
       var ffind = $('#fechahastad').data("DateTimePicker").date();
-      //ffind = moment(ffind, 'YYYY-MM-DD').format('YYYY-MM-DD');  
+
+      //numero de horas de la reserva
+      var nhorasd = $('#nhorasd').val();
+
+      //variable inicial y final de la reserva
+      var finires = $('#fechainiciod').data("DateTimePicker").date();
+      var ffinres = moment(finid).add(nhorasd, 'hours');
+
+      //esto hace que la fecha inicial tenga la hora cero, de lo contrario la condicion del while
+      //no se cumpliria en uno de los casos porque una fecha excede a la otra en horas, minutos o segundos
+      finid = moment().startOf('day');
 
       if(nrodias > 0){
 
-        /*
-        for(var i = 0; i<nrodias ; i++){
+            var arrreservasd = [];
+            var arrfestivosd = [];
 
-          console.log("Valor "+adiassel[i] + " Fecha: " + fechahastad);
+            crsfToken = document.getElementsByName("_token")[0].value;
 
-        }
-        */
-        
-        var cont = 0;
-        while(finid <= ffind){
+            var festrequestd;
+
+                festrequestd = $.ajax({
+                       url: 'getFestivos',
+                       async: false,
+                       data: 'vacio=' + 'sinretorno',
+                       dataType: 'json',
+                       type: "POST",
+                       headers: {
+                        "X-CSRF-TOKEN": crsfToken
+                      },
+                      success: function(festivos) {
+                        
+                        for(var i = 0; i < festivos.length; i++){
+                          var ffestd = moment(festivos[i].FEST_FECHA, 'YYYY-MM-DD').format('YYYY-MM-DD');
+                          arrfestivosd[i] = ffestd;
+                        }
+
+                      },
+                      error:   function(json){
+                        console.log("Error al consultar festivos");
+                      }        
+                });
+
+            
+            
+            while(finid <= ffind){
+
+              var fini = moment(finires, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+              var ffin = moment(ffinres, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm'); 
+              var ffinre = moment(finid, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+
+              //variable para controlar la excepcion de salida del bucle
+              finid = moment(finid).add(1, 'days');
+
+              //variable para obtener el día de la semana (lunes, martes, miercoles..)
+              var diares =  moment(finid, 'YYYY-MM-DD HH:mm').format('dddd');
+
+              //variable para volver la fecha de la reserva en formato YYYY-MM-DD
+              var finir = moment(fini, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
+
+              //fechas que incrementan en la reserva
+              finires = moment(finires).add(1, 'days');
+              ffinres = moment(ffinres).add(1, 'days');
+
+                for (var i = 0; i < arrfestivosd.length; i++) {
+                  
+                    var festd = moment(arrfestivosd[i], 'YYYY-MM-DD').format('YYYY-MM-DD');
+
+                    //if((festd != finir) || (diares != "domingo")){
+
+                      if(diares != "domingo"){
+
+                        arrreservasd[i] = [titulod, fini, 
+                                        todoeldiad, fondod, 
+                                        ffin, salad, 
+                                        equipod, facultadd,
+                                        docented, grupod, materiad];
+
+                        //console.log("valor del arreglo: " + arrreservasd[i] + " día: "+ diares);
+                        console.log(diares + " ");
+
+                      }
+
+                      
+
+                      
+                      
+                    //}
+
+                }
+
+              
+            }
 
 
-          var fini = moment(finid, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
-          var ffin = moment(ffind, 'YYYY-MM-DD').format('YYYY-MM-DD'); 
+            crsfToken = document.getElementsByName("_token")[0].value;
 
-          
+            var request;
 
-          finid = moment(finid).add(1, 'days');
+            request = $.ajax({
+               url: 'guardarReservas',
+               data: {reservas : arrreservasd},
+               //dataType: 'json',
+               type: "POST",
+               headers: {
+                "X-CSRF-TOKEN": crsfToken
+            },
+            success: function(events) {
+                        
+              
+              $.msgBox({
+                title:"Éxito",
+                content:"¡Su reserva se ha realizado satisfactoriamente!",
+                type:"success"
+              });
 
-          console.log(fini + " <= " + ffin + " cont ");
+              $('#calendar').fullCalendar('refetchEvents');
 
-
-        }
-
-
-        
+            },
+            error:   function(json){
+              console.log("Error al crear evento");
+            }        
+            });
+     
       }else{
 
-        $.msgBox({
-            title:"Error",
-            content:"¡Faltan datos para la reserva!",
-            type:"error"
-        }); 
+              $.msgBox({
+                  title:"Error",
+                  content:"¡Faltan datos para la reserva!",
+                  type:"error"
+              }); 
 
       }
 
@@ -399,13 +514,13 @@
 
     function llenarDocentesd(facultad){
 
-              var opcion = $("#facultadesd").val();
+              //var opcion = $("#facultadesd").val();
 
               crsfToken = document.getElementsByName("_token")[0].value;
 
               $.ajax({
-                       url: '../consultaDocentes',
-                       data: 'unidad='+ opcion,
+                       url: '../consultaDocentesd',
+                       data: 'unidad='+ facultad,
                        dataType: "json",
                        type: "POST",
                        headers: {
@@ -415,7 +530,7 @@
 
                             $('#docentesd').empty();
 
-                            var registros = grupos.length;
+                            var registros = docentes.length;
 
                             if(registros > 0){
                 
@@ -423,15 +538,8 @@
                                   $("#docentesd").append('<option value=' + docentes[i].PEGE_ID + '>' + docentes[i].PENG_PRIMERNOMBRE + " " + docentes[i].PENG_SEGUNDONOMBRE + " " + docentes[i].PENG_PRIMERAPELLIDO + " " + docentes[i].PENG_SEGUNDOAPELLIDO + '</option>' );
                                 } 
 
-                            }else{
-
-                                $.msgBox({
-                                              title:"Información",
-                                              content:"¡No hay datos disponibles!",
-                                              type:"info"
-                                }); 
-
                             }
+
                     },
                     error: function(json){
                             console.log("Error al traer los datos");
@@ -444,11 +552,11 @@
     var cfacultadesd = 0;
     $("#facultadesd").click(function(){
 
-      var facu = $("#facultadesd").val();
+      var facud = $("#facultadesd").val();
 
-      if(facu != null){
+      if(facud != null){
 
-        llenarDocentesd(facu);
+        llenarDocentesd(facud);
 
       }
 
@@ -469,6 +577,7 @@
                           $('#facultadesd').empty();
 
                           var registros = facultades.length;
+
                           if(registros > 0){
                               for(var i = 0; i < facultades.length; i++){
                                 $("#facultadesd").append('<option value=' + facultades[i].UNID_ID + '>' + facultades[i].UNID_NOMBRE + '</option>');
@@ -492,47 +601,6 @@
             cfacultadesd++;
       }
 
-
-      var opcion = $("#facultadesd").val();
-
-      if(opcion != null){
-
-            crsfToken = document.getElementsByName("_token")[0].value;
-
-            $.ajax({
-                     url: '../consultaDocentes',
-                     data: 'unidad='+ opcion,
-                     dataType: "json",
-                     type: "POST",
-                     headers: {
-                            "X-CSRF-TOKEN": crsfToken
-                        },
-                  success: function(docentes) {
-
-                          $('#docentesd').empty();
-
-                          var registros = grupos.length;
-
-                          if(registros > 0){
-              
-                              for(var i = 0; i < docentes.length; i++){
-                                $("#docentesd").append('<option value=' + docentes[i].DOCE_IDENTIFICACION + '>' + docentes[i].DOCE_NOMBRES + " " + docentes[i].DOCE_APELLIDOS + '</option>');
-                              } 
-                          }else{
-
-                              $.msgBox({
-                                            title:"Información",
-                                            content:"¡No hay datos disponibles!",
-                                            type:"info"
-                              }); 
-
-                          }
-                  },
-                  error: function(json){
-                          console.log("Error al traer los datos");
-                  }        
-              });
-        }
 
     });
 
@@ -1570,6 +1638,16 @@
                   <label class="col-sm-2 control-label">Fecha Inicial:</label>
                   <div class='input-group date' id='fechainiciod'>
               <input type='text' class="form-control" />
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+              </span>
+            </div>
+
+            <br>
+
+            <label class="col-sm-2 control-label">Horas:</label>
+            <div class='input-group date' >
+              <input type='number' class="form-control" id="nhorasd" placeholder="No. de horas" />
               <span class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
               </span>
