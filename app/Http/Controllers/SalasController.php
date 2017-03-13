@@ -311,7 +311,7 @@ class SalasController extends Controller
 		if($this->validaEquipoEnPrestamos($SALA_ID)) {
     		//$sala->SALA_PRESTAMO = 1;
     			$descripcionmsj='La Sala '.$sala->SALA_ID.' Tiene Equipos En prestamos no se puede liberar';    	
-    			$mensaje='message-modal-nok';
+    			$mensaje='warning-modal';
 		}else{
 				$sala->save();
 				$descripcionmsj='La Sala '.$sala->SALA_ID.' Actualiza exitosamente!';    		

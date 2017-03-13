@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use reservas\Http\Requests;
 use reservas\Reserva;
-use reservas\Autorizacione;
+use reservas\Autorizacion;
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Input;

@@ -27,6 +27,7 @@ alias gc="git commit -m"
 alias gp="git push"
 alias gs="git status"
 alias gl="git log"
+alias gdiscard="git clean -df && git checkout -- ."
 
 #Console
 alias cls="clear"

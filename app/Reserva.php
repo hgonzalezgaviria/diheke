@@ -61,4 +61,27 @@ class Reserva extends Model
         $otherKey   = 'AUTO_ID';
         return $this->belongsToMany(Autorizacione::class, 'RESERVAS_AUTORIZADAS', $foreingKey,  $otherKey);
     }
+
+
+    //Scope Join con Autorizaciones
+    public function scopeAutorizaciones($query)
+    {
+        $query = $query->join('RESERVAS_AUTORIZADAS',
+                            'RESERVAS_AUTORIZADAS.RESE_ID', '=', 'RESERVAS.RESE_ID')
+                        ->join('AUTORIZACIONES',
+                            'AUTORIZACIONES.AUTO_ID', '=', 'RESERVAS_AUTORIZADAS.AUTO_ID');
+        return $query;
+    }
+    //Scope Reservas aprobadas
+    public function scopeAprobadas($query)
+    {
+        return $query->autorizaciones()
+                    ->where('AUTORIZACIONES.AUTO_ESTADO', Estado::RESERVA_APROBADA);
+    }
+    //Scope Reservas pendientes por aprobar
+    public function scopePendientesAprobar($query)
+    {
+        return $query->autorizaciones()
+                    ->where('AUTORIZACIONES.AUTO_ESTADO', Estado::RESERVA_PENDIENTE);
+    }
 }
