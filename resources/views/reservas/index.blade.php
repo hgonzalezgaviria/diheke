@@ -154,6 +154,9 @@
 
     $("#reservadias").click(function(){
 
+      var arrreservasd = [];
+      var arrfestivosd = [];
+
       var fondod = null;
       var titulod = 'RS.D';
       var todoeldiad = false;
@@ -194,9 +197,6 @@
 
       if(nrodias > 0){
 
-            var arrreservasd = [];
-            var arrfestivosd = [];
-
             crsfToken = document.getElementsByName("_token")[0].value;
 
             var festrequestd;
@@ -224,8 +224,8 @@
                 });
 
             
-            
-            while(finid <= ffind){
+            var contr = 0;
+            while(finid < ffind){
 
               var fini = moment(finires, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
               var ffin = moment(ffinres, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm'); 
@@ -235,7 +235,7 @@
               finid = moment(finid).add(1, 'days');
 
               //variable para obtener el día de la semana (lunes, martes, miercoles..)
-              var diares =  moment(finid, 'YYYY-MM-DD HH:mm').format('dddd');
+              var diares =  moment(fini, 'YYYY-MM-DD HH:mm').format('dddd');
 
               //variable para volver la fecha de la reserva en formato YYYY-MM-DD
               var finir = moment(fini, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
@@ -244,15 +244,9 @@
               finires = moment(finires).add(1, 'days');
               ffinres = moment(ffinres).add(1, 'days');
 
-                for (var i = 0; i < arrfestivosd.length; i++) {
-                  
-                    var festd = moment(arrfestivosd[i], 'YYYY-MM-DD').format('YYYY-MM-DD');
+              if(diares != "domingo"){
 
-                    //if((festd != finir) || (diares != "domingo")){
-
-                      if(diares != "domingo"){
-
-                        arrreservasd[i] = [titulod, fini, 
+                        arrreservasd[contr] = [titulod, fini, 
                                         todoeldiad, fondod, 
                                         ffin, salad, 
                                         equipod, facultadd,
@@ -261,20 +255,37 @@
                         //console.log("valor del arreglo: " + arrreservasd[i] + " día: "+ diares);
                         console.log(diares + " ");
 
-                      }
+              }else{
+
+                        arrreservasd[contr] = [null, null, 
+                                        null, null, 
+                                        null, null, 
+                                        null, null,
+                                        null, null, null];
+
+              }
+
+              contr++;
+
+                /*
+                for (var i = 0; i < arrfestivosd.length; i++) {
+                  
+                    var festd = moment(arrfestivosd[i], 'YYYY-MM-DD').format('YYYY-MM-DD');
+
+                    //if((festd != finir) || (diares != "domingo")){
 
                       
 
-                      
-                      
-                    //}
 
                 }
+                */
 
               
             }
 
+            //alert(arrreservasd.length);
 
+            
             crsfToken = document.getElementsByName("_token")[0].value;
 
             var request;
@@ -303,6 +314,7 @@
               console.log("Error al crear evento");
             }        
             });
+            
      
       }else{
 
