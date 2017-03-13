@@ -79,6 +79,7 @@ Route::post('eliminaEvento','ReservasController@delete');
 Route::post('consultaSalas', array('as' => 'consultaSalas','uses' => 'EquiposController@consultaSalas'));
 Route::post('consultarEquipos', array('as'=>'consultarEquipos','uses' => 'ConsultaEquiposController@consultarEquipos'));
 
+Route::get('autorizarReservas', 'AutorizacionesController@index');
 
 Route::post('consultaMaterias', array('as' => 'consultaMaterias','uses' => 'ReservasController@consultaMaterias'));
 

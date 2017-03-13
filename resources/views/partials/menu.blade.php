@@ -88,12 +88,24 @@
 					</li>
 						</ul>
 					</li>
-					<li>
-						<a href="{{ url('/reservas/show') }}">
-							<i class="fa fa-calendar" aria-hidden="true"></i> Reservas
-						</a>
+
+					<!-- Menu de Reservas-->
+					<li class="dropdown">						
+						<ul class="nav navbar-nav">
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+								<i class="fa fa-calendar" aria-hidden="true"></i> Reservas
+									<span class="caret"></span>
+								</a>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="{{ url('/reservas/show') }}"><i class="fa fa-calendar"></i> Reservar</a></li>
+									<li><a href="{{ url('/autorizarReservas') }}"><i class="fa fa-calendar-check-o"></i> Autorizar</a></li>
+								</ul>
+							</li>
+						</ul>
 					</li>
-					
+					<!-- FIN Menu de Reservas-->
+
 					<!-- Menu de Consultas-->
 					<li class="dropdown">						
 						<ul class="nav navbar-nav">
