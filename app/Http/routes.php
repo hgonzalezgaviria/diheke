@@ -80,6 +80,8 @@ Route::post('consultaSalas', array('as' => 'consultaSalas','uses' => 'EquiposCon
 Route::post('consultarEquipos', array('as'=>'consultarEquipos','uses' => 'ConsultaEquiposController@consultarEquipos'));
 
 Route::get('autorizarReservas', 'AutorizacionesController@index');
+Route::post('autorizarReservas/{AUTO_ID}/aprobar', 'AutorizacionesController@aprobar');
+Route::post('autorizarReservas/{AUTO_ID}/rechazar', 'AutorizacionesController@rechazar');
 
 Route::post('consultaMaterias', array('as' => 'consultaMaterias','uses' => 'ReservasController@consultaMaterias'));
 

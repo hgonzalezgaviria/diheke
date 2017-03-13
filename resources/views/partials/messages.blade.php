@@ -23,34 +23,50 @@
 
 @if (Session::has('message-modal'))
 	@section('scripts')
-		<script type="text/javascript">
-			$(document).ready(function () {
-				var modal = $('#messageModal');
-				modal.find('#message').text('{{Session::get('message-modal')}}');
-				modal.find('.modal-header')
-					.addClass('alert-success')
-					.find('.modal-title').text('¡Operación exitosa!');
-				modal.modal('show');
-			})
-		</script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			var modal = $('#messageModal');
+			modal.find('#message').html('{{Session::get('message-modal')}}');
+			modal.find('.modal-content')
+				.addClass('panel-success')
+				.find('.modal-title').text('¡Operación exitosa!');
+			modal.modal('show');
+		})
+	</script>
 	@parent
 	@endsection
+@endif
 
-	@elseif (Session::has('message-modal-nok'))
-		@section('scripts')
-		<script type="text/javascript">
-			$(document).ready(function () {
-				var modal = $('#messageModal');
-				modal.find('#message').text('{{Session::get('message-modal-nok')}}');
-				modal.find('.modal-header')
-					.addClass('alert-warning')
-					.find('.modal-title').text('¡Advertencia!');
-				modal.modal('show');
-			})
-		</script>
+@if (Session::has('warning-modal'))
+	@section('scripts')
+	<script type="text/javascript">
+		$(document).ready(function () {
+			var modal = $('#messageModal');
+			modal.find('#message').html('{{Session::get('warning-modal')}}');
+			modal.find('.modal-content')
+				.addClass('panel-warning')
+				.find('.modal-title').text('¡Advertencia!');
+			modal.modal('show');
+		})
+	</script>
 	@parent
 	@endsection
+@endif
 
+@if (Session::has('danger-modal'))
+	@section('scripts')
+	<script type="text/javascript">
+		$(document).ready(function () {
+			var modal = $('#messageModal');
+			modal.find('#message').html('{{Session::get('danger-modal')}}');
+			modal.find('.modal-content')
+				.addClass('panel-danger')
+				.find('.modal-title').text('¡Error!');
+			modal.modal('show');
+		})
+	</script>
+	@parent
+	@endsection
 @endif
 
 
@@ -61,7 +77,7 @@
 <div class="modal fade" id="messageModal" role="dialog" tabindex="-1" >
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<div class="modal-header">
+			<div class="modal-header panel-heading" style="border-top-left-radius: inherit; border-top-right-radius: inherit;">
 				<h4 class="modal-title"></h4>
 			</div>
 
