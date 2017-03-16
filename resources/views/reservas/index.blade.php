@@ -5,6 +5,8 @@
 
   $(function () {
 
+    var adiassel = [];
+
     $('#fechainicio').datetimepicker({
       locale: 'es',
       format: 'YYYY-MM-DD HH:mm',
@@ -246,14 +248,34 @@
 
               if(diares != "domingo"){
 
+                  for(var i=0; i<adiassel.length; i++) {
+
+                    if(diares == adiassel[i]){
+                      console.log("son días iguales: "+ adiassel[i] + " - " + diares);
+
                         arrreservasd[contr] = [titulod, fini, 
                                         todoeldiad, fondod, 
                                         ffin, salad, 
                                         equipod, facultadd,
                                         docented, grupod, materiad];
+                    }else{
+
+                        arrreservasd[contr] = [null, null, 
+                                        null, null, 
+                                        null, null, 
+                                        null, null,
+                                        null, null, null];
+                                        
+                    }
+                    
+                    
+
+                  }
+
+                        
 
                         //console.log("valor del arreglo: " + arrreservasd[i] + " día: "+ diares);
-                        console.log(diares + " ");
+                        //console.log(diares + " ");
 
               }else{
 
@@ -715,7 +737,7 @@
     //=================================================
 
     //agregamos un callback para determinar cual es el check box que se encuentra en estado seleccionado
-    var adiassel = [];
+    
     $("input[name=chkdias]").click(function(){
       //asignamos a la variable "sel" el valor del R.B seleccionado
       adiassel = $("input[name=chkdias]:checked").map(function(){
@@ -1641,7 +1663,7 @@
                    <label><input type="checkbox" value="viernes" name="chkdias" id="vi"> Viernes</label>
                  </div>
                  <div class="otros">
-                   <label><input type="checkbox" value="sabado" name="chkdias" id="sa"> Sabado</label>
+                   <label><input type="checkbox" value="sábado" name="chkdias" id="sa"> Sabado</label>
                  </div>
 
             
