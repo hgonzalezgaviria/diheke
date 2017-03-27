@@ -209,7 +209,7 @@ class RecursosController extends Controller
     }
 
 
-    public function consultaSalas(){
+    public function consultaSalasR(){
 
         $SEDE_ID = $_POST['sede'];
 
