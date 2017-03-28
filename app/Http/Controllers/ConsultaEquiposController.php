@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Redirector;
 
 use reservas\Politica;
+use reservas\Sede;
+use reservas\Equipo;
 
 class ConsultaEquiposController extends Controller
 {
@@ -35,6 +37,7 @@ class ConsultaEquiposController extends Controller
 			}
 		}
 	}
+	
 
 	/**
 	 * Muestra una lista de los registros.
@@ -45,63 +48,32 @@ class ConsultaEquiposController extends Controller
 	{
 		//Se obtienen todos los registros.
 		
-
-		$sedes = \reservas\Sede::orderBy('SEDE_ID')
+		$sedes = Sede::orderBy('SEDE_ID')
 						->select('SEDE_ID', 'SEDE_DESCRIPCION')
 						->get();
 
 		$sala = Input::get('sala');
 
 		//$equipos = \reservas\Equipo::all();
-		$equipos = \reservas\Equipo::where('SALA_ID',$sala)->get();
-
+		$equipos = Equipo::where('SALA_ID',$sala)
+        			->orderBy('EQUI_ID')
+        			->get();
 
 		//Se carga la vista y se pasan los registros
 		return view('consultas/equipos/index', compact('sala','equipos'));
 	}
-
-
-	/**
-	 * Muestra información de un registro.
-	 *
-	 * @param  int  $ESFI_ID
-	 * @return Response
-	 */
-	public function show($POLI_ID)
-	{
-		// Se obtiene el registro
-
-	}
-
 
      public function consultarEquipos(){
 
         //$SEDE_ID = $_POST['sede'];
         $SALA_ID = $_POST['sala'];
 
-        $equipos = \DB::table('EQUIPOS')
-                            ->select('EQUIPOS.*')
-                            ->where('SALA_ID', $SALA_ID)
-                            ->get();
+        $equipos = Equipo::where('SALA_ID', $SALA_ID)
+        			->orderBy('EQUI_ID')
+        			->get();
 
-        /*$equipos = \reservas\Equipo::where('SALA_ID', $SALA_ID)
-        			->get();*/
-
-        return json_encode($equipos);
-        //return $salas;
+        return $equipos->toJson();
     }
 
-
-
-
-
-
-
-	/**
-	 * Actualiza un registro en la base de datos.
-	 *
-	 * @param  int  $ESFI_ID
-	 * @return Response	 */
-	
 
 }

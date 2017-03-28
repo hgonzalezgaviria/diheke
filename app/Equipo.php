@@ -26,10 +26,6 @@ class Equipo extends Model
 		'EQUI_CREADOPOR'
 	];
 
-    protected $hidden = [
-      	"EQUI_ID"
-    ];
-
     //Una Equipo se encuentra en una Sala
 	public function sala()
 	{
