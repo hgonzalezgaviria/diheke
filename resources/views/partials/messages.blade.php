@@ -65,7 +65,7 @@
 			</div>
 		</div>
 	</div><!-- Fin de Mensaje Modal.-->
-
+{{dump(Session::all())}}
 @section('scripts')
 	<script type="text/javascript">
 
@@ -80,7 +80,7 @@
 		@if (Session::has('modal-success'))
 			$(document).ready(function () {
 				var modal = $('#messageModal');
-				modal.find('#message').html('{{{Session::get('modal-message')}}}');
+				modal.find('#message').html('{{{Session::get('modal-success')}}}');
 				modal.find('.modal-content')
 					.addClass('panel-success')
 					.find('.modal-title').text('¡Operación exitosa!');
