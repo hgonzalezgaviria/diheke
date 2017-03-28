@@ -34,7 +34,7 @@ class EstadosController extends Controller
             {
                 if( ! in_array($role , ['admin','editor']))//Si el rol no es admin o editor, se niega el acceso.
                 {
-                    Session::flash('error', '¡Usuario no tiene permisos!');
+                    Session::flash('alert-danger', '¡Usuario no tiene permisos!');
                     abort(403, '¡Usuario no tiene permisos!.');
                 }
             }
@@ -116,7 +116,7 @@ class EstadosController extends Controller
         */
 
         // redirecciona al index de controlador
-        Session::flash('message', 'Estado creado exitosamente!');
+        Session::flash('alert-info', 'Estado creado exitosamente!');
         return redirect()->to('estados');
     }
 
@@ -219,7 +219,7 @@ class EstadosController extends Controller
 
 
         // redirecciona al index de controlador
-        Session::flash('message', 'Estado actualizado exitosamente!');
+        Session::flash('alert-info', 'Estado actualizado exitosamente!');
         return redirect()->to('estados/');
     }
 
@@ -244,7 +244,7 @@ class EstadosController extends Controller
         //$estado->delete();
 
         // redirecciona al index de controlador
-        Session::flash('message', 'estado '.$ESTA_ID.' borrado!');
+        Session::flash('alert-info', 'estado '.$ESTA_ID.' borrado!');
         return redirect()->to('estados');
     }
 

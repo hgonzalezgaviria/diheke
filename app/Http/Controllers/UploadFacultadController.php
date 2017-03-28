@@ -35,7 +35,7 @@ class UploadFacultadController extends Controller
 			{
 				if( ! in_array($role , ['admin']))//Si el rol no es admin, se niega el acceso.
 				{
-					//Session::flash('error', '¡Usuario no tiene permisos!');
+					//Session::flash('alert-danger', '¡Usuario no tiene permisos!');
 					abort(403, '¡Usuario no tiene permisos!.');
 				}
 			}
@@ -209,7 +209,7 @@ class UploadFacultadController extends Controller
 
 		// redirecciona al index de controlador
 		if($showMsg){
-			Session::flash('message', '¡'.$count.' '.class_basename($className).'(s) eliminados y sus relaciones exitosamente!');
+			Session::flash('alert-info', '¡'.$count.' '.class_basename($className).'(s) eliminados y sus relaciones exitosamente!');
 			return redirect()->back();
 		}
 	}

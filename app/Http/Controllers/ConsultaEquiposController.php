@@ -29,7 +29,7 @@ class ConsultaEquiposController extends Controller
 			{
 				if( ! in_array($role , ['admin','editor']))//Si el rol no es admin o editor, se niega el acceso.
 				{
-					Session::flash('error', '¡Usuario no tiene permisos!');
+					Session::flash('alert-danger', '¡Usuario no tiene permisos!');
 					abort(403, '¡Usuario no tiene permisos!.');
 				}
 			}

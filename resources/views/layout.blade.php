@@ -41,6 +41,19 @@
 			.page-header{
 				margin-top:10px;
 			}
+			/*Alerta flotante a la derecha.*/
+			.alertas {
+			    position: absolute;
+			    max-height: 500px;
+			    max-width: 600px;
+			    bottom : 20px;
+			    right: 20px;
+			    z-index: 999;
+			}
+			.alertas>.alert{
+				width: 300px;
+				margin-bottom: 5px;
+			}
 		</style>
 		<!-- Fonts 
 		<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'> -->

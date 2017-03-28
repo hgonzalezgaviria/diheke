@@ -29,7 +29,7 @@ class PoliticasController extends Controller
 			{
 				if( ! in_array($role , ['admin','editor']))//Si el rol no es admin o editor, se niega el acceso.
 				{
-					Session::flash('error', '¡Usuario no tiene permisos!');
+					Session::flash('alert-danger', '¡Usuario no tiene permisos!');
 					abort(403, '¡Usuario no tiene permisos!.');
 				}
 			}
@@ -85,7 +85,7 @@ class PoliticasController extends Controller
         $politica->save();
 
 		// redirecciona al index de controlador
-		Session::flash('message', 'Politica creada exitosamente!');
+		Session::flash('alert-info', 'Politica creada exitosamente!');
 		return redirect()->to('politicas');
 	}
 
@@ -154,7 +154,7 @@ class PoliticasController extends Controller
 		$politica->save();
 
 		// redirecciona al index de controlador
-		Session::flash('message', 'Politica '.$politica->POLI_ID.' modificada exitosamente!');
+		Session::flash('alert-info', 'Politica '.$politica->POLI_ID.' modificada exitosamente!');
 		return redirect()->to('politicas');
 	}
 
@@ -175,7 +175,7 @@ class PoliticasController extends Controller
 
 		// redirecciona al index de controlador
 		if($showMsg){
-			Session::flash('message', 'Politica '.$politica->SEDE_ID.' eliminada exitosamente!');
+			Session::flash('alert-info', 'Politica '.$politica->SEDE_ID.' eliminada exitosamente!');
 			return redirect()->to('politicas');
 		}
 	}

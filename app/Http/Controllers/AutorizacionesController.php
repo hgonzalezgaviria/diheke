@@ -50,7 +50,7 @@ class AutorizacionesController extends Controller
     
     
         // redirecciona al index de controlador
-        Session::flash('message-modal', 'Autorización '.$AUTO_ID.' aprobada.');
+        Session::flash('modal-success', 'Autorización '.$AUTO_ID.' aprobada.');
         return redirect()->to($this->index);
     }
 
@@ -71,7 +71,7 @@ class AutorizacionesController extends Controller
         $autorizacion->save();
 
         // redirecciona al index de controlador
-        Session::flash('warning-modal', 'Autorización '.$AUTO_ID.' rechazada.');
+        Session::flash('modal-warning', 'Autorización '.$AUTO_ID.' rechazada.');
         return redirect()->to($this->index);
     }
 

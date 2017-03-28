@@ -80,7 +80,7 @@ class AuthController extends Controller
 			{
 				if( ! in_array($role , ['admin']))//Si el rol no es admin, se niega el acceso.
 				{
-					Session::flash('error', '¡Usuario no tiene permisos!');
+					Session::flash('alert-danger', '¡Usuario no tiene permisos!');
 					abort(403, '¡Usuario no tiene permisos!.');
 				}
 			}
@@ -145,7 +145,7 @@ class AuthController extends Controller
 
 	
 
-		Session::flash('message', 'Usuario '.$usuario->username.' creado exitosamente!');
+		Session::flash('alert-info', 'Usuario '.$usuario->username.' creado exitosamente!');
 		return redirect('usuarios');
     }
 
@@ -258,7 +258,7 @@ class AuthController extends Controller
         $usuario->save();
 
         // redirecciona al index de controlador
-        Session::flash('message', 'Usuario '.$usuario->username.' modificado exitosamente!');
+        Session::flash('alert-info', 'Usuario '.$usuario->username.' modificado exitosamente!');
         return redirect('usuarios');
     }
 
@@ -274,13 +274,13 @@ class AuthController extends Controller
 
 		//Si el usuario fue creado por SYSTEM, no se puede borrar.
 		if($usuario->USER_CREADOPOR == 'SYSTEM'){
-			Session::flash('error', '¡Usuario '.$usuario->username.' no se puede borrar!');
+			Session::flash('alert-danger', '¡Usuario '.$usuario->username.' no se puede borrar!');
 	    } else {
 			$usuario->USER_ELIMINADOPOR = auth()->user()->username;
 			$usuario->save();
 			$usuario->delete();
 			
-			Session::flash('warning', '¡Usuario '.$usuario->username.' borrado!');
+			Session::flash('alert-warning', '¡Usuario '.$usuario->username.' borrado!');
 		}
 
 	    return redirect('usuarios');

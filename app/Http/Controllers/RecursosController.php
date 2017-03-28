@@ -31,7 +31,7 @@ class RecursosController extends Controller
             {
                 if( ! in_array($role , ['admin','editor']))//Si el rol no es admin o editor, se niega el acceso.
                 {
-                    Session::flash('error', '¡Usuario no tiene permisos!');
+                    Session::flash('alert-danger', '¡Usuario no tiene permisos!');
                     abort(403, '¡Usuario no tiene permisos!.');
                 }
             }
@@ -111,7 +111,7 @@ class RecursosController extends Controller
     
 
         // redirecciona al index de controlador
-        Session::flash('message', 'Recurso creado exitosamente!');
+        Session::flash('alert-info', 'Recurso creado exitosamente!');
         return redirect()->to('recursos');
     }
 
@@ -183,7 +183,7 @@ class RecursosController extends Controller
         $recurso->salas()->sync($idsSalas);
 
         // redirecciona al index de controlador
-        Session::flash('message', 'Recurso actualizado exitosamente!');
+        Session::flash('alert-info', 'Recurso actualizado exitosamente!');
         return redirect()->to('recursos/');
     }
 
@@ -204,12 +204,12 @@ class RecursosController extends Controller
         $recurso->delete();
         
         // redirecciona al index de controlador
-        Session::flash('message', 'Recurso '.$RECU_ID.' borrado!');
+        Session::flash('alert-info', 'Recurso '.$RECU_ID.' borrado!');
         return redirect()->to('recursos');
     }
 
 
-    public function consultaSalas(){
+    public function consultaSalasR(){
 
         $SEDE_ID = $_POST['sede'];
 
