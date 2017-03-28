@@ -65,7 +65,6 @@
 			</div>
 		</div>
 	</div><!-- Fin de Mensaje Modal.-->
-{{dump(Session::all())}}
 @section('scripts')
 	<script type="text/javascript">
 
