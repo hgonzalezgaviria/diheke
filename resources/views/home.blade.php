@@ -82,8 +82,7 @@
         tabContent.empty();
         var nohayEquipos=false;
         for (var i = 0 ; i < salas.length; i++) {
-          if(salas[i].SEDE_ID == $(this).data('sede') && 
-            salas[i].ESTA_ID==1 &&
+          if(salas[i].SEDE_ID == $(this).data('sede') &&             
             salas[i].SALA_PRESTAMO==1 &&
           salas[i].equipos_disp > 0
           ){
