@@ -313,6 +313,12 @@ class SalasController extends Controller
     			$descripcionmsj='La Sala '.$sala->SALA_ID.' Tiene Equipos En prestamos no se puede liberar';    	
     			$mensaje='modal-warning';
 		}else{
+				if($sala->ESTA_ID == 2){
+					$sala->ESTA_ID = 1;
+				}else{
+					$sala->ESTA_ID = 2;
+				}
+				
 				$sala->save();
 				$descripcionmsj='La Sala '.$sala->SALA_ID.' Actualiza exitosamente!';    		
 				$mensaje='modal-success';

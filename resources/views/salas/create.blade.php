@@ -3,7 +3,7 @@
 
 @section('content')
 
-	<h1 class="page-header">Nuevo Sala</h1>
+	<h1 class="page-header">Nueva Sala</h1>
 
 	@include('partials/errors')
 	

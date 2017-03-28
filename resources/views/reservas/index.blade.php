@@ -246,44 +246,56 @@
               finires = moment(finires).add(1, 'days');
               ffinres = moment(ffinres).add(1, 'days');
 
+
               if(diares != "domingo"){
+
+                  /*
 
                   for(var i=0; i<adiassel.length; i++) {
 
-                    if(diares == adiassel[i]){
-                      console.log("son días iguales: "+ adiassel[i] + " - " + diares);
+                    //console.log(diares + " - " + adiassel[i]);
 
-                        arrreservasd[contr] = [titulod, fini, 
-                                        todoeldiad, fondod, 
-                                        ffin, salad, 
-                                        equipod, facultadd,
-                                        docented, grupod, materiad];
-                    }else{
+                        if(diares == adiassel[i]){
+                  
+                            arrreservasd[contr] = [titulod, fini, 
+                                            todoeldiad, fondod, 
+                                            ffin, salad, 
+                                            equipod, facultadd,
+                                            docented, grupod, materiad];
 
-                        arrreservasd[contr] = [null, null, 
-                                        null, null, 
-                                        null, null, 
-                                        null, null,
-                                        null, null, null];
-                                        
-                    }
-                    
-                    
+
+                        }else{
+
+                            arrreservasd[contr] = [null, null,
+                                            null, null, 
+                                            null, null, 
+                                            null, null,
+                                            null, null, null];
+
+                        }
+
 
                   }
+
+                  */
+                  for(var i=0; i<adiassel.length; i++) {
+
+                    
+                    if(adiassel[i] == diares){
+
+                      console.log("días iguales: " + adiassel[i] + " = " + diares);
+
+                    }
+
+                  }
+
+
+                  //console.log(diares + "\n");
 
                         
 
                         //console.log("valor del arreglo: " + arrreservasd[i] + " día: "+ diares);
                         //console.log(diares + " ");
-
-              }else{
-
-                        arrreservasd[contr] = [null, null, 
-                                        null, null, 
-                                        null, null, 
-                                        null, null,
-                                        null, null, null];
 
               }
 
@@ -304,6 +316,8 @@
 
               
             }
+
+            //console.log("este es el arreglo final: "+ arrreservasd);
 
             //alert(arrreservasd.length);
 
@@ -333,9 +347,10 @@
 
             },
             error:   function(json){
-              console.log("Error al crear evento");
+              console.log("Error al crear evento de reservas por días: ");
             }        
             });
+            
             
      
       }else{
@@ -762,6 +777,7 @@
 
     //agregamos un callback para determinar cual es el Radio Button que se encuentra en estado seleccionado
     //radios
+
     $("input[name=radio]").click(function(){
       
       //asignamos a la variable "sel" el valor del R.B seleccionado
@@ -998,8 +1014,14 @@
                               }
                               //====================================================================================
                               
+                              /*
 
-                              
+                              alert(puedereservar + "\n" + titulo + "\n" + fechainicio + "\n" + todoeldia + "\n"
+                                 + fondo + "\n" + fechafinal + "\n" + sala + "\n" + equipo + "\n" + 
+                                 facultad + "\n" + materia + "\n" + grupo + "\n" + docente + "\n");
+
+                              */
+
                               if(puedereservar){
 
                                       crsfToken = document.getElementsByName("_token")[0].value;
@@ -1025,7 +1047,7 @@
                                            $('#calendar').fullCalendar('refetchEvents');
                                          },
                                          error:   function(json){
-                                          console.log("Error al crear evento");
+                                          console.log("Error al crear evento en reserva unitaria");
                                         }        
                                       });
 
@@ -1524,7 +1546,7 @@
              <br>
             <button id="reservar" type="button" class="btn btn-primary btn-flat">Crear Reserva</button>
 
-            <button id="probar" type="button" class="btn btn-primary btn-flat">Probar</button>
+           
 
             
 
