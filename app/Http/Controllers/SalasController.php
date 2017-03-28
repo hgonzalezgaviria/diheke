@@ -29,7 +29,7 @@ class SalasController extends Controller
 			{
 				if( ! in_array($role , ['admin']))//Si el rol no es admin, se niega el acceso.
 				{
-					Session::flash('error', '¡Usuario no tiene permisos!');
+					Session::flash('alert-danger', '¡Usuario no tiene permisos!');
 					abort(403, '¡Usuario no tiene permisos!.');
 				}
 			}
@@ -144,7 +144,7 @@ class SalasController extends Controller
 		$sala->save();
 	 
 		// redirecciona al index de controlador
-		Session::flash('message', 'Sala '.$sala->SALA_ID.' creada exitosamente!');
+		Session::flash('alert-info', 'Sala '.$sala->SALA_ID.' creada exitosamente!');
 		return redirect()->to('salas');
 	}
 
@@ -271,7 +271,7 @@ class SalasController extends Controller
 		$sala->save();
 
 		// redirecciona al index de controlador
-		Session::flash('message', 'Sala '.$sala->SALA_ID.' modificada exitosamente!');
+		Session::flash('alert-info', 'Sala '.$sala->SALA_ID.' modificada exitosamente!');
 		return redirect()->to('salas');
 	}
 
@@ -292,7 +292,7 @@ class SalasController extends Controller
 
 		// redirecciona al index de controlador
 		if($showMsg){
-			Session::flash('message', 'Sala '.$sala->SALA_ID.' eliminada exitosamente!');
+			Session::flash('alert-info', 'Sala '.$sala->SALA_ID.' eliminada exitosamente!');
 			return redirect()->to('salas');
 		}
 	}	
@@ -311,11 +311,11 @@ class SalasController extends Controller
 		if($this->validaEquipoEnPrestamos($SALA_ID)) {
     		//$sala->SALA_PRESTAMO = 1;
     			$descripcionmsj='La Sala '.$sala->SALA_ID.' Tiene Equipos En prestamos no se puede liberar';    	
-    			$mensaje='warning-modal';
+    			$mensaje='modal-warning';
 		}else{
 				$sala->save();
 				$descripcionmsj='La Sala '.$sala->SALA_ID.' Actualiza exitosamente!';    		
-				$mensaje='message-modal';
+				$mensaje='modal-success';
 		}
 
 				// redirecciona al index de controlador

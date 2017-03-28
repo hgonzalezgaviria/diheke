@@ -30,7 +30,7 @@ class EquiposController extends Controller
             {
                 if( ! in_array($role , ['admin','editor']))//Si el rol no es admin o editor, se niega el acceso.
                 {
-                    Session::flash('error', '¡Usuario no tiene permisos!');
+                    Session::flash('alert-danger', '¡Usuario no tiene permisos!');
                     abort(403, '¡Usuario no tiene permisos!.');
                 }
             }
@@ -154,7 +154,7 @@ $dataUri = 'data:image/' . $type . ';base64,' . base64_encode($data);
         */
 
         // redirecciona al index de controlador
-        Session::flash('message', 'Equipo creado exitosamente!');
+        Session::flash('alert-info', 'Equipo creado exitosamente!');
         return redirect()->to('equipos');
     }
 
@@ -229,7 +229,7 @@ $dataUri = 'data:image/' . $type . ';base64,' . base64_encode($data);
         $equipo->save();
 
         // redirecciona al index de controlador
-        Session::flash('message', 'Equipo actualizado exitosamente!');
+        Session::flash('alert-info', 'Equipo actualizado exitosamente!');
         return redirect()->to('equipos/'.$id);
     }
 
@@ -248,7 +248,7 @@ $dataUri = 'data:image/' . $type . ';base64,' . base64_encode($data);
         $equipo->delete();
 
         // redirecciona al index de controlador
-        Session::flash('message', 'Equipo '.$id.' borrado!');
+        Session::flash('alert-info', 'Equipo '.$id.' borrado!');
         return redirect()->to('equipos');
     }
 

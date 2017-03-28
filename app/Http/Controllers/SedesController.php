@@ -27,7 +27,7 @@ class SedesController extends Controller
 			{
 				if( ! in_array($role , ['admin','editor']))//Si el rol no es admin o editor, se niega el acceso.
 				{
-					Session::flash('error', '¡Usuario no tiene permisos!');
+					Session::flash('alert-danger', '¡Usuario no tiene permisos!');
 					abort(403, '¡Usuario no tiene permisos!.');
 				}
 			}
@@ -81,7 +81,7 @@ class SedesController extends Controller
          $sede->save();
 
 		// redirecciona al index de controlador
-		Session::flash('message', 'Sede creada exitosamente!');
+		Session::flash('alert-info', 'Sede creada exitosamente!');
 		return redirect()->to('sedes');
 	}
 
@@ -146,7 +146,7 @@ class SedesController extends Controller
 		$sede->save();
 
 		// redirecciona al index de controlador
-		Session::flash('message', 'Sede '.$sede->ESFI_ID.' modificada exitosamente!');
+		Session::flash('alert-info', 'Sede '.$sede->ESFI_ID.' modificada exitosamente!');
 		return redirect()->to('sedes');
 	}
 
@@ -167,7 +167,7 @@ class SedesController extends Controller
 
 		// redirecciona al index de controlador
 		if($showMsg){
-			Session::flash('message', 'Sede '.$sede->SEDE_ID.' eliminada exitosamente!');
+			Session::flash('alert-info', 'Sede '.$sede->SEDE_ID.' eliminada exitosamente!');
 			return redirect()->to('sedes');
 		}
 	}

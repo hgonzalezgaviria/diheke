@@ -31,7 +31,7 @@ class TipoEstadosController extends Controller
             {
                 if( ! in_array($role , ['admin','editor']))//Si el rol no es admin o editor, se niega el acceso.
                 {
-                    Session::flash('error', '¡Usuario no tiene permisos!');
+                    Session::flash('alert-danger', '¡Usuario no tiene permisos!');
                     abort(403, '¡Usuario no tiene permisos!.');
                 }
             }
@@ -99,7 +99,7 @@ class TipoEstadosController extends Controller
         */
 
         // redirecciona al index de controlador
-        Session::flash('message', 'Tipo de estado creado exitosamente!');
+        Session::flash('alert-info', 'Tipo de estado creado exitosamente!');
         return redirect()->to('tipoestados');
     }
 
@@ -157,7 +157,7 @@ class TipoEstadosController extends Controller
         $tipoestado->save();
 
         // redirecciona al index de controlador
-        Session::flash('message', 'Tipo de estado actualizado exitosamente!');
+        Session::flash('alert-info', 'Tipo de estado actualizado exitosamente!');
         return redirect()->to('tipoestados/');
     }
 
@@ -176,7 +176,7 @@ class TipoEstadosController extends Controller
         $tipoestado->delete();
 
         // redirecciona al index de controlador
-        Session::flash('message', 'Tipo estado '.$TIES_ID.' borrado!');
+        Session::flash('alert-info', 'Tipo estado '.$TIES_ID.' borrado!');
         return redirect()->to('tipoestados');
     }
 
