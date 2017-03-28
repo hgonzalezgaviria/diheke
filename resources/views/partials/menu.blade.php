@@ -100,7 +100,7 @@
 									<span class="caret"></span>
 								</a>
 								<ul class="dropdown-menu" role="menu">
-									<li><a href="{{ url('/reservas/show') }}"><i class="fa fa-calendar"></i> Reservar</a></li>
+									<li><a href="{{ url('home') }}"><i class="fa fa-calendar"></i> Reservar</a></li>
 									<li><a href="{{ url('/autorizarReservas') }}"><i class="fa fa-calendar-check-o"></i> Autorizar</a></li>
 								</ul>
 							</li>
@@ -117,8 +117,13 @@
 									<span class="caret"></span>
 								</a>
 								<ul class="dropdown-menu" role="menu">
-									<li><a href="{{ url('/consultaPrestamos') }}"><i class="fa fa-ticket"></i> Prestamos</a></li>
+									<li><a href="{{ url('/consultaPrestamos') }}"><i class="fa fa-get-pocket"></i> Prestamos</a></li>
+
+									<li><a href="{{ url('/consultaReservas') }}"><i class="fa fa-ticket"></i> Reservas</a></li>
 								</ul>
+							
+									
+								
 							</li>
 						</ul>
 					</li>
