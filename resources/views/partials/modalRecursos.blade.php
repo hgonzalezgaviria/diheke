@@ -66,7 +66,7 @@
 						if (recursos.length<=0){ //Si no hay recursos en la sala
 							html= '<div class="col-xs-12">'+
           				'<div class="alert alert-danger" id="note1">'+
-                    		'Para la sede seleccionada no hay recursos disponibles.'+
+                    		'Para la sala seleccionada no hay recursos disponibles.'+
                     		'</div>'+
                     		'<div class="alert alert-success" id="note2">'+
                     		'Acción: Debe ingresar al mantenimiento de recursos y asociar  los recursos a la sala.'+
@@ -117,7 +117,7 @@
 			</div>
           <div class="modal-footer">
             <button type="submit" class="btn-xs btn-danger btn-xs" data-dismiss="modal">
-                  <span class="glyphicon glyphicon-remove"></span> Cancelar
+                  <span class="glyphicon glyphicon-remove"></span> Cerrar
                 </button>
           </div>
 		</div>
