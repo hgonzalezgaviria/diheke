@@ -58,9 +58,7 @@ class CreateTableReservas extends Migration
                     ->references('SALA_ID')->on('SALAS')
                     ->onDelete('cascade');
 
-            $table->foreign('EQUI_ID')
-                    ->references('EQUI_ID')->on('EQUIPOS')
-                    ->onDelete('cascade');
+            
 
         });
     }
