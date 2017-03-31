@@ -73,12 +73,13 @@ class SedesController extends Controller
 			'SEDE_OBSERVACIONES' => ['max:300'],
 		]);
 
- 		$sede = request()->except(['_token']);
-
-
-        $sede = Sede::create($sede);
-        $sede->SEDE_CREADOPOR = auth()->user()->username;
-         $sede->save();
+        $sede = Sede::create(
+			array_merge(
+				request()->except(['_token']) ,
+				['SEDE_CREADOPOR' => auth()->user()->username]
+			)
+		);
+		
 
 		// redirecciona al index de controlador
 		Session::flash('alert-info', 'Sede creada exitosamente!');

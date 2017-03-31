@@ -23,6 +23,7 @@ class Sede extends Model
 		'SEDE_DESCRIPCION',
 		'SEDE_DIRECCION',
 		'SEDE_OBSERVACIONES',
+		'SEDE_CREADOPOR',
 	];
 
 	//Una Sede tiene muchas Salas
