@@ -5,9 +5,43 @@
 /**/
 	 $(function () {
 
+
+	 	/*
+			Control botones filtro por estado del equipo.
+	 	*/
+		$('input:radio[name ="opcFiltro"]').on('change', function () {
+			var selected = $(this).filter(':checked').val();
+
+			switch (selected){
+			    case 'all':
+			    	$('.equipo').removeClass('hide');
+			        break;
+			    case 'enabled':
+			    	$('.equipo').each(function( index ) {
+			    		var estado = $(this).find('.estado').data('estado');
+			    		if(estado != {{\reservas\Estado::EQUIPO_DISPONIBLE}})
+			    			$(this).addClass('hide');
+			    		else
+			    			$(this).removeClass('hide');
+			    	});
+			        break;
+			    case 'disabled':
+			    	$('.equipo').each(function( index ) {
+			    		var estado = $(this).find('.estado').data('estado');
+			    		if(estado != {{\reservas\Estado::EQUIPO_OCUPADO}})
+			    			$(this).addClass('hide');
+			    		else
+			    			$(this).removeClass('hide');
+			    	});
+			        break;
+			}
+
+		});// Fin Control filtro por estado de equipo.
+
+
+
  		//con la siguiente linea se enciende o no el boton
 		//$('#switch').bootstrapToggle('on');
-
 		// INICIO Obtiene id de cada checkbox y lo adiciona a un arreglo
 		var arraid = [];
 		var i = 0;
@@ -41,7 +75,6 @@
 							$('#'+arraid[i]).bootstrapToggle('disable');
 						}
 					//console.log(equipo[i].ESTA_ID);
-
 					} 
 	                
 	              },
@@ -51,13 +84,8 @@
         	}); //Fin ajax
 			
 
-			
-			
-		
 		    //Captura onchange al momento de cambiar
 		    $('.filter-toggle').change(function() {
-		    	      //$('#console-event').html('Toggle: ' + $(this).prop('checked'))
-		      //alert('checkbox en estado: '+ $(this).prop('checked'));
 
 			    var checkeado =  $(this).prop('checked');
 			    if(!checkeado){
@@ -65,27 +93,11 @@
 		     		var equipo = $(this).attr("id");
 			     	$('#frmPrestamo').find('#equipo').val(equipo)
 			     	$("#modalPrestamoEquipos").modal('show');
-			     	//ert(checkeado);  
 			    }
 
-		      //if
-		      //if($(".filter-toggle").is(':checked')) {  
-            //alert(checkeado);  
-     //   } else {  
-
-        	//}
-
-		      
-		       //$("#myModal").modal();
-		     //var equipo = $(this).closest(".filter-toggle").attr("id");
-			   // also tried $(this).parent(".head-div") -- same effect
-			  //alert('id seleccionado ' + equipo); // Shows as Undefined
-
-		     
-		      
-
 		    });
-		 //Funcio para habilitar el checkbox si cancela el prestamo
+
+		 //Funcion para habilitar el checkbox si cancela el prestamo
 			$('#modalPrestamoEquipos').on('hide.bs.modal', function (event) {
 				
 				var equipo = $(this).find('#equipo').val();
@@ -96,8 +108,7 @@
 			})
 
 	  });	
-		
-
+	 
     </script>
 @parent
 @endsection
@@ -107,29 +118,24 @@
 	<h1 class="page-header">Consultas De Equipos</h1>
 
 	<div class="row well well-sm"><!--Radio buttons -->
-		
-		  		<label  class="radio-inline">
-		    	<input type="radio" name="opciones" id="opciones_1" value="opcion_1" checked>
-		    	Todos
-		  		</label>		
-	
-		  		<label  class="radio-inline">
-		    	<input type="radio" name="opciones" id="opciones_2" value="opcion_2">
-		    	Disponibles
-		  		</label>
-		
-			
-		  		<label  class="radio-inline">
-		    	<input type="radio" name="opciones" id="opciones_3" value="opcion_3">
-		    	Ocupados
-		  		</label>		
-
+  		<label class="radio-inline">
+	    	<input type="radio" name="opcFiltro" value="all" checked>
+	    	Todos
+  		</label>
+  		<label  class="radio-inline">
+	    	<input type="radio" name="opcFiltro" value="enabled">
+	    	Disponibles
+  		</label>
+  		<label  class="radio-inline">
+	    	<input type="radio" name="opcFiltro" value="disabled">
+	    	Ocupados
+  		</label>		
 	</div>
 	
 	{{ Form::open(['id'=>'consulequi' , 'class' => 'form-vertical']) }}
 	
 	@foreach ($equipos as $i => $equipo)
-		<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 zoom-in-hover">
+		<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 zoom-in-hover equipo">
 			<div class="panel panel-default">
 
 				<div class="panel-heading">
@@ -152,7 +158,7 @@
 				
 					<br>
 
-					<div class="alert alert-info" id="switch{{$i}}">
+					<div class="alert alert-{{$equipo->ESTA_ID == \reservas\Estado::EQUIPO_DISPONIBLE ? 'success' : 'warning'}} estado" data-estado="{{$equipo->ESTA_ID}}">
 						{{ $equipo -> estado -> ESTA_DESCRIPCION }}
 					</div>
 

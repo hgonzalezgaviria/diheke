@@ -19,6 +19,12 @@ class Estado extends Model
 	const DELETED_AT = 'ESTA_FECHAELIMINADO';
 	protected $dates = ['ESTA_FECHAELIMINADO'];
 
+	const SALA_DISPONIBLE   = 1;
+	const SALA_OCUPADA      = 2;
+
+	const EQUIPO_DISPONIBLE = 3;
+	const EQUIPO_OCUPADO    = 4;
+
 	const RESERVA_PENDIENTE = 5;
 	const RESERVA_APROBADA  = 6;
 	const RESERVA_RECHAZADA = 7;
