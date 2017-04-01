@@ -17,7 +17,7 @@ class SalasController extends Controller
 	{
 		//Requiere que el usuario inicie sesión.
 		$this->middleware('auth');
-		if(isset($redirect)){
+		if(!auth()->guest() && isset($redirect)){
 
 			$action = Route::currentRouteAction();
 			$role = isset(auth()->user()->rol->ROLE_ROL) ? auth()->user()->rol->ROLE_ROL : 'user';
