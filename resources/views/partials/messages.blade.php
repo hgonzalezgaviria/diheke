@@ -9,26 +9,26 @@
 			{{ Session::get('alert-info') }}
 		</div>
 	@endif
-	@if (Session::has('alert-success alert-flash'))
+	@if (Session::has('alert-success'))
 		@foreach(Session::get('alert-success') as $msg)
-		<div class="alert alert-success">
+		<div class="alert alert-success alert-flash">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 			<strong><i class="fa fa-exclamation-triangle fa-2x fa-pull-left" aria-hidden="true"></i></strong>
 			{{ $msg }}
 		</div>
 		@endforeach
 	@endif
-	@if (Session::has('alert-warning alert-flash'))
+	@if (Session::has('alert-warning'))
 		@foreach(Session::get('alert-warning') as $msg)
-		<div class="alert alert-warning">
+		<div class="alert alert-warning alert-flash">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 			<strong><i class="fa fa-exclamation-triangle fa-2x fa-pull-left" aria-hidden="true"></i></strong>
 			{{ $msg }}
 		</div>
 		@endforeach
 	@endif
-	@if (Session::has('alert-danger alert-flash'))
-		<div class="alert alert-danger">
+	@if (Session::has('alert-danger'))
+		<div class="alert alert-danger alert-flash">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 			<strong><i class="fa fa-exclamation-triangle fa-2x fa-pull-left" aria-hidden="true"></i></strong>
 			{{ Session::get('alert-danger') }}
