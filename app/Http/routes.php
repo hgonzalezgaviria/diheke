@@ -93,6 +93,7 @@ Route::post('consultaGrupos', array('as' => 'consultaGrupos','uses' => 'Reservas
 
 Route::post('consultaDocentes', array('as' => 'consultaDocentes','uses' => 'ReservasController@consultaDocentes'));
 Route::post('consultaDocentesd', array('as' => 'consultaDocentesd','uses' => 'ReservasController@consultaDocentesd'));
+Route::get('consultaDocentesd', array('as' => 'consultaDocentesd','uses' => 'ReservasController@consultaDocentesd'));
 
 
 //recursos

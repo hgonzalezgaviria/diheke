@@ -155,24 +155,11 @@ class ReservasController extends Controller
       $cont = 0;
       $idauto = null;
 
-
       $reservas = Input::all();
 
-      /*
-      for ($i=0; $i < $hasta; $i++) { 
-          for ($j=0; $j < 7; $j++) { 
-              
-          }
-      }
-      */
-
       foreach ($reservas as $res) {
-          
         foreach ($res as $k) {
-        
             if($k[0] != null){
-
-                
                 if($cont == 0 && $role != 'admin'){
                     $idauto = \DB::table('AUTORIZACIONES')->insertGetId(
                         [
@@ -201,14 +188,10 @@ class ReservasController extends Controller
                         ]
                     );
                 }
-
-                
-
                 $cont++;
             
                 //Insertando evento a base de datos
                 $reserva = new Reserva;
-                
                 $reserva->RESE_TITULO = $k[0];
                 $reserva->RESE_FECHAINI = $k[1];
                 $reserva->RESE_TODOELDIA = $k[2];
@@ -217,30 +200,29 @@ class ReservasController extends Controller
                 $reserva->SALA_ID = $k[5];
                 $reserva->EQUI_ID = NULL;
                 $reserva->RESE_CREADOPOR = auth()->user()->username;
-
                 $reserva->save();
 
                 $reservaid = $reserva->RESE_ID;
 
-                
                 \DB::table('RESERVAS_AUTORIZADAS')->insertGetId(
                         [
                         'RESE_ID' => $reservaid, 
                         'AUTO_ID' => $idauto
                         ]
                 );
-
-                
-                
             }
-        
         }
-
       }
 
       $correcto = "correcto";
-      return $reserva;
-      //return Response::json($correcto);
+
+        if(isset($reserva))
+            return $reserva;
+        else
+            return response()->json([
+                'ERROR' => 'Algo pasó en el controlador...',
+                'reservas' => json_encode($reservas)
+            ]);
     }
 
     public function consultaMaterias(){
@@ -279,7 +261,8 @@ class ReservasController extends Controller
 
     public function consultaDocentes(){
 
-        $UNID_ID = $_POST['unidad'];
+        //$UNID_ID = $_POST['unidad'];
+        $UNID_ID = Input::get('unidad');
 
         $docentes = \DB::table('PERSONANATURALGENERAL')
                             ->select(
@@ -300,7 +283,9 @@ class ReservasController extends Controller
 
     public function consultaDocentesd(){
 
-        $UNID_ID = $_POST['unidad'];
+        //$UNID_ID = $_POST['unidad'];
+        $UNID_ID = Input::get('unidad');
+
 
         $docentes = \DB::table('PERSONANATURALGENERAL')
                             ->select(
@@ -313,6 +298,7 @@ class ReservasController extends Controller
                             ->join('DOCENTESUNIDADES','PERSONAGENERAL.PEGE_ID','=','DOCENTESUNIDADES.PEGE_ID')
                             ->where('DOCENTESUNIDADES.UNID_ID','=',$UNID_ID)
                             ->get();
+
 
         return json_encode($docentes);
         //return $salas;materias

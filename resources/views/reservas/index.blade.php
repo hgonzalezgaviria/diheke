@@ -222,6 +222,7 @@
                       },
                       error:   function(json){
                         console.log("Error al consultar festivos");
+                        $('#errorAjax').append(json.responseText);
                       }        
                 });
 
@@ -246,38 +247,24 @@
               finires = moment(finires).add(1, 'days');
               ffinres = moment(ffinres).add(1, 'days');
 
-
               if(diares != "domingo"){
-
-                  /*
-
                   for(var i=0; i<adiassel.length; i++) {
-
                     //console.log(diares + " - " + adiassel[i]);
-
                         if(diares == adiassel[i]){
-                  
                             arrreservasd[contr] = [titulod, fini, 
                                             todoeldiad, fondod, 
                                             ffin, salad, 
                                             equipod, facultadd,
                                             docented, grupod, materiad];
-
-
                         }else{
-
                             arrreservasd[contr] = [null, null,
                                             null, null, 
                                             null, null, 
                                             null, null,
                                             null, null, null];
-
                         }
-
-
                   }
 
-                  */
                   for(var i=0; i<adiassel.length; i++) {
 
                     
@@ -289,14 +276,9 @@
 
                   }
 
-
                   //console.log(diares + "\n");
-
-                        
-
                         //console.log("valor del arreglo: " + arrreservasd[i] + " día: "+ diares);
                         //console.log(diares + " ");
-
               }
 
               contr++;
@@ -322,33 +304,31 @@
             //alert(arrreservasd.length);
 
             
+            console.log(arrreservasd);
+
             crsfToken = document.getElementsByName("_token")[0].value;
-
             var request;
-
             request = $.ajax({
-               url: 'guardarReservas',
-               data: {reservas : arrreservasd},
-               //dataType: 'json',
-               type: "POST",
-               headers: {
-                "X-CSRF-TOKEN": crsfToken
-            },
-            success: function(events) {
-                        
-              
-              $.msgBox({
-                title:"Éxito",
-                content:"¡Su reserva se ha realizado satisfactoriamente!",
-                type:"success"
-              });
-
-              $('#calendar').fullCalendar('refetchEvents');
-
-            },
-            error:   function(json){
-              console.log("Error al crear evento de reservas por días: ");
-            }        
+                url: 'guardarReservas',
+                data: {reservas : arrreservasd},
+                //dataType: 'json',
+                type: "POST",
+                headers: {
+                  "X-CSRF-TOKEN": crsfToken
+                },
+                success: function(events) {
+                  console.log('Response guardarReservas: '+JSON.stringify(events));
+                  $.msgBox({
+                    title:"Éxito",
+                    content:"¡Su reserva se ha realizado satisfactoriamente!",
+                    type:"success"
+                  });
+                  $('#calendar').fullCalendar('refetchEvents');
+                },
+                error:   function(json){
+                  console.log("Error al crear evento de reservas por días: ");
+                      $('#errorAjax').append(json.responseText);
+                }
             });
             
             
@@ -407,6 +387,7 @@
                   },
                   error: function(json){
                           console.log("Error al traer los datos");
+                        $('#errorAjax').append(json.responseText);
                   }        
               });
 
@@ -460,6 +441,7 @@
                   },
                   error: function(json){
                           console.log("Error al traer los datos");
+                        $('#errorAjax').append(json.responseText);
                   }        
               });
 
@@ -507,6 +489,7 @@
                   },
                   error: function(json){
                           console.log("Error al traer los datos");
+                        $('#errorAjax').append(json.responseText);
                   }        
               });
 
@@ -555,7 +538,8 @@
                             }
                     },
                     error: function(json){
-                            console.log("Error al traer los datos");
+                        console.log("Error al traer los datos");
+                        $('#errorAjax').append('<h1>llenarDocentes</h1>'+json.responseText);
                     }        
                 });
 
@@ -592,6 +576,7 @@
                     },
                     error: function(json){
                             console.log("Error al traer los datos");
+                        $('#errorAjax').append('<h1>llenarDocentesd</h1>'+json.responseText);
                     }        
                 });
 
@@ -603,10 +588,8 @@
 
       var facud = $("#facultadesd").val();
 
-      if(facud != null){
-
+      if(facud != null ){
         llenarDocentesd(facud);
-
       }
 
       if(cfacultadesd == 0){
@@ -643,6 +626,7 @@
                   },
                   error: function(json){
                           console.log("Error al traer los datos");
+                        $('#errorAjax').append('<strong>$("#facultadesd").click</strong>'+json.responseText);
                   }        
               });
 
@@ -691,6 +675,7 @@
                   },
                   error: function(json){
                           console.log("Error al traer los datos");
+                        $('#errorAjax').append(json.responseText);
                   }        
               });
 
@@ -739,6 +724,7 @@
                   },
                   error: function(json){
                           console.log("Error al traer los datos");
+                        $('#errorAjax').append(json.responseText);
                   }        
               });
 
@@ -872,6 +858,7 @@
                       },
                       error:   function(json){
                         console.log("Error al consultar festivos");
+                        $('#errorAjax').append(json.responseText);
                       }        
                     });
 
@@ -1048,6 +1035,7 @@
                                          },
                                          error:   function(json){
                                           console.log("Error al crear evento en reserva unitaria");
+                        $('#errorAjax').append(json.responseText);
                                         }        
                                       });
 
@@ -1248,6 +1236,7 @@
                                                     },
                                                     error:   function(json){
                                                       console.log("Error al crear evento");
+                        $('#errorAjax').append(json.responseText);
                                                     }        
                                                     });
                                                 }else if(puedehacerreservas == false){
@@ -1401,6 +1390,7 @@
           },
           error: function(json){
             console.log("Error al crear evento");
+                        $('#errorAjax').append(json.responseText);
           }        
         });
 
@@ -1637,7 +1627,7 @@
                   <label class="col-sm-2 control-label">Facultad:</label>
                   <div class="col-sm-10">
                       <select class="form-control" name="size" id="facultadesd">
-                        <option value="">Seleccione..</option>
+                        <option value="0">Seleccione..</option>
                       </select>
                   </div>
               </div>
@@ -1757,5 +1747,7 @@
 
 
 </div>
+
+<div id="errorAjax"></div>
 
 @endsection
