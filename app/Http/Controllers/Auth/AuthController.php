@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Routing\Redirector;
 
 class AuthController extends Controller
 {
@@ -42,7 +43,7 @@ class AuthController extends Controller
 	 *
 	 * @return void
 	 */
-	public function __construct()
+	public function __construct(Redirector $redirect=null)
 	{
 
 		//Lista de acciones que no requieren autenticación
@@ -50,6 +51,7 @@ class AuthController extends Controller
 			'logout',
 			'login',
 			'getLogout',
+			'showLoginForm',
 		];
 
 		//Lista de acciones que solo puede realizar los administradores
@@ -67,21 +69,19 @@ class AuthController extends Controller
 
 
 		//Requiere que el usuario inicie sesión, excepto en la vista logout.
-		$this->middleware($this->guestMiddleware(),
-			['except' => array_collapse([$arrActionsLogin, $arrActionsAdmin])]
-		);
+		$this->middleware('auth', [ 'except' => $arrActionsLogin ]);
 
-		if(Route::currentRouteAction() !== null){//Compatibilidad con el comando "php artisan route:list", ya que ingresa como guest y la ruta es nula.		
+
+		if(auth()->check() && isset($redirect)){ //Compatibilidad con el comando "php artisan route:list", ya que ingresa como guest y la ruta es nula.		
 			$action = Route::currentRouteAction();
-			$role = isset(auth()->user()->rol->ROLE_ROL) ? auth()->user()->rol->ROLE_ROL : 'user';
+			$ROLE_ID = auth()->check() ? auth()->user()->ROLE_ID : 0;
 
-			
 			if(in_array(explode("@", $action)[1], $arrActionsAdmin))//Si la acción del controlador se encuentra en la lista de acciones de admin...
 			{
-				if( ! in_array($role , ['admin']))//Si el rol no es admin, se niega el acceso.
+				if( ! in_array($ROLE_ID , [\reservas\Rol::ADMIN]))//Si el rol no es admin, se niega el acceso.
 				{
-					Session::flash('alert-danger', '¡Usuario no tiene permisos!');
-					abort(403, '¡Usuario no tiene permisos!.');
+					//Session::flash('alert-danger', 'Usuario no tiene permisos.');
+					abort(403, 'Usuario no tiene permisos!.');
 				}
 			}
 		}
@@ -276,11 +276,15 @@ class AuthController extends Controller
 		if($usuario->USER_CREADOPOR == 'SYSTEM'){
 			Session::flash('alert-danger', '¡Usuario '.$usuario->username.' no se puede borrar!');
 	    } else {
+
+			if($usuario->personaGeneral)
+				$usuario->personaGeneral->delete();
+
 			$usuario->USER_ELIMINADOPOR = auth()->user()->username;
 			$usuario->save();
 			$usuario->delete();
 			
-			Session::flash('alert-warning', '¡Usuario '.$usuario->username.' borrado!');
+			Session::flash('alert-warning', ['¡Usuario '.$usuario->username.' borrado!']);
 		}
 
 	    return redirect('usuarios');

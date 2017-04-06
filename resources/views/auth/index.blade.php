@@ -7,11 +7,16 @@
 	<div class="row well well-sm">
 
 		<div id="btn-create" class="pull-right">
+			<!-- botón de importar usuarios -->
+			@include('auth/index-modal-import')
+
 			<a class='btn btn-primary' role='button' href="{{ URL::to('roles') }}">
-				<i class="fa fa-male" aria-hidden="true"></i> <i class="fa fa-female" aria-hidden="true"></i> Roles
+				<i class="fa fa-male" aria-hidden="true"></i> <i class="fa fa-female" aria-hidden="true"></i>
+				Roles<span class="hidden-xs"></span>
 			</a>
 			<a class='btn btn-primary' role='button' href="{{ URL::to('register') }}">
-				<i class="fa fa-user-plus" aria-hidden="true"></i> Nuevo Usuario
+				<i class="fa fa-user-plus" aria-hidden="true"></i>
+				Nuevo<span class="hidden-xs"> Usuario</span>
 			</a>
 		</div>
 	</div>

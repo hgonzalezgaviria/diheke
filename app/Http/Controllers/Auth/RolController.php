@@ -4,6 +4,7 @@ namespace reservas\Http\Controllers\Auth;
 
 use reservas\Http\Controllers\Controller;
 
+use Validator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,20 @@ class RolController extends Controller
 	}
 
 	/**
+	 * Get a validator for an incoming registration request.
+	 *
+	 * @param  array  $data
+	 * @return \Illuminate\Contracts\Validation\Validator
+	 */
+	protected function validator(array $data, $ROLE_ID = 0)
+	{
+		return Validator::make($data, [
+			'ROLE_ROL' => ['required','max:15','unique:ROLES,ROLE_ROL,'.$ROLE_ID.',ROLE_ID'],
+			'ROLE_DESCRIPCION' => ['required', 'max:255','unique:ROLES,ROLE_DESCRIPCION,'.$ROLE_ID.',ROLE_ID'],
+		]);
+	}
+
+	/**
 	 * Muestra una lista de los registros.
 	 *
 	 * @return Response
@@ -66,22 +81,21 @@ class RolController extends Controller
 	 */
 	public function store()
 	{
-		//Validación de datos
-		$this->validate(request(), [
-			'ROLE_ROL' => 'required|max:15|unique:ROLES',
-			'ROLE_DESCRIPCION' => ['required', 'max:255'],
-		]);
+		//Datos recibidos desde la vista.
+		$request = request()->all();
+		//Se valida que los datos recibidos cumplan los requerimientos necesarios.
+		$validator = $this->validator($request);
+		if( $validator->fails() ) {
+			$this->throwValidationException(
+				request(), $validator
+			);
+		}
 
-		//Permite seleccionar los datos que se desean guardar.
-		$rol = new Rol;
-		$rol->ROLE_ROL = Input::get('ROLE_ROL');
-		$rol->ROLE_DESCRIPCION = Input::get('ROLE_DESCRIPCION');
-        $rol->ROLE_CREADOPOR = auth()->user()->username;
-        //Se guarda modelo
-		$rol->save();
+		//Se crea el registro.
+		$rol = Rol::create($request);
 
-		// redirecciona al index de controlador
-		Session::flash('alert-info', 'Rol '.$rol->ROLE_DESCRIPCION.' creado exitosamente!');
+		//redirecciona al index de controlador
+		Session::flash('alert-info', 'Rol '.$rol->ROLE_DESCRIPCION.' creado exitosamente.');
 		return redirect()->to('roles');
 	}
 
@@ -110,23 +124,23 @@ class RolController extends Controller
 	 */
 	public function update($ROLE_ID)
 	{
-		//Validación de datos
-		$this->validate(request(), [
-			'ROLE_ROL' => 'required|max:15|unique:ROLES',
-			'ROLE_DESCRIPCION' => ['required', 'max:300'],
-		]);
+		//Datos recibidos desde la vista.
+		$request = request()->all();
+		//Se valida que los datos recibidos cumplan los requerimientos necesarios.
+		$validator = $this->validator($request, $ROLE_ID);
+		if( $validator->fails() ) {
+			$this->throwValidationException(
+				request(), $validator
+			);
+		}
 
 		// Se obtiene el registro
 		$rol = Rol::findOrFail($ROLE_ID);
-
-		$rol->ROLE_ROL = Input::get('ROLE_ROL');
-		$rol->ROLE_DESCRIPCION = Input::get('ROLE_DESCRIPCION');
-        $rol->ROLE_MODIFICADOPOR = auth()->user()->username;
-        //Se guarda modelo
-		$rol->save();
+		//y se actualiza con los datos recibidos.
+		$rol->update(request()->except(['_token']));
 
 		// redirecciona al index de controlador
-		Session::flash('alert-info', 'Rol '.$rol->ROLE_DESCRIPCION.' modificado exitosamente!');
+		Session::flash('alert-info', 'Rol '.$rol->ROLE_DESCRIPCION.' modificado exitosamente.');
 		return redirect()->to('roles');
 	}
 
@@ -140,22 +154,61 @@ class RolController extends Controller
 	{
 		$rol = Rol::findOrFail($ROLE_ID);
 
+
+
 		//Si la encuesta fue creada por SYSTEM, no se puede borrar.
 		if($rol->ROLE_CREADOPOR == 'SYSTEM'){
-			Session::flash('alert-danger', 'Rol '.$rol->ROLE_DESCRIPCION.' no se puede borrar!');
+			Session::flash('modal-danger', 'Rol '.$rol->ROLE_DESCRIPCION.' no se puede borrar.');
 			return redirect()->to('roles');
 	    } else {
 
-	        $rol->ROLE_ELIMINADOPOR = auth()->user()->username;
-			$rol->save();
 			$rol->delete();
+			
+			$opcBorrado = request()->get('opcBorrado');
+			switch ($opcBorrado) {
+				case 'moveRelations':
+					$move_to_ROLE =  Rol::findOrFail(request()->get('roles'));
+					foreach ($rol->usuarios as $usuario)
+						$move_to_ROLE->usuarios()->save($usuario);
+					break;
+				case 'deleteRelations':
+					$rol->usuarios()->delete(); //Pendiente registrar USER_eliminadopor	
+					break;
+			}
+
 
 			// redirecciona al index de controlador
 			if($showMsg){
-				Session::flash('alert-info', 'Rol '.$rol->ROLE_DESCRIPCION.' eliminado exitosamente!');
+				Session::flash('alert-info', 'Rol '.$rol->ROLE_DESCRIPCION.' eliminado exitosamente.');
 				return redirect()->to('roles');
 			}
 		}
+	}
+
+
+	/**
+	 * 
+	 *
+	 * @param  int  $ROLE_ID
+	 * @return Response
+	 */
+	public function getUsuarios($ROLE_ID)
+	{
+		$rol = Rol::findOrFail($ROLE_ID);
+		$contUsuarios = $rol->usuarios->count();
+		return $contUsuarios;
+	}
+
+	/**
+	 * 
+	 *
+	 * @return Response
+	 */
+	public function getRoles()
+	{
+		//Se crea un array con los roles disponibles
+		$arrRoles = model_to_array(Rol::class, 'ROLE_DESCRIPCION');
+		return json_encode($arrRoles);
 	}
 
 

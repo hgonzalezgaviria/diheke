@@ -4,14 +4,23 @@
 @section('content')
 
 	<h1 class="page-header">Nuevo Rol</h1>
-
 	@include('partials/errors')
 	
-	{{ Form::open(['url' => 'roles', 'class' => 'form-horizontal']) }}
+	{{ Form::open(['url' => 'roles', 'class' => 'form-vertical']) }}
 
-	  	<div class="form-group">
+		<div class="form-group{{ $errors->has('ROLE_ROL') ? ' has-error' : '' }}">
+			{{ Form::label('ROLE_ROL', 'Identificador interno',  [ 'class' => 'col-md-4 control-label' ]) }} 
+			{{ Form::text('ROLE_ROL', old('ROLE_ROL'), [ 'class' => 'form-control', 'maxlength' => '15', 'required' ]) }}
+			@if ($errors->has('ROLE_ROL'))
+				<span class="help-block">
+					<strong>{{ $errors->first('ROLE_ROL') }}</strong>
+				</span>
+			@endif
+		</div>
+
+		<div class="form-group">
 			{{ Form::label('ROLE_DESCRIPCION', 'Descripción') }} 
-			{{ Form::text('ROLE_DESCRIPCION', old('ROLE_DESCRIPCION'), [ 'class' => 'form-control', 'max' => '255', 'required' ]) }}
+			{{ Form::text('ROLE_DESCRIPCION', old('ROLE_DESCRIPCION'), [ 'class' => 'form-control', 'maxlength' => '50', 'required' ]) }}
 		</div>
 
 		<!-- Botones -->

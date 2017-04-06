@@ -2,10 +2,9 @@
 
 namespace reservas;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use reservas\ModelWithSoftDeletes;
 
-class Rol extends Model
+class Rol extends ModelWithSoftDeletes
 {
 	//Nombre de la tabla en la base de datos
 	protected $table = 'ROLES';
@@ -14,12 +13,13 @@ class Rol extends Model
 	//Traza: Nombre de campos en la tabla para auditoría de cambios
 	const CREATED_AT = 'ROLE_FECHACREADO';
 	const UPDATED_AT = 'ROLE_FECHAMODIFICADO';
-	use SoftDeletes;
 	const DELETED_AT = 'ROLE_FECHAELIMINADO';
 	protected $dates = ['ROLE_FECHAELIMINADO'];
 
-	protected $fillable = ['ROLE_ROL','ROLE_DESCRIPCION','ROLE_CREADOPOR'];
-
+	protected $fillable = [
+		'ROLE_ROL',
+		'ROLE_DESCRIPCION',
+	];
 
 	//Constantes para referenciar los roles creados por SYSTEM
 	const ADMIN      = 1;

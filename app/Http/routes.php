@@ -10,18 +10,38 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::get('layoutPDF', 'ExportarPdfController@layoutPDF');
-Route::get('streamPDF', 'ExportarPdfController@streamPDF');
-Route::get('savePDF', 'ExportarPdfController@savePDF');
-//Route::get('encuestas/{ENCU_id}/downloadZIP', 'ExportarPdfController@downloadZIP');
-
 
 //Autenticación
 Route::auth();
-Route::resource('usuarios', 'Auth\AuthController');
-Route::resource('roles', 'Auth\RolController');
-Route::get('password/email/{USER_ID}', 'Auth\PasswordController@sendEmail');
-Route::get('password/reset/{USER_ID}', 'Auth\PasswordController@showResetForm');
+Route::group(['namespace' => 'Auth'], function(){
+
+	Route::resource('usuarios', 'AuthController', [
+		'parameters'=>['usuarios' => 'USER_id']
+	]);
+	Route::get('password/email/{USER_id}', 'PasswordController@sendEmail');
+	Route::get('password/reset/{USER_id}', 'PasswordController@showResetForm');
+
+	Route::resource('roles', 'RolController', [
+		'except' => ['show'],
+		'parameters' => ['roles' => 'ROLE_id']
+	]);
+	Route::group(['as' => 'roles.', 'prefix' => 'roles'], function () {
+		Route::get('getUsuarios/{ROLE_id}', 'RolController@getUsuarios')
+			->name('getUsuarios');
+		Route::get('getRoles', 'RolController@getRoles')
+			->name('getRoles');
+	});
+
+	Route::group(['as' => 'usuarios.', 'prefix' => 'usuarios'], function () {
+		Route::post('importXLS', 'UploadController@createUsersFromFile')
+				->name('createUsersFromFile');
+		Route::get('plantilla/{ext}', 'UploadController@generarPlantillaUsers')
+				->name('generarPlantilla');
+	});
+	Route::match(['get','post'], 'createUserFromAjax', 'UploadController@createFromAjax')
+			->name('usuarios.createFromAjax');
+			
+});
 
 //Inicio
 Route::get('/home', 'HomeController@index');
@@ -107,3 +127,9 @@ Route::get('salas/{SALA_ID}/reservarSalaEquipos', 'SalasController@reservarSalaE
 
 //Finalizar prestamos para equipos
 Route::get('prestamos/{PRES_ID}/finalizarPrestamo', 'PrestamoEquiposController@finalizarPrestamo')->name('finalizarPrestamo');
+
+//ExportarPdf
+Route::get('layoutPDF', 'ExportarPdfController@layoutPDF');
+Route::get('streamPDF', 'ExportarPdfController@streamPDF');
+Route::get('savePDF', 'ExportarPdfController@savePDF');
+//Route::get('encuestas/{ENCU_id}/downloadZIP', 'ExportarPdfController@downloadZIP');
