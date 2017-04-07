@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Redirector;
+use Maatwebsite\Excel\Facades\Excel;
 
 use Illuminate\Http\Request;
 
@@ -18,36 +19,24 @@ use reservas\Rol;
 class UploadController extends Controller
 {
 
-	public function __construct(Redirector $redirect=null)
-	{
-		//Requiere que el usuario inicie sesión.
-		$this->middleware('auth');
-		
-		if(auth()->check() && isset($redirect)){
-			$action = Route::currentRouteAction();
-			$ROLE_ID = auth()->check() ? auth()->user()->ROLE_ID : 0;
-
-			//Lista de acciones que solo puede realizar los administradores o los editores
-			$arrActionsAdmin = ['createFromAjax'];
-
-			if(in_array(explode("@", $action)[1], $arrActionsAdmin))//Si la acción del controlador se encuentra en la lista de acciones de admin...
-			{
-				if( ! in_array($ROLE_ID , [\reservas\Rol::ADMIN]))//Si el rol no es admin, se niega el acceso.
-				{
-					//Session::flash('alert-danger', 'Usuario no tiene permisos.');
-					abort(403, 'Usuario no tiene permisos!.');
-				}
-			}
-		}
-	}
-
-
 	/**
 	 * Crea usuarios por ajax cargados desde un archivo de excel.
 	 *
 	 */
 	public function createFromAjax(Request $request)
 	{
+		if( auth()->guest() )
+			return response()->json([
+				'status' => 'ERR',
+			    'msg' => 'Usuario no autenticado.',
+			], 403);
+		
+		if( auth()->user()->ROLE_ID != Rol::ADMIN )
+			return response()->json([
+				'status' => 'ERR',
+			    'msg' => 'Usuario no tiene permisos.',
+			], 403);
+
 		$currentUser = auth()->user()->username;
 
 		$ROLE_DESCRIPCION = Input::get('rol');

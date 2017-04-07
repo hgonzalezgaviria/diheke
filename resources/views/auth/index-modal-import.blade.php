@@ -11,6 +11,8 @@
 	<script type="text/javascript">
 		//Carga archivo de excel y crea los usuarios
 		var workbook = null;
+		var processing = false;
+		var reload = false;
 		var rABS = false; // true: readAsBinaryString ; false: readAsArrayBuffer
 
 		/* processing array buffers, only required for readAsArrayBuffer */
@@ -22,11 +24,17 @@
 		}
 
 
+		$('#pregModalImport').on('hide.bs.modal', function(e) {
+			//Si se esta procesando una carga, el modal no se puede cerrar.
+			if(processing)
+				e.preventDefault();
+			if(reload)
+				location.reload();
+		});
+
 		//Restaura el formulario para realizar una nueva carga.
 		function resetForm() {
-			$('#pregModalImport')
-				.prop('tabindex', -1)
-				.modal({backdrop: false, keyboard: true});
+			$('.progress-bar').removeClass('progress-bar-success progress-bar-danger');
 			$('#cargarExcel').prop('disabled', true);
 			$('#cancelLoad').prop('disabled', false);
 			$('#archivo').val('');
@@ -72,10 +80,10 @@
 		//Procesa el archivo previamente seleccionado y cargado. El botón solo estará habilitado si se ha cargado previamente un archivo. 
 		$('#cargarExcel').on('click', function (e) {
 			e.preventDefault();
+			processing = true;
+			reload = true;
 
-			$('#pregModalImport')
-				.prop('tabindex', false)
-				.modal({backdrop: 'static', keyboard: false});
+			$('#archivo').prop('disabled', true);
 			$('#cargarExcel').prop('disabled', true);
 			$('#cancelLoad').prop('disabled', true);
 
@@ -105,49 +113,66 @@
 					}
 				})
 				.done(function( data, textStatus, jqXHR ) {
-					//updateBarProgress(porcent);
 					//console.log('Response: '+JSON.stringify(textStatus));
 					//$('#response').html(JSON.stringify(response));
 				})
 				.fail(function( jqXHR, textStatus, errorThrown ) {
-					//updateBarProgress(porcent, 'danger');
-					//console.log('Error ajax: '+JSON.stringify(event));
+					//console.log('Err: '+JSON.stringify(jqXHR));
 					//$('#response').html(event.responseText);
 				})
 				.always(function( data, textStatus, jqXHR ) {
 					console.log('proc: '+i+' de '+cantRows+'('+porcent+'%)');
-					if (i == cantRows) {
-						updateBarProgress(100);
+					if (jqXHR === 'Forbidden') {
+						updateBarProgress(100, 'danger');
+						addLog(0, 'Error en la conexión con el servidor. Presione F5.');
 					} else {
-						updateBarProgress(porcent);
-						createUsers(jsonUsers, i);
+						if (i == cantRows) {
+							processing = false;
+							$('#archivo').prop('disabled', false);
+							updateBarProgress(100);
+						} else {
+							updateBarProgress(porcent);
+							createUsers(jsonUsers, i);
+						}
+
+						if (typeof jqXHR.responseJSON === 'undefined')
+							addLog(i, 'NetworkError: 500 Internal Server Error.');
+						else
+							addLog(i, jqXHR.responseJSON);
 					}
-					
-					addLog(i, jqXHR.responseJSON);
-					//console.log('ajax responseText: '+jqXHR.responseText);
-					console.log('ajax Finish: '+JSON.stringify(jqXHR));
 				});
 		}
 
 		function updateBarProgress(porcent, bar_class) {
 			if (typeof bar_class === 'undefined') {var bar_class = 'primary';}
 
-			$('.progress-bar-'+bar_class)
+			var progBar = $('.progress-bar');
+
+			progBar
 				.css('width', porcent+'%')
 				.css('min-width', '2em')
-				.attr('aria-valuenow', porcent)
-				.find('.valuePorcent').text(porcent+' %');
+				.attr('aria-valuenow', porcent);
 
-				if(porcent == 100)
-					$('.progress-bar-primary').addClass('progress-bar-success');
+				if(bar_class == 'danger'){
+					progBar.addClass('progress-bar-danger');
+						//.find('.valuePorcent').append('<span> Error</span>');
+				} else {
+					if(porcent == 100){
+						progBar.addClass('progress-bar-success')
+					}
+					progBar.find('.valuePorcent').text(porcent+' %');
+				}
 		}
 
 		function addLog(row, log) {
-			var status = log['status'];
-			var logMsg = log['msg'];
-			if (typeof status === 'undefined') {
-				var status = 'ERR';
-				var logMsg = 'Error en el servidor.';
+			var status;
+			var logMsg;
+
+			if(typeof log === 'string'){
+				logMsg = log;
+			} else if(typeof log === 'object'){
+				status = log['status'];
+				logMsg = log['msg'];
 			}
 
 			var alert_class = '';
@@ -166,10 +191,10 @@
 					'<li class="list-group-item list-group-item-'+alert_class+'" style="padding: 0px 15px;">'+
 						'<strong>Fila '+row+': </strong>'+logMsg+
 					'</li>'
-			 	);
+				);
 			if( $('#scrollLog').is(':checked') ){
-    			console.log('scrollLog: '+ resultados.prop('scrollHeight'));
-    			resultados.scrollTop(resultados.prop('scrollHeight'));
+				//console.log('scrollLog: '+ resultados.prop('scrollHeight'));
+				resultados.scrollTop(resultados.prop('scrollHeight'));
 			}
 		}
 
@@ -217,9 +242,6 @@
 					</div>
 
 					<div class="progress">
-						<div class="progress-bar progress-bar-danger" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
-							<span class="valuePorcent"></span>
-						</div>
 						<div class="progress-bar progress-bar-primary" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
 							<span class="valuePorcent"></span>
 						</div>
@@ -228,7 +250,6 @@
 				</div>
 
 				<div class="modal-footer">
-
 					<div class="btn btn-link">
 						<label>
 							<input type="checkbox" id="scrollLog" checked> Scroll log
