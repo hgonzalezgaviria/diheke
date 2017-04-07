@@ -11,7 +11,7 @@
 				  //format: 'DD/MM/YYYY hh:mm A',
 				  stepping: 30,
 				  useCurrent: false,  //Important! See issue #1075. Requerido para minDate
-				  minDate: new Date(),
+				  minDate: new Date()-1, //-1 Permite seleccionar el dia actual
 				  icons: {
 					time: "fa fa-clock-o",
 					date: "fa fa-calendar",
@@ -47,7 +47,7 @@
 				  //format: 'DD/MM/YYYY hh:mm A',
 				  stepping: 30,
 				  useCurrent: false,  //Important! See issue #1075. Requerido para minDate
-				  minDate: new Date(),
+				  minDate: new Date()-1, //-1 Permite seleccionar el dia actual
 				  icons: {
 					time: "fa fa-clock-o",
 					date: "fa fa-calendar",
