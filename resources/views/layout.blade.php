@@ -7,6 +7,9 @@
 		{!! Html::meta( 'viewport', 'width=device-width, initial-scale=1') !!}
 
 		{!! Html::favicon('favicon.ico') !!}
+		{{-- Automatic page load progress bar --}}
+		{!! Html::script('assets/js/pace/pace.min.js') !!}
+		{!! Html::style('assets/js/pace/pace-theme-flash.css') !!}
 		
 		{!! Html::style('assets/js/jquery-ui/jquery-ui.min.css') !!}
 		{{--{!! Html::style('assets/css/jquery.dataTables.min.css') !!}--}}
@@ -38,9 +41,39 @@
 	    <![endif]-->
 	    
 		<style>
-			.page-header{
-				margin-top:10px;
+			.container{padding: 60px 10px 20px;}
+			.page-header{margin-top:10px;}
+			.jumbotron{padding:10px 20px !important;}
+
+			/*Tamaño de checkbox mas grande.*/
+			.form-check-input {
+				width: 15px;
+				height: 15px;
+				margin-top: 2px !important;
 			}
+			.radio-inline+.radio-inline {margin-left: 0;}
+			.radio-inline {margin-right: 10px;}
+
+			/*Modal centrado en pantallas xs.*/
+			@media screen and (min-width: 768px) { 
+			  .modal:before {
+				display: inline-block;
+				vertical-align: middle;
+				content: " ";
+				height: 100%;
+			  }
+			}
+			.modal {text-align: center;}
+			.modal-dialog {
+			  display: inline-block;
+			  text-align: left;
+			  vertical-align: middle;
+			}
+
+			.fa-2x, .fa-3x{
+				vertical-align: middle;
+			}
+
 			/*Alerta flotante a la derecha.*/
 			.alertas {
 			    position: absolute;
@@ -54,6 +87,16 @@
 				width: 300px;
 				margin-bottom: 5px;
 			}
+
+			/*Sombra en botones*/
+			.btn-danger, .btn-default, .btn-info, .btn-primary, .btn-success, .btn-warning {
+				-webkit-box-shadow: 4px 3px 3px 0px rgba(0, 0, 0, 0.25), inset 1px 1px 1px 1px rgba(255, 255, 255, 0.25);
+				-moz-box-shadow: 4px 3px 3px 0px rgba(0, 0, 0, 0.25), inset 1px 1px 1px 1px rgba(255, 255, 255, 0.25);
+				box-shadow: 4px 3px 3px 0px rgba(0, 0, 0, 0.25), inset 1px 1px 1px 1px rgba(255, 255, 255, 0.25);
+			}
+			/*.btn:active{
+				box-shadow: inset 0px 0px 6px 2px rgba(0,0,0, .4), inset 0px 0px 6px 2px rgba(0,0,0, .4);
+			}*/
 		</style>
 		<!-- Fonts 
 		<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'> -->
@@ -63,11 +106,7 @@
 
 		@include('partials/menu')
 
-		<!--
-		<div class="container" style="padding-top:60px;padding-left:50px;padding-right:50px;">
-		-->
-		<div class="container" style="padding-top:60px;">
-
+		<div class="container">
 			<!-- Utilizado para mostrar cualquier mensaje -->
 			@include('partials/messages')
 
