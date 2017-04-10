@@ -19,6 +19,7 @@
 			<th class="col-md-2">ID</th>
 			<th class="col-md-2">Tipo de Estado</th>
 			<th class="col-md-2">Observaciones</th>
+			<th class="col-md-2">Creado por</th>
 			<th class="col-md-2">Acciones</th>
 
 		</tr>
@@ -29,6 +30,7 @@
 			<td>{{ $tipoestado -> TIES_ID }}</td>
 			<td>{{ $tipoestado -> TIES_DESCRIPCION }}</td>
 			<td>{{ $tipoestado -> TIES_OBSERVACIONES }}</td>
+			<td>{{ $tipoestado -> TIES_CREADOPOR }}</td>
 			<td>
 
 			<!-- Muestra este registro (Utiliza método show encontrado en GET /reservas/{reserva_id}/pregs/{id} -->

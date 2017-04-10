@@ -235,6 +235,9 @@ class EstadosController extends Controller
     $estado = Estado::findOrFail($ESTA_ID);
 
         // delete
+        if($estado->ESTA_CREADOPOR == 'SYSTEM'){
+            Session::flash('alert-danger', 'Estado '.$estado->ESTA_DESCRIPCION.' no se puede borrar!');
+        } else {
         $estado->ESTA_ELIMINADOPOR = auth()->user()->username;
         $estado->save();
         $estado->delete();
@@ -242,9 +245,11 @@ class EstadosController extends Controller
         // delete
         //$estado = Estado::find($ESTA_ID);
         //$estado->delete();
+        Session::flash('alert-info', 'estado '.$ESTA_ID.' borrado!');
+    }
 
         // redirecciona al index de controlador
-        Session::flash('alert-info', 'estado '.$ESTA_ID.' borrado!');
+        
         return redirect()->to('estados');
     }
 

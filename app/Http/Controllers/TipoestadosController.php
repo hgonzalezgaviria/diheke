@@ -171,12 +171,16 @@ class TipoEstadosController extends Controller
     {
         // delete
         $tipoestado = Tipoestado::findOrFail($TIES_ID);
+          if($tipoestado->TIES_CREADOPOR == 'SYSTEM'){
+            Session::flash('alert-danger', 'TipoEstado '.$tipoestado->TIES_DESCRIPCION.' no se puede borrar!');
+        } else {
         $tipoestado->TIES_ELIMINADOPOR = auth()->user()->username;
         $tipoestado->save();        
         $tipoestado->delete();
-
-        // redirecciona al index de controlador
         Session::flash('alert-info', 'Tipo estado '.$TIES_ID.' borrado!');
+        // redirecciona al index de controlador
+    }
+        
         return redirect()->to('tipoestados');
     }
 
