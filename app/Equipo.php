@@ -55,6 +55,23 @@ class Equipo extends Model
 		return $this->hasMany(Prestamo::class, $foreingKey);
 	}
 
+	public static function getEquipos()
+    {
+        $salas = self::with('sala')->orderBy('EQUI_ID')
+        				//->join('RECURSOSALAS', 'RECURSOSALAS.SALA_ID', '=', 'SALAS.SALA_ID')
+        				//->join('RECURSOS', 'RECURSOS.RECU_ID', '=', 'RECURSOSALAS.RECU_ID')
+        				//->where('TIES_DESCRIPCION', 'ACTIVO')
+                        ->select([
+                        	'EQUI_ID',
+                        	'EQUI_DESCRIPCION',							
+							'EQUI_OBSERVACIONES',							
+							'SALA_ID',							
+                        ])
+                        ->get();
+                        //dd($salas);
+        return $salas;
+    }
+
     
 
 }

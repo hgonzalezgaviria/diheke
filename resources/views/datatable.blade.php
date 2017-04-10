@@ -9,7 +9,7 @@
       	son configuraciones de presentación
       	HFG--Se Realiza ajuste de texto, otros atributos
       	*/
-	 	$('#tabla').DataTable({  
+	 	$('.table').DataTable({  
 	 		"lengthMenu": [[5, 10, 15, 25,50,100], [5, 10, 15, 25,50,100]],
 	 		"sScrollY": "350px",
 	        //"pagingType": "full_numbers",
