@@ -44,11 +44,14 @@ class SalasController extends Controller
 	public function index()
 	{
 		//Se obtienen todos los registros.
-		$salas = Sala::all();
+		//$salas = Sala::all();
+		$salas = \reservas\Sala::getSalas();
 
 		    $sedes = \DB::table('SEDES')
                            ->select('SEDES.*')
                            ->get();
+                
+
 
 		//Se carga la vista y se pasan los registros
 		return view('salas/index', compact('salas','sedes'));

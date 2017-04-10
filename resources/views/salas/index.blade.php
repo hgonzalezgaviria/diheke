@@ -69,7 +69,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach($salas as $sala)
+		@foreach($salas as $i => $sala)
 		<tr>
 			<td>{{ $sala -> SALA_ID }}</td>
 			<td>{{ $sala -> SALA_DESCRIPCION }}</td>
@@ -127,6 +127,33 @@
 										]) }}
 					<!-- Fin Botón Borrar (destroy) -->
 
+				<!-- Botón Recursos -->	
+					{{ Form::button('<i class="	fa fa-wrench" aria-hidden="true"></i> ',[
+										'class'=>'btn btn-xs btn-default',
+										'data-toggle'=>'modal',
+										'data-id'=>$sala -> SALA_ID,
+											'data-modelo'=>'sala',
+											'data-index'=>$i, 
+											'data-descripcion'=>$sala -> SALA_DESCRIPCION,
+											'data-target'=>'#modalRecursos',
+							]) }}
+
+				<!-- FIN Botón Recursos -->	
+
+
+				<!-- Botón Equipos -->	
+					{{ Form::button('<i class="	fa fa-desktop" aria-hidden="true"></i>',[
+										'class'=>'btn btn-xs btn-default',
+										'data-toggle'=>'modal',
+										'data-id'=>$sala -> SALA_ID,
+											'data-modelo'=>'sala',
+											'data-index'=>$i, 
+											'data-descripcion'=>$sala -> SALA_DESCRIPCION,
+											'data-target'=>'#modalEquipos',
+							]) }}
+
+				<!-- FIN Botón Equipos -->	
+
 				
 			</td>
 		</tr>
@@ -136,4 +163,6 @@
 
 @include('salas/index-modalReservar')
 @include('partials/modalDelete')
+@include('salas/modalRecursos')
+@include('salas/modalEquipos')
 @endsection
