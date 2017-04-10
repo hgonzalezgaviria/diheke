@@ -62,6 +62,12 @@
 								</a>
 							</li>
 
+							<li>
+								<a href="{{ url('/festivos') }}">
+									<i class="fa fa-btn fa-key"></i> Festivos
+								</a>
+							</li>
+
 							<!--
 							<li>
 								<a href="{{ url('/politicas') }}">

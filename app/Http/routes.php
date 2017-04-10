@@ -71,6 +71,9 @@ Route::resource('salas', 'SalasController');
 // Equipos (equipos)
 Route::resource('equipos', 'EquiposController');
 
+//festivos
+Route::resource('festivos', 'FestivosController');
+
 //tipos de estados
 Route::resource('tipoestados', 'TipoestadosController');
 
