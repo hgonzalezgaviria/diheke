@@ -2,10 +2,9 @@
 
 namespace reservas;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use reservas\ModelWithSoftDeletes;
 
-class Reserva extends Model
+class Reserva extends ModelWithSoftDeletes
 {
     //Nombre de la tabla en la base de datos
     protected $table = "RESERVAS";
@@ -14,24 +13,18 @@ class Reserva extends Model
     //Traza: Nombre de campos en la tabla para auditoría de cambios
     const CREATED_AT = 'RESE_FECHACREADO';
     const UPDATED_AT = 'RESE_FECHAMODIFICADO';
-    use SoftDeletes;
     const DELETED_AT = 'RESE_FECHAELIMINADO';
     protected $dates = ['RESE_FECHAELIMINADO'];
 
 
-
     protected $fillable = [
+        "RESE_TITULO",
         "RESE_FECHAINI",
-        "RESE_FECHAFIN",
         "RESE_TODOELDIA",
         "RESE_COLOR",
-        "RESE_TITULO",
+        "RESE_FECHAFIN",
         'SALA_ID',
         'EQUI_ID',
-    ];
-
-    protected $hidden = [
-      	"RESE_ID"
     ];
 
 
@@ -59,7 +52,7 @@ class Reserva extends Model
     {
         $foreingKey = 'RESE_ID';
         $otherKey   = 'AUTO_ID';
-        return $this->belongsToMany(Autorizacione::class, 'RESERVAS_AUTORIZADAS', $foreingKey,  $otherKey);
+        return $this->belongsToMany(Autorizacion::class, 'RESERVAS_AUTORIZADAS', $foreingKey,  $otherKey);
     }
 
 

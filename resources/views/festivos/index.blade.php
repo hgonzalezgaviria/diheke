@@ -7,6 +7,10 @@
 	<div class="row well well-sm">
 
 		<div id="btn-create" class="pull-right">
+			<!-- botón de importar usuarios -->
+			@include('festivos/index-modal-import')
+
+	
 			<a class='btn btn-primary' role='button' href="{{ URL::to('festivos/create') }}">
 				<i class="fa fa-plus" aria-hidden="true"></i> Nuevo Día Festivo
 			</a>

@@ -87,6 +87,22 @@ class AuthController extends Controller
 		}
 	}
 
+	 /**
+     * Validate the user login request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     */
+    protected function validateLogin(Request $request)
+    {
+    	//Convierte a minúsculas el usuario
+        $request->username = strtolower($request->username);
+        $this->validate($request, [
+            $this->loginUsername() => 'required', 'password' => 'required',
+        ]);
+    }
+
+
 	/**
 	 * Get a validator for an incoming registration request.
 	 *

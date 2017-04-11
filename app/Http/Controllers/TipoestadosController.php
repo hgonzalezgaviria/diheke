@@ -45,14 +45,9 @@ class TipoEstadosController extends Controller
      */
     public function index()
     {
-        //Se genera paginación cada $cantPages registros.
-        $cantPages = 10;
-        //Se obtienen todas los contratos.
-        $tipoestados = Tipoestado::paginate($cantPages);
-
-
-        //Se carga la vista y se pasan los registros. ->paginate($cantPages)
-        return view('tipoestados/index')->with('tipoestados', $tipoestados);
+        $tipoestados = Tipoestado::all();
+        //Se carga la vista y se pasan los registros.
+        return view('tipoestados/index', compact('tipoestados'));
     }
 
     /**
@@ -171,12 +166,16 @@ class TipoEstadosController extends Controller
     {
         // delete
         $tipoestado = Tipoestado::findOrFail($TIES_ID);
+          if($tipoestado->TIES_CREADOPOR == 'SYSTEM'){
+            Session::flash('alert-danger', 'TipoEstado '.$tipoestado->TIES_DESCRIPCION.' no se puede borrar!');
+        } else {
         $tipoestado->TIES_ELIMINADOPOR = auth()->user()->username;
         $tipoestado->save();        
         $tipoestado->delete();
-
-        // redirecciona al index de controlador
         Session::flash('alert-info', 'Tipo estado '.$TIES_ID.' borrado!');
+        // redirecciona al index de controlador
+    }
+        
         return redirect()->to('tipoestados');
     }
 
