@@ -319,7 +319,7 @@ $(function () {
 
 		var titulo = 'R.S';
 		var todoeldia = false;
-		var fondo = 'rgb(51, 122, 183)';
+		var fondo = 'rgb(252, 255, 51)';
 
 		/*var color = $('#color').val();
 		if(color != null){
