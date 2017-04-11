@@ -49,7 +49,7 @@ class PrestamoEquiposController extends Controller
 
         $equipoPrestamos = \reservas\Prestamo::orderBy('PRES_ID')
                         ->select('PRES_ID', 'PRES_IDUSARIO','PRES_NOMBREUSARIO','EQUI_ID','PRES_CREADOPOR',
-                            'PRES_FECHACREADO')
+                            'PRES_FECHAINI')
                         ->where('PRES_FECHAFIN', null)
                         ->get();
 
@@ -68,8 +68,15 @@ class PrestamoEquiposController extends Controller
                            ->select('SEDES.*')
                            ->get();
 
+                           //Covertir imagen en base64
+$image = asset('assets/img/Logo_opt1.png');
+$type = pathinfo($image, PATHINFO_EXTENSION);
+$data = file_get_contents($image);
+$dataUri = 'data:image/' . $type . ';base64,' . base64_encode($data);
+//dd($dataUri);
+
         //Se carga la vista y se pasan los registros
-        return view('consultas/prestamos/index', compact('equipoPrestamos','salas','sedes','fechaRegistro'));
+        return view('consultas/prestamos/index', compact('equipoPrestamos','salas','sedes','fechaRegistro','dataUri'));
     }
 
 
@@ -93,6 +100,7 @@ class PrestamoEquiposController extends Controller
         $prestamo->PRES_IDUSARIO = $doc_usuario;
         $prestamo->PRES_NOMBREUSARIO = $nombre;
         $prestamo->EQUI_ID = $equipo;
+        $prestamo->PRES_FECHAINI = \Carbon\Carbon::now()->toDateTimeString(); 
         $prestamo->PRES_CREADOPOR = auth()->user()->username;
 
          $prestamo->save();

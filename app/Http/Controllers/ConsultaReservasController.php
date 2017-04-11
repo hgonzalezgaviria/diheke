@@ -67,9 +67,16 @@ class ConsultaReservasController extends Controller
         $sedes = \DB::table('SEDES')
                            ->select('SEDES.*')
                            ->get();
+      //Covertir imagen en base64
+      $image = asset('assets/img/Logo_opt1.png');
+      $type = pathinfo($image, PATHINFO_EXTENSION);
+      $data = file_get_contents($image);
+      $dataUri = 'data:image/' . $type . ';base64,' . base64_encode($data);
+      //dd($dataUri);
+
 
         //Se carga la vista y se pasan los registros
-        return view('consultas/reservas/index', compact('reservas','salas','sedes','fechaRegistro'));
+        return view('consultas/reservas/index', compact('reservas','salas','sedes','fechaRegistro','dataUri'));
     }
 
 }

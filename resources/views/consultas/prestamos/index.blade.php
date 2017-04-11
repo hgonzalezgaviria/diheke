@@ -1,7 +1,7 @@
 @extends('layout')
 @section('title', '/ Consulta Prestamos')
-@include('datatable')
 @section('content')
+@include('datatableExport')
 @section('scripts')
 	{!! Html::script('assets/js/jquery.countdown.min.js') !!}
     <script>
@@ -112,6 +112,34 @@
 		} );
 
 	  });
+
+     //Obtener fecha del sistemas
+		var name="ReportePrestamos";
+		var title="Reporte De Prestamos";
+		var columnss= [ 0, 1, 2, 3,4,5,6 ];
+		function fecha(){
+				var hoy = new Date();
+				var dd = hoy.getDate();
+				var mm = hoy.getMonth()+1; //hoy es 0!
+				var yyyy = hoy.getFullYear();
+				var hora = hoy.getHours();
+				var minuto = hoy.getMinutes();
+				var segundo = hoy.getSeconds(); 
+
+				if(dd<10) {
+				    dd='0'+dd
+				} 
+
+				if(mm<10) {
+				    mm='0'+mm
+				} 
+
+				//hoy = mm+'/'+dd+'/'+yyyy;
+				hoy = yyyy+mm+dd+'_'+hora+minuto+segundo;
+
+				return hoy;
+		}
+
 		
 
     </script>
@@ -130,7 +158,7 @@
 
 	</div>
 	
-<table class="table table-striped" id="tabla">
+<table class="table table-striped table-bordered dt-responsive nowrap" id="tabla">
 	<thead>
 		<tr class="info">
 			<th class="col-xs-1">ID</th>
@@ -156,7 +184,7 @@
 			<td>{{ $prestamo -> EQUI_ID }}</td>			 	
 			<td>{{ $prestamo -> equipo -> sala -> SALA_DESCRIPCION }}</td>
 			<td>{{ $prestamo -> equipo -> sala -> sede -> SEDE_DESCRIPCION }}</td>
-			<td class="fechaInicio" data-fechainicio="{{ $prestamo -> PRES_FECHACREADO }}"></td>
+			<td class="fechaInicio" data-fechainicio="{{ $prestamo -> PRES_FECHAINI }}"></td>
 			<td class="counterTime text-right"></td>
 			<td>
 

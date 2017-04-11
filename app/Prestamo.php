@@ -24,6 +24,7 @@ class Prestamo extends Model
 		'PRES_NOMBREUSARIO', 
 		'EQUI_ID',		
 		'PRES_CREADOPOR',
+		'PRES_FECHAINI',
 		'PRES_FECHAFIN',
 			];
 
