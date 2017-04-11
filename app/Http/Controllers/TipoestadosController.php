@@ -45,14 +45,9 @@ class TipoEstadosController extends Controller
      */
     public function index()
     {
-        //Se genera paginación cada $cantPages registros.
-        $cantPages = 10;
-        //Se obtienen todas los contratos.
-        $tipoestados = Tipoestado::paginate($cantPages);
-
-
-        //Se carga la vista y se pasan los registros. ->paginate($cantPages)
-        return view('tipoestados/index')->with('tipoestados', $tipoestados);
+        $tipoestados = Tipoestado::all();
+        //Se carga la vista y se pasan los registros.
+        return view('tipoestados/index', compact('tipoestados'));
     }
 
     /**

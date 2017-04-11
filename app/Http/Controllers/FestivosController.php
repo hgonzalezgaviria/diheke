@@ -46,14 +46,9 @@ class FestivosController extends Controller
      */
     public function index()
     {
-        //Se genera paginación cada $cantPages registros.
-        $cantPages = 10;
-        //Se obtienen todas los contratos.
-        $festivos = Festivo::paginate($cantPages);
-
-
-        //Se carga la vista y se pasan los registros. ->paginate($cantPages)
-        return view('festivos/index')->with('festivos', $festivos);
+        $festivos = Festivo::all();
+        //Se carga la vista y se pasan los registros.
+        return view('festivos/index', compact('festivos'));
     }
 
     /**
