@@ -2,18 +2,15 @@
 
 namespace reservas;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use reservas\ModelWithSoftDeletes;
 
-class Autorizacion extends Model
+class Autorizacion extends ModelWithSoftDeletes
 {
-    //
     protected $table = 'AUTORIZACIONES';
     protected $primaryKey = 'AUTO_ID';
 	//Traza: Nombre de campos en la tabla para auditoría de cambios
 	const CREATED_AT = 'AUTO_FECHACREADO';
 	const UPDATED_AT = 'AUTO_FECHAMODIFICADO';
-	use SoftDeletes;
 	const DELETED_AT = 'AUTO_FECHAELIMINADO';
 	protected $dates = ['AUTO_FECHAELIMINADO'];
 	

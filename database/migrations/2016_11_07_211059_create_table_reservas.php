@@ -15,7 +15,7 @@ class CreateTableReservas extends Migration
         Schema::create('RESERVAS', function (Blueprint $table) {
 
             $table->increments('RESE_ID') 
-                ->commRESE_ent = "Valor autonumerico, llave primaria de la tabla RESERVAS.";
+                ->comment = "Valor autonumerico, llave primaria de la tabla RESERVAS.";
 
             $table->datetime('RESE_FECHAINI')
                 ->comment = "fecha inicio de la reserva";

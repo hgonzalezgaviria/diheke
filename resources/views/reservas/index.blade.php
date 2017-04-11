@@ -51,7 +51,7 @@
 
 						<div class="col-xs-5 form-group">
 							<label>Horas:</label>
-							<input type='number' class="form-control" id="nHoras" placeholder="No. de horas" />
+							<input type='number' class="form-control" min="1" max="12" id="nHoras" placeholder="No. de horas" />
 						</div>
 
 					</div>
