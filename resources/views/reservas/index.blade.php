@@ -4,6 +4,17 @@
 @section('head')
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	{!! Html::style('assets/css/bootstrap-multiselect.css') !!}
+
+		<style type="text/css">
+		  .modal-header, h4, .close {
+      background-color: #286090;
+      color:white !important;
+      text-align: center;
+      font-size: 25px;
+      border-radius:6px;
+  }
+
+	</style>
 @parent
 @endsection
 
@@ -165,19 +176,23 @@
   </div><!-- /.panel-body -->
 </div><!-- /.panel -->
 
-<div class="modal fade" id="myModal" role="dialog">
-  <div class="modal-dialog modal-lg">
+<div class="modal fade" data-backdrop="static" data-keyboard="false" id="myModal" role="dialog">
+  <div class="modal-dialog">
 	<div class="modal-content">
-	  <div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal">&times;</button>
-		<h4 class="modal-title">Detalle de Reserva</h4>
+	  <div class="modal-header" style="padding:40px 50px;">		
+		<h4><span class="glyphicon glyphicon-modal-window"></span> Detalle Reserva</h4>
 	  </div>
-	  <div class="modal-body" id="divmodal">
+	  <div class="modal-body" id="divmodal" style="padding:40px 50px;">
 		<p></p>
+		<div class="form-group">
+                <label for="nombre"> Duración</label>
+                </div>
 	  </div>
 	  <div class="modal-footer">
-		<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-	  </div>
+            <button type="submit" class="btn btn-danger btn-default pull-right" data-dismiss="modal">
+                  <span class="glyphicon glyphicon-remove"></span> Cerrar
+                </button>
+          </div>
 	</div>
   </div>
 </div>

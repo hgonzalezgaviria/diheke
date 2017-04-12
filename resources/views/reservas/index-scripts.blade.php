@@ -770,9 +770,14 @@ $(function () {
 			var start = moment(calEvent.start).format('YYYY-MM-DD HH:mm:ss');
 			var end = moment(calEvent.end).format('YYYY-MM-DD HH:mm:ss');
 			$('#divmodal').empty();
-			$('#divmodal').append("<p>Titulo: " +  calEvent.title + "</p>");
-			$('#divmodal').append("<p>Fecha de Inicio: " +  start + "</p>");
-			$('#divmodal').append("<p>Fecha Fin: " +  end + "</p>");
+			$('#divmodal').append("<p><b>Descripción:</b> " +  calEvent.title + "</p>");
+			$('#divmodal').append("<p><b>Sede:</b> "+'PRINCIPAL'+"</p>");
+			$('#divmodal').append("<p><b>Espacio/Sala:</b> "+'SALA103 - SISTEMAS'+ "</p>");
+			$('#divmodal').append("<p><b>Fecha de Inicio:</b> " +  start + "</p>");
+			$('#divmodal').append("<p><b>Fecha Fin:</b> " +  end + "</p>");
+			$('#divmodal').append("<p><b>Duración:</b> " +'2'+ "</p>");
+			$('#divmodal').append("<p><b>Tipo de repetición:</b> "+'NINGUNA'+  "</p>");
+			$('#divmodal').append("<p><b>Estado:</b> " +'PENDIENTE'+ "</p>");
 			$('#myModal').modal('show');
 			// change the border color just for fun
 			$(this).css('border-color', 'red');
