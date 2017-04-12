@@ -74,10 +74,6 @@
 								<input class="form-check-input" type="radio" name="tipoRepeticion" value="hasta">
 								Hasta una Fecha
 							</label>
-							<label class="radio-inline">
-								<input class="form-check-input" type="radio" name="tipoRepeticion" value="pordias">
-								Por días
-							</label>
 						</div>
 					</div>
 
@@ -91,7 +87,7 @@
 						</div>
 					</div>
 
-					<div class="form-group reservaPorDias hide">
+					<div class="form-group reservaPorDias reservaHastaFecha hide">
 						<label for="chkdias">Dias:</label>
 						<div class="input-group">
 							<select id="chkdias" name="chkdias[]" class="form-control" multiple="multiple" required>

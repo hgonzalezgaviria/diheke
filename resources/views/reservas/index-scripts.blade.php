@@ -8,35 +8,33 @@ $(function () {
 	var equipo = null;
 
 
-
-	//Pendiente borrar ya que los colores serán asignados según el estado de la reserva.
-	//Color de fondo, si el usuario no lo define, se asigna por defecto.
-	var fondod = ($('#color').val()!= null) ? $('#color').val() : 'rgb(0, 255, 0)';
-	//configuracion del colorpicker para que tenga el formato RGB.
-	/*$('#color').colorpicker({
-		//color: '#AA3399',
-		format: 'rgb',
-		input: 'color'
-	});*/
-
+	//Se obtienen los días de la semana seleccionados y se almacena en la variable global 'diasSemSelected'
 	//Dropdown con lista de dias de la semana [lunes-sabado]
+	var diasSemSelected = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
 	$('#chkdias').multiselect({
 		//maxHeight: 400,
 		//dropUp: true,
 		numberDisplayed: 8,
 		//buttonWidth: '300px',
-		nonSelectedText: 'Ninguno'
-	});
+		nonSelectedText: 'Ninguno',
+		onChange: function(option, checked, select) {
+			diasem = $(option).val();
+			if(checked)
+				diasSemSelected.push(diasem);
+			else
+				diasSemSelected = $(diasSemSelected).not([diasem]).get();
 
-	//Se obtienen los días de la semana seleccionados y se almacena en la variable global 'diasSemSelected'
-	var diasSemSelected = [];
-	$("#chkdias").on('change', function(){
+			console.log(diasSemSelected);
+        }
+	});
+    $('#chkdias').multiselect('selectAll', false);
+    $('#chkdias').multiselect('updateButtonText');
+    /*$("#chkdias").on('change', function(){
 		diasSemSelected = $(this).find('option:selected').map(function(){
 							return $(this).val();
 						}).get();
 		console.log(diasSemSelected);
-	});
-
+	});*/
 
 	//Inicialización de inputs tipo DataPicker
 	var optionsDtPicker = {
@@ -307,9 +305,9 @@ $(function () {
 			case 'hasta': //Reserva diaria hasta la fecha seleccionada.
 				reservaHastaFecha();
 				break;
-			case 'pordias': //Reserva para los días de la semana seleccionados hasta la fecha seleccionada.
+			/*case 'pordias': //Reserva para los días de la semana seleccionados hasta la fecha seleccionada.
 				reservaPorDias();
-				break;
+				break;*/
 			case 'ninguna':
 				reservaSinRepeticion();
 				break;
@@ -320,9 +318,9 @@ $(function () {
 
 		var arrFestivos = getFestivos();
 
-		var titulo = 'R.S';
+		var titulo = 'RS';
 		var todoeldia = false;
-		var fondo = 'rgb(252, 255, 51)';
+		var fondo = 'rgb(51, 122, 183)';
 
 		/*var color = $('#color').val();
 		if(color != null){
@@ -483,20 +481,11 @@ $(function () {
 
 	function reservaHastaFecha() {
 
-
-
 		/***** COPIADO DESDE  reservaSinRepeticion ******/
 		var arrFestivos = getFestivos();
 
-		var titulo = 'R.S';
+		var titulo = 'RS.R';
 		var todoeldia = false;
-		var fondo = 'rgb(51, 122, 183)';
-
-		/*var color = $('#color').val();
-		if(color != null){
-			fondo = color;
-			//console.log('no es nulo '+color)
-		}*/
 
 		//Obteniendo valores del formulario
 		var fechaini = $('#fechaInicio').data("DateTimePicker").date();
@@ -554,8 +543,9 @@ $(function () {
 
 			//trae todas las reservas del fullcalendar 
 			var reservasTodas = $('#calendar').fullCalendar('clientEvents');
-
-			var puedeHacerReservas = (reservasTodas[0] == null) ? false : true;
+			console.log(JSON.stringify(reservasTodas));
+			var puedeHacerReservas = true;
+			//(reservasTodas[0] == null) ? false : true;
 
 			//variable para almacenar el valor de la fecha de inicio formateada a YYYY-MM-DD de la
 			//reserva que se pretende realizar
@@ -567,17 +557,17 @@ $(function () {
 
 			while(fini < fechahasta){
 					if(cont != 0){
-					fechainicio = moment(fechainicio).add(1, 'days');
-					fechainicio = moment(fechainicio,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-					fechafinal = moment(fechafinal).add(1, 'days');
-					fechafinal = moment(fechafinal,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-					fini = moment(fini).add(1, 'days');
+						fechainicio = moment(fechainicio).add(1, 'days');
+						fechainicio = moment(fechainicio,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+						fechafinal = moment(fechafinal).add(1, 'days');
+						fechafinal = moment(fechafinal,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+						fini = moment(fini).add(1, 'days');
 					}else if(cont == 1){
-					fechainicio = moment(fechainicio).add(1, 'days');
-					fechainicio = moment(fechainicio,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-					fechafinal = moment(fechafinal).add(1, 'days');
-					fechafinal = moment(fechafinal,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-					fini = moment(fini).add(1, 'days');
+						fechainicio = moment(fechainicio).add(1, 'days');
+						fechainicio = moment(fechainicio,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+						fechafinal = moment(fechafinal).add(1, 'days');
+						fechafinal = moment(fechafinal,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+						fini = moment(fini).add(1, 'days');
 					}
 
 					cont = 1;
@@ -586,17 +576,17 @@ $(function () {
 					var diasemana =  moment(fechainicio, 'YYYY-MM-DD HH:mm').format('dddd');
 
 					//console.log(fini+' es festivo? ' + ($.inArray( fini , arrFestivos)>=0))
-					//Si la fecha no está en arrFestivos y si el dia no es domingo...
-					if( ($.inArray( fini , arrFestivos) < 0) && (diasemana != "domingo")){
+					//Si la fecha no está en arrFestivos y si el dia está seleccionado...
+					if( 
+						( $.inArray( fini , arrFestivos) < 0 ) && ( $.inArray(diasemana, diasSemSelected) >= 0 )
+						){
 						//Se adiciona la fecha al arreglo de reservas
 						arrReservas.push({
 							'RESE_TITULO': titulo,
 							'RESE_FECHAINI': fechainicio,
 							'RESE_FECHAFIN': fechafinal, 
 							'RESE_TODOELDIA': todoeldia,
-							'RESE_COLOR': fondo,
 							'SALA_ID': sala,
-							'EQUI_ID': equipo,
 						});
 					}
 
@@ -630,25 +620,9 @@ $(function () {
 						if(fecInicioValidaran == finicioreservaran){
 							//si esta condicion es verdadera no puede reservar
 							if(finicioran>=fechairan && finicioran<=ffinalran){
-								/*
-								$.msgBox({
-									title:"Error con fecha inicial",
-									content:"¡No se puede realizar reserva, existen algunas que se traslapan! "+finicioran,
-									type:"error"
-								});
-								*/
-								//reservastras += fechairan + " - " + ffinalran + "\n";
 								puedeHacerReservas = false;
 								break;
 							} else if(ffinalreservaran>=fechairan && ffinalreservaran<=ffinalran){
-								/*
-								$.msgBox({
-									title:"Error con fecha final",
-									content:"¡No se puede realizar reserva, existen algunas que se traslapan! "+ffinalreservaran,
-									type:"error"
-								});
-								*/
-								//reservastras += fechairan + " - " + ffinalran + "\n";
 								puedeHacerReservas = false;
 								break;
 							} else {
@@ -692,7 +666,7 @@ $(function () {
 						$('#errorAjax').append(json.responseText);
 					}
 				});
-			}else if(puedeHacerReservas == false){
+			} else {
 				$.msgBox({
 					title:"Error",
 					content:"¡No se puede realizar reservas, algunas se traslapan en el horario! ",
@@ -701,114 +675,6 @@ $(function () {
 			}
 		}//aqui cierra el if de si es reserva de rango
 	};
-
-	function reservaPorDias() {
-		
-		var arrreservasd = [];
-		var arrFestivosd = [];
-
-		var titulod = 'RS.D';
-		var todoeldiad = false;
-
-		var facultadd = $("#cboxFacultades").val();
-		var docented = $("#cBoxDocentes").val();
-		var materiad = $("#asignaturasd").val();
-		var grupod = $("#cBoxGrupos").val();
-
-		var sala = getUrlParameter('sala');
-		
-		//variable para validar cuantos días se seleccionaron
-		var nrodias = diasSemSelected.length;
-
-		//variables de fechas de inicio de reserva y fecha final para validar el rango
-		var fecha_ini_d = $('#fechaInicio').data("DateTimePicker").date();
-		var fecha_fin_d = $('#fechaHasta').data("DateTimePicker").date();
-
-		//numero de horas de la reserva
-		var nhorasd = $('#nHoras').val();
-
-		//variable inicial y final de la reserva
-		var fecha_ini_reserva = $('#fechaInicio').data("DateTimePicker").date();
-		var fecha_fin_reserva = moment(fecha_ini_d).add(nhorasd, 'hours');
-
-		if(nrodias > 0){
-			arrFestivosd = getFestivos();
-
-			var countReservas = 0;
-
-			//esto hace que la fecha inicial tenga la hora cero, de lo contrario la condicion del while
-			//no se cumpliria en uno de los casos porque una fecha excede a la otra en horas, minutos o segundos
-			while(moment(fecha_ini_d).startOf('day') < fecha_fin_d){
-
-				var fini = moment(fecha_ini_reserva, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-				var ffin = moment(fecha_fin_reserva, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm'); 
-				var ffinre = moment(fecha_ini_d, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-
-				//variable para controlar la excepcion de salida del bucle
-				fecha_ini_d = moment(fecha_ini_d).add(1, 'days');
-
-				//variable para obtener el día de la semana (lunes, martes, miércoles..)
-				var diares =  moment(fini, 'YYYY-MM-DD HH:mm').format('dddd');
-
-				//variable para volver la fecha de la reserva en formato YYYY-MM-DD
-				var finir = moment(fini, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
-
-				//fechas que incrementan en la reserva
-				fecha_ini_reserva = moment(fecha_ini_reserva).add(1, 'days');
-				fecha_fin_reserva = moment(fecha_fin_reserva).add(1, 'days');
-
-				for(var i=0; i<nrodias; i++) {
-					console.log(diares + '=' + $.inArray( diares , diasSemSelected))
-					if( $.inArray( diares , diasSemSelected) ){
-						console.log("countReservas: " + countReservas);
-						arrreservasd[countReservas] = [
-							titulod, fini, 
-							todoeldiad, fondod, 
-							ffin, sala, 
-							equipo, facultadd,
-							docented, grupod, materiad
-						];
-						console.log(arrreservasd[countReservas]);
-						countReservas++;
-					}
-				}
-			}
-
-			console.log(arrreservasd);
-
-			var request;
-			request = $.ajax({
-				url: 'guardarReservas',
-				data: {reservas : arrreservasd},
-				//dataType: 'json',
-				type: "POST",
-				headers: {
-					"X-CSRF-TOKEN": crsfToken
-				},
-				success: function(events) {
-					console.log('Response guardarReservas: '+JSON.stringify(events));
-					$.msgBox({
-					title:"Éxito",
-					content:"¡Su reserva se ha realizado satisfactoriamente!",
-					type:"success"
-					});
-					$('#calendar').fullCalendar('refetchEvents');
-				},
-				error: function(json){
-					console.log("Error al crear evento de reservas por días: ");
-					$('#errorAjax').append(json.responseText);
-				}
-			});
-
-		} else {
-			$.msgBox({
-				title:"Error",
-				content:"¡Faltan datos para la reserva!",
-				type:"error"
-			}); 
-		}
-	};
-
 
 /***** HELPERS - Funciones de apoyo *****/
 

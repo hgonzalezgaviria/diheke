@@ -156,22 +156,38 @@ class ReservasController extends Controller
 		$ROLE_ID = auth()->check() ? auth()->user()->ROLE_ID : 0;
 		$fechaactual = Carbon::now();
 
-		$rawReservasInput = Input::get('reservas');
+		$rawReservasInput = $request->get('reservas');
 
 		//Arreglo para almacenar los id´s de las reservas creadas
 		$arrRESE_ID = [];
+
+		if(!isset($rawReservasInput) OR !is_array($rawReservasInput) OR empty($rawReservasInput)){
+			return response()->json([
+				'ERROR' => 'Datos incompletos.',
+				'reservas' => json_encode($rawReservasInput)
+			], 400); //400 Bad Request: La solicitud contiene sintaxis errónea y no debería repetirse
+		}
+
+
+
 		foreach ($rawReservasInput as $rawReserva) {
+
+			if($ROLE_ID == \reservas\Rol::ADMIN)
+				$color = Reserva::COLOR_APROBADO;
+			else
+				$color = Reserva::COLOR_PENDIENTE;
+
 			//Crear reserva:
 			$reserva = Reserva::create(
 				array_only($rawReserva, [
 					'RESE_TITULO',
 					'RESE_FECHAINI',
 					'RESE_TODOELDIA',
-					'RESE_COLOR',
 					'RESE_FECHAFIN',
 					'SALA_ID',
-					'EQUI_ID',
-				])
+				]) + [
+					'RESE_COLOR' => $color,
+				]
 			);
 			//Se adiciona el ID al arreglo de reservas
 			array_push($arrRESE_ID, $reserva->RESE_ID);
@@ -181,12 +197,14 @@ class ReservasController extends Controller
 		if(count($arrRESE_ID) > 0){
 
 			//Recopiando datos para la autorización...
-			$datosAutoriz = Input::only([
+			$datosAutoriz = $request->only([
 				'UNID_ID',
 				'PEGE_ID',
 				'GRUP_ID',
-				'MATE_CODIGOMATERIA',]) +
-				['AUTO_FECHASOLICITUD' => $fechaactual];
+				'MATE_CODIGOMATERIA',
+				]) + [
+				'AUTO_FECHASOLICITUD' => $fechaactual,
+			];
 
 			//Si el usuario es ADMIN, la reserva se autoriza automáticamente.
 			if($ROLE_ID != \reservas\Rol::ADMIN){
@@ -208,12 +226,14 @@ class ReservasController extends Controller
 		} else {
 			/*return response()->json([
 				'ERROR' => 'No se crearon reservas.',
-				'reservas' => json_encode(Input::all())
+				'reservas' => json_encode($request->all())
 			]);*/
 		}
 
 		return $arrRESE_ID;
 	}
+
+
 
 	public function consultaMaterias(){
 

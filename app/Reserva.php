@@ -28,6 +28,12 @@ class Reserva extends ModelWithSoftDeletes
     ];
 
 
+    //Constantes para colores asignados al estado de la reserva
+    const COLOR_PENDIENTE  = 'rgb(255, 255, 0)'; //Yellow
+    const COLOR_APROBADO   =  'rgb(0, 255, 0)';  //Lime
+    const COLOR_RECHAZADO  = 'rgb(255, 0, 0)';   //Red
+    const COLOR_FINALIZADO  = 'rgb(204, 204, 204)'; //Gray 80%
+
     //Una Reserva se asocia a una sala
     public function sala()
     {
