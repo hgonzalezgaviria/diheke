@@ -7,14 +7,14 @@
 
      $(document).ready(function (){
 
-
+     	var table1 = $('#tabla').DataTable();
 
       	
 	//BUSQUEDA POR COLUMNA
 
 		// #SEDE_ID is a <input type="text"> element
 		$('#DES_ID').on( 'keyup', function () {
-		    table
+		    table1
 		        .columns( 1 )
 		        .search( this.value )
 		        .draw();
@@ -23,7 +23,7 @@
 
 		// #SEDE_ID is a <input type="text"> element
 		$('#SALA_ID').change(function () {
-		    table
+		    table1
 		        .columns( 4 )
 		        .search( $('#SALA_ID option:selected').text() )
 		        .draw();
@@ -33,7 +33,7 @@
 
 	// #SEDE_ID is a <input type="text"> element
 		$('#SEDE_ID').change(function () {
-		    table
+		    table1
 		        .columns( 3 )
 		        .search( $('#SEDE_ID option:selected').text() )
 		        .draw();

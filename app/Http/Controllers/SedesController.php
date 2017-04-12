@@ -44,6 +44,7 @@ class SedesController extends Controller
 		//Se obtienen todos los registros.
 		$sedes = Sede::all();
 
+
 		//Se carga la vista y se pasan los registros
 		return view('sedes/index', compact('sedes'));
 	}
@@ -90,13 +91,13 @@ class SedesController extends Controller
 	/**
 	 * Muestra información de un registro.
 	 *
-	 * @param  int  $ESFI_ID
+	 * @param  int  $SEDE_ID
 	 * @return Response
 	 */
-	public function show($ESFI_ID)
+	public function show($SEDE_ID)
 	{
 		// Se obtiene el registro
-		$sede = Sede::findOrFail($ESFI_ID);
+		$sede = Sede::findOrFail($SEDE_ID);
 
 		// Muestra la vista y pasa el registro
 		return view('sedes/show', compact('sede'));
@@ -106,13 +107,13 @@ class SedesController extends Controller
 	/**
 	 * Muestra el formulario para editar un registro en particular.
 	 *
-	 * @param  int  $ESFI_ID
+	 * @param  int  $SEDE_ID
 	 * @return Response
 	 */
-	public function edit($ESFI_ID)
+	public function edit($SEDE_ID)
 	{
 		// Se obtiene el registro a modificar
-		$sede = Sede::findOrFail($ESFI_ID);
+		$sede = Sede::findOrFail($SEDE_ID);
 
 		// Muestra el formulario de edición y pasa el registro a editar
 		// y arreglos para llenar los Selects
@@ -123,10 +124,10 @@ class SedesController extends Controller
 	/**
 	 * Actualiza un registro en la base de datos.
 	 *
-	 * @param  int  $ESFI_ID
+	 * @param  int  $SEDE_ID
 	 * @return Response
 	 */
-	public function update($ESFI_ID)
+	public function update($SEDE_ID)
 	{
 		//Validación de datos
 		//Validación de datos
@@ -137,7 +138,7 @@ class SedesController extends Controller
 		]);
 
 		// Se obtiene el registro
-		$sede = Sede::findOrFail($ESFI_ID);
+		$sede = Sede::findOrFail($SEDE_ID);
 
 		$sede->SEDE_DESCRIPCION = Input::get('SEDE_DESCRIPCION');
 		$sede->SEDE_DIRECCION = Input::get('SEDE_DIRECCION');
@@ -147,31 +148,61 @@ class SedesController extends Controller
 		$sede->save();
 
 		// redirecciona al index de controlador
-		Session::flash('alert-info', 'Sede '.$sede->ESFI_ID.' modificada exitosamente!');
+		Session::flash('alert-info', 'Sede '.$sede->SEDE_ID.' modificada exitosamente!');
 		return redirect()->to('sedes');
 	}
 
 	/**
 	 * Elimina un registro de la base de datos.
 	 *
-	 * @param  int  $ESFI_ID
+	 * @param  int  $SEDE_ID
 	 * @return Response
 	 */
-	public function destroy($ESFI_ID, $showMsg=True)
+	public function destroy($SEDE_ID, $showMsg=True)
 	{
-		$sede = Sede::findOrFail($ESFI_ID);
+		$sede = Sede::findOrFail($SEDE_ID);
 
 		// delete
-        $sede->SEDE_ELIMINADOPOR = auth()->user()->username;
+		//dd($this->validaDatosRelacionados($SEDE_ID));
+		if($this->validaDatosRelacionados($SEDE_ID)) {
+			$descripcionmsj='La Sede '.$sede->SEDE_ID.' tiene datos relacionados. No es posible borrar';    	
+    			$mensaje='modal-warning';
+		}else{
+		$sede->SEDE_ELIMINADOPOR = auth()->user()->username;
 		$sede->save();
 		$sede->delete();
+		$descripcionmsj='La Sede '.$sede->SEDE_ID.' eliminada exitosamente!';    		
+				$mensaje='modal-success';
+
+
+		}
+        
 
 		// redirecciona al index de controlador
 		if($showMsg){
-			Session::flash('alert-info', 'Sede '.$sede->SEDE_ID.' eliminada exitosamente!');
+			Session::flash($mensaje, $descripcionmsj);
 			return redirect()->to('sedes');
 		}
+
 	}
+
+		public function validaDatosRelacionados($SEDE_ID)
+	{
+			 
+		 $ocupacion=false;
+		   $idsedesala = \reservas\Sala::orderBy('SEDE_ID')
+                        ->select('SEDE_ID')
+                        ->where('SEDE_ID', $SEDE_ID)
+                        ->count();
+                        //->get();
+
+//	                        dd($idsedesala);
+                        if ($idsedesala>0){
+                        	$ocupacion=true;
+              			 //break;
+                        }			
+        			return $ocupacion;
+		}
 
 
 }
