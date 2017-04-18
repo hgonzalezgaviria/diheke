@@ -289,13 +289,23 @@ class SalasController extends Controller
 		$sala = Sala::findOrFail($SALA_ID);
 
 		// delete
+		//dd($this->validaDatosRelacionados($SALA_ID));
+		if($this->validaDatosRelacionados($SALA_ID)) {
+			$descripcionmsj='La sala '.$sala->SALA_ID.' tiene datos relacionados. No es posible borrar';    	
+    			$mensaje='modal-warning';
+		}else{
+		
 		$sala->SALA_ELIMINADOPOR = auth()->user()->username;
 		$sala->save();
 		$sala->delete();
+		$descripcionmsj='La Sede '.$sala->SALA_ID.' eliminada exitosamente!';    		
+				$mensaje='modal-success';
+
+	}
 
 		// redirecciona al index de controlador
 		if($showMsg){
-			Session::flash('alert-info', 'Sala '.$sala->SALA_ID.' eliminada exitosamente!');
+			Session::flash($mensaje, $descripcionmsj);
 			return redirect()->to('salas');
 		}
 	}	
@@ -364,6 +374,31 @@ class SalasController extends Controller
               }
 			return $ocupacion;
 		}
+
+	 public function validaDatosRelacionados($SALA_ID)
+    {
+             
+         $ocupacion=false;
+           $idequipossala = \reservas\Equipo::orderBy('SALA_ID')
+                        ->select('SALA_ID')
+                        ->where('SALA_ID', $SALA_ID)
+                        ->count();
+                        //->get();
+
+   		/*
+   			$idsedesala = \reservas\Recurso::orderBy('SALA_ID')
+                        ->select('SALA_ID')
+                        ->where('SALA_ID', $SALA_ID)
+                        ->count();
+                        //->get();
+*/
+//                          dd($idsedesala);
+                        if ($idequipossala>0){
+                            $ocupacion=true;
+                         //break;
+                        }           
+                    return $ocupacion;
+        }
 
 }
 

@@ -48,6 +48,13 @@ class Sala extends Model
 		return $this->hasMany(Equipo::class, $foreingKey);
 	}
 
+	//Una Sala tiene muchas reservas
+	public function reservas()
+	{
+		$foreingKey = 'SALA_ID';
+		return $this->hasMany(Reserva::class, $foreingKey);
+	}
+
 	//Una Sala tiene un Estado
 	public function estado()
 	{

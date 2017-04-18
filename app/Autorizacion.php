@@ -16,7 +16,12 @@ class Autorizacion extends ModelWithSoftDeletes
 	
 	protected $fillable = [
 		'AUTO_FECHASOLICITUD',
-		'AUTO_FECHAAPROBACION'
+		'AUTO_FECHAAPROBACION',
+		'AUTO_ESTADO',
+		'UNID_ID',
+		'PEGE_ID',
+		'GRUP_ID',
+		'MATE_CODIGOMATERIA',
 	];
 
     protected $hidden = [

@@ -60,8 +60,10 @@ class ReservasController extends Controller
 		
 		$data = array(); //declaramos un array principal que va contener los datos
 
-		$reservas = Reserva::where('SALA_ID', $sala)
-					->get(); //listamos todos los id de los eventos
+		$reservas = \reservas\Sala::findOrFail($sala)->reservas;
+
+		//$reservas = Reserva::where('SALA_ID', $sala)
+					//->get(); //listamos todos los id de los eventos
 
 		$count = count($reservas); //contamos los ids obtenidos para saber el numero exacto de eventos
 		
@@ -217,6 +219,10 @@ class ReservasController extends Controller
 					'AUTO_ESTADO' => Estado::RESERVA_APROBADA,
 				]);
 			}
+
+			return response()->json([
+				$datosAutoriz
+			]); //400 Bad Request: La solicitud contiene sintaxis errónea y no debería repetirse
 
 			//Crear Autorización:
 			$autorizacion = Autorizacion::create($datosAutoriz);

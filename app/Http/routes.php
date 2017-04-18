@@ -136,3 +136,8 @@ Route::get('layoutPDF', 'ExportarPdfController@layoutPDF');
 Route::get('streamPDF', 'ExportarPdfController@streamPDF');
 Route::get('savePDF', 'ExportarPdfController@savePDF');
 //Route::get('encuestas/{ENCU_id}/downloadZIP', 'ExportarPdfController@downloadZIP');
+
+//Prueba
+Route::get('/testreserva', function(){
+	return View::make('reservas/testvalidacion');
+});
