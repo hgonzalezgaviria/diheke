@@ -25,11 +25,11 @@ $(function () {
 				diasSemSelected = $(diasSemSelected).not([diasem]).get();
 
 			console.log(diasSemSelected);
-        }
+		}
 	});
-    $('#chkdias').multiselect('selectAll', false);
-    $('#chkdias').multiselect('updateButtonText');
-    /*$("#chkdias").on('change', function(){
+	$('#chkdias').multiselect('selectAll', false);
+	$('#chkdias').multiselect('updateButtonText');
+	/*$("#chkdias").on('change', function(){
 		diasSemSelected = $(this).find('option:selected').map(function(){
 							return $(this).val();
 						}).get();
@@ -39,9 +39,11 @@ $(function () {
 	//Inicialización de inputs tipo DataPicker
 	var optionsDtPicker = {
 		locale: 'es',
-		stepping: 1,
+		stepping: 30,
 		useCurrent: false,  //Important! See issue #1075. Requerido para minDate
 		minDate: new Date()-1, //-1 Permite seleccionar el dia actual
+		daysOfWeekDisabled: [0],//Deshabilita el día domingo
+		//disabledDates: getFestivos(), //No funciona porque el arreglo debe ser objMoment o mm/dd/yyyy
 		icons: {
 			time: "fa fa-clock-o",
 			date: "fa fa-calendar",
@@ -289,6 +291,7 @@ $(function () {
 				$('.reservaPorDias').removeClass('hide');
 				break;
 			default: //Reseva sin repetición
+				$('#fechaHasta').val('');
 				$('.reservaHastaFecha').addClass('hide');
 				$('.reservaPorDias').addClass('hide');
 		}
@@ -309,196 +312,26 @@ $(function () {
 				reservaPorDias();
 				break;*/
 			case 'ninguna':
-				reservaSinRepeticion();
+				reservaHastaFecha();
 				break;
 		}
 	});
 
-	function reservaSinRepeticion() {
-
-		var arrFestivos = getFestivos();
-
-		var titulo = 'RS';
-		var todoeldia = false;
-		var fondo = 'rgb(51, 122, 183)';
-
-		/*var color = $('#color').val();
-		if(color != null){
-			fondo = color;
-			//console.log('no es nulo '+color)
-		}*/
-
-		//Obteniendo valores del formulario
-		var fechaini = $('#fechaInicio').data("DateTimePicker").date();
-		//var fechafin = $('#fechaFin').data("DateTimePicker").date();
-
-		var nhoras = $('#nHoras').val();
-
-		//se le adiciona el numero de horas
-
-		var fechafin = moment(fechaini).add(nhoras, 'hours');
-
-		//var fechainicio = moment(fechaini, 'YYYY-DD-MM HH:mm:ss').format('YYYY-DD-MM HH:mm:ss');
-		var fechainicio = moment(fechaini, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-		var fechafinal = moment(fechafin,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-
-
-		var facultad = $("#cboxFacultades").val();
-		var docente = $("#cBoxDocentes").val();
-		var materia = $("#cboxAsignaturas").val();
-		var grupo = $("#cBoxGrupos").val();
-
-
-
-		var reserva = new Object();
-		var finicio = $('#fechaInicio').data("DateTimePicker").date();
-		finicio = moment(finicio, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-
-		//variable para almacenar el valor de la fecha de inicio formateada a YYYY-MM-DD de la
-		//reserva que se pretende realizar
-		var finiciovalida = $('#fechaInicio').data("DateTimePicker").date();
-		finiciovalida = moment(finiciovalida, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
-
-		var fechahasta = $('#fechaHasta').data("DateTimePicker").date();
-		fechahasta = moment(fechahasta, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
-
-		//trae todos los eventos del fullcalendar 
-		var array = $('#calendar').fullCalendar('clientEvents');
-
-		var puedereservar = (array[0] == null) ? false : true;
-
-		for(i in array){
-
-			//objeto tipo date para almacenar el valor de la fecha inicial de la reserva que esta en bd
-			var fechai = new Date();
-			fechai = moment(array[i].start, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-
-			//objeto tipo date para almacenar el valor de la fecha final de la reserva que esta en bd
-			var ffinal = new Date();
-			ffinal = moment(array[i].end, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-
-			//objeto tipo date para almacenar el valor de la fecha inicial de la reserva que se pretende
-			//realizar
-			var finicioreserva = new Date();
-			finicioreserva = moment(array[i].start, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
-
-			//objeto tipo date para almacenar el valor de la fecha final de la reserva que se pretende
-			//realizar
-			var ffinalreserva = new Date();
-			ffinalreserva = moment(fechafin, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-
-			//si la fecha de inicio de base de datos (formato YYYY-MM-DD) es igual a la fecha de inicio
-			//de reserva que se pretende realizar, se validan las demas condiciones. Es decir que no va
-			//revisar todas las reservas sino unicamente las reservas del día en que se pretende realizar
-			//la nueva reserva
-			if(finiciovalida == finicioreserva){
-				//si esta condicion es verdadera no puede reservar
-				if(finicio>=fechai && finicio<=ffinal){
-
-					$.msgBox({
-						title:"Error",
-						content:"¡Fecha inicial no disponible para la reserva! "+finicio,
-						type:"error"
-					});
-
-					puedereservar = false;
-					break;
-				
-				} else if(ffinalreserva>=fechai && ffinalreserva<=ffinal){
-					
-					$.msgBox({
-						title:"Error",
-						content:"¡Fecha final no disponible para la reserva! "+ffinalreserva,
-						type:"error"
-					});
-
-					puedereservar = false;
-					break;
-
-				} else {
-					puedereservar = true;
-				}
-			} else {
-				puedereservar = true;
-			}
-		}
-
-		if(puedereservar){
-			//====================================================================================
-			//este bloque sirve para validar que el día en que se pretende hacer la reserva no sea un festivo
-			var finiciores = moment(fechainicio, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
-			for(var j = 0; j < arrFestivos.length; j++){
-			
-				var fest = moment(arrFestivos[j], 'YYYY-MM-DD').format('YYYY-MM-DD');
-				var diasem =  moment(finiciores, 'YYYY-MM-DD HH:mm').format('dddd');
-
-				if(fest == finiciores || diasem == "domingo"){
-					puedereservar = false;
-				}
-			}
-
-
-			if(puedereservar){
-				$.ajax({
-					url: 'guardaEventos',
-					data: 'title='+ titulo+
-						'&start='+ fechainicio+
-						'&allday='+todoeldia+
-						'&background='+fondo+
-						'&end='+fechafinal+
-						'&sala='+sala+
-						'&equipo='+equipo+
-						'&facultad='+facultad+
-						'&materia='+materia+
-						'&grupo='+grupo+
-						'&docente='+docente,
-					type: "POST",
-					headers: {
-						"X-CSRF-TOKEN": crsfToken
-					},
-					success: function(events) {
-						$.msgBox({
-							title:"Éxito",
-							content:"¡Su reserva se ha realizado satisfactoriamente!",
-							type:"success"
-						});
-						$('#calendar').fullCalendar('refetchEvents');
-					},
-					error: function(json){
-						console.log("Error al crear evento en reserva unitaria");
-						$('#errorAjax').append(json.responseText);
-					}        
-				});
-			} else {
-				$.msgBox({
-					title: "Error",
-					content: "¡No se puede realizar la reserva, este día es domingo o festivo!",
-					type: "error"
-				});
-			}
-		}//aqui cierra el if de si puede reservar					
-	};
 
 	function reservaHastaFecha() {
 
 		/***** COPIADO DESDE  reservaSinRepeticion ******/
-		var arrFestivos = getFestivos();
 
 		var titulo = 'RS.R';
 		var todoeldia = false;
 
 		//Obteniendo valores del formulario
 		var fechaini = $('#fechaInicio').data("DateTimePicker").date();
-		//var fechafin = $('#fechaFin').data("DateTimePicker").date();
-
+		var fechainicio = moment(fechaini, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
 		var nhoras = $('#nHoras').val();
 
 		//se le adiciona el numero de horas
-
 		var fechafin = moment(fechaini).add(nhoras, 'hours');
-
-		//var fechainicio = moment(fechaini, 'YYYY-DD-MM HH:mm:ss').format('YYYY-DD-MM HH:mm:ss');
-		var fechainicio = moment(fechaini, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
 		var fechafinal = moment(fechafin,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
 
 
@@ -507,90 +340,81 @@ $(function () {
 		var materia = $("#cboxAsignaturas").val();
 		var grupo = $("#cBoxGrupos").val();
 
-		var reserva = new Object();
-		var finicio = $('#fechaInicio').data("DateTimePicker").date();
-		finicio = moment(finicio, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
 
-		//variable para almacenar el valor de la fecha de inicio formateada a YYYY-MM-DD de la
-		//reserva que se pretende realizar
-		var finiciovalida = $('#fechaInicio').data("DateTimePicker").date();
-		finiciovalida = moment(finiciovalida, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
-
-		var fechahasta = $('#fechaHasta').data("DateTimePicker").date();
-		fechahasta = moment(fechahasta, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
-
-		//trae todos los eventos del fullcalendar 
-		var array = $('#calendar').fullCalendar('clientEvents');
-
-		var puedereservar = (array[0] == null) ? false : true;
 
 		/***** FIN  COPIADO DESDE  reservaSinRepeticion ******/
 
-		if( (fechahasta!=null && fechahasta!="") && (tipoRepetChecked!=null && tipoRepetChecked=="hasta") ){
 
-			var fini = $('#fechaInicio').data("DateTimePicker").date();
-			fini = moment(fini, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
+		//variable para almacenar el valor de la fecha de inicio formateada a YYYY-MM-DD de la
+		//reserva que se pretende realizar
+		var fini = $('#fechaInicio').data("DateTimePicker").date();
+		fini = moment(fini, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
 
+		var fechahasta = $('#fechaHasta').data("DateTimePicker").date();
+		if(fechahasta == null){
+			fechahasta = moment(fini).add(nhoras, 'hours').format('YYYY-MM-DD HH:ss');;
+		} else {
+			fechahasta = moment(fechahasta, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
+		}
 
-			var fecha = null;
-			var fecReservaIni = moment(fechainicio).add(0, 'days');
-			fecReservaIni = moment(fecReservaIni,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
+		if(fini > fechahasta){
+			$.msgBox({
+				title:"Error",
+				content:"¡Fecha inicial no puede ser mayor a la fecha final! ",
+				type:"error"
+			});
+			return;
+		}
 
-			//alert(fini + " - " + fechahasta);
-			var i = 0;
-			var arrReservas = [];
-			var cont = 0;
+		var arrReservas = [];
+		var cont = 0;
 
-			//trae todas las reservas del fullcalendar 
-			var reservasTodas = $('#calendar').fullCalendar('clientEvents');
-			console.log(JSON.stringify(reservasTodas));
-			var puedeHacerReservas = true;
-			//(reservasTodas[0] == null) ? false : true;
+		//trae todas las reservas del fullcalendar 
+		var reservasTodas = $('#calendar').fullCalendar('clientEvents');
+		//console.log(JSON.stringify(reservasTodas));
+		var puedeHacerReservas = true;
 
-			//variable para almacenar el valor de la fecha de inicio formateada a YYYY-MM-DD de la
-			//reserva que se pretende realizar
-			var fecInicioValidaran = new Date();
+		console.log('fini = '+fini);
+		console.log('fechahasta = '+fechahasta);
+		console.log(fini < fechahasta);
 
-			var finicioran = new Date();
+		var arrFestivos = getFestivos();
 
-			var reservastras = null;
+		//Si la reserva es sin repetición, no se debe repetir el while
+		var repetir = true;
+		while( (fini < fechahasta) && puedeHacerReservas && repetir){
+			if(tipoRepetChecked == 'ninguna')
+				repetir = false;
 
-			while(fini < fechahasta){
-					if(cont != 0){
-						fechainicio = moment(fechainicio).add(1, 'days');
-						fechainicio = moment(fechainicio,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-						fechafinal = moment(fechafinal).add(1, 'days');
-						fechafinal = moment(fechafinal,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-						fini = moment(fini).add(1, 'days');
-					}else if(cont == 1){
-						fechainicio = moment(fechainicio).add(1, 'days');
-						fechainicio = moment(fechainicio,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-						fechafinal = moment(fechafinal).add(1, 'days');
-						fechafinal = moment(fechafinal,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-						fini = moment(fini).add(1, 'days');
-					}
+			if(cont!=0){
+				fechainicio = moment(fechainicio).add(1, 'days');
+				fechainicio = moment(fechainicio,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+				fechafinal = moment(fechafinal).add(1, 'days');
+				fechafinal = moment(fechafinal,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+				fini = moment(fini).add(1, 'days');
+			}
+			cont++;
+			fini = moment(fini,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
 
-					cont = 1;
+			var diasemana =  moment(fechainicio, 'YYYY-MM-DD HH:mm').format('dddd');
 
-					fini = moment(fini,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
-					var diasemana =  moment(fechainicio, 'YYYY-MM-DD HH:mm').format('dddd');
+			//console.log(fini+' es festivo? ' + ($.inArray( fini , arrFestivos)>=0))
+			//Si la fecha no está en arrFestivos y si el dia está seleccionado...
+			if( 
+				( $.inArray( fini , arrFestivos) < 0 ) && ( $.inArray(diasemana, diasSemSelected) >= 0 )
+				){
+				//Se adiciona la fecha al arreglo de reservas
+				arrReservas.push({
+					'RESE_TITULO': titulo,
+					'RESE_FECHAINI': fechainicio,
+					'RESE_FECHAFIN': fechafinal, 
+					'RESE_TODOELDIA': todoeldia,
+					'SALA_ID': sala,
+				});
 
-					//console.log(fini+' es festivo? ' + ($.inArray( fini , arrFestivos)>=0))
-					//Si la fecha no está en arrFestivos y si el dia está seleccionado...
-					if( 
-						( $.inArray( fini , arrFestivos) < 0 ) && ( $.inArray(diasemana, diasSemSelected) >= 0 )
-						){
-						//Se adiciona la fecha al arreglo de reservas
-						arrReservas.push({
-							'RESE_TITULO': titulo,
-							'RESE_FECHAINI': fechainicio,
-							'RESE_FECHAFIN': fechafinal, 
-							'RESE_TODOELDIA': todoeldia,
-							'SALA_ID': sala,
-						});
-					}
-
-					//Validaciones de cruce de fechas en reservas existentes
+				//Validaciones de cruce de fechas en reservas existentes
+				//Si existen reservas previas, se debe validar que no tenga cruces
+				if(reservasTodas.length > 0){
 					for(k in reservasTodas){
 
 						//objeto tipo date para almacenar el valor de la fecha inicial de la reserva del arreglo
@@ -601,83 +425,94 @@ $(function () {
 						var ffinalran = new Date();
 						ffinalran = moment(reservasTodas[k].end, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
 
-						fecInicioValidaran = moment(fechainicio, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
-
-						finicioran = moment(fechainicio, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
-
+						//variable para almacenar el valor de la fecha de inicio formateada a YYYY-MM-DD de la
+						//reserva que se pretende realizar
+						var fecInicioValidaran = moment(fechainicio, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
+ 
 						//objeto tipo date para almacenar el valor de la fecha inicial de la reserva que se pretende realizar
 						var finicioreservaran = new Date();
 						finicioreservaran = moment(reservasTodas[k].start, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
-
-						//objeto tipo date para almacenar el valor de la fecha final de la reserva que se pretende realizar
-						var ffinalreservaran = new Date();
-						ffinalreservaran = moment(fechafinal, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
 
 						//si la fecha de inicio de base de datos (formato YYYY-MM-DD) es igual a la fecha de inicio
 						//de reserva que se pretende realizar, se validan las demas condiciones. Es decir que no va
 						//revisar todas las reservas sino unicamente las reservas del día en que se pretende realizar
 						//la nueva reserva
+						console.log('fechairan = '+fechairan);
+						console.log('ffinalran = '+ffinalran);
+						console.log('fechainicio = '+fechainicio);
+						console.log('fechafinal = '+fechafinal);
 						if(fecInicioValidaran == finicioreservaran){
-							//si esta condicion es verdadera no puede reservar
-							if(finicioran>=fechairan && finicioran<=ffinalran){
-								puedeHacerReservas = false;
-								break;
-							} else if(ffinalreservaran>=fechairan && ffinalreservaran<=ffinalran){
-								puedeHacerReservas = false;
-								break;
-							} else {
-								puedeHacerReservas = true;
-							}
-						} else {
-							puedeHacerReservas = true;
+							puedeHacerReservas = validarReservaLibre(fechairan,ffinalran, fechainicio,fechafinal);
 						}
-					}//aqui cierra el for
-				i++;
-			}//aqui cierra el while
 
+						if(!puedeHacerReservas)
+							break;
+					}//For validar reservas existentes
+				}
+			}//If Festivos
+		}//aqui cierra el while
 
-			if(puedeHacerReservas){
-				$.ajax({
-					url: 'guardarReservas',
-					data: {
-						reservas : arrReservas,
-						'UNID_ID': facultad,
-						'PEGE_ID': docente,
-						'GRUP_ID': grupo,
-						'MATE_CODIGOMATERIA': materia
-					},
-					//dataType: 'json',
-					type: "POST",
-					headers: {
-						"X-CSRF-TOKEN": crsfToken
-					},
-					success: function(events) {
-						$('#calendar').fullCalendar('refetchEvents');
-						$.msgBox({
-							title:"Éxito",
-							content:"¡Su reserva se ha realizado satisfactoriamente!",
-							type:"success"
-						});
+			console.log('puedeHacerReservas='+puedeHacerReservas);
+		if(puedeHacerReservas){
+			$.ajax({
+				url: 'guardarReservas',
+				data: {
+					reservas : arrReservas,
+					'UNID_ID': facultad,
+					'PEGE_ID': docente,
+					'GRUP_ID': grupo,
+					'MATE_CODIGOMATERIA': materia
+				},
+				//dataType: 'json',
+				type: "POST",
+				headers: {
+					"X-CSRF-TOKEN": crsfToken
+				},
+				success: function(events) {
+					$('#calendar').fullCalendar('refetchEvents');
+					$.msgBox({
+						title:"Éxito",
+						content:"¡Su reserva se ha realizado satisfactoriamente!",
+						type:"success"
+					});
 
-						console.log("Events guardarReservas"+JSON.stringify(events));
-					},
-					error: function(json){
-						console.log("Error al crear evento");
-						$('#errorAjax').append(json.responseText);
-					}
-				});
-			} else {
-				$.msgBox({
-					title:"Error",
-					content:"¡No se puede realizar reservas, algunas se traslapan en el horario! ",
-					type:"error"
-				});
-			}
-		}//aqui cierra el if de si es reserva de rango
+					console.log("Events guardarReservas"+JSON.stringify(events));
+				},
+				error: function(json){
+					console.log("Error al crear evento");
+					$('#errorAjax').append(json.responseText);
+				}
+			});
+		} else {
+			$.msgBox({
+				title:"Error",
+				content:"¡No se puede realizar reservas, algunas se traslapan en el horario! ",
+				type:"error"
+			});
+		}
+
 	};
 
 /***** HELPERS - Funciones de apoyo *****/
+	
+	//Valida que una fecha de reserva nueva no se "traslape" con una reserva existente
+	// Para mas información, visite el archivo reservas/testvalidacion.blade.php
+	function validarReservaLibre(fIniExis, fFinExis, fIniNew, fFinNew){
+		var esvalida = false;
 
+		if(( (fIniNew >= fIniExis) &&
+			  (fIniNew >= fFinExis) &&
+			  (fFinNew >= fFinExis) 
+			) || (
+			  (fIniNew < fIniExis) &&
+			  (fIniNew < fFinExis) &&
+			  (fFinNew <= fIniExis)
+				))
+			esvalida = true;
+		
+		return esvalida;
+	}
+			
 	//Obtener el valor de un parametro enviado por GET
 	function getUrlParameter(sParam) {
 		var sPageURL = decodeURIComponent(window.location.search.substring(1)),
