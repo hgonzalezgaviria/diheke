@@ -60,7 +60,10 @@ class ReservasController extends Controller
 		
 		$data = array(); //declaramos un array principal que va contener los datos
 
-		$reservas = \reservas\Sala::findOrFail($sala)->reservas;
+		//$reservas = \reservas\Sala::findOrFail($sala)->reservas;
+		$reservas = \reservas\Reserva::programadas()
+									->where('SALA_ID', $sala)
+									->get();
 
 		//$reservas = Reserva::where('SALA_ID', $sala)
 					//->get(); //listamos todos los id de los eventos
@@ -70,13 +73,34 @@ class ReservasController extends Controller
 
 		//hacemos un ciclo para anidar los valores obtenidos a nuestro array principal $data
 		for($i=0;$i<$count;$i++){
+
+			//Se calcula el color de la reserva según el estado de la autorización
+			$ESTA_ID = $reservas[$i]->autorizaciones->first()->ESTA_ID;
+			switch ($ESTA_ID) {
+				case Estado::RESERVA_PENDIENTE:
+					$backgroundColor = Reserva::COLOR_PENDIENTE;
+					break;
+				case Estado::RESERVA_APROBADA:
+					$backgroundColor = Reserva::COLOR_APROBADO;
+					break;
+				case Estado::RESERVA_RECHAZADA:
+					$backgroundColor = Reserva::COLOR_RECHAZADO;
+					break;
+				case Estado::RESERVA_ANULADA:
+					$backgroundColor = Reserva::COLOR_RECHAZADO;
+					break;
+				default:
+					$backgroundColor = Reserva::COLOR_FINALIZADO;
+					break;
+			}
+
 			$data[$i] = array(
-				
 				"title"=>$reservas[$i]->RESE_TITULO, //obligatoriamente "title", "start" y "url" son campos requeridos
 				"start"=>$reservas[$i]->RESE_FECHAINI, //por el plugin asi que asignamos a cada uno el valor correspondiente
 				"end"=>$reservas[$i]->RESE_FECHAFIN,
 				"allDay"=>$reservas[$i]->ALLDAY,
-				"backgroundColor"=>$reservas[$i]->RESE_COLOR,
+				//"backgroundColor"=>$reservas[$i]->RESE_COLOR,
+				"backgroundColor"=>$backgroundColor,
 				//"borderColor"=>$borde[$i],
 				"id"=>$reservas[$i]->RESE_ID,
 				"sala" => $sala
@@ -84,7 +108,6 @@ class ReservasController extends Controller
 				//en el campo "url" concatenamos el el URL con el id del evento para luego
 				//en el evento onclick de JS hacer referencia a este y usar el método show
 				//para mostrar los datos completos de un evento
-				
 			);
 		}
  
@@ -118,7 +141,7 @@ class ReservasController extends Controller
 		$reserva->RESE_FECHAINI = Input::get('start');
 		$reserva->RESE_FECHAFIN = Input::get('end');
 		$reserva->RESE_TODOELDIA = false;
-		$reserva->RESE_COLOR = Input::get('background');
+		//$reserva->RESE_COLOR = Input::get('background');
 		//$reserva->SALA_ID = 1;
 		//$reserva->EQUI_ID = null;        
 
@@ -155,6 +178,7 @@ class ReservasController extends Controller
 	public function guardarReservas(Request $request)
 	{
 
+
 		$ROLE_ID = auth()->check() ? auth()->user()->ROLE_ID : 0;
 		$fechaactual = Carbon::now();
 
@@ -170,14 +194,13 @@ class ReservasController extends Controller
 			], 400); //400 Bad Request: La solicitud contiene sintaxis errónea y no debería repetirse
 		}
 
-
-
 		foreach ($rawReservasInput as $rawReserva) {
 
-			if($ROLE_ID == \reservas\Rol::ADMIN)
+			//El color no se guarda en la BD sino que se calcula dependiento el estado de la reserva
+			/*if($ROLE_ID == \reservas\Rol::ADMIN)
 				$color = Reserva::COLOR_APROBADO;
 			else
-				$color = Reserva::COLOR_PENDIENTE;
+				$color = Reserva::COLOR_PENDIENTE;*/
 
 			//Crear reserva:
 			$reserva = Reserva::create(
@@ -187,9 +210,9 @@ class ReservasController extends Controller
 					'RESE_TODOELDIA',
 					'RESE_FECHAFIN',
 					'SALA_ID',
-				]) + [
+				])/* + [
 					'RESE_COLOR' => $color,
-				]
+				]*/
 			);
 			//Se adiciona el ID al arreglo de reservas
 			array_push($arrRESE_ID, $reserva->RESE_ID);
@@ -197,6 +220,7 @@ class ReservasController extends Controller
 
 		//Si se crearon reservas...
 		if(count($arrRESE_ID) > 0){
+
 
 			//Recopiando datos para la autorización...
 			$datosAutoriz = $request->only([
@@ -210,19 +234,19 @@ class ReservasController extends Controller
 
 			//Si el usuario es ADMIN, la reserva se autoriza automáticamente.
 			if($ROLE_ID != \reservas\Rol::ADMIN){
-				array_push($datosAutoriz, [
-					'AUTO_ESTADO' => Estado::RESERVA_PENDIENTE,
+				$datosAutoriz = $datosAutoriz + [
+					'ESTA_ID' => Estado::RESERVA_PENDIENTE,
 					'AUTO_FECHAAPROBACION' => $fechaactual,
-				]);
+				];
 			} else {
-				array_push($datosAutoriz, [
-					'AUTO_ESTADO' => Estado::RESERVA_APROBADA,
-				]);
+				$datosAutoriz = $datosAutoriz + [
+					'ESTA_ID' => Estado::RESERVA_APROBADA,
+				];
 			}
 
-			return response()->json([
-				$datosAutoriz
-			]); //400 Bad Request: La solicitud contiene sintaxis errónea y no debería repetirse
+			/*return response()->json([
+				'request' => json_encode($datosAutoriz)
+			]);*/
 
 			//Crear Autorización:
 			$autorizacion = Autorizacion::create($datosAutoriz);
@@ -230,10 +254,10 @@ class ReservasController extends Controller
 			$autorizacion->reservas()->sync($arrRESE_ID, false);
 
 		} else {
-			/*return response()->json([
+			return response()->json([
 				'ERROR' => 'No se crearon reservas.',
-				'reservas' => json_encode($request->all())
-			]);*/
+				'request' => json_encode($request->all())
+			]);
 		}
 
 		return $arrRESE_ID;
@@ -367,7 +391,7 @@ class ReservasController extends Controller
 					$idauto = \DB::table('AUTORIZACIONES')->insertGetId(
 						[
 						'AUTO_FECHASOLICITUD' => $fechaactual, 
-						'AUTO_ESTADO' => 'NAP'
+						'ESTA_ID' => 'NAP'
 						]
 					);
 				}

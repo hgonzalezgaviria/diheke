@@ -18,7 +18,7 @@ class CreateTableAutorizacion extends Migration
             $table->increments('AUTO_ID');
             $table->datetime('AUTO_FECHASOLICITUD');
             $table->datetime('AUTO_FECHAAPROBACION')->nullable();
-            $table->unsignedInteger('AUTO_ESTADO');
+            $table->unsignedInteger('ESTA_ID');
             $table->unsignedInteger('UNID_ID')->nullable();
             $table->unsignedInteger('PEGE_ID')->nullable();
             $table->unsignedInteger('GRUP_ID')->nullable();
@@ -44,7 +44,11 @@ class CreateTableAutorizacion extends Migration
             $table->foreign('PEGE_ID')
                   ->references('PEGE_ID')->on('PERSONAGENERAL')
                   ->onDelete('cascade');
-            
+
+            $table->foreign('ESTA_ID')
+                  ->references('ESTA_ID')->on('ESTADOS')
+                  ->onDelete('cascade');
+
 
              //Traza
             $table->string('AUTO_CREADOPOR')

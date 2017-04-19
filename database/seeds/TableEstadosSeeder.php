@@ -56,6 +56,12 @@ class TableEstadosSeeder extends Seeder
            $estado->ESTA_CREADOPOR =  'SYSTEM';
            $estado->save();
 
+           $estado = new \reservas\Estado;
+           $estado->ESTA_DESCRIPCION = 'ANULADA';
+           $estado->TIES_ID = 3;
+           $estado->ESTA_CREADOPOR =  'SYSTEM';
+           $estado->save();
+
 	 }
 
 }

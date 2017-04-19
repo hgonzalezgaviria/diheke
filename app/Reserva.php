@@ -32,6 +32,7 @@ class Reserva extends ModelWithSoftDeletes
     const COLOR_PENDIENTE  = 'rgb(255, 255, 0)'; //Yellow
     const COLOR_APROBADO   =  'rgb(0, 255, 0)';  //Lime
     const COLOR_RECHAZADO  = 'rgb(255, 0, 0)';   //Red
+    const COLOR_ANULADO  = 'rgb(255, 0, 0)';   //Red
     const COLOR_FINALIZADO  = 'rgb(204, 204, 204)'; //Gray 80%
 
     //Una Reserva se asocia a una sala
@@ -52,7 +53,7 @@ class Reserva extends ModelWithSoftDeletes
     /*
      * Las reservas que están autorizadas.
      * en el constructor, para relacionar una reserva usar:
-     * $reserva->autorizaciones()->sync([x, y , z], false); //Sin el false, reemplaza las relaciones existentes.
+     * $reserva->autorizacion()->sync([x, y , z], false); //Sin el false, reemplaza las relaciones existentes.
      */
     public function autorizaciones()
     {
@@ -75,12 +76,19 @@ class Reserva extends ModelWithSoftDeletes
     public function scopeAprobadas($query)
     {
         return $query->autorizaciones()
-                    ->where('AUTORIZACIONES.AUTO_ESTADO', Estado::RESERVA_APROBADA);
+                    ->where('AUTORIZACIONES.ESTA_ID', Estado::RESERVA_APROBADA);
     }
     //Scope Reservas pendientes por aprobar
     public function scopePendientesAprobar($query)
     {
         return $query->autorizaciones()
-                    ->where('AUTORIZACIONES.AUTO_ESTADO', Estado::RESERVA_PENDIENTE);
+                    ->where('AUTORIZACIONES.ESTA_ID', Estado::RESERVA_PENDIENTE);
+    }
+    //Scope Reservas pendientes por aprobar
+    public function scopeProgramadas($query)
+    {
+        return $query->autorizaciones()
+                    ->where('AUTORIZACIONES.ESTA_ID', '!=', Estado::RESERVA_RECHAZADA)
+                    ->where('AUTORIZACIONES.ESTA_ID', '!=', Estado::RESERVA_ANULADA);
     }
 }

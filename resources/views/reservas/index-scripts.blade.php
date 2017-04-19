@@ -617,8 +617,8 @@ $(function () {
 			// change the border color just for fun
 			$(this).css('border-color', 'red');
 		},
-		editable: true,
-		droppable: true, // this allows things to be dropped onto the calendar !!!
+		editable: false,
+		droppable: false, // this allows things to be dropped onto the calendar !!!
 		drop: function (date, allDay) { // this function is called when something is dropped
 			// retrieve the dropped element's stored Event Object
 			var originalEventObject = $(this).data('eventObject');

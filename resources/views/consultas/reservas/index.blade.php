@@ -181,6 +181,7 @@
 			<th class="col-xs-2">Descripción</th>			
 			<th class="col-xs-2">Sala</th>
 			<th class="col-xs-2">Sede</th>
+			<th class="col-xs-2">Estado</th>
 			<th class="col-xs-1">Creado por</th>			
 			<th> </th>
 
@@ -197,6 +198,7 @@
 			<td>{{ $reserva -> RESE_TITULO }}</td>			 	
 			<td>{{ $reserva -> sala -> SALA_DESCRIPCION }}</td>
 			<td>{{ $reserva -> sala -> sede -> SEDE_DESCRIPCION }}</td>
+			<td></td>
 			<td>{{ $reserva -> RESE_CREADOPOR }}</td>
 		
 			<td>

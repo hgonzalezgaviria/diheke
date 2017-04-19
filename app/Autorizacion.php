@@ -17,7 +17,7 @@ class Autorizacion extends ModelWithSoftDeletes
 	protected $fillable = [
 		'AUTO_FECHASOLICITUD',
 		'AUTO_FECHAAPROBACION',
-		'AUTO_ESTADO',
+		'ESTA_ID',
 		'UNID_ID',
 		'PEGE_ID',
 		'GRUP_ID',
@@ -38,15 +38,23 @@ class Autorizacion extends ModelWithSoftDeletes
 		return $this->belongsToMany(Reserva::class, 'RESERVAS_AUTORIZADAS', $foreingKey,  $otherKey);
 	}
 
+	//Una autorización tiene un Estado
+	public function estado()
+	{
+		$foreingKey = 'ESTA_ID';
+		return $this->belongsTo(Estado::class, $foreingKey);
+	}
+
+
 
     //Scope Reservas aprobadas
     public function scopeAprobadas($query)
     {
-        return $query->where('AUTO_ESTADO', Estado::RESERVA_APROBADA);
+        return $query->where('ESTA_ID', Estado::RESERVA_APROBADA);
     }
     //Scope Reservas pendientes por aprobar
     public function scopePendientesAprobar($query)
     {
-        return $query->where('AUTO_ESTADO', Estado::RESERVA_PENDIENTE);
+        return $query->where('ESTA_ID', Estado::RESERVA_PENDIENTE);
     }
 }

@@ -28,6 +28,7 @@ class Estado extends Model
 	const RESERVA_PENDIENTE = 5;
 	const RESERVA_APROBADA  = 6;
 	const RESERVA_RECHAZADA = 7;
+	const RESERVA_ANULADA   = 8;
 
 	protected $fillable = [
 		'ESTA_DESCRIPCION', 
@@ -43,10 +44,17 @@ class Estado extends Model
 	}
 
 	//Un estado tiene muchas equipos
-	public function equipo()
+	public function equipos()
 	{
 		$foreingKey = 'ESTA_ID';
 		return $this->hasMany(Equipo::class, $foreingKey);
+	}
+
+	//Un estado tiene muchas equipos
+	public function autorizaciones()
+	{
+		$foreingKey = 'ESTA_ID';
+		return $this->hasMany(Autorizacion::class, $foreingKey);
 	}
 
 	//Un estado tiene tipo estado

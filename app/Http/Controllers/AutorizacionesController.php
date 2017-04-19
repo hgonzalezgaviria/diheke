@@ -44,7 +44,7 @@ class AutorizacionesController extends Controller
         // Se obtiene el registro
         $autorizacion = Autorizacion::findOrFail($AUTO_ID);
 
-        $autorizacion->AUTO_ESTADO = Estado::RESERVA_APROBADA;
+        $autorizacion->ESTA_ID = Estado::RESERVA_APROBADA;
         $autorizacion->AUTO_OBSERVACIONES = Input::get('AUTO_OBSERVACIONES');
         $autorizacion->save();
     
@@ -66,7 +66,7 @@ class AutorizacionesController extends Controller
         // Se obtiene el registro
         $autorizacion = Autorizacion::findOrFail($AUTO_ID);
 
-        $autorizacion->AUTO_ESTADO = Estado::RESERVA_RECHAZADA;
+        $autorizacion->ESTA_ID = Estado::RESERVA_RECHAZADA;
         $autorizacion->AUTO_OBSERVACIONES = Input::get('AUTO_OBSERVACIONES');
         $autorizacion->save();
 
