@@ -41,7 +41,8 @@ $(function () {
 		locale: 'es',
 		stepping: 30,
 		useCurrent: false,  //Important! See issue #1075. Requerido para minDate
-		minDate: new Date()-1, //-1 Permite seleccionar el dia actual
+		minDate: moment(), //-1 Permite seleccionar el dia actual
+		defaultDate: moment().add(30,'minutes'), //-1 Permite seleccionar el dia actual
 		daysOfWeekDisabled: [0],//Deshabilita el día domingo
 		//disabledDates: getFestivos(), //No funciona porque el arreglo debe ser objMoment o mm/dd/yyyy
 		icons: {
