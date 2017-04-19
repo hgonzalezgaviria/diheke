@@ -42,6 +42,25 @@
 						'data-target'=>'#pregModal',
 					]) }}
 					
+							<!-- Botón Anular -->
+					{{ Form::button('<i class="fa fa-calendar-times-o" aria-hidden="true"></i> Anular',[
+						'class'=>'btn btn-xs btn-warning',
+						'data-toggle'=>'modal',
+						'data-id'=>$autorizacion->AUTO_ID,
+						'data-accion'=>'anular',
+						'data-target'=>'#pregModal',
+					]) }}
+
+					<!-- Botón Detalle reserva -->
+					{{ Form::button('<i class="fa fa-calendar-times-o" aria-hidden="true"></i> Detalle Reserva',[
+						'class'=>'btn btn-xs btn-info',
+						'data-toggle'=>'modal',
+						'data-id'=>$autorizacion->AUTO_ID,
+						'data-accion'=>'rechazar',
+						'data-target'=>'#modalReserva',
+					]) }}
+
+
 				</td>
 			</tr>
 			@endforeach
@@ -49,4 +68,5 @@
 	</table>
 
 @include('reservas/autorizar-modal')
+@include('reservas/detalleReserva-modal')
 @endsection
