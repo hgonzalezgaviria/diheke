@@ -123,7 +123,9 @@
 		{!! Html::script('assets/js/fullcalendar.js') !!}
 		{!! Html::script('assets/js/es.js') !!}
 		{!! Html::script('assets/js/bootstrap.min.js') !!}
-
+		<script type="text/javascript">
+			$('#msgModalProcessing').modal('show');
+		</script>
 		{!! Html::script('assets/js/datatable/jquery.dataTables.min.js') !!}
 		{!! Html::script('assets/js/datatable/dataTables.buttons.min.js') !!}
 		{!! Html::script('assets/js/datatable/jszip.min.js') !!}

@@ -154,7 +154,7 @@
 					</div>
 
 					<div class="text-right">
-						<button id="btn-reservar" type="submit" class="btn btn-primary btn-flat">
+						<button id="btn-reservar" class="btn btn-primary btn-flat" data-toggle="modal" data-target="#msgModalProcessing">
 							Crear Reserva
 						</button>
 					</div>
@@ -205,7 +205,7 @@
 			});
 
 			$('#anularReserva').on('click', function (event) {
-				alert('llamar método para anular');
+				//alert('llamar método para anular');
 			});
 
 		});
@@ -240,6 +240,20 @@
 
 
 
+<!-- Mensaje Modal al borrar registro. Bloquea la pantalla mientras se procesa la solicitud -->
+<div class="modal fade" data-backdrop="static" data-keyboard="false" id="msgModalProcessing" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-body">
+				<h4>
+					<i class="fa fa-cog fa-spin fa-3x fa-fw" style="vertical-align: middle;"></i> Cargando...
+				</h4>
+			</div>
+		</div>
+
+	</div>
+</div><!-- Fin de Mensaje Modal al borrar registro.-->
 
 {{-- @include('reservas/index-modalReservasPorDias') --}}
 

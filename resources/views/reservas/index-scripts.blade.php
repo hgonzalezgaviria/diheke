@@ -302,7 +302,9 @@ $(function () {
 
 
 /***** Funciones para reservar *****/
-	$('#btn-reservar').on('click', function() {
+	//$('#btn-reservar').on('click', function() {
+	$('#msgModalProcessing').on('shown.bs.modal', function() {
+
 		tipoRepetChecked = $("input[name=tipoRepeticion]").filter(':checked').val();
 
 		switch(tipoRepetChecked){
@@ -316,7 +318,10 @@ $(function () {
 				reservaHastaFecha();
 				break;
 		}
+		//$('#msgModalProcessing').modal('handleUpdate')
+		//window.setTimeout(function(){ location.reload(); }, 1000);
 	});
+
 
 
 	function reservaHastaFecha() {
@@ -364,6 +369,7 @@ $(function () {
 				content:"¡Fecha inicial no puede ser mayor a la fecha final! ",
 				type:"error"
 			});
+			$('#msgModalProcessing').modal('hide');
 			return;
 		}
 
@@ -438,16 +444,13 @@ $(function () {
 						//de reserva que se pretende realizar, se validan las demas condiciones. Es decir que no va
 						//revisar todas las reservas sino unicamente las reservas del día en que se pretende realizar
 						//la nueva reserva
-						console.log('fechairan = '+fechairan);
-						console.log('ffinalran = '+ffinalran);
-						console.log('fechainicio = '+fechainicio);
-						console.log('fechafinal = '+fechafinal);
 						if(fecInicioValidaran == finicioreservaran){
 							puedeHacerReservas = validarReservaLibre(fechairan,ffinalran, fechainicio,fechafinal);
 						}
 
 						if(!puedeHacerReservas){
 							msgError = 'Algunas se traslapan en el horario!';
+							repetir = false;
 							break;
 						}
 					}//For validar reservas existentes
@@ -486,7 +489,9 @@ $(function () {
 				error: function(json){
 					console.log("Error al crear evento");
 					$('#errorAjax').append(json.responseText);
-				}
+				},
+				complete: function(json){
+				},
 			});
 		} else {
 			$.msgBox({
@@ -494,8 +499,8 @@ $(function () {
 				content:"¡No se puede realizar reservas. "+msgError,
 				type:"error"
 			});
+			$('#msgModalProcessing').modal('hide');
 		}
-
 	};
 
 /***** HELPERS - Funciones de apoyo *****/
@@ -603,7 +608,10 @@ $(function () {
 		},
 		eventRender: function(event, element) { 
 			var endd = moment(event.end).format('HH:mm');
-			element.find('.fc-title').append(" " + endd); 
+			element.find('.fc-title').append(" " + endd);
+		},
+		eventAfterAllRender: function( view ) {
+			$('#msgModalProcessing').modal('hide');
 		},
 		eventClick: function(calEvent, jsEvent, view) {
 			//Visualizar Popup con los detalles de la reserva
