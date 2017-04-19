@@ -85,58 +85,26 @@
 @endsection
 
 <!-- Mensaje Modal para confirmar borrado de registro-->
-<div class="modal fade" id="pregModal" role="dialog" tabindex="-1" >
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header panel-heading" style="border-top-left-radius: inherit; border-top-right-radius: inherit;">
-				<h4 class="modal-title"></h4>
-			</div>
-
-			<div class="modal-body">
-				<h4>
-					<i class="fa fa-exclamation-triangle fa-3x fa-fw"></i>
-					<span class="body"></span>
-				</h4>
-
-				{{ Form::open( ['id'=>'frmAutorizacion', 'class'=>'frmModal form-vertical', 'accept-charset'=>'UTF-8'] ) }}
-					{{ Form::textarea('AUTO_OBSERVACIONES', old('AUTO_OBSERVACIONES'), [
-						'id'=>'AUTO_OBSERVACIONES',
-						'class' => 'form-control',
-						'size' => '20x3',
-						'placeholder' => 'Escriba aquí una observación.',
-						'style' => 'resize: vertical',
-						'required'
-					]) }}
-			</div>
-
-			<div class="modal-footer">
-					{{ Form::button('<i class="fa fa-times" aria-hidden="true"></i> NO',[
-						'class'=>'btn btn-xs btn-default',
-						'data-dismiss'=>'modal',
-					]) }}
-					{{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> SI ',[
-						'class'=>'btn btn-xs btn-success',
-						'type'=>'submit',
-					]) }}
-				{{ Form::close() }}
-			</div>
-		</div>
+<div class="modal fade" data-backdrop="static" data-keyboard="false" id="modalReserva" role="dialog">
+  <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header" style="padding:40px 50px;">		
+		<h4><span class="glyphicon glyphicon-modal-window"></span> Detalle Reserva</h4>
+	  </div>
+	  <div class="modal-body" id="divmodal" style="padding:40px 50px;">
+		<p></p>
+		<div class="form-group">
+                <label for="nombre"> Duración</label>
+                </div>
+	  </div>
+	  <div class="modal-footer">
+        	<a href="" id="anularReserva" class="btn btn-danger pull-right hide">
+              <span class="glyphicon glyphicon-remove"></span> Anular
+            </a>
+        	<button class="btn btn-success btn-default pull-right" data-dismiss="modal">
+              <span class="glyphicon glyphicon-remove"></span> Cerrar
+            </button>
+          </div>
 	</div>
-</div><!-- Fin de Mensaje Modal confirmar borrado de registro.-->
-
-
-<!-- Mensaje Modal al borrar registro. Bloquea la pantalla mientras se procesa la solicitud -->
-<div class="modal fade" id="msgModalProcesando" role="dialog">
-	<div class="modal-dialog">
-
-		<!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-body">
-				<h4>
-					<i class="fa fa-cog fa-spin fa-3x fa-fw" style="vertical-align: middle;"></i> Procesando solicitud...
-				</h4>
-			</div>
-		</div>
-
-	</div>
-</div><!-- Fin de Mensaje Modal al borrar registro.-->
+  </div>
+</div>

@@ -107,6 +107,7 @@ Route::post('consultarEquipos', array('as'=>'consultarEquipos','uses' => 'Consul
 Route::get('autorizarReservas', 'AutorizacionesController@index');
 Route::post('autorizarReservas/{AUTO_ID}/aprobar', 'AutorizacionesController@aprobar');
 Route::post('autorizarReservas/{AUTO_ID}/rechazar', 'AutorizacionesController@rechazar');
+Route::post('autorizarReservas/{AUTO_ID}/anular', 'AutorizacionesController@anular');
 Route::get('autorizarReservas/{AUTO_ID}/anular', 'AutorizacionesController@anular');
 
 Route::post('consultaMaterias', array('as' => 'consultaMaterias','uses' => 'ReservasController@consultaMaterias'));
