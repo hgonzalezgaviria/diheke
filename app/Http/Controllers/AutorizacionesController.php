@@ -75,4 +75,24 @@ class AutorizacionesController extends Controller
         return redirect()->to($this->index);
     }
 
+    /**
+     * Rechaza una reserva o grupo de reservas.
+     *
+     * @param  int  $AUTO_ID
+     * @return Response
+     */
+    public function anular($AUTO_ID)
+    {
+        // Se obtiene el registro
+        $autorizacion = Autorizacion::findOrFail($AUTO_ID);
+
+        $autorizacion->ESTA_ID = Estado::RESERVA_ANULADA;
+        $autorizacion->AUTO_OBSERVACIONES = Input::get('AUTO_OBSERVACIONES');
+        $autorizacion->save();
+
+        // redirecciona al index de controlador
+        Session::flash('modal-warning', 'Autorización '.$AUTO_ID.' anulada.');
+        return redirect()->back();
+    }
+
 }

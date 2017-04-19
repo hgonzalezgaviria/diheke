@@ -26,8 +26,8 @@ class CreateTableReservas extends Migration
             $table->boolean('RESE_TODOELDIA')->nullable()
                 ->comment = "indica si la reunion es todo el día";
 
-            $table->string('RESE_COLOR')->nullable()
-                ->comment = "color de la reserva.";
+            /*$table->string('RESE_COLOR')->nullable()
+                ->comment = "color de la reserva.";*/
 
             $table->mediumText('RESE_TITULO')->nullable()
                 ->comment = "titulo de la reserva.";

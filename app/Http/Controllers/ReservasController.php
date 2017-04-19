@@ -62,7 +62,12 @@ class ReservasController extends Controller
 
 		//$reservas = \reservas\Sala::findOrFail($sala)->reservas;
 		$reservas = \reservas\Reserva::programadas()
-									->where('SALA_ID', $sala)
+									->join('SALAS', 'SALAS.SALA_ID', '=', 'RESERVAS.SALA_ID')
+									->join('SEDES', 'SEDES.SEDE_ID', '=', 'SALAS.SEDE_ID')
+									->join('RESERVAS_AUTORIZADAS AS RES_AUT', 'RES_AUT.RESE_ID', '=', 'RESERVAS.RESE_ID')
+									->join('AUTORIZACIONES AS AUTORIZ', 'AUTORIZ.AUTO_ID', '=', 'RESERVAS_AUTORIZADAS.AUTO_ID')
+									->join('ESTADOS', 'ESTADOS.ESTA_ID', '=', 'AUTORIZACIONES.ESTA_ID')
+									->where('RESERVAS.SALA_ID', $sala)
 									->get();
 
 		//$reservas = Reserva::where('SALA_ID', $sala)
@@ -70,7 +75,6 @@ class ReservasController extends Controller
 
 		$count = count($reservas); //contamos los ids obtenidos para saber el numero exacto de eventos
 		
-
 		//hacemos un ciclo para anidar los valores obtenidos a nuestro array principal $data
 		for($i=0;$i<$count;$i++){
 
@@ -93,8 +97,8 @@ class ReservasController extends Controller
 					$backgroundColor = Reserva::COLOR_FINALIZADO;
 					break;
 			}
-
-			$data[$i] = array(
+			
+			$data[$i] = [
 				"title"=>$reservas[$i]->RESE_TITULO, //obligatoriamente "title", "start" y "url" son campos requeridos
 				"start"=>$reservas[$i]->RESE_FECHAINI, //por el plugin asi que asignamos a cada uno el valor correspondiente
 				"end"=>$reservas[$i]->RESE_FECHAFIN,
@@ -102,13 +106,19 @@ class ReservasController extends Controller
 				//"backgroundColor"=>$reservas[$i]->RESE_COLOR,
 				"backgroundColor"=>$backgroundColor,
 				//"borderColor"=>$borde[$i],
-				"id"=>$reservas[$i]->RESE_ID,
-				"sala" => $sala
+				"RESE_ID"=>$reservas[$i]->RESE_ID,
+				"SALA_DESCRIPCION"=>$reservas[$i]->SALA_DESCRIPCION,
+				"SALA_CAPACIDAD"=>$reservas[$i]->SALA_CAPACIDAD,
+				"SEDE_DESCRIPCION"=>$reservas[$i]->SEDE_DESCRIPCION,
+				"ESTA_DESCRIPCION" => $reservas[$i]->ESTA_DESCRIPCION,
+				"AUTO_ID" => $reservas[$i]->AUTO_ID,
+				"count_reservas" => Autorizacion::find($reservas[$i]->AUTO_ID)->reservas->count(),
+				"RESE_CREADOPOR" => $reservas[$i]->RESE_CREADOPOR
 				//"url"=>"cargaEventos".$id[$i]
 				//en el campo "url" concatenamos el el URL con el id del evento para luego
 				//en el evento onclick de JS hacer referencia a este y usar el método show
 				//para mostrar los datos completos de un evento
-			);
+			];
 		}
  
 		 //convertimos el array principal $data a un objeto Json 

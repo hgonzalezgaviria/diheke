@@ -198,7 +198,7 @@
 			<td>{{ $reserva -> RESE_TITULO }}</td>			 	
 			<td>{{ $reserva -> sala -> SALA_DESCRIPCION }}</td>
 			<td>{{ $reserva -> sala -> sede -> SEDE_DESCRIPCION }}</td>
-			<td></td>
+			<td>{{ $reserva -> autorizaciones -> first() -> estado -> ESTA_DESCRIPCION }}</td>
 			<td>{{ $reserva -> RESE_CREADOPOR }}</td>
 		
 			<td>

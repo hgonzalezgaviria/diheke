@@ -397,7 +397,7 @@ $(function () {
 			fini = moment(fini,'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
 
 			var diasemana =  moment(fechainicio, 'YYYY-MM-DD HH:mm').format('dddd');
-
+			var msgError;
 			//console.log(fini+' es festivo? ' + ($.inArray( fini , arrFestivos)>=0))
 			//Si la fecha no está en arrFestivos y si el dia está seleccionado...
 			if( 
@@ -445,15 +445,19 @@ $(function () {
 							puedeHacerReservas = validarReservaLibre(fechairan,ffinalran, fechainicio,fechafinal);
 						}
 
-						if(!puedeHacerReservas)
+						if(!puedeHacerReservas){
+							msgError = 'Algunas se traslapan en el horario!';
 							break;
+						}
 					}//For validar reservas existentes
 				}
-			}//If Festivos
+			} else {//If Festivos
+				msgError = 'Es un festivo.';
+			}
 		}//aqui cierra el while
 
 			console.log('puedeHacerReservas='+puedeHacerReservas);
-		if(puedeHacerReservas){
+		if(puedeHacerReservas && arrReservas.length>0){
 			$.ajax({
 				url: 'guardarReservas',
 				data: {
@@ -486,7 +490,7 @@ $(function () {
 		} else {
 			$.msgBox({
 				title:"Error",
-				content:"¡No se puede realizar reservas, algunas se traslapan en el horario! ",
+				content:"¡No se puede realizar reservas. "+msgError,
 				type:"error"
 			});
 		}
@@ -604,18 +608,22 @@ $(function () {
 			//Visualizar Popup con los detalles de la reserva
 			var start = moment(calEvent.start).format('YYYY-MM-DD HH:mm:ss');
 			var end = moment(calEvent.end).format('YYYY-MM-DD HH:mm:ss');
+
 			$('#divmodal').empty();
-			$('#divmodal').append("<p><b>Descripción:</b> " +  calEvent.title + "</p>");
-			$('#divmodal').append("<p><b>Sede:</b> "+'PRINCIPAL'+"</p>");
-			$('#divmodal').append("<p><b>Espacio/Sala:</b> "+'SALA103 - SISTEMAS'+ "</p>");
-			$('#divmodal').append("<p><b>Fecha de Inicio:</b> " +  start + "</p>");
-			$('#divmodal').append("<p><b>Fecha Fin:</b> " +  end + "</p>");
-			$('#divmodal').append("<p><b>Duración:</b> " +'2'+ "</p>");
-			$('#divmodal').append("<p><b>Tipo de repetición:</b> "+'NINGUNA'+  "</p>");
-			$('#divmodal').append("<p><b>Estado:</b> " +'PENDIENTE'+ "</p>");
-			$('#myModal').modal('show');
+			$('#divmodal').append("<p><b>Descripción: </b> " +  calEvent.title + "</p>");
+			$('#divmodal').append("<p><b>Sede: </b> "+calEvent.SEDE_DESCRIPCION+"</p>");
+			$('#divmodal').append("<p><b>Espacio/Sala: </b> "+calEvent.SALA_DESCRIPCION+ "</p>");
+			$('#divmodal').append("<p><b>Fecha de Inicio: </b> " +  start + "</p>");
+			$('#divmodal').append("<p><b>Fecha Fin: </b> " +  end + "</p>");
+			//$('#divmodal').append("<p><b>Duración:</b> " +'2'+ "</p>");
+			$('#divmodal').append("<p><b>Estado:</b> " +calEvent.ESTA_DESCRIPCION+ "</p>");
+			$('#divmodal').append("<p><b>Total reservas:</b> " +calEvent.count_reservas+ "</p>");
+			$('#divmodal').append("<p><b>Creado por:</b> <span class='RESE_CREADOPOR'>" +calEvent.RESE_CREADOPOR+ "</span></p>");
+			$('#divmodal').append("<p><b>Autorización:</b> <span class='AUTO_ID'>" +calEvent.AUTO_ID+ "</span></p>");
+			$('#modalReserva').modal('show');
 			// change the border color just for fun
 			$(this).css('border-color', 'red');
+			//console.log(calEvent);
 		},
 		editable: false,
 		droppable: false, // this allows things to be dropped onto the calendar !!!

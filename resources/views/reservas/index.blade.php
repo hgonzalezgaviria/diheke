@@ -73,7 +73,6 @@
 						<span class="input-group-addon"><i></i></span>
 					</div>
 
-
 					<div class="form-group">
 						<label>Tipo de Repetición:</label>
 						<div class="input-group">
@@ -81,10 +80,13 @@
 								<input class="form-check-input" type="radio" name="tipoRepeticion" value="ninguna" checked>
 								Ninguna
 							</label>
+
+            				@if (in_array(Auth::user()->rol->ROLE_ROL , ['audit','admin']))
 							<label class="radio-inline">
 								<input class="form-check-input" type="radio" name="tipoRepeticion" value="hasta">
 								Hasta una Fecha
 							</label>
+							@endif
 						</div>
 					</div>
 
@@ -176,7 +178,43 @@
   </div><!-- /.panel-body -->
 </div><!-- /.panel -->
 
-<div class="modal fade" data-backdrop="static" data-keyboard="false" id="myModal" role="dialog">
+
+
+
+@section('scripts')
+	<script type="text/javascript">
+		//Carga de datos a mensajes modales para eliminar y clonar registros
+		$(document).ready(function () {
+
+
+			$('#modalReserva').on('show.bs.modal', function (event) {
+				var button = $(event.relatedTarget); // Button that triggered the modal
+				var modal = $(this);
+				
+				var RESE_CREADOPOR = modal.find('.RESE_CREADOPOR').text();
+				var userCurrent = '{{ Auth::user()->username }}';
+				var rolCurrent = '{{ Auth::user()->rol->ROLE_ROL }}';
+
+				if(userCurrent == RESE_CREADOPOR || rolCurrent == 'admin'){
+					var AUTO_ID = modal.find('.AUTO_ID').text();
+					var btnAnular = modal.find('#anularReserva');
+					btnAnular
+						.attr('href', '/autorizarReservas/'+AUTO_ID+'/anular')
+						.removeClass('hide');
+				}
+			});
+
+			$('#anularReserva').on('click', function (event) {
+				alert('llamar método para anular');
+			});
+
+		});
+	</script>
+@parent
+@endsection
+
+
+<div class="modal fade" data-backdrop="static" data-keyboard="false" id="modalReserva" role="dialog">
   <div class="modal-dialog">
 	<div class="modal-content">
 	  <div class="modal-header" style="padding:40px 50px;">		
@@ -189,13 +227,18 @@
                 </div>
 	  </div>
 	  <div class="modal-footer">
-            <button type="submit" class="btn btn-danger btn-default pull-right" data-dismiss="modal">
-                  <span class="glyphicon glyphicon-remove"></span> Cerrar
-                </button>
+        	<a href="" id="anularReserva" class="btn btn-danger pull-right hide">
+              <span class="glyphicon glyphicon-remove"></span> Anular
+            </a>
+        	<button class="btn btn-success btn-default pull-right" data-dismiss="modal">
+              <span class="glyphicon glyphicon-remove"></span> Cerrar
+            </button>
           </div>
 	</div>
   </div>
 </div>
+
+
 
 
 {{-- @include('reservas/index-modalReservasPorDias') --}}
