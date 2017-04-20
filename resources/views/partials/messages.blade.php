@@ -68,12 +68,12 @@
 @section('scripts')
 	<script type="text/javascript">
 
-		//Se cierra la alerta a los 5 segundos.
+		//Se cierra la alerta a los 10 segundos.
 		setTimeout(function () {
         	$('.alert-flash').slideUp(500, function(){
 			    $(this).alert('close');
 			});
-		}, 5000);
+		}, 10*(1000));
 
 		//Si el mensaje es modal, se configura la ventana según el tipo de mensaje (success, warning y danger).
 		@if (Session::has('modal-success'))

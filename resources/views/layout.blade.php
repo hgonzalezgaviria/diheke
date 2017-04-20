@@ -76,7 +76,7 @@
 
 			/*Alerta flotante a la derecha.*/
 			.alertas {
-			    position: absolute;
+			    position: fixed;
 			    max-height: 500px;
 			    max-width: 600px;
 			    bottom : 20px;

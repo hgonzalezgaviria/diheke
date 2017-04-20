@@ -91,7 +91,7 @@ class AutorizacionesController extends Controller
         $autorizacion->save();
 
         // redirecciona al index de controlador
-        Session::flash('modal-warning', 'Autorización '.$AUTO_ID.' anulada.');
+        Session::flash('alert-warning', ['Autorización '.$AUTO_ID.' anulada.']);
         return redirect()->back();
     }
 

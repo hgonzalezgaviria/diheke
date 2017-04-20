@@ -83,7 +83,13 @@ $(function () {
 	$('#fechaHasta').data("DateTimePicker").options({
 		format: 'YYYY-MM-DD'
 	});
+	$('#fechaHasta').data("DateTimePicker").clear();
 
+    $("#fechaInicio").on("dp.change", function (e) {
+        $('#fechaHasta').data("DateTimePicker")
+        	.minDate(e.date)
+        	.clear();
+    });
 
 /***** Funciones y eventos para llenar dropdown/combobox *****/
 
@@ -357,7 +363,7 @@ $(function () {
 		fini = moment(fini, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
 
 		var fechahasta = $('#fechaHasta').data("DateTimePicker").date();
-		if(fechahasta == null){
+		if(fechahasta == null || fechahasta.format('YYYY-MM-DD') == fini){
 			fechahasta = moment(fini).add(nhoras, 'hours').format('YYYY-MM-DD HH:ss');;
 		} else {
 			fechahasta = moment(fechahasta, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
@@ -487,10 +493,14 @@ $(function () {
 					console.log("Events guardarReservas"+JSON.stringify(events));
 				},
 				error: function(json){
-					console.log("Error al crear evento");
+					console.log("Error al crear la reserva");
 					$('#errorAjax').append(json.responseText);
-				},
-				complete: function(json){
+					$.msgBox({
+						title:"Error",
+						content:"¡No se puede realizar la reserva!. Verifique los datos estén completos.",
+						type:"error"
+					});
+					$('#msgModalProcessing').modal('hide');
 				},
 			});
 		} else {
