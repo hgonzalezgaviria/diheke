@@ -7,7 +7,6 @@ $(function () {
 	//var equipo = getUrlParameter('equipo');
 	var equipo = null;
 
-
 	//Se obtienen los días de la semana seleccionados y se almacena en la variable global 'diasSemSelected'
 	//Dropdown con lista de dias de la semana [lunes-sabado]
 	var diasSemSelected = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
@@ -44,6 +43,8 @@ $(function () {
 		minDate: moment(), //-1 Permite seleccionar el dia actual
 		defaultDate: moment().add(30,'minutes'), //-1 Permite seleccionar el dia actual
 		daysOfWeekDisabled: [0],//Deshabilita el día domingo
+		//enabledHours: (Array)[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21],
+		//disabledHours: (Array)[0,1,2,3,4,5,6,22,23], //Deshabilita las horas en las cuales no hay servicio de reserva
 		//disabledDates: getFestivos(), //No funciona porque el arreglo debe ser objMoment o mm/dd/yyyy
 		icons: {
 			time: "fa fa-clock-o",
@@ -78,6 +79,7 @@ $(function () {
 	$('#fechaInicio').data("DateTimePicker").options({
 		format: 'YYYY-MM-DD HH:mm'
 	});
+	$('#fechaInicio').data("DateTimePicker").disabledHours([0,1,2,3,4,5,6,22,23]);
 
 	$('#fechaHasta').datetimepicker(optionsDtPicker);
 	$('#fechaHasta').data("DateTimePicker").options({
@@ -89,6 +91,9 @@ $(function () {
         $('#fechaHasta').data("DateTimePicker")
         	.minDate(e.date)
         	.clear();
+    });
+
+    $("#fechaHasta").on("dp.change", function (e) {
     });
 
 /***** Funciones y eventos para llenar dropdown/combobox *****/

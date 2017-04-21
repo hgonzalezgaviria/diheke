@@ -134,7 +134,7 @@
 		{!! Html::script('assets/js/datatable/buttons.html5.min.js') !!}
 		{!! Html::script('assets/js/jquery.msgBox.js') !!}
 
-		{!! Html::script('assets/js/bootstrap-datetimepicker.js') !!}
+		{!! Html::script('assets/js/bootstrap-datetimepicker.min.js') !!}
 		{{--{!! Html::script('assets/js/datatable/dataTables.bootstrap.min.js') !!}--}}
 		{!! Html::script('assets/js/datatable/buttons.colVis.min.js') !!}
 		{!! Html::script('assets/js/datatable/buttons.print.min.js') !!}
