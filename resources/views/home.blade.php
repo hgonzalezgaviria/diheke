@@ -154,7 +154,9 @@
 <div class="col-xs-8 col-sm-10">
       <ul class="nav nav-tabs tabs-top">
         <li class="hide"><a href="#salas" id="tab-salas" data-toggle="tab" data-sede="">Salas</a></li>
+        @if (in_array(Auth::user()->rol->ROLE_ROL , ['audit','admin']))
         <li class="hide"><a href="#equipos" id="tab-equipos" data-toggle="tab" data-sede="">Equipos</a></li>
+        @endif        
       </ul>
 </div>
 
