@@ -55,7 +55,16 @@
 					{{ Form::button('<i class="fa fa-calendar-times-o" aria-hidden="true"></i> Detalle Reserva',[
 						'class'=>'btn btn-xs btn-info',
 						'data-toggle'=>'modal',
-						'data-id'=>$autorizacion->AUTO_ID,
+						'data-rese_fechaini'=>$autorizacion->reservas->first()->RESE_FECHAINI,
+						'data-rese_fechaini'=>$autorizacion->reservas->first()->RESE_FECHAINI,
+						'data-rese_fechafin'=>$autorizacion->reservas->last()->RESE_FECHAFIN,
+						'data-sede_descripcion'=>$autorizacion->reservas->first()->sala->sede->SEDE_DESCRIPCION,
+						'data-sala_descripcion'=>$autorizacion->reservas->first()->sala->SALA_DESCRIPCION,
+						'data-esta_descripcion'=>$autorizacion->estado->ESTA_DESCRIPCION,
+						'data-total_reservas'=>$autorizacion->reservas->count(),
+						'data-rese_creadopor'=>$autorizacion->reservas->first()->RESE_CREADOPOR,
+						'data-auto_descripcion'=>$autorizacion->AUTO_DESCRIPCION,
+						'data-auto_id'=>$autorizacion->AUTO_ID,
 						'data-accion'=>'rechazar',
 						'data-target'=>'#modalReserva',
 					]) }}

@@ -6,13 +6,13 @@
 	{!! Html::style('assets/css/bootstrap-multiselect.css') !!}
 
 		<style type="text/css">
-		  .modal-header, h4, .close {
+	.modal-header-reserva {
       background-color: #286090;
       color:white !important;
       text-align: center;
       font-size: 25px;
       border-radius:6px;
-  }
+  	}
 
 	</style>
 @parent
@@ -217,8 +217,8 @@
 <div class="modal fade" data-backdrop="static" data-keyboard="false" id="modalReserva" role="dialog">
   <div class="modal-dialog">
 	<div class="modal-content">
-	  <div class="modal-header" style="padding:40px 50px;">		
-		<h4><span class="glyphicon glyphicon-modal-window"></span> Detalle Reserva</h4>
+	  <div class="modal-header modal-header-reserva" style="padding:40px 50px;">		
+		<h2><span class="glyphicon glyphicon-modal-window"></span> Detalle Reserva</h2>
 	  </div>
 	  <div class="modal-body" id="divmodal" style="padding:40px 50px;">
 		<p></p>
