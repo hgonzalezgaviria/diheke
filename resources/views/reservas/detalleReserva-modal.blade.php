@@ -23,6 +23,14 @@
 			vertical-align: middle;
 		}
 
+		.modal-header, h4, .close {
+      background-color: #286090;
+      color:white !important;
+      text-align: center;
+      font-size: 25px;
+      border-radius:6px;
+  }
+
 	</style>
 @parent
 @endsection
@@ -93,8 +101,18 @@
 	  </div>
 	  <div class="modal-body" id="divmodal" style="padding:40px 50px;">
 		<p></p>
-		<div class="form-group">
-                <label for="nombre"> Duración</label>
+		<div class="form-group">                
+                <p><b>Descripción: </b> " "</p>
+                <p><b>Sede: </b> ""</p>
+                <p><b>Espacio/Sala: </b> " "</p>
+                <p><b>Fecha de Inicio: </b> "  "</p>
+                <p><b>Fecha Fin: </b> "  "</p>
+                <p><b>Estado:</b> "  "</p>
+                <p><b>Total reservas:</b> "  "</p>
+                <p><b>Creado por:</b> <span class='RESE_CREADOPOR'>"  "</span></p>
+                <p><b>Autorización:</b> <span class='AUTO_ID'>"  "</span></p>
+
+
                 </div>
 	  </div>
 	  <div class="modal-footer">
