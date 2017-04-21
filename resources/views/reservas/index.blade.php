@@ -199,7 +199,7 @@
 					var AUTO_ID = modal.find('.AUTO_ID').text();
 					var btnAnular = modal.find('#anularReserva');
 					btnAnular
-						.attr('href', '/autorizarReservas/'+AUTO_ID+'/anular')
+						.attr('href', '../autorizarReservas/'+AUTO_ID+'/anular')
 						.removeClass('hide');
 				}
 			});
