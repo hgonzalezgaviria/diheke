@@ -32,39 +32,39 @@
 							<span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="{{ url('/tipoestados') }}"><i class="fa fa-btn fa-key"></i> Tipos de Estados</a></li>
+							<li><a href="{{ url('/tipoestados') }}"><i class="fa fa-bullseye"></i> Tipos de Estados</a></li>
 
-							<li><a href="{{ url('/estados') }}"><i class="fa fa-btn fa-sign-out"></i> Estados </a></li>
+							<li><a href="{{ url('/estados') }}"><i class="fa fa-circle"></i> Estados </a></li>
 
 							<li role="separator" class="divider"></li>
 							
 							<li>
 								<a href="{{ url('/sedes') }}">
-									<i class="fa fa-btn fa-key"></i> Sedes
+									<i class="fa fa-building"></i> Sedes
 								</a>
 							</li>
 							<li>
 								<a href="{{ url('/salas') }}">
-									<i class="fa fa-btn fa-key"></i> Salas
+									<i class="fa fa-building-o"></i> Salas
 								</a>
 							</li>
 
 							<li>
 								<a href="{{ url('/equipos') }}">
-									<i class="fa fa-btn fa-key"></i> Equipos
+									<i class="fa fa-desktop"></i> Equipos
 								</a>
 							</li>
 
 							
 							<li>
 								<a href="{{ url('/recursos') }}">
-									<i class="fa fa-btn fa-key"></i> Recursos
+									<i class="fa fa-gavel"></i> Recursos
 								</a>
 							</li>
 
 							<li>
 								<a href="{{ url('/festivos') }}">
-									<i class="fa fa-btn fa-key"></i> Festivos
+									<i class="fa fa-sun-o"></i> Festivos
 								</a>
 							</li>
 
@@ -80,7 +80,7 @@
 							
 							<li>
 								<a href="{{ url('/upload') }}">
-									<i class="fa fa-btn fa-key"></i> Academusoft
+									<i class="fa fa-graduation-cap"></i> Academusoft
 								</a>
 							</li>
 
@@ -123,9 +123,11 @@
 									<span class="caret"></span>
 								</a>
 								<ul class="dropdown-menu" role="menu">
-									<li><a href="{{ url('/consultaPrestamos') }}"><i class="fa fa-get-pocket"></i> Prestamos</a></li>
+									<li><a href="{{ url('/consultaPrestamos') }}"><i class="fa fa-laptop"></i> Prestamos</a></li>
 
-									<li><a href="{{ url('/consultaReservas') }}"><i class="fa fa-ticket"></i> Reservas</a></li>
+									<li><a href="{{ url('/consultaReservas') }}"><i class="fa fa-list-ol"></i> Listado de Reservas</a></li>
+
+									<li><a href="{{ url('/calreservas') }}"><i class="fa fa-calendar-o"></i> Calendario de Reservas</a></li>
 								</ul>
 							
 									

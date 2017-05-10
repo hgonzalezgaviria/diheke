@@ -47,6 +47,12 @@ Route::group(['namespace' => 'Auth'], function(){
 Route::get('/home', 'HomeController@index');
 Route::get('/', 'HomeController@index');
 
+//Calendario de reservas
+Route::get('/calreservas', 'HomeController@calreservas');
+
+//Calendario de reservas
+Route::get('reservas/calreservas', 'ReservasController@listarReservas');
+
 //Ayuda
 Route::get('/help', function(){
 	return View::make('help');

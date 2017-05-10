@@ -46,6 +46,11 @@ class ReservasController extends Controller
 	{
 		return view('reservas/index');
 	}
+
+	public function listarReservas()
+	{
+		return view('reservas/listarreservas');
+	}
    
 	
 	/**
