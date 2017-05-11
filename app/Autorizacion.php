@@ -45,6 +45,13 @@ class Autorizacion extends ModelWithSoftDeletes
 		return $this->belongsTo(Estado::class, $foreingKey);
 	}
 
+	//Una autorización tiene una materia
+	public function materia()
+	{
+		$foreingKey = 'MATE_CODIGOMATERIA';
+		return $this->belongsTo(Materia::class, $foreingKey);
+	}
+
 
 
     //Scope Reservas aprobadas

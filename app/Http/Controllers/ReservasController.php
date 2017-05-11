@@ -72,6 +72,11 @@ class ReservasController extends Controller
 									->join('RESERVAS_AUTORIZADAS AS RES_AUT', 'RES_AUT.RESE_ID', '=', 'RESERVAS.RESE_ID')
 									->join('AUTORIZACIONES AS AUTORIZ', 'AUTORIZ.AUTO_ID', '=', 'RESERVAS_AUTORIZADAS.AUTO_ID')
 									->join('ESTADOS', 'ESTADOS.ESTA_ID', '=', 'AUTORIZACIONES.ESTA_ID')
+									->join('MATERIAS', 'MATERIAS.MATE_CODIGOMATERIA', '=', 'AUTORIZ.MATE_CODIGOMATERIA')
+									->join('GRUPOS', 'GRUPOS.GRUP_ID', '=', 'AUTORIZ.GRUP_ID')
+									->where('RESERVAS.SALA_ID', $sala)
+									->join('UNIDADES', 'UNIDADES.UNID_ID', '=', 'AUTORIZ.UNID_ID')
+						->join('PERSONANATURALGENERAL', 'PERSONANATURALGENERAL.PEGE_ID', '=', 'AUTORIZ.PEGE_ID')
 									->where('RESERVAS.SALA_ID', $sala)
 									->get();
 
@@ -104,7 +109,7 @@ class ReservasController extends Controller
 			}
 			
 			$data[$i] = [
-				"title"=>$reservas[$i]->RESE_TITULO, //obligatoriamente "title", "start" y "url" son campos requeridos
+				"title"=>substr($reservas[$i]->MATE_NOMBRE, 0, 10) . "..", //obligatoriamente "title", "start" y "url" son campos requeridos
 				"start"=>$reservas[$i]->RESE_FECHAINI, //por el plugin asi que asignamos a cada uno el valor correspondiente
 				"end"=>$reservas[$i]->RESE_FECHAFIN,
 				"allDay"=>$reservas[$i]->ALLDAY,
@@ -118,7 +123,12 @@ class ReservasController extends Controller
 				"ESTA_DESCRIPCION" => $reservas[$i]->ESTA_DESCRIPCION,
 				"AUTO_ID" => $reservas[$i]->AUTO_ID,
 				"count_reservas" => Autorizacion::find($reservas[$i]->AUTO_ID)->reservas->count(),
-				"RESE_CREADOPOR" => $reservas[$i]->RESE_CREADOPOR
+				"RESE_CREADOPOR" => $reservas[$i]->RESE_CREADOPOR,
+				"MATE_NOMBRE"=>$reservas[$i]->MATE_NOMBRE,
+				"UNID_NOMBRE"=>$reservas[$i]->UNID_NOMBRE,
+				"GRUP_NOMBRE"=>$reservas[$i]->GRUP_NOMBRE,
+				"PENG_NOMBRE"=>$reservas[$i]->PENG_PRIMERNOMBRE . " " . $reservas[$i]->PENG_SEGUNDONOMBRE
+				. " " . $reservas[$i]->PENG_PRIMERAPELLIDO . " " . $reservas[$i]->PENG_SEGUNDOAPELLIDO,
 				//"url"=>"cargaEventos".$id[$i]
 				//en el campo "url" concatenamos el el URL con el id del evento para luego
 				//en el evento onclick de JS hacer referencia a este y usar el método show

@@ -39,26 +39,6 @@
 
 	<div class="row">
 
-		<div class="col-xs-2 form-group">
-			<label>Desde:</label>
-			<div class='input-group date' id='fechaInicio'>
-				<input type='text' class="form-control" />
-				<span class="input-group-addon">
-					<span class="glyphicon glyphicon-calendar"></span>
-				</span>
-			</div>	
-		</div>
-
-		<div class="col-xs-2 form-group">
-			<label>Hasta:</label>
-			<div class='input-group date' id='fechaHasta'>
-				<input type='text' class="form-control" />
-				<span class="input-group-addon">
-					<span class="glyphicon glyphicon-calendar"></span>
-				</span>
-			</div>	
-		</div>
-
 
 		<div class="col-xs-3 form-group">
 			<label>Facultad:</label>
@@ -69,7 +49,7 @@
 			</div>
 		</div>
 
-		<div class="col-xs-3 form-group">
+		<div class="col-xs-4 form-group">
 			<label>Docente:</label>
 			<div class="selectContainer">
 				<select class="form-control" name="size" id="cBoxDocentes">
@@ -81,7 +61,7 @@
 	</div><!-- /.panel-body -->	
 
 	<div class="row">
-		<div class="col-xs-4 form-group">
+		<div class="col-xs-3 form-group">
 			<label>Grupo:</label>
 			<div class="selectContainer">
 				<select class="form-control" name="size" id="cBoxGrupos">
@@ -90,7 +70,7 @@
 			</div>
 		</div>
 
-		<div class="col-xs-6 form-group">
+		<div class="col-xs-4 form-group">
 			<label>Asignatura:</label>
 			<div class="selectContainer">
 				<select class="form-control" name="size" id="cboxAsignaturas">
@@ -98,14 +78,56 @@
 				</select>
 			</div>
 		</div>
+
+	</div>
+
+	<div class="row">
+
+		<div class="col-xs-3 form-group">
+			<label>Estado:</label>
+			<div class="selectContainer">
+				<select class="form-control" name="size" id="cboxEstados">
+				  <option selected disabled>Seleccione...</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="col-xs-2 form-group">
+			<label>Mes:</label>
+			<div class="selectContainer">
+				<select class="form-control" name="size" id="cboxMeses">
+				  <option selected disabled>Seleccione...</option>
+				  <option value="0">Enero</option>
+				  <option value="1">Febrero</option>
+				  <option value="2">Marzo</option>
+				  <option value="3">Abril</option>
+				  <option value="4">Mayo</option>
+				  <option value="5">Junio</option>
+				  <option value="6">Julio</option>
+				  <option value="7">Agosto</option>
+				  <option value="8">Septiembre</option>
+				  <option value="9">Octubre</option>
+				  <option value="10">Noviembre</option>
+				  <option value="11">Diciembre</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="col-xs-2 form-group">
+			<label></label>
+			<div class="selectContainer">
+			<button id="btn-filtrar" class="btn btn-primary btn-flat">
+				Filtrar Resultados
+			</button>
+			</div>
+		</div>
+		
+		
+
 	</div>
 
 
-
-
 		<div class="row">
-
-			
 
 			<div class="col-xs-12 col-sm-14"> <!-- col calendar -->
 				<div class="box box-primary">

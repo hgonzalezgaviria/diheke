@@ -62,6 +62,8 @@ $(function () {
 		}
 	};
 
+	/*
+
 	$('#fechaInicio').datetimepicker(optionsDtPicker);
 	$('#fechaInicio').data("DateTimePicker").options({
 		format: 'YYYY-MM-DD'
@@ -74,6 +76,211 @@ $(function () {
 	});
 
 	$('#fechaHasta').data("DateTimePicker").clear();
+
+	*/
+
+	/***** Funciones y eventos para llenar dropdown/combobox *****/
+
+	//llenar cboxFacultades
+	function llenarCboxFacultades(facultad){
+	//$("#cboxFacultades").on('click', function(){
+		var cboxFacultades = $('#cboxFacultades');
+
+		if( cboxFacultades.val() == null){
+			cboxFacultades.empty();
+			cboxFacultades.append('<option selected disabled>Cargando...</option>');
+			//cboxFacultades.find('option:first').text("Cargando...");
+			$.ajax({
+				url: '../consultaFacultades',
+				//data: 'sede='+ null,
+				dataType: "json",
+				type: "POST",
+				headers: {
+					"X-CSRF-TOKEN": crsfToken
+				},
+				success: function(facultades) {
+				 
+					cboxFacultades.empty();
+					var registros = facultades.length;
+					if(registros > 0){
+						cboxFacultades.append('<option selected disabled>Seleccione...</option>');
+						for(var i = 0; i < facultades.length; i++){
+							cboxFacultades.append(
+								'<option value="' + facultades[i].UNID_ID + '">' +
+									facultades[i].UNID_NOMBRE +
+								'</option>'
+							);
+						}
+					} else {
+						$.msgBox({
+							title:"Información",
+							content:"¡No hay datos disponibles!",
+							type:"info"
+						}); 
+					}
+				},
+				error: function(json){
+					console.log("Error al traer los datos");
+					$('#errorAjax').append(json.responseText);
+				}
+			});
+		}
+	} // llenarCboxFacultades click
+	llenarCboxFacultades();
+
+	//Al cambiar seleccion de cboxFacultades, se llena cBoxDocentes
+	$("#cboxFacultades").on('change', function(){
+		llenarCboxDocentes($(this).val());
+	}); // cboxFacultades change
+
+	//llenar cboxDocentes
+	function llenarCboxDocentes(facultad){
+		//var facultad = $("#cboxFacultades").val();
+		var cBoxDocentes = $("#cBoxDocentes");
+
+		//if( cBoxDocentes.val() == null){
+
+			cBoxDocentes.empty();
+			cBoxDocentes.append('<option selected disabled>Cargando...</option>');
+
+			$.ajax({
+				url: '../consultaDocentes',
+				data: 'unidad='+ facultad,
+				dataType: "json",
+				type: "POST",
+				headers: {
+					"X-CSRF-TOKEN": crsfToken
+				},
+				success: function(docentes, error) {
+					cBoxDocentes.empty();
+					var registros = docentes.length;
+
+					if(registros > 0){
+						cBoxDocentes.append('<option selected disabled>Seleccione...</option>');
+						for(var i = 0; i < docentes.length; i++){
+							cBoxDocentes.append('<option value=' + docentes[i].PEGE_ID + '>' + docentes[i].PENG_PRIMERNOMBRE + " " + docentes[i].PENG_SEGUNDONOMBRE + " " + docentes[i].PENG_PRIMERAPELLIDO + " " + docentes[i].PENG_SEGUNDOAPELLIDO + '</option>' );
+						} 
+					} else {
+						$.msgBox({
+							title:"Información",
+							content:"¡No hay datos disponibles!",
+							type:"info"
+						});
+					}
+				},
+				error: function(json){
+					console.log("Error al traer los datos");
+					$('#errorAjax').append('<h1>llenarDocentes</h1>'+json.responseText);
+				}
+			});
+		//}
+	}// llenarCboxDocentes func
+
+	//Al cambiar seleccion de cBoxDocentes, se llena cBoxGrupos
+	$("#cBoxDocentes").on('change', function(){
+		//llenarCboxGrupos($(this).val());
+		$("#cBoxGrupos").trigger('click');
+	}); // cBoxDocentes change
+
+	//llenar cBoxGrupos
+	$("#cBoxGrupos").on('click', function(){
+
+		var cBoxGrupos = $(this);
+
+		if( cBoxGrupos.val() == null){
+			cBoxGrupos.find('option:first').text("Cargando...");
+			$.ajax({
+				url: '../consultaGrupos',
+				data: 'sede='+ null,
+				dataType: "json",
+				type: "POST",
+				headers: {
+					"X-CSRF-TOKEN": crsfToken
+				},
+				success: function(grupos) {
+					cBoxGrupos.empty();
+					var registros = grupos.length;
+					if(registros > 0){
+						for(var i = 0; i < grupos.length; i++){
+							$("#cBoxGrupos").append(
+								'<option value=' + grupos[i].GRUP_ID + '>' +
+									grupos[i].GRUP_NOMBRE +
+								'</option>'
+							);
+						}
+					} else {
+						$.msgBox({
+							title:"Información",
+							content:"¡No hay datos disponibles!",
+							type:"info"
+						});
+					}
+				},
+				error: function(json){
+					console.log("Error al traer los datos");
+					$('#errorAjax').append(json.responseText);
+				}
+				});
+		}
+	}); // cBoxGrupos click
+
+	//llenar cboxAsignaturas
+	$("#cboxAsignaturas").on('click', function(){
+		var selectAsignaturas = $(this);
+		
+		if(selectAsignaturas.val() == null){
+			selectAsignaturas.find('option:first').text("Cargando...");
+			$.ajax({
+				url: '../consultaMaterias',
+				data: 'sede='+ null,
+				dataType: "json",
+				type: "POST",
+				headers: {
+				"X-CSRF-TOKEN": crsfToken
+				},
+				success: function(materia) {
+					selectAsignaturas.empty();
+					var registros = materia.length;
+					if(registros > 0){
+						for(var i = 0; i < materia.length; i++){
+							selectAsignaturas.append(
+								'<option value=' + materia[i].MATE_CODIGOMATERIA + '>' +
+									materia[i].MATE_NOMBRE +
+								'</option>'
+							);
+						}
+						selectAsignaturas.trigger("chosen:updated");
+					} else {
+						$.msgBox({
+							title:"Información",
+							content:"¡No hay datos disponibles!",
+							type:"info"
+						}); 
+					}
+				},
+				error: function(json){
+					console.log("Error al traer los datos");
+					$('#errorAjax').append(json.responseText);
+				}
+			});
+		}
+	}); // cboxAsignaturas click
+
+	//cambiar el mes cuando lo seleccione del combo
+	$("#cboxMeses").on('change', function(){
+
+		var selectMeses = $(this).val();
+		var currentYear = (new Date).getFullYear();
+
+		if(selectMeses != null && selectMeses != ""){
+
+			$('#calendar').fullCalendar('gotoDate', new Date(currentYear, selectMeses));
+
+		}
+		
+		
+		
+	}); // cboxMeses click
 
     
 
@@ -105,6 +312,8 @@ $(function () {
 	//Date for the calendar events (dummy data)
 	//while(reload==false){
 	$('#calendar').fullCalendar({
+		//isRTL: true,
+		displayEventTime: false,
 		header: {
 			left: 'prev,next today',
 			center: 'title',
@@ -120,11 +329,41 @@ $(function () {
 			url:"../cargaEventos" + sala
 		},
 		eventRender: function(event, element) { 
+			var startt = moment(event.start).format('HH:mm');
 			var endd = moment(event.end).format('HH:mm');
-			element.find('.fc-title').append(" " + endd);
+			element.find('.fc-title').append(" " + startt + "-" + endd);
 		},
 		eventAfterAllRender: function( view ) {
 			$('#msgModalProcessing').modal('hide');
+		},
+		eventMouseover: function(calEvent, jsEvent) { 
+
+			//tooltip de bootstrap
+			/* 
+			var p = '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">'
+				+ "prueba prueba"
+				+ '</div></div>';
+			*/
+
+			var tooltip = '<div class="tooltipevent" style="width:340px;height:100px;background:#f9ec54;position:absolute;z-index:10001;">'+
+				"<b>Sede:</b>"+calEvent.SEDE_DESCRIPCION +" <br>"+
+				"<b>Facultad:</b>"+calEvent.UNID_NOMBRE +" <br>"+
+				"<b>Grupo:</b>"+calEvent.GRUP_NOMBRE +" <br>"+
+				"<b>Materia:</b>"+calEvent.MATE_NOMBRE +" <br>"+
+				"<b>Docente:</b>"+ calEvent.PENG_NOMBRE +" <br>" +
+				'</div>'; var $tool = $(tooltip).appendTo('body');
+		$(this).mouseover(function(e) {
+		    $(this).css('z-index', 10000);
+		            $tool.fadeIn('500');
+		            $tool.fadeTo('10', 1.9);
+		}).mousemove(function(e) {
+		    $tool.css('top', e.pageY + 10);
+		    $tool.css('left', e.pageX + 20);
+		});
+		},
+		eventMouseout: function(calEvent, jsEvent) {
+		$(this).css('z-index', 8);
+		$('.tooltipevent').remove();
 		},
 		eventClick: function(calEvent, jsEvent, view) {
 			//Visualizar Popup con los detalles de la reserva
@@ -132,12 +371,11 @@ $(function () {
 			var end = moment(calEvent.end).format('YYYY-MM-DD HH:mm:ss');
 
 			$('#divmodal').empty();
-			$('#divmodal').append("<p><b>Descripción: </b> " +  calEvent.title + "</p>");
-			$('#divmodal').append("<p><b>Sede: </b> "+calEvent.SEDE_DESCRIPCION+"</p>");
+			$('#divmodal').append("<p><b>Sede: </b> "+calEvent.SEDE_DESCRIPCION+ "<b> Facultad: </b> "+calEvent.UNID_NOMBRE+  "</p>");
+			$('#divmodal').append("<p><b>Grupo: </b> "+calEvent.GRUP_NOMBRE+ "<b> Materia: </b> "+calEvent.MATE_NOMBRE + "</p>");
+			$('#divmodal').append("<p><b>Docente: </b> "+calEvent.PENG_NOMBRE+ "</p>");
 			$('#divmodal').append("<p><b>Espacio/Sala: </b> "+calEvent.SALA_DESCRIPCION+ "</p>");
-			$('#divmodal').append("<p><b>Fecha de Inicio: </b> " +  start + "</p>");
-			$('#divmodal').append("<p><b>Fecha Fin: </b> " +  end + "</p>");
-			//$('#divmodal').append("<p><b>Duración:</b> " +'2'+ "</p>");
+			$('#divmodal').append("<p><b>Fecha de Inicio: </b> " + start + "<b> Fecha Fin: </b> " + end +"</p>");
 			$('#divmodal').append("<p><b>Estado:</b> " +calEvent.ESTA_DESCRIPCION+ "</p>");
 			$('#divmodal').append("<p><b>Total reservas:</b> " +calEvent.count_reservas+ "</p>");
 			$('#divmodal').append("<p><b>Creado por:</b> <span class='RESE_CREADOPOR'>" +calEvent.RESE_CREADOPOR+ "</span></p>");

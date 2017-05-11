@@ -522,6 +522,7 @@ temporary rendered events).
 	border-radius: 3px;
 	border: 1px solid #3a87ad; /* default BORDER color */
 	font-weight: normal; /* undo jqui's ui-widget-header bold */
+	cursor: pointer;
 }
 
 .fc-event,
