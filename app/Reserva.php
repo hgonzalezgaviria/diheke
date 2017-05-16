@@ -91,4 +91,14 @@ class Reserva extends ModelWithSoftDeletes
                     ->where('AUTORIZACIONES.ESTA_ID', '!=', Estado::RESERVA_RECHAZADA)
                     ->where('AUTORIZACIONES.ESTA_ID', '!=', Estado::RESERVA_ANULADA);
     }
+
+    //Scope Reservas todas
+    public function scopeTodas($query)
+    {
+        return $query->autorizaciones()
+                    ->orWhere('AUTORIZACIONES.ESTA_ID', '=', Estado::RESERVA_RECHAZADA)
+                    ->orWhere('AUTORIZACIONES.ESTA_ID', '=', Estado::RESERVA_ANULADA)
+                    ->orWhere('AUTORIZACIONES.ESTA_ID', '=', Estado::RESERVA_PENDIENTE)
+                    ->orWhere('AUTORIZACIONES.ESTA_ID', '=', Estado::RESERVA_APROBADA);
+    }
 }

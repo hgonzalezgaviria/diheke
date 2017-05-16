@@ -77,11 +77,86 @@ class ReservasController extends Controller
 									->where('RESERVAS.SALA_ID', $sala)
 									->join('UNIDADES', 'UNIDADES.UNID_ID', '=', 'AUTORIZ.UNID_ID')
 						->join('PERSONANATURALGENERAL', 'PERSONANATURALGENERAL.PEGE_ID', '=', 'AUTORIZ.PEGE_ID')
-									->where('RESERVAS.SALA_ID', $sala)
-									->get();
+						->where('RESERVAS.SALA_ID', $sala)
+						->get();
 
-		//$reservas = Reserva::where('SALA_ID', $sala)
-					//->get(); //listamos todos los id de los eventos
+		$count = count($reservas); //contamos los ids obtenidos para saber el numero exacto de eventos
+		
+		//hacemos un ciclo para anidar los valores obtenidos a nuestro array principal $data
+		for($i=0;$i<$count;$i++){
+
+			//Se calcula el color de la reserva según el estado de la autorización
+			$ESTA_ID = $reservas[$i]->autorizaciones->first()->ESTA_ID;
+			switch ($ESTA_ID) {
+				case Estado::RESERVA_PENDIENTE:
+					$backgroundColor = Reserva::COLOR_PENDIENTE;
+					break;
+				case Estado::RESERVA_APROBADA:
+					$backgroundColor = Reserva::COLOR_APROBADO;
+					break;
+				case Estado::RESERVA_RECHAZADA:
+					$backgroundColor = Reserva::COLOR_RECHAZADO;
+					break;
+				case Estado::RESERVA_ANULADA:
+					$backgroundColor = Reserva::COLOR_RECHAZADO;
+					break;
+				default:
+					$backgroundColor = Reserva::COLOR_FINALIZADO;
+					break;
+			}
+			
+			$data[$i] = [
+				"title"=>substr($reservas[$i]->MATE_NOMBRE, 0, 10) . "..", //obligatoriamente "title", "start" y "url" son campos requeridos
+				"start"=>$reservas[$i]->RESE_FECHAINI, //por el plugin asi que asignamos a cada uno el valor correspondiente
+				"end"=>$reservas[$i]->RESE_FECHAFIN,
+				"allDay"=>$reservas[$i]->ALLDAY,
+				//"backgroundColor"=>$reservas[$i]->RESE_COLOR,
+				"backgroundColor"=>$backgroundColor,
+				//"borderColor"=>$borde[$i],
+				"RESE_ID"=>$reservas[$i]->RESE_ID,
+				"SALA_DESCRIPCION"=>$reservas[$i]->SALA_DESCRIPCION,
+				"SALA_CAPACIDAD"=>$reservas[$i]->SALA_CAPACIDAD,
+				"SEDE_DESCRIPCION"=>$reservas[$i]->SEDE_DESCRIPCION,
+				"ESTA_DESCRIPCION" => $reservas[$i]->ESTA_DESCRIPCION,
+				"AUTO_ID" => $reservas[$i]->AUTO_ID,
+				"count_reservas" => Autorizacion::find($reservas[$i]->AUTO_ID)->reservas->count(),
+				"RESE_CREADOPOR" => $reservas[$i]->RESE_CREADOPOR,
+				"MATE_NOMBRE"=>$reservas[$i]->MATE_NOMBRE,
+				"UNID_NOMBRE"=>$reservas[$i]->UNID_NOMBRE,
+				"GRUP_NOMBRE"=>$reservas[$i]->GRUP_NOMBRE,
+				"PENG_NOMBRE"=>$reservas[$i]->PENG_PRIMERNOMBRE . " " . $reservas[$i]->PENG_SEGUNDONOMBRE
+				. " " . $reservas[$i]->PENG_PRIMERAPELLIDO . " " . $reservas[$i]->PENG_SEGUNDOAPELLIDO,
+				//"url"=>"cargaEventos".$id[$i]
+				//en el campo "url" concatenamos el el URL con el id del evento para luego
+				//en el evento onclick de JS hacer referencia a este y usar el método show
+				//para mostrar los datos completos de un evento
+			];
+		}
+ 
+		 //convertimos el array principal $data a un objeto Json 
+	   return json_encode($data); //para luego retornarlo y estar listo para consumirlo
+	}
+
+	public function consultarReservas($sala = null)
+	{
+		
+		$data = array(); //declaramos un array principal que va contener los datos
+
+		//$reservas = \reservas\Sala::findOrFail($sala)->reservas;
+		$reservas = \reservas\Reserva::todas()
+									->join('SALAS', 'SALAS.SALA_ID', '=', 'RESERVAS.SALA_ID')
+									->join('SEDES', 'SEDES.SEDE_ID', '=', 'SALAS.SEDE_ID')
+									->join('RESERVAS_AUTORIZADAS AS RES_AUT', 'RES_AUT.RESE_ID', '=', 'RESERVAS.RESE_ID')
+									->join('AUTORIZACIONES AS AUTORIZ', 'AUTORIZ.AUTO_ID', '=', 'RESERVAS_AUTORIZADAS.AUTO_ID')
+									->join('ESTADOS', 'ESTADOS.ESTA_ID', '=', 'AUTORIZACIONES.ESTA_ID')
+									->join('MATERIAS', 'MATERIAS.MATE_CODIGOMATERIA', '=', 'AUTORIZ.MATE_CODIGOMATERIA')
+									->join('GRUPOS', 'GRUPOS.GRUP_ID', '=', 'AUTORIZ.GRUP_ID')
+									->where('RESERVAS.SALA_ID', $sala)
+									->join('UNIDADES', 'UNIDADES.UNID_ID', '=', 'AUTORIZ.UNID_ID')
+					->join('PERSONANATURALGENERAL', 'PERSONANATURALGENERAL.PEGE_ID', '=', 'AUTORIZ.PEGE_ID')
+					->where('RESERVAS.SALA_ID', $sala)
+					//->orWhere('RESERVAS.SALA_ID', '=' , 'RESERVAS.SALA_ID')
+						->get();
 
 		$count = count($reservas); //contamos los ids obtenidos para saber el numero exacto de eventos
 		
@@ -383,6 +458,23 @@ class ReservasController extends Controller
 							->get();
 
 		return json_encode($grupos);
+		//return $salas;materias
+	
+	}
+
+
+	public function consultaEstados(){
+
+		//$SEDE_ID = $_POST['sede'];
+
+		$estados = \DB::table('ESTADOS')
+							->select(
+									'ESTADOS.ESTA_ID',
+									'ESTADOS.ESTA_DESCRIPCION')
+							->where('ESTADOS.TIES_ID','=',3)
+							->get();
+
+		return json_encode($estados);
 		//return $salas;materias
 	
 	}

@@ -44,7 +44,7 @@
 			<label>Facultad:</label>
 			<div class="selectContainer">
 				<select class="form-control" name="size" id="cboxFacultades">
-				  <option selected disabled>Seleccione...</option>
+				  <option selected disabled>Todos...</option>
 				</select>
 			</div>
 		</div>
@@ -53,7 +53,7 @@
 			<label>Docente:</label>
 			<div class="selectContainer">
 				<select class="form-control" name="size" id="cBoxDocentes">
-				  <option selected disabled>Seleccione...</option>
+				  <option selected disabled>Todos...</option>
 				</select>
 			</div>
 		</div>
@@ -65,7 +65,7 @@
 			<label>Grupo:</label>
 			<div class="selectContainer">
 				<select class="form-control" name="size" id="cBoxGrupos">
-				  <option selected disabled>Seleccione...</option>
+				  <option selected disabled>Todos...</option>
 				</select>
 			</div>
 		</div>
@@ -74,7 +74,7 @@
 			<label>Asignatura:</label>
 			<div class="selectContainer">
 				<select class="form-control" name="size" id="cboxAsignaturas">
-				  <option selected disabled>Seleccione...</option>
+				  <option selected disabled>Todos...</option>
 				</select>
 			</div>
 		</div>
@@ -87,8 +87,15 @@
 			<label>Estado:</label>
 			<div class="selectContainer">
 				<select class="form-control" name="size" id="cboxEstados">
-				  <option selected disabled>Seleccione...</option>
+				  <option selected disabled>Todos...</option>
 				</select>
+			</div>
+		</div>
+
+		<div class="col-xs-2 form-group">
+			<label>Año:</label>
+			<div class="selectContainer">
+				<input class="form-control" type="text" name="ano" id="ano" maxlength="4" minlength="4">
 			</div>
 		</div>
 
@@ -96,7 +103,7 @@
 			<label>Mes:</label>
 			<div class="selectContainer">
 				<select class="form-control" name="size" id="cboxMeses">
-				  <option selected disabled>Seleccione...</option>
+				  <option selected disabled>Todos...</option>
 				  <option value="0">Enero</option>
 				  <option value="1">Febrero</option>
 				  <option value="2">Marzo</option>

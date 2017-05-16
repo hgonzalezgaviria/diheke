@@ -62,23 +62,6 @@ $(function () {
 		}
 	};
 
-	/*
-
-	$('#fechaInicio').datetimepicker(optionsDtPicker);
-	$('#fechaInicio').data("DateTimePicker").options({
-		format: 'YYYY-MM-DD'
-	});
-	$('#fechaInicio').data("DateTimePicker").disabledHours([0,1,2,3,4,5,6,22,23]);
-
-	$('#fechaHasta').datetimepicker(optionsDtPicker);
-	$('#fechaHasta').data("DateTimePicker").options({
-		format: 'YYYY-MM-DD'
-	});
-
-	$('#fechaHasta').data("DateTimePicker").clear();
-
-	*/
-
 	/***** Funciones y eventos para llenar dropdown/combobox *****/
 
 	//llenar cboxFacultades
@@ -103,7 +86,7 @@ $(function () {
 					cboxFacultades.empty();
 					var registros = facultades.length;
 					if(registros > 0){
-						cboxFacultades.append('<option selected disabled>Seleccione...</option>');
+						cboxFacultades.append('<option selected disabled>Todos...</option>');
 						for(var i = 0; i < facultades.length; i++){
 							cboxFacultades.append(
 								'<option value="' + facultades[i].UNID_ID + '">' +
@@ -127,6 +110,53 @@ $(function () {
 		}
 	} // llenarCboxFacultades click
 	llenarCboxFacultades();
+
+	//llenar llenarCboxEstados
+	function llenarCboxEstados(){
+	//$("#cboxFacultades").on('click', function(){
+		var cboxEstados = $('#cboxEstados');
+
+		if( cboxEstados.val() == null){
+			cboxEstados.empty();
+			cboxEstados.append('<option selected disabled>Cargando...</option>');
+			//cboxFacultades.find('option:first').text("Cargando...");
+			$.ajax({
+				url: '../consultaEstados',
+				//data: 'sede='+ null,
+				dataType: "json",
+				type: "POST",
+				headers: {
+					"X-CSRF-TOKEN": crsfToken
+				},
+				success: function(estados) {
+				 
+					cboxEstados.empty();
+					var registros = estados.length;
+					if(registros > 0){
+						cboxEstados.append('<option selected disabled>Todos...</option>');
+						for(var i = 0; i < estados.length; i++){
+							cboxEstados.append(
+								'<option value="' + estados[i].ESTA_ID + '">' +
+									estados[i].ESTA_DESCRIPCION +
+								'</option>'
+							);
+						}
+					} else {
+						$.msgBox({
+							title:"Información",
+							content:"¡No hay datos disponibles!",
+							type:"info"
+						}); 
+					}
+				},
+				error: function(json){
+					console.log("Error al traer los datos");
+					$('#errorAjax').append(json.responseText);
+				}
+			});
+		}
+	} // llenarCboxEstados click
+	llenarCboxEstados();
 
 	//Al cambiar seleccion de cboxFacultades, se llena cBoxDocentes
 	$("#cboxFacultades").on('change', function(){
@@ -156,7 +186,7 @@ $(function () {
 					var registros = docentes.length;
 
 					if(registros > 0){
-						cBoxDocentes.append('<option selected disabled>Seleccione...</option>');
+						cBoxDocentes.append('<option selected disabled>Todos...</option>');
 						for(var i = 0; i < docentes.length; i++){
 							cBoxDocentes.append('<option value=' + docentes[i].PEGE_ID + '>' + docentes[i].PENG_PRIMERNOMBRE + " " + docentes[i].PENG_SEGUNDONOMBRE + " " + docentes[i].PENG_PRIMERAPELLIDO + " " + docentes[i].PENG_SEGUNDOAPELLIDO + '</option>' );
 						} 
@@ -266,16 +296,34 @@ $(function () {
 		}
 	}); // cboxAsignaturas click
 
+	//click en el boton de filtrar
+	$("#btn-filtrar").on('click', function(){
+		
+		
+		
+	}); // click en el boton de filtrar
+
+
 	//cambiar el mes cuando lo seleccione del combo
 	$("#cboxMeses").on('change', function(){
 
 		var selectMeses = $(this).val();
 		var currentYear = (new Date).getFullYear();
 
+		var ano = $("#ano").val(); //año especificado por el usuario para la consulta
+
+		var anosel = null; //variable que contendra el año en curso o el año dado por el usuario
+						   //si es que el año dado por el usuario es nulo
+
+
+		if(ano != null && ano.length == 4){
+			anosel = ano;
+		}else{
+			anosel = currentYear;
+		}
+
 		if(selectMeses != null && selectMeses != ""){
-
-			$('#calendar').fullCalendar('gotoDate', new Date(currentYear, selectMeses));
-
+			$('#calendar').fullCalendar('gotoDate', new Date(anosel, selectMeses));
 		}
 		
 		
@@ -326,7 +374,7 @@ $(function () {
 			day: 'dia'
 		},
 		events: {
-			url:"../cargaEventos" + sala
+			url:"../listarReservas" + sala
 		},
 		eventRender: function(event, element) { 
 			var startt = moment(event.start).format('HH:mm');
