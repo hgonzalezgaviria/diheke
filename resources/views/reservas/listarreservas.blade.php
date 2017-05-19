@@ -39,6 +39,7 @@
 
 	<div class="row">
 
+	{{ Form::open(array('url' => 'consultarReservas', 'class' => 'form-vertical')) }}
 
 		<div class="col-xs-3 form-group">
 			<label>Facultad:</label>
@@ -123,13 +124,11 @@
 		<div class="col-xs-2 form-group">
 			<label></label>
 			<div class="selectContainer">
-			<button id="btn-filtrar" class="btn btn-primary btn-flat">
-				Filtrar Resultados
-			</button>
+			<input type="submit" name="Filtrar Resultados" id="btn-filtrar" class="btn btn-primary btn-flat">
 			</div>
 		</div>
 		
-		
+		{{ Form::close() }}
 
 	</div>
 

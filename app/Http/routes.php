@@ -53,6 +53,8 @@ Route::get('/calreservas', 'HomeController@calreservas');
 //Calendario de reservas
 Route::get('reservas/calreservas', 'ReservasController@listarReservas');
 
+//Route::get('listarReservas{sala?}/{facultad?}','ReservasController@consultarReservas');
+
 Route::get('listarReservas{sala?}','ReservasController@consultarReservas');
 
 //Ayuda
@@ -122,7 +124,7 @@ Route::post('consultaMaterias', array('as' => 'consultaMaterias','uses' => 'Rese
 
 Route::post('consultaFacultades', array('as' => 'consultaFacultades','uses' => 'ReservasController@consultaFacultades'));
 
-Route::post('consultaEstados', array('as' => 'consultaEstados','uses' => 'ReservasController@consultaFacultades'));
+Route::post('consultaEstados', array('as' => 'consultaEstados','uses' => 'ReservasController@consultaEstados'));
 
 Route::post('consultaGrupos', array('as' => 'consultaGrupos','uses' => 'ReservasController@consultaGrupos'));
 

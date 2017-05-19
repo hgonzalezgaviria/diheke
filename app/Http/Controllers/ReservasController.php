@@ -142,6 +142,7 @@ class ReservasController extends Controller
 		
 		$data = array(); //declaramos un array principal que va contener los datos
 
+
 		//$reservas = \reservas\Sala::findOrFail($sala)->reservas;
 		$reservas = \reservas\Reserva::todas()
 									->join('SALAS', 'SALAS.SALA_ID', '=', 'RESERVAS.SALA_ID')
@@ -152,6 +153,7 @@ class ReservasController extends Controller
 									->join('MATERIAS', 'MATERIAS.MATE_CODIGOMATERIA', '=', 'AUTORIZ.MATE_CODIGOMATERIA')
 									->join('GRUPOS', 'GRUPOS.GRUP_ID', '=', 'AUTORIZ.GRUP_ID')
 									->where('RESERVAS.SALA_ID', $sala)
+									//->Where('AUTORIZ.UNID_ID', $facultad)
 									->join('UNIDADES', 'UNIDADES.UNID_ID', '=', 'AUTORIZ.UNID_ID')
 					->join('PERSONANATURALGENERAL', 'PERSONANATURALGENERAL.PEGE_ID', '=', 'AUTORIZ.PEGE_ID')
 					->where('RESERVAS.SALA_ID', $sala)

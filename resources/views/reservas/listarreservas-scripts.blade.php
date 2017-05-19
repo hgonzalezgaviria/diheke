@@ -296,13 +296,6 @@ $(function () {
 		}
 	}); // cboxAsignaturas click
 
-	//click en el boton de filtrar
-	$("#btn-filtrar").on('click', function(){
-		
-		
-		
-	}); // click en el boton de filtrar
-
 
 	//cambiar el mes cuando lo seleccione del combo
 	$("#cboxMeses").on('change', function(){
@@ -354,6 +347,162 @@ $(function () {
 		});
 	}
 
+	//click en el boton de filtrar
+	$("#btn-filtrar").on('click', function(){
+
+
+		var facultad = $("#cboxFacultades").val();
+		var docente = $("#cBoxDocentes").val();
+		var grupo = $("#cBoxGrupos").val();
+		var materia = $("#cboxAsignaturas").val();
+		var estado = $("#cboxEstados").val();
+
+		//alert("filtros: "+ facultad + " " + docente + " " + grupo + " " + materia + " " + estado
+
+		aplicarFiltros(facultad, null, null ,null ,null);	
+		//$('#calendar').fullCalendar('refetchEvents');
+		
+	}); // click en el boton de filtrar
+
+
+	//consultar los proyectos con filtros
+
+	function aplicarFiltros(facultad, docente, grupo, materia, estado){
+
+		$('#calendar').fullCalendar({
+			//isRTL: true,
+			displayEventTime: false,
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+			buttonText: {
+				today: 'hoy',
+				month: 'mes',
+				week: 'semana',
+				day: 'dia'
+			},
+			events: {
+				url:"../listarReservas" + sala + facultad
+			},
+			eventRender: function(event, element) { 
+				var startt = moment(event.start).format('HH:mm');
+				var endd = moment(event.end).format('HH:mm');
+				element.find('.fc-title').append(" " + startt + "-" + endd);
+			},
+			eventAfterAllRender: function( view ) {
+				$('#msgModalProcessing').modal('hide');
+			},
+			eventMouseover: function(calEvent, jsEvent) { 
+
+				//tooltip de bootstrap
+				/* 
+				var p = '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">'
+					+ "prueba prueba"
+					+ '</div></div>';
+				*/
+
+				var tooltip = '<div class="tooltipevent" style="width:340px;height:110px;background:#f9ec54;position:absolute;z-index:10001;">'+
+					"<b>Sede:</b>"+calEvent.SEDE_DESCRIPCION +" <br>"+
+					"<b>Facultad:</b>"+calEvent.UNID_NOMBRE +" <br>"+
+					"<b>Grupo:</b>"+calEvent.GRUP_NOMBRE +" <br>"+
+					"<b>Materia:</b>"+calEvent.MATE_NOMBRE +" <br>"+
+					"<b>Docente:</b>"+ calEvent.PENG_NOMBRE +" <br>" +
+					"<b>Estado:</b>"+ calEvent.ESTA_DESCRIPCION +" <br>" +
+					'</div>'; var $tool = $(tooltip).appendTo('body');
+			$(this).mouseover(function(e) {
+			    $(this).css('z-index', 10000);
+			            $tool.fadeIn('500');
+			            $tool.fadeTo('10', 1.9);
+			}).mousemove(function(e) {
+			    $tool.css('top', e.pageY + 10);
+			    $tool.css('left', e.pageX + 20);
+			});
+			},
+			eventMouseout: function(calEvent, jsEvent) {
+			$(this).css('z-index', 8);
+			$('.tooltipevent').remove();
+			},
+			eventClick: function(calEvent, jsEvent, view) {
+				//Visualizar Popup con los detalles de la reserva
+				var start = moment(calEvent.start).format('YYYY-MM-DD HH:mm:ss');
+				var end = moment(calEvent.end).format('YYYY-MM-DD HH:mm:ss');
+
+				$('#divmodal').empty();
+				$('#divmodal').append("<p><b>Sede: </b> "+calEvent.SEDE_DESCRIPCION+ "<b> Facultad: </b> "+calEvent.UNID_NOMBRE+  "</p>");
+				$('#divmodal').append("<p><b>Grupo: </b> "+calEvent.GRUP_NOMBRE+ "<b> Materia: </b> "+calEvent.MATE_NOMBRE + "</p>");
+				$('#divmodal').append("<p><b>Docente: </b> "+calEvent.PENG_NOMBRE+ "</p>");
+				$('#divmodal').append("<p><b>Espacio/Sala: </b> "+calEvent.SALA_DESCRIPCION+ "</p>");
+				$('#divmodal').append("<p><b>Fecha de Inicio: </b> " + start + "<b> Fecha Fin: </b> " + end +"</p>");
+				$('#divmodal').append("<p><b>Estado:</b> " +calEvent.ESTA_DESCRIPCION+ "</p>");
+				$('#divmodal').append("<p><b>Total reservas:</b> " +calEvent.count_reservas+ "</p>");
+				$('#divmodal').append("<p><b>Creado por:</b> <span class='RESE_CREADOPOR'>" +calEvent.RESE_CREADOPOR+ "</span></p>");
+				$('#divmodal').append("<p><b>Autorización:</b> <span class='AUTO_ID'>" +calEvent.AUTO_ID+ "</span></p>");
+				$('#modalReserva').modal('show');
+				// change the border color just for fun
+				$(this).css('border-color', 'red');
+				//console.log(calEvent);
+			},
+			editable: false,
+			droppable: false, // this allows things to be dropped onto the calendar !!!
+			drop: function (date, allDay) { // this function is called when something is dropped
+				// retrieve the dropped element's stored Event Object
+				var originalEventObject = $(this).data('eventObject');
+				// we need to copy it, so that multiple events don't have a reference to the same object
+				var copiedEventObject = $.extend({}, originalEventObject);
+				allDay=false;
+				// assign it the date that was reported
+				copiedEventObject.start = date;
+				copiedEventObject.end = date;
+				copiedEventObject.allDay = allDay;
+				copiedEventObject.backgroundColor = $(this).css("background-color");
+				copiedEventObject.borderColor = $(this).css("border-color");
+
+				// render the event on the calendar
+				//$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+				// the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+				// is the "remove after drop" checkbox checked?
+				if ($('#drop-remove').is(':checked')) {
+					// if so, remove the element from the "Draggable Events" list
+					$(this).remove();
+				}
+
+				//Guardamos el evento creado en base de datos
+				var title=copiedEventObject.title;
+				var start=copiedEventObject.start.format("YYYY-MM-DD HH:mm");
+				var end=copiedEventObject.end.format("YYYY-MM-DD HH:mm");
+				var back=copiedEventObject.backgroundColor;
+
+				var fechaInicioStr = $('#fechaInicio').data("DateTimePicker").date();
+				var fechaIni = moment(fechaInicioStr).format("YYYY-MM-DD HH:mm:ss");
+
+				var fechaFinStr = $('#fechaFin').data("DateTimePicker").date();
+				var fechaFin = moment(fechaFinStr).format("YYYY-MM-DD HH:mm:ss");
+			
+				$.ajax({
+					url: 'guardaEventos',
+					data: 'title='+ title+'&start='+ fechaIni+'&allday='+allDay+'&background='+back+
+					'&end='+fechaFin,
+					type: "POST",
+					headers: {
+					"X-CSRF-TOKEN": crsfToken
+					},
+					success: function(events) {
+						console.log('Evento creado');
+						$('#calendar').fullCalendar('refetchEvents');
+					},
+					error: function(json){
+						console.log("Error al crear evento");
+						$('#errorAjax').append(json.responseText);
+					}
+				});
+			}
+		});
+	}
+
+	//consultar las reservas con filtros
+
 	ini_events($('#external-events div.external-event'));
 	/* initialize the calendar
 	-----------------------------------------------------------------*/
@@ -393,12 +542,13 @@ $(function () {
 				+ '</div></div>';
 			*/
 
-			var tooltip = '<div class="tooltipevent" style="width:340px;height:100px;background:#f9ec54;position:absolute;z-index:10001;">'+
+			var tooltip = '<div class="tooltipevent" style="width:340px;height:110px;background:#f9ec54;position:absolute;z-index:10001;">'+
 				"<b>Sede:</b>"+calEvent.SEDE_DESCRIPCION +" <br>"+
 				"<b>Facultad:</b>"+calEvent.UNID_NOMBRE +" <br>"+
 				"<b>Grupo:</b>"+calEvent.GRUP_NOMBRE +" <br>"+
 				"<b>Materia:</b>"+calEvent.MATE_NOMBRE +" <br>"+
 				"<b>Docente:</b>"+ calEvent.PENG_NOMBRE +" <br>" +
+				"<b>Estado:</b>"+ calEvent.ESTA_DESCRIPCION +" <br>" +
 				'</div>'; var $tool = $(tooltip).appendTo('body');
 		$(this).mouseover(function(e) {
 		    $(this).css('z-index', 10000);
