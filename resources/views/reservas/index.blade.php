@@ -83,7 +83,7 @@
 
             				@if (in_array(Auth::user()->rol->ROLE_ROL , ['audit','admin']))
 							<label class="radio-inline">
-								<input class="form-check-input" type="radio" name="tipoRepeticion" value="hasta">
+								<input class="form-check-input" id="tipoRepeticionHF" type="radio" name="tipoRepeticion" value="hasta">
 								Hasta una Fecha
 							</label>
 							@endif
@@ -185,6 +185,84 @@
 	<script type="text/javascript">
 		//Carga de datos a mensajes modales para eliminar y clonar registros
 		$(document).ready(function () {
+			//var select = $('#cboxFacultades').val();
+			
+
+			$('#btn-reservar').click(function() {
+				if($('#tipoRepeticionHF').is(':checked')) { 
+					var varfechaHasta = $('#fechaHasta').val();
+					  if (varfechaHasta === '') {
+        				alert('El campo Fecha Hasta esta vacio');
+        			$("#fechaHasta").focus();
+        			return false;
+    				}
+
+					//alert("it's checked"); 
+
+				}
+
+    //Se obtiene el valor del campo
+    var name = $('#nHoras').val();
+
+    //Se verifica que el valor del campo este vacio
+    if (name === '') {
+        alert('El campo Horas esta vacio');
+        $("#nHoras").focus();
+        return false;
+    }
+    //Se verifica longitud del campo
+    else if (name.length != 1) {
+        alert('El longitud del campo hora es incorrecto');
+        return false;
+    } else {
+       //return true;
+    }
+
+     var selectFaculta = $('#cboxFacultades').val();
+
+       if (selectFaculta === null) {
+      	alert("Debes seleccionar una Falculta");
+      	$("#cboxFacultades").focus();
+        return false;
+    }else {
+        //alert('Campo correcto');
+    }
+
+         var selectDocente = $('#cBoxDocentes').val();
+
+       if (selectDocente === null) {
+      	alert("Debes seleccionar un Docente");
+      	$("#cBoxDocentes").focus();
+        return false;
+    }else {
+        //alert('Campo correcto');
+    }
+
+    var selectGrupo = $('#cBoxGrupos').val();
+
+       if (selectGrupo === null) {
+      	alert("Debes seleccionar un Grupo");
+      	$("#cBoxGrupos").focus();
+        return false;
+    }else {
+        //alert('Campo correcto');
+    }
+
+       var selectAsignatura = $('#cboxAsignaturas').val();
+
+       if (selectAsignatura === null) {
+      	alert("Debes seleccionar una Asignatura");
+      	$("#cboxAsignaturas").focus();
+        return false;
+    }else {
+        //alert('Campo correcto');
+    }
+
+
+
+});
+
+
 
 
 			$('#modalReserva').on('show.bs.modal', function (event) {
@@ -201,6 +279,11 @@
 					btnAnular
 						.attr('href', '../autorizarReservas/'+AUTO_ID+'/anular')
 						.removeClass('hide');
+				}else{
+					btnAnular
+						.attr('href', '../autorizarReservas/'+AUTO_ID+'/anular')
+						.removeClass('hide');
+
 				}
 			});
 
