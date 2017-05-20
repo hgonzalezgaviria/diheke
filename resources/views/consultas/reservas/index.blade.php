@@ -5,10 +5,17 @@
 @section('scripts')
 	{!! Html::script('assets/js/jquery.countdown.min.js') !!}
     <script>
-
     	
      $(document).ready(function (){
 
+		//Cambiar de formato los objetos de la clase .fecha
+		var formatClassFecha = function(){
+			$('.fecha').each(function( index ) {
+				var fecha = $( this );
+				var fechaStr = formatDate(fecha.data('fecha'));
+				fecha.html(fechaStr);
+			});
+		}
 
 		//Formato de fecha
 		var formatDate = function(strDate){
@@ -16,26 +23,17 @@
 			return strDateFormatted;
 		}
 
-
 		var setCounterTime = function(){
 			//Contador
 			$('.counterTime').each(function() {
-				var $this = $(this), fechaInicio = $(this).parent().find('.fechaInicio').data('fechainicio');
-				$this.countdown(fechaInicio, {elapse: true})
+				var $this = $(this), fecha = $(this).parent().find('.fecha').data('fecha');
+				$this.countdown(fecha, {elapse: true})
 				.on('update.countdown', function(event) {
 					var $this = $(this);
 					var totalHours = event.offset.totalDays * 24 + event.offset.hours;
 					$this.html(event.strftime(totalHours + ' hr %M min %S seg'));
 					//$this.html(event.strftime(totalHours + ':%M:%S'));
 				});
-			});
-
-
-			//Cambiar de formato de fecha inicio
-			$('.fechaInicio').each(function( index ) {
-				var fecha = $( this );
-				var fechaStr = formatDate(fecha.data('fechainicio'));
-				fecha.html(fechaStr);
 			});
 
 		}
@@ -73,7 +71,7 @@
 		        .draw();
 		} );
 
-	//CARGA DE COMBO POR JQUERY
+		//CARGA DE COMBO POR JQUERY
 
 		$('#SEDE_ID').change(function () {
 		    table1
@@ -140,9 +138,6 @@
 
 				return hoy;
 		}
-
-		
-
     </script>
 @parent
 @endsection
@@ -180,8 +175,12 @@
 		@foreach($reservas as $reserva)
 		<tr>
 			<td>{{ $reserva -> RESE_ID }}</td>
-			<td class="fechaInicio" data-fechainicio="{{ $reserva -> RESE_FECHAINI }}"></td>
-			<td class="fechaInicio" data-fechainicio="{{ $reserva -> RESE_FECHAFIN }}"></td>
+			<td class="fecha" data-fecha="{{ $reserva -> RESE_FECHAINI }}">
+				{{ $reserva -> RESE_FECHAINI }}
+			</td>
+			<td class="fecha" data-fecha="{{ $reserva -> RESE_FECHAFIN }}">
+				{{ $reserva -> RESE_FECHAFIN }}
+			</td>
 			<td>{{ $reserva -> RESE_TITULO }}</td>			 	
 			<td>{{ $reserva -> sala -> SALA_DESCRIPCION }}</td>
 			<td>{{ $reserva -> sala -> sede -> SEDE_DESCRIPCION }}</td>
@@ -189,8 +188,6 @@
 			<td>{{ $reserva -> RESE_CREADOPOR }}</td>
 		
 			<td>
-
-		
 			</td>
 		</tr>
 		@endforeach

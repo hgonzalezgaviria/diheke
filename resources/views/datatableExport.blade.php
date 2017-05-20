@@ -3,6 +3,23 @@
     <script>
      $(function () {
 
+		//Cambiar de formato los objetos de la clase .fecha
+		var formatClassFecha = function(){
+			$('.fecha').each(function( index ) {
+				var fecha = $( this );
+				var fechaStr = formatDate(fecha.data('fecha'));
+				fecha.html(fechaStr);
+			});
+		}
+
+		//Formato de fecha
+		var formatDate = function(strDate){
+			var strDateFormatted = moment(strDate).format('DD/MM/YYYY hh:mm A');
+			return strDateFormatted;
+		}
+
+		formatClassFecha();
+
       	/*      	
       	para realizar la paginacion de una tabla lo unico que hay que hacer es asignarle un id a la tabla,
       	en este caso el id es "tabla" e invocar la función Datatable, lo demas que ven sobre esta función

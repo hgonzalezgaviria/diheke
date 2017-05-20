@@ -19,8 +19,8 @@
 		var setCounterTime = function(){
 			//Contador
 			$('.counterTime').each(function() {
-				var $this = $(this), fechaInicio = $(this).parent().find('.fechaInicio').data('fechainicio');
-				$this.countdown(fechaInicio, {elapse: true})
+				var $this = $(this), fecha = $(this).parent().find('.fecha').data('fecha');
+				$this.countdown(fecha, {elapse: true})
 				.on('update.countdown', function(event) {
 					var $this = $(this);
 					var totalHours = event.offset.totalDays * 24 + event.offset.hours;
@@ -31,9 +31,9 @@
 
 
 			//Cambiar de formato de fecha inicio
-			$('.fechaInicio').each(function( index ) {
+			$('.fecha').each(function( index ) {
 				var fecha = $( this );
-				var fechaStr = formatDate(fecha.data('fechainicio'));
+				var fechaStr = formatDate(fecha.data('fecha'));
 				fecha.html(fechaStr);
 			});
 
@@ -184,7 +184,9 @@
 			<td>{{ $prestamo -> EQUI_ID }}</td>			 	
 			<td>{{ $prestamo -> equipo -> sala -> SALA_DESCRIPCION }}</td>
 			<td>{{ $prestamo -> equipo -> sala -> sede -> SEDE_DESCRIPCION }}</td>
-			<td class="fechaInicio" data-fechainicio="{{ $prestamo -> PRES_FECHAINI }}"></td>
+			<td class="fecha" data-fecha="{{ $prestamo -> PRES_FECHAINI }}">
+				{{ $prestamo -> PRES_FECHAINI }}
+			</td>
 			<td class="counterTime text-right"></td>
 			<td>
 
