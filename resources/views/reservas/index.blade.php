@@ -192,7 +192,13 @@
 				if($('#tipoRepeticionHF').is(':checked')) { 
 					var varfechaHasta = $('#fechaHasta').val();
 					  if (varfechaHasta === '') {
-        				alert('El campo Fecha Hasta esta vacio');
+					  	$.msgBox({
+							title:"Información",
+							content:"El campo Fecha Hasta esta vacio",
+							type:"warning"
+						}); 
+
+        				//alert('El campo Fecha Hasta esta vacio');
         			$("#fechaHasta").focus();
         			return false;
     				}
@@ -206,13 +212,23 @@
 
     //Se verifica que el valor del campo este vacio
     if (name === '') {
-        alert('El campo Horas esta vacio');
+        //alert('El campo Horas esta vacio');
+          	$.msgBox({
+							title:"Información",
+							content:"El campo Horas esta vacio'",
+							type:"warning"
+						}); 
         $("#nHoras").focus();
         return false;
     }
     //Se verifica longitud del campo
     else if (name.length != 1) {
-        alert('El longitud del campo hora es incorrecto');
+       // alert('El longitud del campo hora es incorrecto');
+           	$.msgBox({
+							title:"Información",
+							content:"El longitud del campo hora es incorrecto",
+							type:"warning"
+						}); 
         return false;
     } else {
        //return true;
@@ -221,7 +237,13 @@
      var selectFaculta = $('#cboxFacultades').val();
 
        if (selectFaculta === null) {
-      	alert("Debes seleccionar una Falculta");
+      	//alert("Debes seleccionar una Falculta");
+      	 	$.msgBox({
+							title:"Información",
+							content:"Debes seleccionar una Falculta",
+							type:"warning"
+						}); 
+
       	$("#cboxFacultades").focus();
         return false;
     }else {
@@ -231,7 +253,13 @@
          var selectDocente = $('#cBoxDocentes').val();
 
        if (selectDocente === null) {
-      	alert("Debes seleccionar un Docente");
+      	//alert("Debes seleccionar un Docente");
+      	$.msgBox({
+							title:"Información",
+							content:"Debes seleccionar un Docente",
+							type:"warning"
+						}); 
+
       	$("#cBoxDocentes").focus();
         return false;
     }else {
@@ -241,7 +269,12 @@
     var selectGrupo = $('#cBoxGrupos').val();
 
        if (selectGrupo === null) {
-      	alert("Debes seleccionar un Grupo");
+      	//alert("Debes seleccionar un Grupo");
+      	 	$.msgBox({
+							title:"Información",
+							content:"Debes seleccionar un Grupo",
+							type:"warning"
+						}); 
       	$("#cBoxGrupos").focus();
         return false;
     }else {
@@ -251,7 +284,12 @@
        var selectAsignatura = $('#cboxAsignaturas').val();
 
        if (selectAsignatura === null) {
-      	alert("Debes seleccionar una Asignatura");
+      	//alert("Debes seleccionar una Asignatura");
+      	 	$.msgBox({
+							title:"Información",
+							content:"Debes seleccionar una Asignatura",
+							type:"warning"
+						}); 
       	$("#cboxAsignaturas").focus();
         return false;
     }else {
