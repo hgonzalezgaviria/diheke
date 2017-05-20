@@ -26,6 +26,7 @@
 				<td>
 
 					<!-- Botón Aprobar -->
+					@if (in_array(Auth::user()->rol->ROLE_ROL , ['audit','admin']))
 					{{ Form::button('<i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobar',[
 						'class'=>'btn btn-xs btn-success',
 						'data-toggle'=>'modal',
@@ -33,7 +34,9 @@
 						'data-accion'=>'aprobar',
 						'data-target'=>'#pregModal',
 					]) }}
+					@endif
 					<!-- Botón Rechazar -->
+					@if (in_array(Auth::user()->rol->ROLE_ROL , ['audit','admin']))
 					{{ Form::button('<i class="fa fa-calendar-times-o" aria-hidden="true"></i> Rechazar',[
 						'class'=>'btn btn-xs btn-danger',
 						'data-toggle'=>'modal',
@@ -41,7 +44,7 @@
 						'data-accion'=>'rechazar',
 						'data-target'=>'#pregModal',
 					]) }}
-					
+					@endif
 							<!-- Botón Anular -->
 					{{ Form::button('<i class="fa fa-calendar-times-o" aria-hidden="true"></i> Anular',[
 						'class'=>'btn btn-xs btn-warning',

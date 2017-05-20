@@ -139,8 +139,8 @@
 
 				@elseif (in_array(Auth::user()->rol->ROLE_ROL , ['user','estudiante','docente']))
 					<li>
-						<a href="{{ url('/prueba') }}">
-							<i class="fa fa-list" aria-hidden="true"></i> Presentar Reserva
+						<a href="{{ url('/autorizarReservas') }}">
+							<i class="fa fa-list" aria-hidden="true"></i> Mis Reservas
 						</a>
 					</li>
 				@endif
