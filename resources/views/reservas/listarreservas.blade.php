@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', '/ Crear Reserva')
+@section('title', '/ Calendario de Reservas')
 
 @section('head')
 	<meta name="csrf-token" content="{{ csrf_token() }}">
@@ -39,12 +39,12 @@
 
 	<div class="row">
 
-	{{ Form::open(array('url' => 'consultarReservas', 'class' => 'form-vertical')) }}
+	{{ Form::open(array('url' => 'reservas/consultarReservasFiltro', 'class' => 'form-vertical')) }}
 
 		<div class="col-xs-3 form-group">
 			<label>Facultad:</label>
 			<div class="selectContainer">
-				<select class="form-control" name="size" id="cboxFacultades">
+				<select class="form-control" name="size" id="cboxFacultades" name="cboxFacultades">
 				  <option selected disabled>Todos...</option>
 				</select>
 			</div>
@@ -124,7 +124,9 @@
 		<div class="col-xs-2 form-group">
 			<label></label>
 			<div class="selectContainer">
-			<input type="submit" name="Filtrar Resultados" id="btn-filtrar" class="btn btn-primary btn-flat">
+			<button type="button" id="btn-filtrar" class="btn btn-primary btn-flat">
+			Filtrar
+			</button>
 			</div>
 		</div>
 		

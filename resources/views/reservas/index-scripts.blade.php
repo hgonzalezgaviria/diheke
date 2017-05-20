@@ -607,6 +607,8 @@ $(function () {
 	//Date for the calendar events (dummy data)
 	//while(reload==false){
 	$('#calendar').fullCalendar({
+
+		displayEventTime: false,
 		header: {
 			left: 'prev,next today',
 			center: 'title',
@@ -622,11 +624,34 @@ $(function () {
 			url:"../cargaEventos" + sala
 		},
 		eventRender: function(event, element) { 
+			var startt = moment(event.start).format('HH:mm');
 			var endd = moment(event.end).format('HH:mm');
-			element.find('.fc-title').append(" " + endd);
+			element.find('.fc-title').append( startt + "-" + endd);
 		},
 		eventAfterAllRender: function( view ) {
 			$('#msgModalProcessing').modal('hide');
+		},
+		eventMouseover: function(calEvent, jsEvent) { 
+			var tooltip = '<div class="tooltipevent" style="width:340px;height:110px;background:#f9ec54;position:absolute;z-index:10001;">'+
+				"<b>Sede:</b>"+calEvent.SEDE_DESCRIPCION +" <br>"+
+				"<b>Facultad:</b>"+calEvent.UNID_NOMBRE +" <br>"+
+				"<b>Grupo:</b>"+calEvent.GRUP_NOMBRE +" <br>"+
+				"<b>Materia:</b>"+calEvent.MATE_NOMBRE +" <br>"+
+				"<b>Docente:</b>"+ calEvent.PENG_NOMBRE +" <br>" +
+				"<b>Estado:</b>"+ calEvent.ESTA_DESCRIPCION +" <br>" +
+				'</div>'; var $tool = $(tooltip).appendTo('body');
+		$(this).mouseover(function(e) {
+		    $(this).css('z-index', 10000);
+		            $tool.fadeIn('500');
+		            $tool.fadeTo('10', 1.9);
+		}).mousemove(function(e) {
+		    $tool.css('top', e.pageY + 10);
+		    $tool.css('left', e.pageX + 20);
+		});
+		},
+		eventMouseout: function(calEvent, jsEvent) {
+		$(this).css('z-index', 8);
+		$('.tooltipevent').remove();
 		},
 		eventClick: function(calEvent, jsEvent, view) {
 			//Visualizar Popup con los detalles de la reserva
@@ -634,12 +659,11 @@ $(function () {
 			var end = moment(calEvent.end).format('YYYY-MM-DD HH:mm:ss');
 
 			$('#divmodal').empty();
-			$('#divmodal').append("<p><b>Descripción: </b> " +  calEvent.title + "</p>");
-			$('#divmodal').append("<p><b>Sede: </b> "+calEvent.SEDE_DESCRIPCION+"</p>");
+			$('#divmodal').append("<p><b>Sede: </b> "+calEvent.SEDE_DESCRIPCION+ "<b> Facultad: </b> "+calEvent.UNID_NOMBRE+  "</p>");
+			$('#divmodal').append("<p><b>Grupo: </b> "+calEvent.GRUP_NOMBRE+ "<b> Materia: </b> "+calEvent.MATE_NOMBRE + "</p>");
+			$('#divmodal').append("<p><b>Docente: </b> "+calEvent.PENG_NOMBRE+ "</p>");
 			$('#divmodal').append("<p><b>Espacio/Sala: </b> "+calEvent.SALA_DESCRIPCION+ "</p>");
-			$('#divmodal').append("<p><b>Fecha de Inicio: </b> " +  start + "</p>");
-			$('#divmodal').append("<p><b>Fecha Fin: </b> " +  end + "</p>");
-			//$('#divmodal').append("<p><b>Duración:</b> " +'2'+ "</p>");
+			$('#divmodal').append("<p><b>Fecha de Inicio: </b> " + start + "<b> Fecha Fin: </b> " + end +"</p>");
 			$('#divmodal').append("<p><b>Estado:</b> " +calEvent.ESTA_DESCRIPCION+ "</p>");
 			$('#divmodal').append("<p><b>Total reservas:</b> " +calEvent.count_reservas+ "</p>");
 			$('#divmodal').append("<p><b>Creado por:</b> <span class='RESE_CREADOPOR'>" +calEvent.RESE_CREADOPOR+ "</span></p>");

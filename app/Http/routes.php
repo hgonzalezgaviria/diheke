@@ -57,6 +57,8 @@ Route::get('reservas/calreservas', 'ReservasController@listarReservas');
 
 Route::get('listarReservas{sala?}','ReservasController@consultarReservas');
 
+Route::get('listReservasFiltro','ReservasController@consultarReservasFiltro');
+
 //Ayuda
 Route::get('/help', function(){
 	return View::make('help');
@@ -101,7 +103,6 @@ Route::resource('consultaPrestamos', 'PrestamoEquiposController');
 Route::post('prestamoEquipo', 'PrestamoEquiposController@crearPrestamo');
 //Consulta reservas
 Route::resource('consultaReservas', 'ConsultaReservasController');
-
 
 //reservas
 Route::resource('reservas', 'ReservasController');
