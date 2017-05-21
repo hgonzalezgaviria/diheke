@@ -190,8 +190,12 @@
 
 			$('#btn-reservar').click(function() {
 				if($('#tipoRepeticionHF').is(':checked')) { 
-					var varfechaHasta = $('#fechaHasta').val();
-					  if (varfechaHasta === '') {
+					var varfechaHasta = $('#fechaHasta').data("DateTimePicker").date();
+					//var varfechaHasta1 = moment(varfechaHasta, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');
+					  if (varfechaHasta === null) {
+					  //	alert('esta blanco');
+				//	  	alert(varfechaHasta);
+
 					  	$.msgBox({
 							title:"Información",
 							content:"El campo Fecha Hasta esta vacio",
@@ -203,7 +207,7 @@
         			return false;
     				}
 
-					//alert("it's checked"); 
+				//	alert(varfechaHasta); 
 
 				}
 

@@ -11,8 +11,9 @@
 				<div class="panel-body">
 
 					<div class="embed-responsive embed-responsive-4by3">
-  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/LLT6pbEUUS8"></iframe>
-</div>
+ 			
+ 			 <iframe width="420" height="315" src="https://www.youtube.com/watch?v=Q8g4EirmVDA" frameborder="0" allowfullscreen></iframe>
+				</div>
 				</div>
 			</div>
 		
