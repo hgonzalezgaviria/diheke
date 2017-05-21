@@ -171,8 +171,8 @@
 <div class="alert alert-info" id="alertinfo"> 
 <h4>
 <i class="fa fa-info-circle fa-pull-left" aria-hidden="true">
- Estimado usuario: <br>
-</i>
+ 
+</i>Estimado usuario: <br>
 </h4>
 <h5 class="tet-justify">
 Debe seleccionar una sede para iniciar el proceso de reservas de salas o prestamos de equipos.

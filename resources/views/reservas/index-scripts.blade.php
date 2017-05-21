@@ -39,6 +39,7 @@ $(function () {
 	var optionsDtPicker = {
 		locale: 'es',
 		stepping: 30,
+		sideBySide: true, // Muestra la hora yla fecha juntas
 		useCurrent: false,  //Important! See issue #1075. Requerido para minDate
 		minDate: moment(), //-1 Permite seleccionar el dia actual
 		defaultDate: moment().add(30,'minutes'), //-1 Permite seleccionar el dia actual
@@ -494,6 +495,8 @@ $(function () {
 						content:"¡Su reserva se ha realizado satisfactoriamente!",
 						type:"success"
 					});
+
+					$('#modalcrearres').modal('toggle');
 
 					console.log("Events guardarReservas"+JSON.stringify(events));
 				},
