@@ -42,16 +42,21 @@ class PrestamoEquiposController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //Se obtienen todos los registros.
         
 
         $equipoPrestamos = \reservas\Prestamo::orderBy('PRES_ID')
                         ->select('PRES_ID', 'PRES_IDUSARIO','PRES_NOMBREUSARIO','EQUI_ID','PRES_CREADOPOR',
-                            'PRES_FECHAINI')
-                        ->where('PRES_FECHAFIN', null)
-                        ->get();
+                            'PRES_FECHAINI', 'PRES_FECHAFIN');
+
+      if(! $request->get('all'))
+          $equipoPrestamos->where('PRES_FECHAFIN', null);
+
+
+        $equipoPrestamos = $equipoPrestamos->get();
+
 
        
         //$fechaActual = \Carbon\Carbon::now()->toDateTimeString(); 

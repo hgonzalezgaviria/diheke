@@ -5,13 +5,33 @@
 @section('scripts')
 	{!! Html::script('assets/js/jquery.countdown.min.js') !!}
     <script>
+       		function getUrlParameter(sParam) {
+		var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+		sURLVariables = sPageURL.split('&'),
+		sParameterName,
+		i;
+
+		for (i = 0; i < sURLVariables.length; i++) {
+			sParameterName = sURLVariables[i].split('=');
+			if (sParameterName[0] === sParam) {
+				return sParameterName[1] === undefined ? true : sParameterName[1];
+			}
+		}
+	};
 
     	
      $(document).ready(function (){
 
+  
+
+
+
 		//Formato de fecha
 		var formatDate = function(strDate){
-			var strDateFormatted = moment(strDate).format('DD/MM/YYYY hh:mm A');
+			var strDateFormatted = '';
+			if(strDate != '' && strDate != null){
+				strDateFormatted = moment(strDate).format('DD/MM/YYYY hh:mm A');
+			}
 			return strDateFormatted;
 		}
 
@@ -116,7 +136,16 @@
      //Obtener fecha del sistemas
 		var name="ReportePrestamos";
 		var title="Reporte De Prestamos";
-		var columnss= [ 0, 1, 2, 3,4,5,6 ];
+			var getPart= getUrlParameter('all');
+		console.log(getPart);
+		//alert(getPart);
+		if(getPart){
+			var columnss= [ 0, 1, 2, 3,4,5,6,7 ];
+		}else{
+			var columnss= [ 0, 1, 2, 3,4,5,6 ];
+		}
+		console.log(columnss);
+		
 		function fecha(){
 				var hoy = new Date();
 				var dd = hoy.getDate();
@@ -151,7 +180,8 @@
 	@include('consultas/prestamos/FormFilters')
 
 	<div id="btn-create" class="pull-right">
-			<a class='btn btn-primary' role='button' href="#">
+
+			<a class='btn btn-primary' role='button' href="{{ URL::to('consultaPrestamos/?all=true') }}">
 				<i class="fa fa-plus" aria-hidden="true"></i> Todos los datos
 			</a>
 		</div>
@@ -168,8 +198,15 @@
 			<th class="col-xs-2">Sala</th>
 			<th class="col-xs-2">Sede</th>
 			<th class="col-xs-2">Fecha Inicio P</th>
+			@if( Request::get('all'))
+			<th class="col-xs-2">Fecha Fin P</th>
+			@endif
+			@if( !Request::get('all'))
 			<th class="col-xs-1">Tiempo trans</th>
 			<th> </th>
+			@endif
+			
+			
 
 		</tr>
 	</thead>
@@ -187,7 +224,15 @@
 			<td class="fecha" data-fecha="{{ $prestamo -> PRES_FECHAINI }}">
 				{{ $prestamo -> PRES_FECHAINI }}
 			</td>
-			<td class="counterTime text-right"></td>
+		@if( Request::get('all'))
+			<td class="fecha" data-fecha="{{ $prestamo -> PRES_FECHAFIN }}">
+				{{ $prestamo -> PRES_FECHAFIN }}
+			</td>
+
+		@endif
+		@if( !Request::get('all'))
+		<td class="counterTime text-right"></td>
+			
 			<td>
 
 				<!-- Botón Terminar () -->
@@ -201,6 +246,7 @@
 						}}
 						<!-- Fin Botón Terminar (show) -->
 			</td>
+			@endif
 		</tr>
 		@endforeach
 	</tbody>
