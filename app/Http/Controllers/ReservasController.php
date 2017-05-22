@@ -109,7 +109,7 @@ class ReservasController extends Controller
 			}
 			
 			$data[$i] = [
-				"title"=>substr($reservas[$i]->MATE_NOMBRE, 0, 3) . "..", //obligatoriamente "title", "start" y "url" son campos requeridos
+				"title"=>substr($reservas[$i]->MATE_NOMBRE, 0, 10) . "..", //obligatoriamente "title", "start" y "url" son campos requeridos
 				"start"=>$reservas[$i]->RESE_FECHAINI, //por el plugin asi que asignamos a cada uno el valor correspondiente
 				"end"=>$reservas[$i]->RESE_FECHAFIN,
 				"allDay"=>$reservas[$i]->ALLDAY,
