@@ -127,7 +127,9 @@
 
 									<li><a href="{{ url('/consultaReservas') }}"><i class="fa fa-list-ol"></i> Listado de Reservas</a></li>
 
+									<!--
 									<li><a href="{{ url('/calreservas') }}"><i class="fa fa-calendar-o"></i> Calendario de Reservas</a></li>
+									-->
 								</ul>
 							
 									

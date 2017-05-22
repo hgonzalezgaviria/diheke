@@ -200,12 +200,16 @@ class ReservasController extends Controller
 				"SALA_DESCRIPCION"=>$reservas[$i]->SALA_DESCRIPCION,
 				"SALA_CAPACIDAD"=>$reservas[$i]->SALA_CAPACIDAD,
 				"SEDE_DESCRIPCION"=>$reservas[$i]->SEDE_DESCRIPCION,
+				"ESTA_ID" => $reservas[$i]->ESTA_ID,
 				"ESTA_DESCRIPCION" => $reservas[$i]->ESTA_DESCRIPCION,
 				"AUTO_ID" => $reservas[$i]->AUTO_ID,
 				"count_reservas" => Autorizacion::find($reservas[$i]->AUTO_ID)->reservas->count(),
 				"RESE_CREADOPOR" => $reservas[$i]->RESE_CREADOPOR,
+				"MATE_CODIGOMATERIA"=>$reservas[$i]->MATE_CODIGOMATERIA,
 				"MATE_NOMBRE"=>$reservas[$i]->MATE_NOMBRE,
-				"UNID_NOMBRE"=>$reservas[$i]->UNID_NOMBRE,
+				"UNID_ID"=>$reservas[$i]->UNID_ID,
+				"PEGE_ID"=>$reservas[$i]->PEGE_ID,
+				"GRUP_ID"=>$reservas[$i]->GRUP_ID,
 				"GRUP_NOMBRE"=>$reservas[$i]->GRUP_NOMBRE,
 				"PENG_NOMBRE"=>$reservas[$i]->PENG_PRIMERNOMBRE . " " . $reservas[$i]->PENG_SEGUNDONOMBRE
 				. " " . $reservas[$i]->PENG_PRIMERAPELLIDO . " " . $reservas[$i]->PENG_SEGUNDOAPELLIDO,
@@ -232,7 +236,6 @@ class ReservasController extends Controller
 		$estado = Input::get("cboxEstados");
 
 	
-		dump($sala);
 		
 		$data = array(); //declaramos un array principal que va contener los datos
 
@@ -303,12 +306,16 @@ class ReservasController extends Controller
 				"SALA_DESCRIPCION"=>$reservas[$i]->SALA_DESCRIPCION,
 				"SALA_CAPACIDAD"=>$reservas[$i]->SALA_CAPACIDAD,
 				"SEDE_DESCRIPCION"=>$reservas[$i]->SEDE_DESCRIPCION,
+				"ESTA_ID" => $reservas[$i]->ESTA_ID,
 				"ESTA_DESCRIPCION" => $reservas[$i]->ESTA_DESCRIPCION,
 				"AUTO_ID" => $reservas[$i]->AUTO_ID,
 				"count_reservas" => Autorizacion::find($reservas[$i]->AUTO_ID)->reservas->count(),
 				"RESE_CREADOPOR" => $reservas[$i]->RESE_CREADOPOR,
+				"MATE_CODIGOMATERIA"=>$reservas[$i]->MATE_CODIGOMATERIA,
 				"MATE_NOMBRE"=>$reservas[$i]->MATE_NOMBRE,
-				"UNID_NOMBRE"=>$reservas[$i]->UNID_NOMBRE,
+				"UNID_ID"=>$reservas[$i]->UNID_ID,
+				"PEGE_ID"=>$reservas[$i]->PEGE_ID,
+				"GRUP_ID"=>$reservas[$i]->GRUP_ID,
 				"GRUP_NOMBRE"=>$reservas[$i]->GRUP_NOMBRE,
 				"PENG_NOMBRE"=>$reservas[$i]->PENG_PRIMERNOMBRE . " " . $reservas[$i]->PENG_SEGUNDONOMBRE
 				. " " . $reservas[$i]->PENG_PRIMERAPELLIDO . " " . $reservas[$i]->PENG_SEGUNDOAPELLIDO,

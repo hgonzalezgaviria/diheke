@@ -347,24 +347,6 @@ $(function () {
 		});
 	}
 
-	//click en el boton de filtrar
-	$("#btn-filtrar").on('click', function(){
-
-
-		var sala = $("#sala").val();
-		var facultad = $("#cboxFacultades").val();
-		var docente = $("#cBoxDocentes").val();
-		var grupo = $("#cBoxGrupos").val();
-		var asignatura = $("#cboxAsignaturas").val();
-		var estado = $("#cboxEstados").val();
-
-		listarFiltro(facultad, sala, docente, grupo, asignatura);
-	
-		
-		
-	}); // click en el boton de filtrar function listarFiltro(facultad, sala, docente, grupo, asignatura, estado){
-
-
 	//consultar las reservas con filtros
 
 	ini_events($('#external-events div.external-event'));
@@ -500,6 +482,10 @@ $(function () {
 		//Token para envío de peticiones por ajax a los controladores de Laravel
 		var crsfToken = $('meta[name="csrf-token"]').attr('content');
 
+		var p = 'sala='+ sala +'&cboxFacultades='+ facultad +'&cBoxDocentes='+ docente +'&cBoxGrupos='+grupo + '&cboxAsignaturas='+ asignatura +'&cboxEstados='+estado;
+
+		//alert(p);
+
         var events = $.ajax({
 						url: '../listReservasFiltro',
 						data: 'sala='+ sala +'&cboxFacultades='+ facultad +'&cBoxDocentes='+ docente +'&cBoxGrupos='+grupo + '&cboxAsignaturas='+ asignatura +'&cboxEstados='+estado,
@@ -509,12 +495,71 @@ $(function () {
 						}
 					});
 
-		$('#calendar').fullCalendar( 'removeEventSource', events);
+		//$('#calendar').fullCalendar( 'removeEventSource', events);
 		$('#calendar').fullCalendar('removeEvents');
         $('#calendar').fullCalendar( 'addEventSource', events);         
         $('#calendar').fullCalendar( 'refetchEvents' );
 
 	}
+
+	function aplicarFiltros(facultad, sala, docente, grupo, asignatura, estado){
+
+		var facultad = 1;
+		var sala = 1;
+		var docente = 1111;
+		var grupo = 12;
+		var asignatura = "FIXXXXX1";
+		var estado = 6;
+
+		var reservasTodas = $('#calendar').fullCalendar('clientEvents');
+
+		var reservasfiltro = new Array();
+
+		if(reservasTodas.length > 0){
+
+			for(i in reservasTodas){
+
+				console.log(reservasTodas[i].AUTO_ID);
+
+				if(facultad != null){
+					if(reservasTodas[i].UNID_ID == facultad){
+						reservasfiltro.push( reservasTodas[i] );
+						//delete reservasTodas[i];
+					}
+				}
+					
+
+			}
+
+		$('#calendar').fullCalendar( 'removeEventSource', reservasTodas);
+		$('#calendar').fullCalendar('removeEvents');
+        $('#calendar').fullCalendar( 'addEventSource', reservasTodas);         
+        $('#calendar').fullCalendar( 'refetchEvents' );
+
+
+
+		}
+
+		console.log(reservasTodas);
+
+	}
+
+	//click en el boton de filtrar
+	$("#btn-filtrar").on('click', function(){
+
+
+		var sala = $("#sala").val();
+		var facultad = $("#cboxFacultades").val();
+		var docente = $("#cBoxDocentes").val();
+		var grupo = $("#cBoxGrupos").val();
+		var asignatura = $("#cboxAsignaturas").val();
+		var estado = $("#cboxEstados").val();
+
+		//listarFiltro(facultad, sala, docente, grupo, asignatura, estado);
+	
+		aplicarFiltros(facultad, sala, docente, grupo, asignatura, estado);
+		
+	}); // click en el boton de filtrar function listarFiltro(facultad, sala, docente, grupo, asignatura, estado){
 
 
 
