@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Redirector;
+use Exception;
 
 class ReservasController extends Controller
 {
@@ -469,25 +470,31 @@ class ReservasController extends Controller
 				'request' => json_encode($request->all())
 			]);
 		}
-
-		$asunto = 'Reserva creada en '.$autorizacion->reservas->first()->sala->SALA_DESCRIPCION;
-		$this->sendEmail($autorizacion, 'emails.info_reserva_creada', $asunto);
-
+		
+			$asunto = 'Reserva creada en '.$autorizacion->reservas->first()->sala->SALA_DESCRIPCION; 	
+			$this->sendEmail($autorizacion, 'emails.info_reserva_creada', $asunto); 		
+			
 		return $arrRESE_ID;
 	}
 
 	protected function sendEmail($autorizacion, $view, $asunto)
     {
-        \Mail::send($view, compact('autorizacion'), function($message) use ($asunto){
-            //Se obtiene el usuario que creó la encuesta
-            $user = auth()->user();
-            //remitente
-            $message->from(env('MAIL_USERNAME'), env('MAIL_NAME'));
-            //asunto
-            $message->subject($asunto);
-            //receptor
-            $message->to($user->email, $user->name);
-        });
+    	try{
+    		\Mail::send($view, compact('autorizacion'), function($message) use ($asunto){
+	            //Se obtiene el usuario que creó la encuesta
+	            $user = auth()->user();
+	            //remitente
+	            $message->from(env('MAIL_USERNAME'), env('MAIL_NAME'));
+	            //asunto
+	            $message->subject($asunto);
+	            //receptor
+	            $message->to($user->email, $user->name);
+        	});
+    	}
+    	catch(Exception $e){
+
+    	}
+        
     }
 
 
