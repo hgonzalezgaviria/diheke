@@ -37,7 +37,7 @@
 .borderesp {
 	
 	background-color: rgb(255, 255, 0); z-index: 8;
-	width:200px;
+	width:100px;
 	border-radius: 8px;
 }
 
@@ -53,7 +53,7 @@
 }
 table.width100 {
 
-	width:500px;
+	width:100px;
 	border: solid 1px #999;
 }
 
@@ -99,7 +99,7 @@ table.width100 {
 	<div class="row">
 	<div class="col-xs-12 col-sm-12"> <!-- col des. estados -->
 
-		<table class="status-legend width100" cellspacing="1">
+		<table class="col-xs-12 col-sm-12" class="status-legend width100" cellspacing="1">
 		<tbody>
 			<tr>
 			<td class="borderesa"> APROBADAS </td>

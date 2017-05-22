@@ -197,12 +197,12 @@
 			<th class="col-xs-1">Equipo</th>			
 			<th class="col-xs-2">Sala</th>
 			<th class="col-xs-2">Sede</th>
-			<th class="col-xs-2">Fecha Inicio P</th>
+			<th class="col-xs-2">Fecha Inicio</th>
 			@if( Request::get('all'))
-			<th class="col-xs-2">Fecha Fin P</th>
+			<th class="col-xs-2">Fecha Fin</th>
 			@endif
 			@if( !Request::get('all'))
-			<th class="col-xs-1">Tiempo trans</th>
+			<th class="col-xs-1">Tpo. Transcurrido</th>
 			<th> </th>
 			@endif
 			
