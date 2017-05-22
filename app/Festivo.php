@@ -19,7 +19,8 @@ class Festivo extends Model
 	
 	protected $fillable = [
 		'FEST_FECHA',
-		'FEST_DESCRIPCION'
+		'FEST_DESCRIPCION',
+		'FEST_CREADOPOR',
 	];
 
     protected $hidden = [

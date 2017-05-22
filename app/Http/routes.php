@@ -67,7 +67,7 @@ Route::get('/help', function(){
 });
 //Prueba
 Route::get('/prueba', function(){
-	return View::make('prueba');
+	return View::make('emails.info_reserva_creada');
 });
 
 //upload tablas Academusoft

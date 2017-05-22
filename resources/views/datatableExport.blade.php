@@ -14,7 +14,10 @@
 
 		//Formato de fecha
 		var formatDate = function(strDate){
-			var strDateFormatted = moment(strDate).format('DD/MM/YYYY hh:mm A');
+			var strDateFormatted = '';
+			if(strDate != '' && strDate != null){
+				strDateFormatted = moment(strDate).format('DD/MM/YYYY hh:mm A');
+			}
 			return strDateFormatted;
 		}
 

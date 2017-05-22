@@ -17,6 +17,7 @@
 
       $('.tabs-left a').click(function (e) {
         e.preventDefault()
+        $('#alertinfo').alert("close");
         var tabContent = $('.tab-content').find('#salas');
         tabContent.empty();
 
@@ -78,6 +79,7 @@
       // Inicio tab equipos
       $('#tab-equipos').click(function (e) {
         e.preventDefault()
+
         var tabContent = $('.tab-content').find('#equipos');
         tabContent.empty();
         var nohayEquipos=false;
@@ -164,7 +166,27 @@
 <div class="tab-content col-xs-offset-4 col-sm-offset-2">
   <div class="tab-pane fade" id="salas"></div>
   <div class="tab-pane fade" id="equipos"></div>
-</div>   
+
+<div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+<div class="alert alert-info" id="alertinfo"> 
+<h4>
+<i class="fa fa-info-circle fa-pull-left" aria-hidden="true">
+ 
+</i>Estimado usuario: <br>
+</h4>
+<h5 class="tet-justify">
+Debe seleccionar una sede para iniciar el proceso de reservas de salas o prestamos de equipos.
+</h5>
+
+</div>
+</div>
+
+
+</div>
+
+
+
+
 
 
 

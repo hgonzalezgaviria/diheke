@@ -10,6 +10,7 @@ use reservas\Http\Requests;
 use reservas\Reserva;
 use reservas\Autorizacion;
 use reservas\Estado;
+use Auth;
 
 use Session;
 use Illuminate\Support\Facades\Input;
@@ -25,9 +26,29 @@ class AutorizacionesController extends Controller
      */
     public function index()
     {
-        $pendientesAprobar = Autorizacion::pendientesAprobar()
+
+        $user= Auth::user()->username;
+        //dump($user);
+
+        $rol=Auth::user()->rol->ROLE_ROL;
+         //dump($rol);
+
+        if($rol=='docente'){
+             $pendientesAprobar = Autorizacion::pendientesAprobar()
+                            ->where('AUTO_CREADOPOR', $user)
                             ->orderBy('AUTO_FECHACREADO', 'desc')
                             ->get();
+
+        }else if ($rol=='admin'){
+              $pendientesAprobar = Autorizacion::pendientesAprobar()
+                            ->orderBy('AUTO_FECHACREADO', 'desc')
+                            ->get();
+
+        }
+
+ 
+
+   
 
         //Se carga la vista y se pasan los registros.
         return view('reservas/autorizar', compact('pendientesAprobar'));

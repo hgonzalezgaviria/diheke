@@ -12,7 +12,51 @@
       text-align: center;
       font-size: 25px;
       border-radius:6px;
+
+
   	}
+
+  .btn-primaryy {
+  -webkit-border-radius: 8;
+  -moz-border-radius: 8;
+  border-radius: 8px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 28px;
+  background: #265a88;
+  padding: 10px 23px 10px 20px;
+  text-decoration: none;
+}
+
+.borderesa {
+	
+	background-color: rgb(0, 255, 0); z-index: 8;
+	width:100px;
+	border-radius: 8px;
+}
+.borderesp {
+	
+	background-color: rgb(255, 255, 0); z-index: 8;
+	width:200px;
+	border-radius: 8px;
+}
+
+.btn-primaryy:hover {
+  background: #23527c;
+  color: #ffffff;
+  text-decoration: none;
+}
+.btn-primaryy:focus {
+  background: #23527c;
+  color: #ffffff;
+  text-decoration: none;
+}
+table.width100 {
+
+	width:500px;
+	border: solid 1px #999;
+}
+
 
 	</style>
 @parent
@@ -28,143 +72,45 @@
 
 {{-- <h1 class="page-header">Nueva Reserva</h1> --}}
 @include('partials/errors')
+@include('reservas/index-modalCrearReservas')
 
 <div class="panel panel-default">
 
 	<div class="panel-heading">
-		<h2>Calendario de Reservas</h2>
+	<div class="row">
+	<div class="col-xs-8">
+		<h2>Calendario de Reservas <small>{{\reservas\Sala::find(Request::get('sala'))->sede->SEDE_DESCRIPCION}}</small> <small>{{\reservas\Sala::find(Request::get('sala'))->SALA_DESCRIPCION}}</small></h2>	</div>
+	<div  class="col-xs-4 text-right" id="btn-create" class="col-xs-3 col-md-9 col-lg-9">
+	<a class='btn btn-primary btn-lg' role='button' data-toggle="modal" data-target="#modalcrearres" href="#">
+		<i class="fa fa-plus" aria-hidden="true"></i> 
+		<span class="hidden-xs">Crear Reserva</span>
+		<span class="sr-only">Crear</span>
+	</a>
+	</div>	
+</div>
+
+		
+
 	</div>
+		
 
 	<div class="panel-body"> <!-- Main content -->
 
 	<div class="row">
+	<div class="col-xs-12 col-sm-12"> <!-- col des. estados -->
 
-		<div class="col-xs-12 col-sm-4"> <!-- Columna con controles para crear reserva -->
-		   
-			<div class="box box-solid">
+		<table class="status-legend width100" cellspacing="1">
+		<tbody>
+			<tr>
+			<td class="borderesa"> APROBADAS </td>
+			<td class="borderesp"> PENDIENTE POR APROBAR </td>				
+			</tr>
+		</tbody>
+		</table>
 
-				<div class="box-header with-border">
-					<h3 class="box-title">Crear Reserva</h3>
-				</div>
+	</div>
 
-				<div class="box-body">
-					<!--form-->
-					<div class="row">
-						<div class="col-xs-7 form-group">
-							<label>Desde:</label>
-							<div class='input-group date' id='fechaInicio'>
-								<input type='text' class="form-control" />
-								<span class="input-group-addon">
-									<span class="glyphicon glyphicon-calendar"></span>
-								</span>
-							</div>
-						</div>
-
-						<div class="col-xs-5 form-group">
-							<label>Horas:</label>
-							<input type='number' class="form-control" min="1" max="12" id="nHoras" placeholder="No. de horas" />
-						</div>
-
-					</div>
-
-
-					<div id="cp3" class="input-group colorpicker-component hide">
-						<input type="text" class="form-control" id="color" readonly="true" />
-						<span class="input-group-addon"><i></i></span>
-					</div>
-
-					<div class="form-group">
-						<label>Tipo de Repetición:</label>
-						<div class="input-group">
-							<label class="radio-inline form-check-label">
-								<input class="form-check-input" type="radio" name="tipoRepeticion" value="ninguna" checked>
-								Ninguna
-							</label>
-
-            				@if (in_array(Auth::user()->rol->ROLE_ROL , ['audit','admin']))
-							<label class="radio-inline">
-								<input class="form-check-input" id="tipoRepeticionHF" type="radio" name="tipoRepeticion" value="hasta">
-								Hasta una Fecha
-							</label>
-							@endif
-						</div>
-					</div>
-
-					<div class="form-group reservaPorDias reservaHastaFecha hide">
-						<label>Hasta:</label>
-						<div class='input-group date' id='fechaHasta'>
-							<input type='text' class="form-control" />
-							<span class="input-group-addon">
-								<span class="glyphicon glyphicon-calendar"></span>
-							</span>
-						</div>
-					</div>
-
-					<div class="form-group reservaPorDias reservaHastaFecha hide">
-						<label for="chkdias">Dias:</label>
-						<div class="input-group">
-							<select id="chkdias" name="chkdias[]" class="form-control" multiple="multiple" required>
-								<option value="lunes" id="lu">Lunes</option>
-								<option value="martes" id="ma">Martes</option>
-								<option value="miércoles" id="mi">Miércoles</option>
-								<option value="jueves" id="ju">Jueves</option>
-								<option value="viernes" id="vi">Viernes</option>
-								<option value="sábado" id="sa">Sábado</option>
-								<option value="domingo" id="do" disabled>Domingo</option>
-							</select>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label>Facultad:</label>
-						<div class="selectContainer">
-							<select class="form-control" name="size" id="cboxFacultades">
-							  <option selected disabled>Seleccione...</option>
-							</select>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label>Docente:</label>
-						<div class="selectContainer">
-							<select class="form-control" name="size" id="cBoxDocentes">
-							  <option selected disabled>Seleccione...</option>
-							</select>
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-xs-4 form-group">
-							<label>Grupo:</label>
-							<div class="selectContainer">
-								<select class="form-control" name="size" id="cBoxGrupos">
-								  <option selected disabled>Seleccione...</option>
-								</select>
-							</div>
-						</div>
-
-						<div class="col-xs-8 form-group">
-							<label>Asignatura:</label>
-							<div class="selectContainer">
-								<select class="form-control" name="size" id="cboxAsignaturas">
-								  <option selected disabled>Seleccione...</option>
-								</select>
-							</div>
-						</div>
-					</div>
-
-					<div class="text-right">
-						<button id="btn-reservar" class="btn btn-primary btn-flat" data-toggle="modal" data-target="#msgModalProcessing">
-							Crear Reserva
-						</button>
-					</div>
-					<!--/form-->
-				</div> <!-- /.box-body -->
-			<br>
-			</div> <!-- /.box -->
-		</div> <!-- /.col Controles para crear reserva -->
-
-		<div class="col-xs-12 col-sm-8"> <!-- col calendar -->
+		<div class="col-xs-12 col-sm-12"> <!-- col calendar -->
 			<div class="box box-primary">
 				<div class="box-body no-padding">
 					<!-- THE CALENDAR -->
@@ -173,11 +119,16 @@
 			</div> <!-- /. box -->
 		</div> <!-- /.col calendar -->
 
+		
+	
+
 	</div> <!-- /.row -->
 	<!-- /.Main content -->
   </div><!-- /.panel-body -->
-</div><!-- /.panel -->
+  
 
+
+</div><!-- /.panel -->
 
 
 
@@ -188,119 +139,7 @@
 			//var select = $('#cboxFacultades').val();
 			
 
-			$('#btn-reservar').click(function() {
-				if($('#tipoRepeticionHF').is(':checked')) { 
-					var varfechaHasta = $('#fechaHasta').val();
-					  if (varfechaHasta === '') {
-					  	$.msgBox({
-							title:"Información",
-							content:"El campo Fecha Hasta esta vacio",
-							type:"warning"
-						}); 
-
-        				//alert('El campo Fecha Hasta esta vacio');
-        			$("#fechaHasta").focus();
-        			return false;
-    				}
-
-					//alert("it's checked"); 
-
-				}
-
-    //Se obtiene el valor del campo
-    var name = $('#nHoras').val();
-
-    //Se verifica que el valor del campo este vacio
-    if (name === '') {
-        //alert('El campo Horas esta vacio');
-          	$.msgBox({
-							title:"Información",
-							content:"El campo Horas esta vacio'",
-							type:"warning"
-						}); 
-        $("#nHoras").focus();
-        return false;
-    }
-    //Se verifica longitud del campo
-    else if (name.length != 1) {
-       // alert('El longitud del campo hora es incorrecto');
-           	$.msgBox({
-							title:"Información",
-							content:"El longitud del campo hora es incorrecto",
-							type:"warning"
-						}); 
-        return false;
-    } else {
-       //return true;
-    }
-
-     var selectFaculta = $('#cboxFacultades').val();
-
-       if (selectFaculta === null) {
-      	//alert("Debes seleccionar una Falculta");
-      	 	$.msgBox({
-							title:"Información",
-							content:"Debes seleccionar una Falculta",
-							type:"warning"
-						}); 
-
-      	$("#cboxFacultades").focus();
-        return false;
-    }else {
-        //alert('Campo correcto');
-    }
-
-         var selectDocente = $('#cBoxDocentes').val();
-
-       if (selectDocente === null) {
-      	//alert("Debes seleccionar un Docente");
-      	$.msgBox({
-							title:"Información",
-							content:"Debes seleccionar un Docente",
-							type:"warning"
-						}); 
-
-      	$("#cBoxDocentes").focus();
-        return false;
-    }else {
-        //alert('Campo correcto');
-    }
-
-    var selectGrupo = $('#cBoxGrupos').val();
-
-       if (selectGrupo === null) {
-      	//alert("Debes seleccionar un Grupo");
-      	 	$.msgBox({
-							title:"Información",
-							content:"Debes seleccionar un Grupo",
-							type:"warning"
-						}); 
-      	$("#cBoxGrupos").focus();
-        return false;
-    }else {
-        //alert('Campo correcto');
-    }
-
-       var selectAsignatura = $('#cboxAsignaturas').val();
-
-       if (selectAsignatura === null) {
-      	//alert("Debes seleccionar una Asignatura");
-      	 	$.msgBox({
-							title:"Información",
-							content:"Debes seleccionar una Asignatura",
-							type:"warning"
-						}); 
-      	$("#cboxAsignaturas").focus();
-        return false;
-    }else {
-        //alert('Campo correcto');
-    }
-
-
-
-});
-
-
+			
 
 
 			$('#modalReserva').on('show.bs.modal', function (event) {

@@ -78,9 +78,12 @@ class FestivosController extends Controller
         //Guarda todos los datos recibidos del formulario
         $festivo = request()->except(['_token']);
 
-
+        //$tag =auth()->user()->username;
+        //dump($tag);
          $festivo = Festivo::create($festivo);
-         $festivo->FEST_CREADOPOR = auth()->user()->username;
+         //dump(auth()->user()->username);
+        $festivo->FEST_CREADOPOR = auth()->user()->username;
+        
         //Se guarda modelo
         $festivo->save();
 

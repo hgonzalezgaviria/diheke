@@ -30,4 +30,13 @@ return [
 
     'compiled' => realpath(storage_path('framework/views')),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Format DateTime in views
+    |--------------------------------------------------------------------------
+    | Shinseiki86
+    |
+    */
+
+    'formatDateTime' => 'd/m/Y h:i A',
 ];
