@@ -138,7 +138,7 @@ class ReservasController extends Controller
 		 //convertimos el array principal $data a un objeto Json 
 	   return json_encode($data); //para luego retornarlo y estar listo para consumirlo
 	}
-
+	
 	public function consultarReservas($sala = null)
 	{
 		
@@ -219,31 +219,51 @@ class ReservasController extends Controller
 	   return json_encode($data); //para luego retornarlo y estar listo para consumirlo
 	}
 
-	public function consultarReservasFiltro($sala = null)
+	public function consultarReservasFiltro()
 	{
 
-		$facultad = $_POST["facultad"];
 
+		$sala = Input::get("sala");
+		$facultad = Input::get("cboxFacultades");
+		$docente = Input::get("cBoxDocentes");
+		$grupo = Input::get("cBoxGrupos");
+		$asignatura = Input::get("cboxAsignaturas");
+		$estado = Input::get("cboxEstados");
+
+	
+		dump($sala);
 		
 		$data = array(); //declaramos un array principal que va contener los datos
 
 
 		//$reservas = \reservas\Sala::findOrFail($sala)->reservas;
-		$reservas = \reservas\Reserva()
-									->join('SALAS', 'SALAS.SALA_ID', '=', 'RESERVAS.SALA_ID')
+		$reservas = \reservas\Reserva::join('SALAS', 'SALAS.SALA_ID', '=', 'RESERVAS.SALA_ID')
 									->join('SEDES', 'SEDES.SEDE_ID', '=', 'SALAS.SEDE_ID')
 									->join('RESERVAS_AUTORIZADAS AS RES_AUT', 'RES_AUT.RESE_ID', '=', 'RESERVAS.RESE_ID')
-									->join('AUTORIZACIONES AS AUTORIZ', 'AUTORIZ.AUTO_ID', '=', 'RESERVAS_AUTORIZADAS.AUTO_ID')
-									->join('ESTADOS', 'ESTADOS.ESTA_ID', '=', 'AUTORIZACIONES.ESTA_ID')
+									->join('AUTORIZACIONES AS AUTORIZ', 'AUTORIZ.AUTO_ID', '=', 'RES_AUT.AUTO_ID')
+									->join('ESTADOS', 'ESTADOS.ESTA_ID', '=', 'AUTORIZ.ESTA_ID')
 									->join('MATERIAS', 'MATERIAS.MATE_CODIGOMATERIA', '=', 'AUTORIZ.MATE_CODIGOMATERIA')
 									->join('GRUPOS', 'GRUPOS.GRUP_ID', '=', 'AUTORIZ.GRUP_ID')
-									->where('RESERVAS.SALA_ID', $sala)
-									->Where('AUTORIZ.UNID_ID', $facultad)
 									->join('UNIDADES', 'UNIDADES.UNID_ID', '=', 'AUTORIZ.UNID_ID')
 					->join('PERSONANATURALGENERAL', 'PERSONANATURALGENERAL.PEGE_ID', '=', 'AUTORIZ.PEGE_ID')
-					->where('RESERVAS.SALA_ID', $sala)
-					//->orWhere('RESERVAS.SALA_ID', '=' , 'RESERVAS.SALA_ID')
-						->get();
+					->where('RESERVAS.SALA_ID', '=' , 3);
+					//	->get();
+
+		if($sala != null)
+			$reservas->where('RESERVAS.SALA_ID', '=', $sala);
+		if($facultad != null)
+			$reservas->where('AUTORIZ.UNID_ID', '=', $facultad);
+		if($docente != null)
+			$reservas->where('AUTORIZ.PEGE_ID', '=', $docente);
+		if($grupo != null)
+			$reservas->where('AUTORIZ.GRUP_ID', '=', $grupo);
+		if($asignatura != null)
+			$reservas->where('AUTORIZ.MATE_CODIGOMATERIA', '=', $asignatura);
+		if($estado)
+			$reservas->where('AUTORIZ.ESTA_ID', '=', $estado);
+
+		$reservas = $reservas->get();
+
 
 		$count = count($reservas); //contamos los ids obtenidos para saber el numero exacto de eventos
 		
@@ -299,7 +319,10 @@ class ReservasController extends Controller
 		}
  
 		 //convertimos el array principal $data a un objeto Json 
-	   return json_encode($data); //para luego retornarlo y estar listo para consumirlo
+		return json_encode($data); //para luego retornarlo y estar listo para consumirlo
+
+		
+
 	}
 
 

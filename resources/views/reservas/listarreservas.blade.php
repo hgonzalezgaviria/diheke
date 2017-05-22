@@ -39,12 +39,14 @@
 
 	<div class="row">
 
-	{{ Form::open(array('url' => 'reservas/consultarReservasFiltro', 'class' => 'form-vertical')) }}
+	{{ Form::open(array('url' => 'reservas/listReservasFiltro', 'class' => 'form-vertical', 'method' => 'GET')) }}
+
+		<input type="text" hidden="true" value="{{Request::get('sala')}}" name="sala">
 
 		<div class="col-xs-3 form-group">
 			<label>Facultad:</label>
 			<div class="selectContainer">
-				<select class="form-control" name="size" id="cboxFacultades" name="cboxFacultades">
+				<select class="form-control" id="cboxFacultades" name="cboxFacultades">
 				  <option selected disabled>Todos...</option>
 				</select>
 			</div>
@@ -53,7 +55,7 @@
 		<div class="col-xs-4 form-group">
 			<label>Docente:</label>
 			<div class="selectContainer">
-				<select class="form-control" name="size" id="cBoxDocentes">
+				<select class="form-control" id="cBoxDocentes" name="cBoxDocentes">
 				  <option selected disabled>Todos...</option>
 				</select>
 			</div>
@@ -65,7 +67,7 @@
 		<div class="col-xs-3 form-group">
 			<label>Grupo:</label>
 			<div class="selectContainer">
-				<select class="form-control" name="size" id="cBoxGrupos">
+				<select class="form-control" id="cBoxGrupos" name="cBoxGrupos">
 				  <option selected disabled>Todos...</option>
 				</select>
 			</div>
@@ -74,7 +76,7 @@
 		<div class="col-xs-4 form-group">
 			<label>Asignatura:</label>
 			<div class="selectContainer">
-				<select class="form-control" name="size" id="cboxAsignaturas">
+				<select class="form-control" id="cboxAsignaturas" name="cboxAsignaturas">
 				  <option selected disabled>Todos...</option>
 				</select>
 			</div>
@@ -87,7 +89,7 @@
 		<div class="col-xs-3 form-group">
 			<label>Estado:</label>
 			<div class="selectContainer">
-				<select class="form-control" name="size" id="cboxEstados">
+				<select class="form-control" id="cboxEstados" name="cboxEstados">
 				  <option selected disabled>Todos...</option>
 				</select>
 			</div>
@@ -96,7 +98,7 @@
 		<div class="col-xs-2 form-group">
 			<label>Año:</label>
 			<div class="selectContainer">
-				<input class="form-control" type="text" name="ano" id="ano" maxlength="4" minlength="4">
+				<input class="form-control" type="text" id="ano" maxlength="4" minlength="4">
 			</div>
 		</div>
 

@@ -57,7 +57,9 @@ Route::get('reservas/calreservas', 'ReservasController@listarReservas');
 
 Route::get('listarReservas{sala?}','ReservasController@consultarReservas');
 
-Route::get('listReservasFiltro','ReservasController@consultarReservasFiltro');
+//Route::get('listarReservasFiltro','ReservasController@consultarReservas');
+
+Route::post('listReservasFiltro', array('as' => 'listReservasFiltro','uses' => 'ReservasController@consultarReservasFiltro'));
 
 //Ayuda
 Route::get('/help', function(){

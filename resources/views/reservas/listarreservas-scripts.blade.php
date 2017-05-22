@@ -351,18 +351,18 @@ $(function () {
 	$("#btn-filtrar").on('click', function(){
 
 
+		var sala = $("#sala").val();
 		var facultad = $("#cboxFacultades").val();
 		var docente = $("#cBoxDocentes").val();
 		var grupo = $("#cBoxGrupos").val();
-		var materia = $("#cboxAsignaturas").val();
+		var asignatura = $("#cboxAsignaturas").val();
 		var estado = $("#cboxEstados").val();
 
-		//alert("filtros: "+ facultad + " " + docente + " " + grupo + " " + materia + " " + estado
-
-		aplicarFiltros(1, null, null ,null ,null);	
-		//$('#calendar').fullCalendar('refetchEvents');
+		listarFiltro(facultad, sala, docente, grupo, asignatura);
+	
 		
-	}); // click en el boton de filtrar
+		
+	}); // click en el boton de filtrar function listarFiltro(facultad, sala, docente, grupo, asignatura, estado){
 
 
 	//consultar las reservas con filtros
@@ -494,6 +494,29 @@ $(function () {
 			});
 		}
 	});
+
+	function listarFiltro(facultad, sala, docente, grupo, asignatura, estado){
+		
+		//Token para envío de peticiones por ajax a los controladores de Laravel
+		var crsfToken = $('meta[name="csrf-token"]').attr('content');
+
+        var events = $.ajax({
+						url: '../listReservasFiltro',
+						data: 'sala='+ sala +'&cboxFacultades='+ facultad +'&cBoxDocentes='+ docente +'&cBoxGrupos='+grupo + '&cboxAsignaturas='+ asignatura +'&cboxEstados='+estado,
+						type: "POST",
+						headers: {
+							"X-CSRF-TOKEN": crsfToken
+						}
+					});
+
+		$('#calendar').fullCalendar( 'removeEventSource', events);
+		$('#calendar').fullCalendar('removeEvents');
+        $('#calendar').fullCalendar( 'addEventSource', events);         
+        $('#calendar').fullCalendar( 'refetchEvents' );
+
+	}
+
+
 
 });
 </script>
