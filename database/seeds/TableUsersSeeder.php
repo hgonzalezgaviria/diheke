@@ -11,7 +11,7 @@ use Illuminate\Database\Seeder;
             \DB::table('USERS')->insert( array(
                 'name' => 'Admin',
                 'username' => 'admin',
-                'email' => 'admin@correo.com',
+                'email' => 'hectorg0g@gmail.com',
                 'password'  => \Hash::make('123'),
                 'ROLE_ID' => reservas\Rol::where('ROLE_ROL','admin')->get()->first()->ROLE_ID,
                 'USER_CREADOPOR' => 'SYSTEM',
@@ -62,7 +62,7 @@ use Illuminate\Database\Seeder;
             \DB::table('USERS')->insert( array(
                 'name' => 'Docente 1 de prueba',
                 'username' => 'docente1',
-                'email' => 'docente1@correo.com',
+                'email' => 'hectorg_g@hotmail.es',
                 'password'  => \Hash::make('123'),
                 'ROLE_ID' => reservas\Rol::where('ROLE_ROL','docente')->get()->first()->ROLE_ID,
                 'USER_CREADOPOR' => 'admin',
