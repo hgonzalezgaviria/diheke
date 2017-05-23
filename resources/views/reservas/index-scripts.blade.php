@@ -610,18 +610,20 @@ $(function () {
 	//Date for the calendar events (dummy data)
 	//while(reload==false){
 	$('#calendar').fullCalendar({
-
+		//theme: true,
 		displayEventTime: false,
 		header: {
 			left: 'prev,next today',
 			center: 'title',
-			right: 'month,agendaWeek,agendaDay'
+			right: 'month,listMonth,agendaWeek,listWeek,agendaDay'
 		},
 		buttonText: {
 			today: 'hoy',
 			month: 'mes',
+			listMonth: 'lista x mes',
 			week: 'semana',
-			day: 'dia'
+			listWeek: 'lista x semana',
+			day: 'dia',
 		},
 		events: {
 			url:"../cargaEventos" + sala
@@ -635,7 +637,7 @@ $(function () {
 			$('#msgModalProcessing').modal('hide');
 		},
 		eventMouseover: function(calEvent, jsEvent) { 
-			var tooltip = '<div class="tooltipevent" style="width:340px;height:110px;background:#f9ec54;position:absolute;z-index:10001;">'+
+			var tooltip = '<div class="tooltipevent" style="width:340px;height:120px;background:#f9ec54;position:absolute;z-index:10001;">'+
 				"<b>Sede:</b>"+calEvent.SEDE_DESCRIPCION +" <br>"+
 				"<b>Facultad:</b>"+calEvent.UNID_NOMBRE +" <br>"+
 				"<b>Grupo:</b>"+calEvent.GRUP_NOMBRE +" <br>"+
